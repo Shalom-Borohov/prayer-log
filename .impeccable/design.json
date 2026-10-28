@@ -1,0 +1,616 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-28T00:00:00Z",
+  "title": "Design System: תפילות",
+  "extensions": {
+    "colorMeta": {
+      "gold-primary": {
+        "role": "primary",
+        "displayName": "Gilded Ink",
+        "canonical": "#8a5a12",
+        "tonalRamp": [
+          "#160700",
+          "#361e00",
+          "#583806",
+          "#7e5317",
+          "#a4763b",
+          "#c49d6f",
+          "#e4c5a1",
+          "#ffead0"
+        ]
+      },
+      "gold-primary-dark": {
+        "role": "primary",
+        "displayName": "Gilded Ink (dark)",
+        "canonical": "#d9ae4e",
+        "tonalRamp": [
+          "#150800",
+          "#342000",
+          "#563a00",
+          "#7a5700",
+          "#a07a1a",
+          "#c0a05e",
+          "#e0c895",
+          "#ffedc8"
+        ]
+      },
+      "gold-leaf": {
+        "role": "primary",
+        "displayName": "Gold Leaf",
+        "canonical": "#e2c27a",
+        "tonalRamp": [
+          "#130900",
+          "#302100",
+          "#503c05",
+          "#735a17",
+          "#987c3b",
+          "#b9a26f",
+          "#dbc9a1",
+          "#fbedd0"
+        ]
+      },
+      "gold-stamp": {
+        "role": "primary",
+        "displayName": "Stamp Gold",
+        "canonical": "#a87a1f",
+        "tonalRamp": [
+          "#160800",
+          "#351f00",
+          "#573900",
+          "#7c5500",
+          "#a27828",
+          "#c29e64",
+          "#e2c699",
+          "#ffeccb"
+        ]
+      },
+      "gold-stamp-dark": {
+        "role": "primary",
+        "displayName": "Stamp Gold (dark)",
+        "canonical": "#d9ae4e",
+        "tonalRamp": [
+          "#150800",
+          "#342000",
+          "#563a00",
+          "#7a5700",
+          "#a07a1a",
+          "#c0a05e",
+          "#e0c895",
+          "#ffedc8"
+        ]
+      },
+      "leather-band": {
+        "role": "neutral",
+        "displayName": "Shell Leather",
+        "canonical": "#2b2320",
+        "tonalRamp": [
+          "#0d0a09",
+          "#272321",
+          "#453e3c",
+          "#645c58",
+          "#877e7a",
+          "#aaa3a0",
+          "#cfc9c7",
+          "#f2edeb"
+        ]
+      },
+      "leather-band-dark": {
+        "role": "neutral",
+        "displayName": "Shell Leather (dark)",
+        "canonical": "#1f1916",
+        "tonalRamp": [
+          "#0d0b09",
+          "#272321",
+          "#443e3c",
+          "#635c59",
+          "#867e7b",
+          "#a9a3a0",
+          "#cec9c7",
+          "#f1eeec"
+        ]
+      },
+      "leather-band-text": {
+        "role": "neutral",
+        "displayName": "Parchment Text",
+        "canonical": "#e8d7ad",
+        "tonalRamp": [
+          "#0f0b02",
+          "#2b2310",
+          "#493f24",
+          "#6a5c3b",
+          "#8d7f5b",
+          "#b0a486",
+          "#d3cab2",
+          "#f5eedd"
+        ]
+      },
+      "leather-shacharit": {
+        "role": "secondary",
+        "displayName": "Bottle Green",
+        "canonical": "#1f4d3a",
+        "tonalRamp": [
+          "#020e08",
+          "#12291f",
+          "#284739",
+          "#3f6855",
+          "#618b77",
+          "#8bae9d",
+          "#b7d2c4",
+          "#e0f4ea"
+        ]
+      },
+      "leather-shacharit-dark": {
+        "role": "secondary",
+        "displayName": "Bottle Green (dark)",
+        "canonical": "#3e7a5e",
+        "tonalRamp": [
+          "#000f07",
+          "#0c2b1d",
+          "#204936",
+          "#356a51",
+          "#578e73",
+          "#84b099",
+          "#b2d4c2",
+          "#dcf6e8"
+        ]
+      },
+      "leather-musaf": {
+        "role": "secondary",
+        "displayName": "Plum",
+        "canonical": "#5b3a6b",
+        "tonalRamp": [
+          "#110616",
+          "#2d1c35",
+          "#4c3558",
+          "#6e507d",
+          "#9272a3",
+          "#b499c2",
+          "#d7c1e2",
+          "#f8e8ff"
+        ]
+      },
+      "leather-musaf-dark": {
+        "role": "secondary",
+        "displayName": "Plum (dark)",
+        "canonical": "#8a63a0",
+        "tonalRamp": [
+          "#110618",
+          "#2e1b38",
+          "#4d335c",
+          "#6f4d82",
+          "#946fa8",
+          "#b597c7",
+          "#d8c0e6",
+          "#f9e7ff"
+        ]
+      },
+      "leather-mincha": {
+        "role": "secondary",
+        "displayName": "Oxblood",
+        "canonical": "#7a2430",
+        "tonalRamp": [
+          "#1c0205",
+          "#3f1318",
+          "#66292f",
+          "#904148",
+          "#b96369",
+          "#d78e91",
+          "#f4b9bb",
+          "#ffe2e3"
+        ]
+      },
+      "leather-mincha-dark": {
+        "role": "secondary",
+        "displayName": "Oxblood (dark)",
+        "canonical": "#b04a57",
+        "tonalRamp": [
+          "#1d0105",
+          "#421018",
+          "#6a252f",
+          "#953c48",
+          "#be5e68",
+          "#dc8a90",
+          "#f9b7ba",
+          "#ffe0e3"
+        ]
+      },
+      "leather-maariv": {
+        "role": "secondary",
+        "displayName": "Navy",
+        "canonical": "#1e3355",
+        "tonalRamp": [
+          "#050b17",
+          "#192437",
+          "#30405a",
+          "#495e80",
+          "#6a81a6",
+          "#92a6c5",
+          "#bccce4",
+          "#e4efff"
+        ]
+      },
+      "leather-maariv-dark": {
+        "role": "secondary",
+        "displayName": "Navy (dark)",
+        "canonical": "#4a6a9e",
+        "tonalRamp": [
+          "#030b1b",
+          "#14243d",
+          "#2a4063",
+          "#425e8b",
+          "#6281b3",
+          "#8ca6d0",
+          "#b7cced",
+          "#e0f0ff"
+        ]
+      },
+      "leather-torah": {
+        "role": "secondary",
+        "displayName": "Brown",
+        "canonical": "#6b4423",
+        "tonalRamp": [
+          "#140801",
+          "#331f0e",
+          "#553922",
+          "#795538",
+          "#9e7758",
+          "#bf9d83",
+          "#e0c5b0",
+          "#feeadb"
+        ]
+      },
+      "leather-torah-dark": {
+        "role": "secondary",
+        "displayName": "Brown (dark)",
+        "canonical": "#a0703f",
+        "tonalRamp": [
+          "#160700",
+          "#351e05",
+          "#573816",
+          "#7d5328",
+          "#a37649",
+          "#c29c78",
+          "#e3c4a8",
+          "#ffead5"
+        ]
+      },
+      "grouped-ground": {
+        "role": "neutral",
+        "displayName": "Grouped Ground",
+        "canonical": "#f2f2f7",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242426",
+          "#3f3f42",
+          "#5d5d61",
+          "#808084",
+          "#a4a4a8",
+          "#cacacd",
+          "#eeeef0"
+        ]
+      },
+      "grouped-ground-dark": {
+        "role": "neutral",
+        "displayName": "Grouped Ground (dark)",
+        "canonical": "#000000",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "cell": {
+        "role": "neutral",
+        "displayName": "Cell",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "cell-dark": {
+        "role": "neutral",
+        "displayName": "Cell (dark)",
+        "canonical": "#1c1c1e",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242425",
+          "#3f3f41",
+          "#5d5d5f",
+          "#808082",
+          "#a4a4a6",
+          "#cacacc",
+          "#eeeeef"
+        ]
+      },
+      "label": {
+        "role": "neutral",
+        "displayName": "Label",
+        "canonical": "#000000",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "label-dark": {
+        "role": "neutral",
+        "displayName": "Label (dark)",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "Raised",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "raised-dark": {
+        "role": "neutral",
+        "displayName": "Raised (dark)",
+        "canonical": "#636366",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242425",
+          "#3f3f41",
+          "#5d5d60",
+          "#808083",
+          "#a4a4a7",
+          "#cacacc",
+          "#eeeef0"
+        ]
+      },
+      "label-secondary": {
+        "role": "neutral",
+        "displayName": "Secondary Label",
+        "canonical": "rgba(60, 60, 67, 0.75)"
+      },
+      "label-secondary-dark": {
+        "role": "neutral",
+        "displayName": "Secondary Label (dark)",
+        "canonical": "rgba(235, 235, 245, 0.6)"
+      },
+      "label-tertiary": {
+        "role": "neutral",
+        "displayName": "Tertiary Label",
+        "canonical": "rgba(60, 60, 67, 0.3)"
+      },
+      "label-tertiary-dark": {
+        "role": "neutral",
+        "displayName": "Tertiary Label (dark)",
+        "canonical": "rgba(235, 235, 245, 0.3)"
+      },
+      "separator": {
+        "role": "neutral",
+        "displayName": "Separator",
+        "canonical": "rgba(60, 60, 67, 0.29)"
+      },
+      "separator-dark": {
+        "role": "neutral",
+        "displayName": "Separator (dark)",
+        "canonical": "rgba(84, 84, 88, 0.6)"
+      },
+      "fill": {
+        "role": "neutral",
+        "displayName": "Fill",
+        "canonical": "rgba(118, 118, 128, 0.12)"
+      },
+      "fill-dark": {
+        "role": "neutral",
+        "displayName": "Fill (dark)",
+        "canonical": "rgba(118, 118, 128, 0.24)"
+      }
+    },
+    "typographyMeta": {
+      "large-title": {
+        "displayName": "Large Title",
+        "purpose": "Screen titles in gold leaf on the leather band; Ionic iOS large title, collapses into the toolbar."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Prayer names in day rows."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Ruled table cells (values at 600), list rows, month day numbers at 500."
+      },
+      "subhead": {
+        "displayName": "Subhead",
+        "purpose": "Date line, attendance segment labels, Torah note, shelf-row labels."
+      },
+      "footnote": {
+        "displayName": "Footnote",
+        "purpose": "Streak lines, group labels, table column heads, list footers."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Month grid weekday initials and Hebrew day letters; tab labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "segment-thumb",
+        "value": "0 3px 8px rgba(0, 0, 0, 0.12), 0 3px 1px rgba(0, 0, 0, 0.04)",
+        "purpose": "Selected attendance segment, matching the native iOS thumb."
+      },
+      {
+        "name": "gold-bands",
+        "value": "inset 0 4px 0 var(--gold), inset 0 -4px 0 var(--gold)",
+        "purpose": "Paints the gold stamp on a day-row spine; 3px bands on month-cell and table-key spines."
+      },
+      {
+        "name": "check-ring",
+        "value": "inset 0 0 0 1.5px var(--app-label-tertiary)",
+        "purpose": "Unchecked Torah circle."
+      }
+    ],
+    "motion": [
+      {
+        "name": "stamp",
+        "value": "220ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Gold bands grow in on the newest spine when it turns gold; off under reduced motion."
+      },
+      {
+        "name": "control-state",
+        "value": "160ms ease-out",
+        "purpose": "Background, colour and shadow changes on attendance segments and the Torah circle."
+      },
+      {
+        "name": "press",
+        "value": "scale(0.97)",
+        "purpose": "Pressed attendance segment; off under reduced motion."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Shelf",
+      "kind": "custom",
+      "refersTo": "spine",
+      "description": "The signature: one spine per day in four states (gold, plain leather, empty dashed, none); the newest slot stamps gold in place.",
+      "html": "<div class=\"ds-shelf ds-hue-shacharit\" dir=\"rtl\"><i class=\"ds-spine ds-spine-gold\"></i><i class=\"ds-spine ds-spine-gold\"></i><i class=\"ds-spine ds-spine-plain\"></i><i class=\"ds-spine ds-spine-empty\"></i><i class=\"ds-spine ds-spine-gold\"></i><i class=\"ds-spine ds-spine-gold\"></i><i class=\"ds-spine ds-spine-gold ds-spine-stamp\"></i></div>",
+      "css": ".ds-hue-shacharit{--hue:var(--leather-shacharit,#1f4d3a);--hue-deep:#1f4d3a} .ds-hue-mincha{--hue:var(--leather-mincha,#7a2430);--hue-deep:#7a2430} .ds-hue-maariv{--hue:var(--leather-maariv,#1e3355);--hue-deep:#1e3355} .ds-hue-musaf{--hue:var(--leather-musaf,#5b3a6b);--hue-deep:#5b3a6b} .ds-hue-torah{--hue:var(--leather-torah,#6b4423);--hue-deep:#6b4423} .ds-shelf{display:flex;align-items:flex-end;gap:3px;height:24px} .ds-spine{display:block;width:6px;height:22px;border-radius:1.5px;background:var(--hue)} .ds-spine-gold{box-shadow:inset 0 4px 0 var(--gold,#a87a1f),inset 0 -4px 0 var(--gold,#a87a1f)} .ds-spine-empty{box-sizing:border-box;border:1px dashed var(--app-label-secondary,rgba(60,60,67,.75));background:transparent} .ds-spine-none{background:transparent} .ds-spine-stamp{animation:ds-stamp 220ms cubic-bezier(0.16,1,0.3,1)} @keyframes ds-stamp{from{box-shadow:inset 0 0 0 var(--gold,#a87a1f),inset 0 0 0 var(--gold,#a87a1f)}} @media (prefers-reduced-motion:reduce){.ds-spine-stamp{animation:none}}"
+    },
+    {
+      "name": "Attendance Segmented Control",
+      "kind": "button",
+      "refersTo": "attendance-track",
+      "description": "Full-width במניין | ביחידות control; selected במניין takes the prayer's deep leather with gold-leaf text.",
+      "html": "<div class=\"ds-attendance ds-hue-mincha\" dir=\"rtl\"><button class=\"ds-att-minyan\" aria-pressed=\"true\">במניין</button><button class=\"ds-att-alone\" aria-pressed=\"false\">ביחידות</button></div>",
+      "css": ".ds-hue-shacharit{--hue:var(--leather-shacharit,#1f4d3a);--hue-deep:#1f4d3a} .ds-hue-mincha{--hue:var(--leather-mincha,#7a2430);--hue-deep:#7a2430} .ds-hue-maariv{--hue:var(--leather-maariv,#1e3355);--hue-deep:#1e3355} .ds-hue-musaf{--hue:var(--leather-musaf,#5b3a6b);--hue-deep:#5b3a6b} .ds-hue-torah{--hue:var(--leather-torah,#6b4423);--hue-deep:#6b4423} .ds-attendance{display:flex;gap:2px;padding:2px;border-radius:9px;background:var(--app-fill,rgba(118,118,128,.12));font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif} .ds-attendance button{flex:1;min-height:40px;border:0;border-radius:7px;background:transparent;color:var(--app-label,#000);font:inherit;font-size:.9375rem;font-weight:500;transition:background-color 160ms ease-out,color 160ms ease-out,box-shadow 160ms ease-out} .ds-attendance button[aria-pressed='true']{font-weight:600;box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04)} .ds-attendance .ds-att-minyan[aria-pressed='true']{background:var(--hue-deep);color:var(--gold-leaf,#e2c27a)} .ds-attendance .ds-att-alone[aria-pressed='true']{background:var(--app-raised,#fff)} .ds-attendance button:active{transform:scale(.97)} .ds-attendance button:focus-visible{outline:2px solid var(--ion-color-primary,#8a5a12);outline-offset:2px}"
+    },
+    {
+      "name": "Torah Check",
+      "kind": "input",
+      "refersTo": "torah-check-on",
+      "description": "44px checkbox target with a 26px circle; on state is deep brown with a gold-leaf checkmark.",
+      "html": "<button class=\"ds-torah-check ds-hue-torah\" role=\"checkbox\" aria-checked=\"true\" aria-label=\"למדתי תורה\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 512 512\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"40\" d=\"M416 128L192 384l-96-96\"/></svg></button>",
+      "css": ".ds-hue-shacharit{--hue:var(--leather-shacharit,#1f4d3a);--hue-deep:#1f4d3a} .ds-hue-mincha{--hue:var(--leather-mincha,#7a2430);--hue-deep:#7a2430} .ds-hue-maariv{--hue:var(--leather-maariv,#1e3355);--hue-deep:#1e3355} .ds-hue-musaf{--hue:var(--leather-musaf,#5b3a6b);--hue-deep:#5b3a6b} .ds-hue-torah{--hue:var(--leather-torah,#6b4423);--hue-deep:#6b4423} .ds-torah-check{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;background:transparent;color:var(--gold-leaf,#e2c27a)} .ds-torah-check::before{content:'';grid-area:1/1;width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--app-label-tertiary,rgba(60,60,67,.3));transition:background-color 160ms ease-out} .ds-torah-check[aria-checked='true']::before{background:var(--hue-deep);box-shadow:none} .ds-torah-check svg{grid-area:1/1;position:relative} .ds-torah-check:focus-visible{outline:2px solid var(--ion-color-primary,#8a5a12);outline-offset:2px}"
+    },
+    {
+      "name": "Ruled Table",
+      "kind": "card",
+      "refersTo": "ruled-table",
+      "description": "Hairline-ruled stats table on a 10px inset cell; row header leading at 400, values trailing at 600, gold-banded spine as the hue key.",
+      "html": "<table class=\"ds-ruled\" dir=\"rtl\"><thead><tr><td></td><th>במניין</th><th>מתוך</th></tr></thead><tbody><tr><th class=\"ds-hue-shacharit\"><i class=\"ds-key\"></i>שחרית</th><td>4</td><td>4</td></tr><tr><th class=\"ds-hue-maariv\"><i class=\"ds-key\"></i>ערבית</th><td>2</td><td>4</td></tr></tbody></table>",
+      "css": ".ds-hue-shacharit{--hue:var(--leather-shacharit,#1f4d3a);--hue-deep:#1f4d3a} .ds-hue-mincha{--hue:var(--leather-mincha,#7a2430);--hue-deep:#7a2430} .ds-hue-maariv{--hue:var(--leather-maariv,#1e3355);--hue-deep:#1e3355} .ds-hue-musaf{--hue:var(--leather-musaf,#5b3a6b);--hue-deep:#5b3a6b} .ds-hue-torah{--hue:var(--leather-torah,#6b4423);--hue-deep:#6b4423} .ds-ruled{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;background:var(--ion-item-background,#fff);color:var(--app-label,#000);font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif;font-size:1.0625rem;font-variant-numeric:tabular-nums} .ds-ruled th,.ds-ruled td{padding:11px 16px;border-bottom:.5px solid var(--app-separator,rgba(60,60,67,.29));text-align:start;font-weight:400} .ds-ruled td{text-align:end;font-weight:600} .ds-ruled thead th{font-size:.8125rem;color:var(--app-label-secondary,rgba(60,60,67,.75));text-align:end} .ds-ruled tr:last-child th,.ds-ruled tr:last-child td{border-bottom:0} .ds-key{display:inline-block;margin-inline-end:10px;vertical-align:middle;width:5px;height:18px;border-radius:1px;background:var(--hue);box-shadow:inset 0 3px 0 var(--gold,#a87a1f),inset 0 -3px 0 var(--gold,#a87a1f)}"
+    },
+    {
+      "name": "Month Grid Cell",
+      "kind": "custom",
+      "refersTo": "month-day",
+      "description": "Day button: Gregorian number, Hebrew day letter, then one small spine per applicable prayer plus Torah; today sits in a leather pill.",
+      "html": "<div class=\"ds-month\" dir=\"rtl\"><button class=\"ds-day is-today\"><span class=\"ds-num\">28</span><span class=\"ds-heb\">ז׳</span><span class=\"ds-spines\"><i class=\"ds-s ds-hue-shacharit ds-g\"></i><i class=\"ds-s ds-hue-mincha\"></i><i class=\"ds-s ds-hue-maariv ds-e\"></i><i class=\"ds-s ds-hue-torah ds-g\"></i></span></button><button class=\"ds-day\"><span class=\"ds-num\">27</span><span class=\"ds-heb\">ו׳</span><span class=\"ds-spines\"><i class=\"ds-s ds-hue-shacharit ds-g\"></i><i class=\"ds-s ds-hue-mincha ds-g\"></i><i class=\"ds-s ds-hue-maariv ds-g\"></i><i class=\"ds-s ds-hue-torah ds-e\"></i></span></button></div>",
+      "css": ".ds-hue-shacharit{--hue:var(--leather-shacharit,#1f4d3a);--hue-deep:#1f4d3a} .ds-hue-mincha{--hue:var(--leather-mincha,#7a2430);--hue-deep:#7a2430} .ds-hue-maariv{--hue:var(--leather-maariv,#1e3355);--hue-deep:#1e3355} .ds-hue-musaf{--hue:var(--leather-musaf,#5b3a6b);--hue-deep:#5b3a6b} .ds-hue-torah{--hue:var(--leather-torah,#6b4423);--hue-deep:#6b4423} .ds-month{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;padding:10px 8px 12px;border-radius:10px;background:var(--ion-item-background,#fff);font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif} .ds-day{display:grid;justify-items:center;align-content:start;gap:1px;min-height:62px;padding:5px 0 6px;border:0;border-radius:8px;background:transparent;color:var(--app-label,#000);font:inherit} .ds-day:active{background:var(--app-fill,rgba(118,118,128,.12))} .ds-day:focus-visible{outline:2px solid var(--ion-color-primary,#8a5a12);outline-offset:-2px} .ds-num{font-size:1.0625rem;font-weight:500;line-height:1.2} .ds-day.is-today .ds-num{min-width:26px;border-radius:13px;background:var(--leather-band,#2b2320);color:var(--gold-leaf,#e2c27a);font-weight:700} .ds-heb{font-size:.6875rem;line-height:1.2;color:var(--app-label-secondary,rgba(60,60,67,.75))} .ds-spines{display:flex;gap:2px;margin-top:4px} .ds-s{display:block;width:4px;height:14px;border-radius:1px;background:var(--hue)} .ds-g{box-shadow:inset 0 3px 0 var(--gold,#a87a1f),inset 0 -3px 0 var(--gold,#a87a1f)} .ds-e{box-sizing:border-box;border:1px dashed var(--app-label-secondary,rgba(60,60,67,.75));background:transparent}"
+    },
+    {
+      "name": "Leather Shell",
+      "kind": "nav",
+      "refersTo": "leather-shell",
+      "description": "Toolbar and large-title band in dark leather with gold-leaf title and chevrons, date line in parchment beneath.",
+      "html": "<header class=\"ds-shell\" dir=\"rtl\"><div class=\"ds-bar\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 512 512\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"48\" d=\"M184 112l144 144-144 144\"/></svg></div><h1>היום</h1><p>יום רביעי · ז׳ חשון · 28.10</p></header>",
+      "css": ".ds-shell{background:var(--leather-band,#2b2320);color:var(--gold-leaf,#e2c27a);font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif;padding:0 20px 14px} .ds-bar{height:44px;display:flex;align-items:center} .ds-shell h1{margin:0;font-size:34px;font-weight:700} .ds-shell p{margin:0;color:var(--leather-band-text,#e8d7ad);font-size:.9375rem;line-height:1.4}"
+    },
+    {
+      "name": "Backfill Banner",
+      "kind": "nav",
+      "refersTo": "backfill-row",
+      "description": "Inset disclosure list atop today, one gilded row per day that needs filling.",
+      "html": "<ul class=\"ds-backfill\" dir=\"rtl\"><li><span>יום רביעי 21.10 לא מולא</span><svg width=\"14\" height=\"14\" viewBox=\"0 0 512 512\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"48\" d=\"M328 112L184 256l144 144\"/></svg></li><li><span>ערבית של יום שישי 23.10 לא סומנה</span><svg width=\"14\" height=\"14\" viewBox=\"0 0 512 512\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"48\" d=\"M328 112L184 256l144 144\"/></svg></li></ul>",
+      "css": ".ds-backfill{list-style:none;margin:0;padding:0;border-radius:10px;overflow:hidden;background:var(--ion-item-background,#fff);font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif;font-size:1.0625rem} .ds-backfill li{display:flex;justify-content:space-between;align-items:center;min-height:44px;padding:0 16px;border-bottom:.5px solid var(--app-separator,rgba(60,60,67,.29));color:var(--ion-color-primary,#8a5a12)} .ds-backfill li svg{color:var(--app-label-tertiary,rgba(60,60,67,.3))} .ds-backfill li:last-child{border-bottom:0} .ds-backfill li:active{background:var(--app-fill,rgba(118,118,128,.12))}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Beit Midrash Shelf",
+    "overview": "**Creative North Star: \"The Beit Midrash Shelf\"**\n\nEvery day is a spine on a shelf of sefarim, and a prayer במניין earns its gold stamp. The system is a native iOS app first: Ionic in forced iOS mode, SF for every word, the system grouped ground, inset groups, a bottom tab bar, large titles that collapse on scroll, full RTL. On top of that native frame sit exactly two borrowed materials: a dark leather band that holds the large title and the date line, and a set of flat leather hues, one per prayer, with gold leaf as the only \"done\" mark.\n\nThe shelf is the one signature and it repeats at every scale: a 7-day mini shelf at the trailing edge of each row on היום, a row of tiny spines under each day number in לוח, and full-period shelves per prayer in סטטיסטיקה. A slot is always one of four states (gold, bare leather, empty dashed, nothing), stamped in place; rows never move and nothing reflows.\n\nDensity is Operate-mode: one tap per prayer, one-handed, seconds at a time. Numbers live in hairline-ruled tables with tabular figures, not in card stacks or charts. Everything is flat colour; the only shadows are the native segmented-control thumb and the inset bands that paint gold onto a spine.",
+    "keyCharacteristics": [
+      "Native iOS skeleton (grouped ground, inset groups, large title, tab bar) with a dark leather shell band.",
+      "One fixed leather hue per prayer, identical on every tab.",
+      "Gold leaf is the only completion mark; bare leather means prayed ביחידות; a dashed empty slot means unmarked.",
+      "The shelf repeats at three sizes as the system's single signature.",
+      "Flat colour only: no grain, texture or gradient."
+    ],
+    "rules": [
+      {
+        "name": "The Fixed Hue Rule",
+        "body": "A prayer's leather is the same on every tab, every table and every shelf. A new surface showing a prayer uses that prayer's hue class, never a new colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Gold Means Minyan Rule",
+        "body": "Gold appears on data only as the done state: a spine stamped for a prayer במניין or a day of learning, and the gold text of the selected במניין segment. Never use gold to decorate a neutral or partial state.",
+        "section": "colors"
+      },
+      {
+        "name": "The Deep Fill Rule",
+        "body": "Anything filled behind gold-leaf text takes `--hue-deep`, which does not lighten in dark mode. Only spines take the lightened `--hue`.",
+        "section": "colors"
+      },
+      {
+        "name": "The Native Type Rule",
+        "body": "SF only, at iOS text-style sizes. Labels above groups are sentence-case footnote in secondary label colour; no uppercase, no tracking, no display face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every number renders with tabular figures (set on body) so counts line up in tables and never jitter when they change.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Leather Rule",
+        "body": "Leather and gold are flat fills. No grain, texture, noise, gradient or sheen on the band, the spines or anything else.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** show a prayer's state as a mark in a fixed slot: gold spine, bare leather, or empty dashed slot.",
+      "**Do** reuse the shelf when a new surface shows a prayer over time, at one of the three established sizes.",
+      "**Do** put anything filled behind gold-leaf text on `--hue-deep` so it holds contrast in dark mode.",
+      "**Do** present numbers in hairline-ruled tables with tabular figures, row header leading and value trailing at 600.",
+      "**Do** stamp in place: a change animates only the slot that changed, and rows never move or reflow.",
+      "**Do** keep every touch target at least 44px and honour reduced motion."
+    ],
+    "donts": [
+      "**Don't** add grain, texture, noise or gradients to the leather or gold; both are flat fills.",
+      "**Don't** mark a row's prayer with a coloured border along the row edge; hue lives in spines, the selected segment and the table key.",
+      "**Don't** use the habit-tracker idiom of green checkmarks, flames or heat grids for completion; completion is the gold spine. (The native checkbox in the Torah check is an input, not a completion badge.)",
+      "**Don't** give a prayer a colour other than its leather, or let one leather stand in for another.",
+      "**Don't** stack statistics into cards or charts; use the ruled tables and shelves.",
+      "**Don't** introduce a display face or a custom type scale; SF at iOS text-style sizes only."
+    ]
+  }
+}
