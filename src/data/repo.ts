@@ -1,4 +1,4 @@
-import { type Attendance, type DayRecord, isEmptyDay, type Prayer } from '../domain/types'
+import { type Attendance, type DayRecord, isEmptyDay, type Prayer, type WornItem } from '../domain/types'
 import { db } from './db'
 
 async function updateDay(date: string, change: (day: DayRecord) => DayRecord) {
@@ -29,6 +29,10 @@ export async function setTorahNote(date: string, note: string) {
   const torahNote = note.trim()
 
   await updateDay(date, ({ torahNote: _previous, ...day }) => (torahNote ? { ...day, torahNote } : day))
+}
+
+export async function setWorn(date: string, item: WornItem, worn: boolean) {
+  await updateDay(date, ({ [item]: _previous, ...day }) => (worn ? { ...day, [item]: true } : day))
 }
 
 export function allDays(): Promise<DayRecord[]> {

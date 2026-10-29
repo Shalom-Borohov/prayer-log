@@ -11,6 +11,7 @@ import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
 import '@ionic/react/css/palettes/dark.system.css'
 import './theme.css'
+import './leather-header.css'
 
 import { App } from './App'
 

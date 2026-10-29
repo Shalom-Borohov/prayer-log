@@ -21,6 +21,12 @@ describe('shelfSlots', () => {
     ])
   })
 
+  it('shelves a ק״ש בלבד day as a short spine', () => {
+    const shemaDays = [day('2026-10-26', { prayers: { maariv: 'shema' } }), day('2026-10-27', { prayers: { maariv: 'alone' } })]
+
+    expect(shelfSlots(shemaDays, 'maariv', '2026-10-27', 2)).toEqual(['short', 'plain'])
+  })
+
   it('stamps Torah days gold', () => {
     expect(shelfSlots(records, 'torah', '2026-10-25', 3)).toEqual(['empty', 'gold', 'empty'])
   })

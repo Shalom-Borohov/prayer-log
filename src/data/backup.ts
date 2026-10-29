@@ -11,6 +11,8 @@ const dayRecordSchema = object({
   prayers: record(picklist(PRAYERS), picklist(ATTENDANCES)),
   torah: boolean(),
   torahNote: optional(string()),
+  tefillin: optional(boolean()),
+  tallit: optional(boolean()),
 })
 
 const backupSchema = object({

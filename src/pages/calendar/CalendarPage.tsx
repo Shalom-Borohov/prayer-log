@@ -64,10 +64,10 @@ export function CalendarPage() {
           <IonToolbar>
             <IonTitle size="large">{COMMON_COPY.calendar}</IonTitle>
           </IonToolbar>
+          <div className="day-heading">
+            <p>{monthTitle(month)}</p>
+          </div>
         </IonHeader>
-        <div className="day-heading">
-          <p>{monthTitle(month)}</p>
-        </div>
         {records && (
           <MonthGrid
             month={month}

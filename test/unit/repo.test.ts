@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { allDays, setPrayer, setTorah, setTorahNote } from '../../src/data/repo'
+import { allDays, setPrayer, setTorah, setTorahNote, setWorn } from '../../src/data/repo'
 import { resetDb } from '../helpers/db'
 
 describe('repo', () => {
@@ -86,6 +86,31 @@ describe('repo', () => {
     await setTorahNote('2026-10-28', '')
 
     expect(await allDays()).toEqual([])
+  })
+
+  it('marking תפילין or טלית alone creates the day', async () => {
+    await setWorn('2026-10-28', 'tefillin', true)
+    await setWorn('2026-10-28', 'tallit', true)
+
+    expect(await allDays()).toStrictEqual([{ date: '2026-10-28', prayers: {}, torah: false, tefillin: true, tallit: true }])
+  })
+
+  it('unmarking תפילין removes the field and, with nothing else, the day', async () => {
+    await setWorn('2026-10-28', 'tefillin', true)
+    await setWorn('2026-10-28', 'tallit', true)
+    await setWorn('2026-10-28', 'tefillin', false)
+
+    expect(await allDays()).toStrictEqual([{ date: '2026-10-28', prayers: {}, torah: false, tallit: true }])
+
+    await setWorn('2026-10-28', 'tallit', false)
+
+    expect(await allDays()).toEqual([])
+  })
+
+  it('stores ק״ש בלבד like any other mark', async () => {
+    await setPrayer('2026-10-28', 'maariv', 'shema')
+
+    expect(await allDays()).toEqual([{ date: '2026-10-28', prayers: { maariv: 'shema' }, torah: false }])
   })
 
   it('lists days oldest first', async () => {

@@ -1,6 +1,6 @@
 import { DAYS_PER_WEEK, addDays, daysInRange, monthEnd, monthStart, weekStart } from './logicalDay'
-import { prayersForDay } from './prayersForDay'
-import type { Attendance, DayRecord, PeriodTotals, PrayerTally } from './types'
+import { prayersForDay, wornItemsForDay } from './prayersForDay'
+import type { Attendance, DayRecord, DayTally, PeriodTotals, PrayerTally } from './types'
 
 export interface DateRange {
   from: string
@@ -17,13 +17,17 @@ export function monthRange(today: string): DateRange {
   return { from: monthStart(today), to: monthEnd(today) }
 }
 
-const emptyTally = (): PrayerTally => ({ minyan: 0, alone: 0, total: 0 })
+const emptyTally = (): PrayerTally => ({ minyan: 0, alone: 0, shema: 0, total: 0 })
+
+const emptyDayTally = (): DayTally => ({ days: 0, total: 0 })
 
 function emptyTotals(): PeriodTotals {
   return {
     prayers: emptyTally(),
     perPrayer: { shacharit: emptyTally(), musaf: emptyTally(), mincha: emptyTally(), maariv: emptyTally() },
-    torah: { days: 0, total: 0 },
+    torah: emptyDayTally(),
+    tefillin: emptyDayTally(),
+    tallit: emptyDayTally(),
   }
 }
 
@@ -31,6 +35,13 @@ function count(tally: PrayerTally, mark: Attendance | undefined) {
   tally.total += 1
   if (mark) {
     tally[mark] += 1
+  }
+}
+
+function countDay(tally: DayTally, done: boolean | undefined) {
+  tally.total += 1
+  if (done) {
+    tally.days += 1
   }
 }
 
@@ -48,9 +59,9 @@ export function periodTotals(records: DayRecord[], from: string, to: string, tod
   const byDate = new Map(records.map((day) => [day.date, day]))
   for (const date of daysInRange(start > from ? start : from, to < today ? to : today)) {
     const record = byDate.get(date)
-    totals.torah.total += 1
-    if (record?.torah) {
-      totals.torah.days += 1
+    countDay(totals.torah, record?.torah)
+    for (const item of wornItemsForDay(date)) {
+      countDay(totals[item], record?.[item])
     }
     for (const prayer of prayersForDay(date)) {
       count(totals.prayers, record?.prayers[prayer])

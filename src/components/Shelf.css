@@ -7,11 +7,16 @@
 }
 
 .spine {
+  --spine-height: 22px;
   display: block;
   width: 6px;
-  height: 22px;
+  height: var(--spine-height);
   border-radius: 1.5px;
   background: var(--hue);
+}
+
+.spine-short {
+  height: calc(var(--spine-height) / 2);
 }
 
 .spine-gold {

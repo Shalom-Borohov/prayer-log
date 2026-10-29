@@ -23,6 +23,32 @@ describe('calendar', () => {
     expect(await cell('29.10')).toBeDisabled()
   })
 
+  it('names ק״ש בלבד, תפילין and טלית in a day’s label', async () => {
+    await db.days.put(
+      day('2026-10-20', {
+        prayers: { shacharit: 'shema', mincha: 'minyan' },
+        tefillin: true,
+        tallit: true,
+        torah: true,
+      }),
+    )
+    renderAt('/tabs/calendar')
+
+    expect(await cell('20.10')).toHaveAccessibleName(
+      'יום שלישי 20.10, ט׳ בחשון: שחרית ק״ש בלבד, מנחה במניין, תפילין, טלית, למדתי תורה',
+    )
+  })
+
+  it('draws a ק״ש בלבד mark as a short spine', async () => {
+    await db.days.put(day('2026-10-20', { prayers: { shacharit: 'shema', maariv: 'minyan' } }))
+    renderAt('/tabs/calendar')
+
+    const shortSpines = (await cell('20.10')).querySelectorAll('.spine-short')
+
+    expect(shortSpines).toHaveLength(1)
+    expect(shortSpines[0]).toHaveClass('hue-shacharit')
+  })
+
   it('leaves days before tracking started without slots', async () => {
     await db.days.put(day('2026-10-15', { prayers: { shacharit: 'minyan' } }))
     renderAt('/tabs/calendar')

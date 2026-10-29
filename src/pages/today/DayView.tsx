@@ -19,12 +19,14 @@ import { addDays } from '../../domain/logicalDay'
 import { prayersForDay } from '../../domain/prayersForDay'
 import { shelfSlots } from '../../domain/shelf'
 import { streaks } from '../../domain/streaks'
+import { WORN_AT_PRAYER } from '../../domain/types'
 import { CALENDAR_PATH, type DayTab, dayPath } from '../../navigation/paths'
 import { BackfillBanner } from './BackfillBanner'
 import { TODAY_COPY } from './copy'
 import { PrayerRow } from './PrayerRow'
 import { TorahRow } from './TorahRow'
 import { WeekSummary } from './WeekSummary'
+import { WornChecks } from './WornChecks'
 import './day.css'
 
 const SHELF_DAYS = 7
@@ -64,11 +66,11 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
           <IonToolbar>
             <IonTitle size="large">{title}</IonTitle>
           </IonToolbar>
+          <div className="day-heading">
+            <p>{[weekdayName(date), hebrewDateLabel(date), gregorianLabel(date)].join(LIST_SEPARATOR)}</p>
+            {holidays.length > 0 && <p className="holidays">{holidays.join(LIST_SEPARATOR)}</p>}
+          </div>
         </IonHeader>
-        <div className="day-heading">
-          <p>{[weekdayName(date), hebrewDateLabel(date), gregorianLabel(date)].join(LIST_SEPARATOR)}</p>
-          {holidays.length > 0 && <p className="holidays">{holidays.join(LIST_SEPARATOR)}</p>}
-        </div>
         {records && dayStreaks && (
           <>
             {date === today && <BackfillBanner records={records} today={today} onOpen={openDay} />}
@@ -81,7 +83,9 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
                   attendance={record?.prayers[prayer]}
                   streak={prayer === 'musaf' ? null : dayStreaks[prayer].current}
                   slots={prayer === 'musaf' ? null : shelfSlots(records, prayer, date, SHELF_DAYS)}
-                />
+                >
+                  {prayer === WORN_AT_PRAYER && <WornChecks date={date} record={record} />}
+                </PrayerRow>
               ))}
             </div>
             <div className="inset-group">

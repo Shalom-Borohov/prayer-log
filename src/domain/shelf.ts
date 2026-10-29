@@ -2,9 +2,11 @@ import { COMMON_COPY } from '../copy/common'
 import { FORMAT_COPY } from '../copy/format'
 import { addDays, daysInRange } from './logicalDay'
 import { trackingStart } from './totals'
-import type { DayRecord, Prayer } from './types'
+import type { Attendance, DayRecord, Prayer } from './types'
 
-export type SlotState = 'gold' | 'plain' | 'empty' | 'none'
+export type SlotState = 'gold' | 'plain' | 'short' | 'empty' | 'none'
+
+const MARK_SLOTS = { minyan: 'gold', alone: 'plain', shema: 'short' } as const satisfies Record<Attendance, SlotState>
 
 export function slotFor(record: DayRecord | undefined, key: Prayer | 'torah'): SlotState {
   if (!record) {
@@ -17,11 +19,7 @@ export function slotFor(record: DayRecord | undefined, key: Prayer | 'torah'): S
 
   const mark = record.prayers[key]
 
-  if (mark === 'minyan') {
-    return 'gold'
-  }
-
-  return mark === 'alone' ? 'plain' : 'empty'
+  return mark ? MARK_SLOTS[mark] : 'empty'
 }
 
 export function shelfLabel(slots: SlotState[], key: Prayer | 'torah'): string {

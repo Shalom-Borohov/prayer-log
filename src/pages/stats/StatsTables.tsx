@@ -2,11 +2,12 @@ import { useId } from 'react'
 import { Shelf } from '../../components/Shelf'
 import { COMMON_COPY } from '../../copy/common'
 import { daysInRange } from '../../domain/logicalDay'
+import { isShemaPrayer } from '../../domain/prayersForDay'
 import { shelfLabel, shelfSlots } from '../../domain/shelf'
 import { streaks } from '../../domain/streaks'
 import type { DateRange } from '../../domain/totals'
 import { periodTotals } from '../../domain/totals'
-import { DAILY_PRAYERS, type DayRecord, PRAYERS, type Prayer, type StreakKey } from '../../domain/types'
+import { DAILY_PRAYERS, type DayRecord, PRAYERS, type Prayer, type StreakKey, WORN_ITEMS } from '../../domain/types'
 import { STATS_COPY } from './copy'
 
 const STREAK_KEYS: StreakKey[] = [...DAILY_PRAYERS, 'torah']
@@ -29,7 +30,8 @@ interface PeriodProps {
 export function PeriodTable({ records, range, today }: PeriodProps) {
   const headingId = useId()
   const torahHeadingId = `${headingId}-torah`
-  const { perPrayer, torah } = periodTotals(records, range.from, range.to, today)
+  const wornHeadingId = `${headingId}-worn`
+  const totals = periodTotals(records, range.from, range.to, today)
 
   return (
     <>
@@ -42,16 +44,18 @@ export function PeriodTable({ records, range, today }: PeriodProps) {
             <td />
             <th scope="col">{COMMON_COPY.attendance.minyan}</th>
             <th scope="col">{COMMON_COPY.attendance.alone}</th>
+            <th scope="col">{STATS_COPY.shemaColumn}</th>
             <th scope="col">{STATS_COPY.totalColumn}</th>
           </tr>
         </thead>
         <tbody>
-          {PRAYERS.filter((prayer) => perPrayer[prayer].total > 0).map((prayer) => (
+          {PRAYERS.filter((prayer) => totals.perPrayer[prayer].total > 0).map((prayer) => (
             <tr key={prayer}>
               <RowHeader hue={prayer} />
-              <td>{perPrayer[prayer].minyan}</td>
-              <td>{perPrayer[prayer].alone}</td>
-              <td>{perPrayer[prayer].total}</td>
+              <td>{totals.perPrayer[prayer].minyan}</td>
+              <td>{totals.perPrayer[prayer].alone}</td>
+              <td>{isShemaPrayer(prayer) ? totals.perPrayer[prayer].shema : STATS_COPY.notApplicable}</td>
+              <td>{totals.perPrayer[prayer].total}</td>
             </tr>
           ))}
         </tbody>
@@ -63,8 +67,21 @@ export function PeriodTable({ records, range, today }: PeriodProps) {
         <tbody>
           <tr>
             <th scope="row">{STATS_COPY.learningDays}</th>
-            <td>{COMMON_COPY.outOf(torah.days, torah.total)}</td>
+            <td>{COMMON_COPY.daysOutOf(totals.torah)}</td>
           </tr>
+        </tbody>
+      </table>
+      <h3 className="group-label" id={wornHeadingId}>
+        {STATS_COPY.wornItems}
+      </h3>
+      <table className="ruled-table" aria-labelledby={wornHeadingId}>
+        <tbody>
+          {WORN_ITEMS.map((item) => (
+            <tr key={item}>
+              <th scope="row">{COMMON_COPY.worn[item]}</th>
+              <td>{COMMON_COPY.daysOutOf(totals[item])}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>

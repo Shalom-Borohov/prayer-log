@@ -13,7 +13,17 @@ export function WeekSummary({ records, date, today }: { records: DayRecord[]; da
       ? COMMON_COPY.thisWeek
       : TODAY_COPY.weekRange(gregorianLabel(week.from), gregorianLabel(week.to))
 
-  const { prayers, torah } = periodTotals(records, week.from, week.to, today)
+  const { prayers, tefillin, tallit, torah } = periodTotals(records, week.from, week.to, today)
+
+  const summaryRows = [
+    { label: COMMON_COPY.attendance.minyan, figure: COMMON_COPY.outOf(prayers.minyan, prayers.total) },
+    { label: COMMON_COPY.attendance.alone, figure: prayers.alone },
+    { label: COMMON_COPY.attendance.shema, figure: prayers.shema },
+    { label: COMMON_COPY.worn.tefillin, figure: COMMON_COPY.daysOutOf(tefillin) },
+    { label: COMMON_COPY.worn.tallit, figure: COMMON_COPY.daysOutOf(tallit) },
+    { label: COMMON_COPY.learnedTorah, figure: COMMON_COPY.daysOutOf(torah) },
+  ]
+
   const titleId = useId()
 
   return (
@@ -23,18 +33,12 @@ export function WeekSummary({ records, date, today }: { records: DayRecord[]; da
       </h3>
       <table className="ruled-table" aria-labelledby={titleId}>
         <tbody>
-          <tr>
-            <th scope="row">{COMMON_COPY.attendance.minyan}</th>
-            <td>{COMMON_COPY.outOf(prayers.minyan, prayers.total)}</td>
-          </tr>
-          <tr>
-            <th scope="row">{COMMON_COPY.attendance.alone}</th>
-            <td>{prayers.alone}</td>
-          </tr>
-          <tr>
-            <th scope="row">{COMMON_COPY.learnedTorah}</th>
-            <td>{COMMON_COPY.outOf(torah.days, torah.total)}</td>
-          </tr>
+          {summaryRows.map(({ label, figure }) => (
+            <tr key={label}>
+              <th scope="row">{label}</th>
+              <td>{figure}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>

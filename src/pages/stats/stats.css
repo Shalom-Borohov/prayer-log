@@ -7,7 +7,16 @@
   font-size: 0.8125rem;
   font-weight: 400;
   color: var(--app-label-secondary);
-  text-align: end;
+}
+
+.stats-table thead th,
+.stats-table td {
+  padding-inline: 8px;
+  text-align: center;
+}
+
+.stats-table :is(th, td):last-child {
+  padding-inline-end: 16px;
 }
 
 .stats-table .spine {
@@ -16,7 +25,7 @@
   vertical-align: middle;
   --gold-band: 3px;
   width: 5px;
-  height: 18px;
+  --spine-height: 18px;
   border-radius: 1px;
 }
 
