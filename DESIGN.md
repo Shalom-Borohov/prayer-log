@@ -72,7 +72,6 @@ rounded:
   cell: "8px"
   segment-track: "9px"
   group: "10px"
-  pill: "13px"
   circle: "50%"
 spacing:
   hairline-gap: "2px"
@@ -150,12 +149,12 @@ components:
     textColor: "{colors.label}"
     rounded: "{rounded.cell}"
     height: "62px"
-    padding: "5px 0 6px"
+    padding: "2px 0 6px"
   month-day-today:
     backgroundColor: "{colors.leather-band}"
     textColor: "{colors.gold-leaf}"
-    rounded: "{rounded.pill}"
-    width: "26px"
+    rounded: "{rounded.circle}"
+    size: "30px"
   backfill-row:
     backgroundColor: "{colors.cell}"
     textColor: "{colors.gold-primary}"
@@ -201,7 +200,7 @@ Each prayer owns one hue, applied through a hue class that sets both a display h
 Spines use the display hue, so they lift in dark mode to stay visible on black. Filled controls (the selected במניין segment, the checked Torah circle) use the deep hue in both modes so gold-leaf text keeps its contrast.
 
 ### Neutral
-- **Shell Leather** (leather-band, leather-band-dark): one solid block holding the toolbar, the condensed large-title header and the date (or month) line inside it. It stays leather during iOS page transitions and above the page when it is pulled down. Also the today pill in the month grid.
+- **Shell Leather** (leather-band, leather-band-dark): one solid block holding the toolbar, the condensed large-title header and the date (or month) line inside it. It stays leather during iOS page transitions and above the page when it is pulled down. Also the today circle in the month grid.
 - **Parchment Text** (leather-band-text): the date line (weekday · Hebrew date · Gregorian) on the band.
 - **Grouped Ground** (grouped-ground / grouped-ground-dark) and **Cell** (cell / cell-dark): the iOS system grouped background and its inset cells. Modals in dark mode step to #1c1c1e ground and #2c2c2e cells.
 - **Labels** (label, label-secondary, label-tertiary and dark pairs): primary text, secondary text for streak lines, group labels, footers and table column heads; tertiary for disabled future days and the unchecked Torah ring. Secondary is raised to 0.75 alpha in light mode for legibility.
@@ -260,7 +259,7 @@ Flat. Depth comes from the iOS grouped model (light cells on a grey or black gro
 
 ## Shapes
 
-Small, square-shouldered forms. Spines are narrow upright rectangles with barely softened corners (1.5px, or 1px at the small sizes). Containers follow iOS: 10px for inset groups, tables and the month grid, 9px/7px for the segmented track and thumb, 8px for month cells. Two round forms exist: the 26px Torah check circle and the 26px-wide, 13px-radius today pill. Hairlines are 0.5px. The only dashed line in the system is the empty spine slot.
+Small, square-shouldered forms. Spines are narrow upright rectangles with barely softened corners (1.5px, or 1px at the small sizes). Containers follow iOS: 10px for inset groups, tables and the month grid, 9px/7px for the segmented track and thumb, 8px for month cells. Two round forms exist: the 26px Torah check circle and the 30px today circle. Hairlines are 0.5px. The only dashed line in the system is the empty spine slot.
 
 ## Components
 
@@ -279,6 +278,15 @@ A native-styled segmented control, full row width: במניין | ביחידות
 - **Selected ביחידות or ק״ש בלבד:** the raised neutral (white / #636366) with label text, thumb shadow. Only במניין takes leather and gold.
 - **States:** tapping the selected segment clears it. Pressed scales to 0.97; colour transitions run 160ms ease-out; 2px gilded focus ring offset 2px. Reduced motion removes both.
 
+### Place (בית כנסת)
+While a prayer is במניין with a place, the place name follows the prayer name on the title line. It uses subhead size in secondary label colour, never gold, and truncates with an ellipsis. It is a 44px target with negative margins, so the row never grows. Tapping it opens a native action sheet:
+- places used before, with the current one selected;
+- מקום חדש… (opens an alert with a text field);
+- ללא מקום (destructive);
+- ביטול.
+
+The same sheet opens by itself whenever a prayer is marked במניין with no remembered place, until one is chosen.
+
 ### Round checks (Torah, תפילין, טלית)
 One shared form: a 26px circle inside a 44px target. Off: a 1.5px tertiary ring. On: the row's deep hue with a gold-leaf checkmark. The Torah check leads the Torah row, followed by title, streak line and mini shelf, with a borderless "מה למדתי…" note field beneath; תפילין and טלית sit side by side under the שחרית control, each circle followed by its label, the whole pair tappable. תפילין is absent on שבת, יום טוב and חול המועד.
 
@@ -289,7 +297,7 @@ Hairline-ruled data tables in place of cards: cell background, 10px corners, 16p
 iOS inset grouped lists: 16px margin, 10px corners, cell background, rows separated by 0.5px hairlines. Used for day rows, the Torah row, period shelves and Ionic inset lists (backfill banner, holiday list, settings).
 
 ### Month grid cells
-Buttons in a seven-column grid: Gregorian number (body 500), Hebrew day letter (caption, secondary), then the day's spines, one per applicable prayer plus Torah. Today's number sits in a leather pill with gold-leaf bold text. Holidays turn the Hebrew letter gilded and bold. Future days are disabled and tertiary with spines hidden. Pressed shows the fill colour; focus is an inset 2px gilded ring.
+Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px box), Hebrew day letter (caption, secondary), then the day's spines, one per applicable prayer plus Torah. Today's number sits in a 30px leather circle with gold-leaf bold text. Holidays turn the Hebrew letter gilded and bold. Future days are disabled and tertiary with spines hidden. Pressed shows the fill colour; focus is an inset 2px gilded ring.
 
 ### Backfill banner
 An inset list at the top of היום (today only) with one disclosure row per day that needs filling, such as an unmarked day or a blank Friday-night ערבית. Label text is gilded; rows navigate to that day. Absent when nothing needs filling.

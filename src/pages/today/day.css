@@ -19,11 +19,40 @@
   min-width: 0;
 }
 
+.day-row-name {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+}
+
 .day-row-title h2 {
+  flex: none;
   margin: 0;
   font-size: 1.0625rem;
   font-weight: 600;
   color: var(--app-label);
+}
+
+.place-button {
+  min-width: 0;
+  margin-block: -12px;
+  margin-inline-end: -8px;
+  padding: 12px 8px;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  color: var(--app-label-secondary);
+  font: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  touch-action: manipulation;
+}
+
+.place-button:focus-visible {
+  outline: 2px solid var(--ion-color-primary);
+  outline-offset: -2px;
 }
 
 .day-row-title p {

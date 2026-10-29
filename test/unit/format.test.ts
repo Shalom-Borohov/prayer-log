@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { gregorianLabel, monthTitle, shortWeekday, streakLabel, weekdayName } from '../../src/domain/format'
+import { fullDateLabel, gregorianLabel, monthTitle, shortWeekday, streakLabel, weekdayName } from '../../src/domain/format'
 
 describe('weekdayName', () => {
   it('names each day of a Sunday–Saturday week', () => {
@@ -29,6 +29,13 @@ describe('gregorianLabel', () => {
   it('is day.month without padding', () => {
     expect(gregorianLabel('2026-10-28')).toBe('28.10')
     expect(gregorianLabel('2027-03-05')).toBe('5.3')
+  })
+})
+
+describe('fullDateLabel', () => {
+  it('is day.month.year without padding', () => {
+    expect(fullDateLabel('2026-10-29')).toBe('29.10.2026')
+    expect(fullDateLabel('2027-03-05')).toBe('5.3.2027')
   })
 })
 

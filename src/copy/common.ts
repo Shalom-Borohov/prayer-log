@@ -14,6 +14,7 @@ export const COMMON_COPY = {
   calendar: 'לוח',
   stats: 'סטטיסטיקה',
   settings: 'הגדרות',
+  cancel: 'ביטול',
   thisWeek: 'השבוע',
   torah: TORAH,
   learnedTorah: 'למדתי תורה',

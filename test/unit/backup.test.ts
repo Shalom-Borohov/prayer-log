@@ -65,6 +65,45 @@ describe('backup', () => {
     expect(await allDays()).toStrictEqual(daysBeforeTefillin)
   })
 
+  it('round-trips the places prayers were prayed at', async () => {
+    await setPrayer('2026-10-26', 'shacharit', 'minyan', 'בית יוסף')
+    await setPrayer('2026-10-26', 'maariv', 'minyan', 'הגר"א')
+    await setPrayer('2026-10-26', 'mincha', 'alone')
+
+    const backup = parseBackup(JSON.stringify(await exportBackup(exportedAt)))
+
+    await resetDb()
+    await restoreBackup(backup)
+
+    expect(await allDays()).toStrictEqual([
+      {
+        date: '2026-10-26',
+        prayers: { shacharit: 'minyan', maariv: 'minyan', mincha: 'alone' },
+        places: { shacharit: 'בית יוסף', maariv: 'הגר"א' },
+        torah: false,
+      },
+    ])
+  })
+
+  it('drops restored places that are blank or not on a prayer marked במניין', async () => {
+    const withStrayPlaces = {
+      date: '2026-10-26',
+      prayers: { shacharit: 'minyan', mincha: 'alone', maariv: 'minyan' },
+      places: { shacharit: 'בית יוסף', mincha: 'הגר"א', maariv: '' },
+      torah: false,
+    }
+
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: [withStrayPlaces] })))
+
+    expect((await allDays())[0].places).toStrictEqual({ shacharit: 'בית יוסף' })
+  })
+
+  it('restores a backup made before places existed', async () => {
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: twoDays })))
+
+    expect(await allDays()).toStrictEqual(twoDays)
+  })
+
   it('restores a day with only תפילין or טלית marked', async () => {
     const wornOnly = [{ date: '2026-10-20', prayers: {}, torah: false, tefillin: true }]
 
@@ -104,6 +143,9 @@ describe('backup', () => {
       withDay({ torahNote: null }),
       withDay({ tefillin: 'yes' }),
       withDay({ tallit: null }),
+      withDay({ places: null }),
+      withDay({ places: { neilah: 'הגר"א' } }),
+      withDay({ places: { shacharit: 5 } }),
     ]
 
     const invalidTexts = ['', 'not json', '{"version":1', ...invalid.map((json) => JSON.stringify(json))]

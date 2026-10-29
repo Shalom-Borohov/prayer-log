@@ -22,7 +22,7 @@
   align-content: start;
   gap: 1px;
   min-height: 62px;
-  padding: 5px 0 6px;
+  padding: 2px 0 6px;
   border: 0;
   border-radius: 8px;
   background: transparent;
@@ -49,14 +49,17 @@
 }
 
 .month-day-number {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
   font-size: 1.0625rem;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1;
 }
 
 .month-day.is-today .month-day-number {
-  min-width: 26px;
-  border-radius: 13px;
+  border-radius: 50%;
   background: var(--leather-band);
   color: var(--gold-leaf);
   font-weight: 700;

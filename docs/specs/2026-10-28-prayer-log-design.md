@@ -24,11 +24,23 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
 18. **תפילין and טלית (added 2026-10-29):** one check each per day, inside the שחרית row. תפילין is hidden on שבת, יום טוב (ראש השנה and יום כיפור included) and חול המועד (הושענא רבה included), following the Israeli custom; it shows on ט׳ באב, when they are worn at מנחה. טלית shows every day.
 19. **Counts (added 2026-10-29, extends 3):** השבוע on היום lists ק״ש בלבד, תפילין and טלית alongside the existing rows; סטטיסטיקה adds a ק״ש column to the per-prayer table and a תפילין וטלית group. The תפילין denominator counts only days they are worn. No streaks or shelves for תפילין and טלית.
 20. **One leather block (added 2026-10-29, clarifies 14):** the header band is one solid block from the status bar through the date line. It never shows the page ground during iOS page transitions, never fades while scrolling, and stays leather when the page is pulled down.
+21. **בית כנסת (added 2026-10-29, extends 2):**
+    - A prayer marked במניין can carry the place it was said in. Marking במניין stays one tap.
+    - The prayer's default place is filled in automatically: the place from the latest day on which that prayer has one. Each prayer keeps its own default, so מנחה's place doesn't carry over to ערבית.
+    - If the prayer has no default yet, an action sheet opens to pick one.
+    - The place shows quietly beside the prayer name. Tapping it opens the action sheet:
+      - places used before, most recent first;
+      - מקום חדש…;
+      - ללא מקום;
+      - ביטול.
+    - Switching the prayer to ביחידות or ק״ש בלבד, or clearing it, removes the place.
+    - The list of places is derived from the logged days: no separate list, no renaming, no per-place stats.
+22. **Version line (added 2026-10-29):** the bottom of הגדרות shows "גרסה <short commit> · עודכנה <build date>". Both are stamped in at build time.
 
 ## Assumptions (accepted by the user)
 
 1. Stack: same as אימונים — React 19 + TypeScript + Vite, Ionic React in iOS mode, Dexie with persistent storage, `vite-plugin-pwa`, Vitest + Testing Library + fake-indexeddb, oxlint. Hebrew calendar via `@hebcal/core` (offline, no location).
-2. Data: one `DayRecord` per logical date `{ date: 'YYYY-MM-DD', prayers: Partial<Record<Prayer, 'minyan' | 'alone' | 'shema'>>, torah: boolean, torahNote?: string, tefillin?: boolean, tallit?: boolean }`; `tefillin` and `tallit` are stored only when true. The backup file stays version 1, so backups made before 2026-10-29 still import. No account, no server. Export/import a JSON backup file from a settings page (gear in the סטטיסטיקה header).
+2. Data: one `DayRecord` per logical date `{ date: 'YYYY-MM-DD', prayers: Partial<Record<Prayer, 'minyan' | 'alone' | 'shema'>>, torah: boolean, torahNote?: string, tefillin?: boolean, tallit?: boolean, places?: Partial<Record<Prayer, string>> }`; `tefillin` and `tallit` are stored only when true, and `places` holds a name only for a prayer marked במניין. The backup file stays version 1, so backups made before 2026-10-29 still import. No account, no server. Export/import a JSON backup file from a settings page (gear in the סטטיסטיקה header).
 3. Tracking start: stats, streaks and the banner start from the first day with any record. Earlier days are not counted as missed.
 4. Totals: the denominator is the applicable prayers on days so far in the period, today included. Weeks start on Sunday.
 5. Day header: weekday · Hebrew date · Gregorian date, plus the holiday or ראש חודש name when there is one.

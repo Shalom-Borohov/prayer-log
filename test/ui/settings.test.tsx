@@ -54,6 +54,12 @@ describe('settings', () => {
     })
   })
 
+  it('shows the running version and when it was last updated', async () => {
+    renderAt('/tabs/stats/settings')
+
+    expect(await screen.findByText(/גרסה [0-9a-f]{7,} · עודכנה \d+\.\d+\.\d{4}/)).toBeVisible()
+  })
+
   it('rejects an invalid backup file and keeps the data', async () => {
     await db.days.put(shabbat)
     renderAt('/tabs/stats/settings')
