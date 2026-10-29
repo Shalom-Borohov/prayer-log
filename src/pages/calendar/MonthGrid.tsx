@@ -1,10 +1,14 @@
-import { ATTENDANCE_LABELS, PRAYER_LABELS, gregorianLabel, shortWeekday, weekdayName } from '../../domain/format'
+import { COMMON_COPY } from '../../copy/common'
+import { dayLabel, shortWeekday } from '../../domain/format'
 import { hebrewDateLabel, hebrewDayNumber } from '../../domain/hebrewCalendar'
-import { addDays, daysInRange, monthEnd, parseIsoDate, weekStart } from '../../domain/logicalDay'
+import { daysInRange, monthEnd, parseIsoDate } from '../../domain/logicalDay'
 import { prayersForDay } from '../../domain/prayersForDay'
 import { slotFor } from '../../domain/shelf'
-import { trackingStart } from '../../domain/totals'
+import { trackingStart, weekRange } from '../../domain/totals'
 import type { DayRecord, Prayer } from '../../domain/types'
+import { CALENDAR_COPY } from './copy'
+
+const MARKS_SEPARATOR = ', '
 
 interface MonthGridProps {
   month: string
@@ -18,26 +22,27 @@ function marksLabel(record: DayRecord | undefined, prayers: Prayer[]): string {
   const marks = prayers.flatMap((prayer) => {
     const mark = record?.prayers[prayer]
 
-    return mark ? [`${PRAYER_LABELS[prayer]} ${ATTENDANCE_LABELS[mark]}`] : []
+    return mark ? [CALENDAR_COPY.prayerMark(COMMON_COPY.prayers[prayer], COMMON_COPY.attendance[mark])] : []
   })
 
   if (record?.torah) {
-    marks.push('למדתי תורה')
+    marks.push(COMMON_COPY.learnedTorah)
   }
 
-  return marks.length > 0 ? marks.join(', ') : 'לא סומן'
+  return marks.length > 0 ? marks.join(MARKS_SEPARATOR) : CALENDAR_COPY.unmarked
 }
 
 export function MonthGrid({ month, today, records, holidayDates, onOpen }: MonthGridProps) {
-  const byDate = new Map(records.map((day) => [day.date, day]))
-  const start = trackingStart(records)
+  const recordsByDate = new Map(records.map((record) => [record.date, record]))
+  const trackedFrom = trackingStart(records)
   const leadingBlanks = Array.from({ length: parseIsoDate(month).getDay() }, (_, index) => index)
-  const dates = daysInRange(month, monthEnd(month))
-  const headers = daysInRange(weekStart(month), addDays(weekStart(month), 6))
+  const monthDates = daysInRange(month, monthEnd(month))
+  const firstWeek = weekRange(month)
+  const weekdayHeaders = daysInRange(firstWeek.from, firstWeek.to)
 
   return (
     <div className="month-grid">
-      {headers.map((date) => (
+      {weekdayHeaders.map((date) => (
         <span key={date} className="month-weekday" aria-hidden="true">
           {shortWeekday(date)}
         </span>
@@ -45,10 +50,10 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
       {leadingBlanks.map((index) => (
         <span key={`blank-${index}`} aria-hidden="true" />
       ))}
-      {dates.map((date) => {
-        const record = byDate.get(date)
+      {monthDates.map((date) => {
+        const record = recordsByDate.get(date)
         const prayers = prayersForDay(date)
-        const tracked = start !== null && date >= start
+        const tracked = trackedFrom !== null && date >= trackedFrom
 
         return (
           <button
@@ -56,14 +61,14 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
             type="button"
             className={`month-day${date === today ? ' is-today' : ''}${holidayDates.has(date) ? ' is-holiday' : ''}`}
             disabled={date > today}
-            aria-label={`${weekdayName(date)} ${gregorianLabel(date)}, ${hebrewDateLabel(date)}: ${marksLabel(record, prayers)}`}
+            aria-label={CALENDAR_COPY.dayCell(dayLabel(date), hebrewDateLabel(date), marksLabel(record, prayers))}
             onClick={() => onOpen(date)}
           >
             <span className="month-day-number">{parseIsoDate(date).getDate()}</span>
             <span className="month-day-hebrew">{hebrewDayNumber(date)}</span>
             <span className="month-day-spines" aria-hidden="true">
-              {[...prayers, 'torah' as const].map((key) => (
-                <i key={key} className={`spine hue-${key} spine-${tracked ? slotFor(record, key) : 'none'}`} />
+              {[...prayers, 'torah' as const].map((track) => (
+                <i key={track} className={`spine hue-${track} spine-${tracked ? slotFor(record, track) : 'none'}`} />
               ))}
             </span>
           </button>

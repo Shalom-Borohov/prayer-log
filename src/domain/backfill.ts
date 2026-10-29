@@ -3,6 +3,8 @@ import { addDays, daysInRange } from './logicalDay'
 import { trackingStart } from './totals'
 import { type DayRecord, isEmptyDay } from './types'
 
+const BACKFILL_DAYS = 7
+
 export interface BackfillReminder {
   date: string
   kind: 'empty' | 'eveMaariv'
@@ -14,9 +16,9 @@ function recentDays(records: DayRecord[], today: string): string[] {
     return []
   }
 
-  const weekAgo = addDays(today, -7)
+  const windowStart = addDays(today, -BACKFILL_DAYS)
 
-  return daysInRange(start > weekAgo ? start : weekAgo, addDays(today, -1))
+  return daysInRange(start > windowStart ? start : windowStart, addDays(today, -1))
 }
 
 const markedDays = (records: DayRecord[]) => new Map(records.filter((day) => !isEmptyDay(day)).map((day) => [day.date, day]))

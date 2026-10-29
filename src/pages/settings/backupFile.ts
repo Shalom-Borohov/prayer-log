@@ -1,9 +1,17 @@
 import { type Backup, parseBackup } from '../../data/backup'
 import { toIsoDate } from '../../domain/logicalDay'
 
+const BACKUP_FILE_PREFIX = 'prayers-backup-'
+
+const BACKUP_EXTENSION = '.json'
+
+const BACKUP_MIME_TYPE = 'application/json'
+
+export const BACKUP_FILE_ACCEPT = [BACKUP_MIME_TYPE, BACKUP_EXTENSION].join(',')
+
 export async function shareBackup(backup: Backup): Promise<void> {
-  const name = `prayers-backup-${toIsoDate(new Date(backup.exportedAt))}.json`
-  const file = new File([JSON.stringify(backup)], name, { type: 'application/json' })
+  const fileName = `${BACKUP_FILE_PREFIX}${toIsoDate(new Date(backup.exportedAt))}${BACKUP_EXTENSION}`
+  const file = new File([JSON.stringify(backup)], fileName, { type: BACKUP_MIME_TYPE })
 
   if (navigator.canShare?.({ files: [file] })) {
     await navigator.share({ files: [file] })

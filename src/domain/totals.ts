@@ -1,4 +1,4 @@
-import { addDays, daysInRange, monthEnd, monthStart, weekStart } from './logicalDay'
+import { DAYS_PER_WEEK, addDays, daysInRange, monthEnd, monthStart, weekStart } from './logicalDay'
 import { prayersForDay } from './prayersForDay'
 import type { Attendance, DayRecord, PeriodTotals, PrayerTally } from './types'
 
@@ -10,7 +10,7 @@ export interface DateRange {
 export function weekRange(today: string): DateRange {
   const from = weekStart(today)
 
-  return { from, to: addDays(from, 6) }
+  return { from, to: addDays(from, DAYS_PER_WEEK - 1) }
 }
 
 export function monthRange(today: string): DateRange {

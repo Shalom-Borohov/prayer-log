@@ -1,12 +1,13 @@
 import { useId } from 'react'
 import { Shelf } from '../../components/Shelf'
-import { TRACK_LABELS } from '../../domain/format'
+import { COMMON_COPY } from '../../copy/common'
 import { daysInRange } from '../../domain/logicalDay'
 import { shelfLabel, shelfSlots } from '../../domain/shelf'
 import { streaks } from '../../domain/streaks'
 import type { DateRange } from '../../domain/totals'
 import { periodTotals } from '../../domain/totals'
 import { DAILY_PRAYERS, type DayRecord, PRAYERS, type Prayer, type StreakKey } from '../../domain/types'
+import { STATS_COPY } from './copy'
 
 const STREAK_KEYS: StreakKey[] = [...DAILY_PRAYERS, 'torah']
 
@@ -14,7 +15,7 @@ function RowHeader({ hue }: { hue: Prayer | 'torah' }) {
   return (
     <th scope="row">
       <i className={`spine spine-gold hue-${hue}`} aria-hidden="true" />
-      {TRACK_LABELS[hue]}
+      {COMMON_COPY.tracks[hue]}
     </th>
   )
 }
@@ -26,21 +27,22 @@ interface PeriodProps {
 }
 
 export function PeriodTable({ records, range, today }: PeriodProps) {
-  const id = useId()
+  const headingId = useId()
+  const torahHeadingId = `${headingId}-torah`
   const { perPrayer, torah } = periodTotals(records, range.from, range.to, today)
 
   return (
     <>
-      <h3 className="group-label" id={id}>
-        לפי תפילה
+      <h3 className="group-label" id={headingId}>
+        {STATS_COPY.byPrayer}
       </h3>
-      <table className="ruled-table stats-table" aria-labelledby={id}>
+      <table className="ruled-table stats-table" aria-labelledby={headingId}>
         <thead>
           <tr>
             <td />
-            <th scope="col">במניין</th>
-            <th scope="col">ביחידות</th>
-            <th scope="col">מתוך</th>
+            <th scope="col">{COMMON_COPY.attendance.minyan}</th>
+            <th scope="col">{COMMON_COPY.attendance.alone}</th>
+            <th scope="col">{STATS_COPY.totalColumn}</th>
           </tr>
         </thead>
         <tbody>
@@ -54,14 +56,14 @@ export function PeriodTable({ records, range, today }: PeriodProps) {
           ))}
         </tbody>
       </table>
-      <h3 className="group-label" id={`${id}-torah`}>
-        תורה
+      <h3 className="group-label" id={torahHeadingId}>
+        {COMMON_COPY.torah}
       </h3>
-      <table className="ruled-table" aria-labelledby={`${id}-torah`}>
+      <table className="ruled-table" aria-labelledby={torahHeadingId}>
         <tbody>
           <tr>
-            <th scope="row">ימים עם לימוד</th>
-            <td>{`${torah.days} מתוך ${torah.total}`}</td>
+            <th scope="row">{STATS_COPY.learningDays}</th>
+            <td>{COMMON_COPY.outOf(torah.days, torah.total)}</td>
           </tr>
         </tbody>
       </table>
@@ -70,20 +72,20 @@ export function PeriodTable({ records, range, today }: PeriodProps) {
 }
 
 export function StreakTable({ records, today }: { records: DayRecord[]; today: string }) {
-  const id = useId()
+  const headingId = useId()
   const byKey = streaks(records, today)
 
   return (
     <>
-      <h3 className="group-label" id={id}>
-        רצפים
+      <h3 className="group-label" id={headingId}>
+        {STATS_COPY.streaks}
       </h3>
-      <table className="ruled-table stats-table" aria-labelledby={id}>
+      <table className="ruled-table stats-table" aria-labelledby={headingId}>
         <thead>
           <tr>
             <td />
-            <th scope="col">נוכחי</th>
-            <th scope="col">שיא</th>
+            <th scope="col">{STATS_COPY.currentStreak}</th>
+            <th scope="col">{STATS_COPY.bestStreak}</th>
           </tr>
         </thead>
         <tbody>
@@ -106,14 +108,14 @@ export function PeriodShelves({ records, range, today }: PeriodProps) {
 
   return (
     <>
-      <h3 className="group-label">מדף</h3>
+      <h3 className="group-label">{STATS_COPY.shelf}</h3>
       <div className="inset-group">
         {STREAK_KEYS.map((key) => {
           const slots = shelfSlots(records, key, end, count)
 
           return (
             <div key={key} className={`shelf-row hue-${key}`}>
-              <span>{TRACK_LABELS[key]}</span>
+              <span>{COMMON_COPY.tracks[key]}</span>
               <Shelf slots={slots} label={shelfLabel(slots, key)} />
             </div>
           )

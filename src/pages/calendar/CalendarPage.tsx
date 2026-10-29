@@ -15,11 +15,14 @@ import {
 } from '@ionic/react'
 import { chevronBack, chevronForward } from 'ionicons/icons'
 import { useState } from 'react'
+import { COMMON_COPY } from '../../copy/common'
 import { useAllDays } from '../../data/hooks'
-import { gregorianLabel, monthTitle } from '../../domain/format'
+import { LIST_SEPARATOR, gregorianLabel, monthTitle } from '../../domain/format'
 import { holidayNames } from '../../domain/hebrewCalendar'
 import { addDays, daysInRange, monthEnd, monthStart } from '../../domain/logicalDay'
 import { useToday } from '../../hooks/useToday'
+import { dayPath } from '../../navigation/paths'
+import { CALENDAR_COPY } from './copy'
 import { MonthGrid } from './MonthGrid'
 import './calendar.css'
 
@@ -32,7 +35,7 @@ export function CalendarPage() {
   const holidays = daysInRange(month, monthEnd(month)).flatMap((date) => {
     const names = holidayNames(date)
 
-    return names.length > 0 ? [{ date, names: names.join(' · ') }] : []
+    return names.length > 0 ? [{ date, names: names.join(LIST_SEPARATOR) }] : []
   })
 
   const holidayDates = new Set(holidays.map((holiday) => holiday.date))
@@ -42,24 +45,24 @@ export function CalendarPage() {
       <IonHeader className="leather-header">
         <IonToolbar>
           <IonButtons slot="end">
-            <IonButton aria-label="החודש הקודם" onClick={() => setMonth(monthStart(addDays(month, -1)))}>
+            <IonButton aria-label={CALENDAR_COPY.previousMonth} onClick={() => setMonth(monthStart(addDays(month, -1)))}>
               <IonIcon slot="icon-only" icon={chevronForward} />
             </IonButton>
             <IonButton
-              aria-label="החודש הבא"
+              aria-label={CALENDAR_COPY.nextMonth}
               disabled={month >= monthStart(today)}
               onClick={() => setMonth(addDays(monthEnd(month), 1))}
             >
               <IonIcon slot="icon-only" icon={chevronBack} />
             </IonButton>
           </IonButtons>
-          <IonTitle>לוח</IonTitle>
+          <IonTitle>{COMMON_COPY.calendar}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense" className="leather-header">
           <IonToolbar>
-            <IonTitle size="large">לוח</IonTitle>
+            <IonTitle size="large">{COMMON_COPY.calendar}</IonTitle>
           </IonToolbar>
         </IonHeader>
         <div className="day-heading">
@@ -71,7 +74,7 @@ export function CalendarPage() {
             today={today}
             records={records}
             holidayDates={holidayDates}
-            onOpen={(date) => router.push(`/tabs/calendar/${date}`)}
+            onOpen={(date) => router.push(dayPath('calendar', date, today))}
           />
         )}
         {holidays.length > 0 && (

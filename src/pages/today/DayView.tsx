@@ -11,15 +11,17 @@ import {
   useIonRouter,
 } from '@ionic/react'
 import { chevronBack, chevronForward } from 'ionicons/icons'
+import { COMMON_COPY } from '../../copy/common'
 import { useAllDays } from '../../data/hooks'
-import { gregorianLabel, weekdayName } from '../../domain/format'
+import { LIST_SEPARATOR, gregorianLabel, weekdayName } from '../../domain/format'
 import { hebrewDateLabel, holidayNames } from '../../domain/hebrewCalendar'
 import { addDays } from '../../domain/logicalDay'
 import { prayersForDay } from '../../domain/prayersForDay'
 import { shelfSlots } from '../../domain/shelf'
 import { streaks } from '../../domain/streaks'
+import { CALENDAR_PATH, type DayTab, dayPath } from '../../navigation/paths'
 import { BackfillBanner } from './BackfillBanner'
-import { type DayTab, dayPath } from './dayPath'
+import { TODAY_COPY } from './copy'
 import { PrayerRow } from './PrayerRow'
 import { TorahRow } from './TorahRow'
 import { WeekSummary } from './WeekSummary'
@@ -32,10 +34,10 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
   const record = records?.find((day) => day.date === date)
   const dayStreaks = records && streaks(records, date, today)
   const router = useIonRouter()
-  const title = date === today ? 'היום' : weekdayName(date)
+  const title = date === today ? COMMON_COPY.today : weekdayName(date)
   const holidays = holidayNames(date)
 
-  const go = (target: string) => router.push(dayPath(tab, target, today), 'none', 'replace')
+  const openDay = (target: string) => router.push(dayPath(tab, target, today), 'none', 'replace')
 
   return (
     <IonPage>
@@ -43,14 +45,14 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
         <IonToolbar>
           {tab === 'calendar' && (
             <IonButtons slot="start">
-              <IonBackButton defaultHref="/tabs/calendar" text="לוח" />
+              <IonBackButton defaultHref={CALENDAR_PATH} text={COMMON_COPY.calendar} />
             </IonButtons>
           )}
           <IonButtons slot="end">
-            <IonButton aria-label="היום הקודם" onClick={() => go(addDays(date, -1))}>
+            <IonButton aria-label={TODAY_COPY.previousDay} onClick={() => openDay(addDays(date, -1))}>
               <IonIcon slot="icon-only" icon={chevronForward} />
             </IonButton>
-            <IonButton aria-label="היום הבא" disabled={date >= today} onClick={() => go(addDays(date, 1))}>
+            <IonButton aria-label={TODAY_COPY.nextDay} disabled={date >= today} onClick={() => openDay(addDays(date, 1))}>
               <IonIcon slot="icon-only" icon={chevronBack} />
             </IonButton>
           </IonButtons>
@@ -64,12 +66,12 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
           </IonToolbar>
         </IonHeader>
         <div className="day-heading">
-          <p>{`${weekdayName(date)} · ${hebrewDateLabel(date)} · ${gregorianLabel(date)}`}</p>
-          {holidays.length > 0 && <p className="holidays">{holidays.join(' · ')}</p>}
+          <p>{[weekdayName(date), hebrewDateLabel(date), gregorianLabel(date)].join(LIST_SEPARATOR)}</p>
+          {holidays.length > 0 && <p className="holidays">{holidays.join(LIST_SEPARATOR)}</p>}
         </div>
         {records && dayStreaks && (
           <>
-            {date === today && <BackfillBanner records={records} today={today} onOpen={go} />}
+            {date === today && <BackfillBanner records={records} today={today} onOpen={openDay} />}
             <div className="inset-group">
               {prayersForDay(date).map((prayer) => (
                 <PrayerRow

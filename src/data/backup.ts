@@ -1,4 +1,5 @@
 import { array, boolean, check, literal, number, object, optional, picklist, pipe, record, safeParse, string } from 'valibot'
+import { APP_COPY } from '../copy/app'
 import { isIsoDate } from '../domain/logicalDay'
 import { ATTENDANCES, type DayRecord, isEmptyDay, PRAYERS } from '../domain/types'
 import { db } from './db'
@@ -30,7 +31,7 @@ export function parseBackup(text: string): Backup {
   const result = safeParse(backupSchema, parseJson(text))
 
   if (!result.success) {
-    throw new Error('קובץ הגיבוי לא תקין')
+    throw new Error(APP_COPY.invalidBackup)
   }
 
   return result.output

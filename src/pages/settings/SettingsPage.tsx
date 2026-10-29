@@ -17,17 +17,22 @@ import {
 } from '@ionic/react'
 import { downloadOutline, shareOutline } from 'ionicons/icons'
 import { type ChangeEvent, useRef } from 'react'
+import { COMMON_COPY } from '../../copy/common'
 import { type Backup, exportBackup, restoreBackup } from '../../data/backup'
-import { isShareCancel, readBackup, shareBackup } from './backupFile'
+import { STATS_PATH } from '../../navigation/paths'
+import { BACKUP_FILE_ACCEPT, isShareCancel, readBackup, shareBackup } from './backupFile'
+import { SETTINGS_COPY } from './copy'
 
-const errorMessage = (error: unknown) => (error instanceof Error ? error.message : 'הפעולה נכשלה')
+const TOAST_DURATION_MS = 2500
+
+const errorMessage = (error: unknown) => (error instanceof Error ? error.message : SETTINGS_COPY.actionFailed)
 
 export function SettingsPage() {
   const fileInput = useRef<HTMLInputElement>(null)
   const [presentAlert] = useIonAlert()
   const [presentToast] = useIonToast()
 
-  const toast = (message: string) => presentToast({ message, duration: 2500, position: 'top' })
+  const toast = (message: string) => presentToast({ message, duration: TOAST_DURATION_MS, position: 'top' })
 
   async function exportData() {
     try {
@@ -42,7 +47,7 @@ export function SettingsPage() {
   async function restore(backup: Backup) {
     try {
       await restoreBackup(backup)
-      void toast('הגיבוי שוחזר')
+      void toast(SETTINGS_COPY.backupRestored)
     } catch (error) {
       void toast(errorMessage(error))
     }
@@ -62,11 +67,11 @@ export function SettingsPage() {
       const backup = await readBackup(file)
 
       presentAlert({
-        header: 'ייבוא גיבוי',
-        message: 'הייבוא יחליף את כל הנתונים',
+        header: SETTINGS_COPY.importBackup,
+        message: SETTINGS_COPY.importWarning,
         buttons: [
-          { text: 'ביטול', role: 'cancel' },
-          { text: 'ייבוא', role: 'destructive', handler: () => void restore(backup) },
+          { text: SETTINGS_COPY.cancel, role: 'cancel' },
+          { text: SETTINGS_COPY.confirmImport, role: 'destructive', handler: () => void restore(backup) },
         ],
       })
     } catch (error) {
@@ -79,34 +84,32 @@ export function SettingsPage() {
       <IonHeader className="leather-header">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/tabs/stats" text="סטטיסטיקה" />
+            <IonBackButton defaultHref={STATS_PATH} text={COMMON_COPY.stats} />
           </IonButtons>
-          <IonTitle>הגדרות</IonTitle>
+          <IonTitle>{COMMON_COPY.settings}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonListHeader>
-          <IonLabel>גיבוי</IonLabel>
+          <IonLabel>{SETTINGS_COPY.backup}</IonLabel>
         </IonListHeader>
         <IonList inset>
           <IonItem button detail={false} onClick={exportData}>
             <IonIcon slot="start" color="primary" icon={shareOutline} />
-            <IonLabel>ייצוא גיבוי</IonLabel>
+            <IonLabel>{SETTINGS_COPY.exportBackup}</IonLabel>
           </IonItem>
           <IonItem button detail={false} onClick={() => fileInput.current?.click()}>
             <IonIcon slot="start" color="primary" icon={downloadOutline} />
-            <IonLabel>ייבוא גיבוי</IonLabel>
+            <IonLabel>{SETTINGS_COPY.importBackup}</IonLabel>
           </IonItem>
         </IonList>
-        <IonNote className="list-footer">
-          הנתונים נשמרים רק במכשיר הזה. הייצוא יוצר קובץ עם כל הימים שסומנו, שאפשר לשמור בקבצים ולשחזר ממנו בייבוא.
-        </IonNote>
+        <IonNote className="list-footer">{SETTINGS_COPY.storageNote}</IonNote>
         <input
           ref={fileInput}
           type="file"
-          accept="application/json,.json"
+          accept={BACKUP_FILE_ACCEPT}
           hidden
-          aria-label="קובץ גיבוי"
+          aria-label={SETTINGS_COPY.backupFile}
           onChange={importFile}
         />
       </IonContent>

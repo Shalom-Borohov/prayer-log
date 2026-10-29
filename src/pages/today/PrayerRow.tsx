@@ -1,6 +1,7 @@
 import { Shelf } from '../../components/Shelf'
+import { COMMON_COPY } from '../../copy/common'
 import { setPrayer } from '../../data/repo'
-import { ATTENDANCE_LABELS, PRAYER_LABELS, streakLabel } from '../../domain/format'
+import { streakLabel } from '../../domain/format'
 import { type SlotState, shelfLabel } from '../../domain/shelf'
 import { ATTENDANCES, type Attendance, type Prayer } from '../../domain/types'
 
@@ -13,7 +14,7 @@ interface PrayerRowProps {
 }
 
 export function PrayerRow({ date, prayer, attendance, streak, slots }: PrayerRowProps) {
-  const label = PRAYER_LABELS[prayer]
+  const label = COMMON_COPY.prayers[prayer]
 
   return (
     <section className={`day-row hue-${prayer}`} role="group" aria-label={label}>
@@ -25,15 +26,15 @@ export function PrayerRow({ date, prayer, attendance, streak, slots }: PrayerRow
         {slots && <Shelf slots={slots} label={shelfLabel(slots, prayer)} stamp />}
       </div>
       <div className="attendance">
-        {ATTENDANCES.map((state) => (
+        {ATTENDANCES.map((option) => (
           <button
-            key={state}
+            key={option}
             type="button"
-            className={`attendance-${state}`}
-            aria-pressed={attendance === state}
-            onClick={() => setPrayer(date, prayer, attendance === state ? null : state)}
+            className={`attendance-${option}`}
+            aria-pressed={attendance === option}
+            onClick={() => setPrayer(date, prayer, attendance === option ? null : option)}
           >
-            {ATTENDANCE_LABELS[state]}
+            {COMMON_COPY.attendance[option]}
           </button>
         ))}
       </div>

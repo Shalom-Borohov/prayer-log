@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { PRAYER_LABELS, blankMaarivLabel, emptyDayLabel, gregorianLabel, monthTitle, shortWeekday, streakLabel, weekdayName } from '../../src/domain/format'
+import { gregorianLabel, monthTitle, shortWeekday, streakLabel, weekdayName } from '../../src/domain/format'
 
 describe('weekdayName', () => {
   it('names each day of a Sunday–Saturday week', () => {
@@ -32,28 +32,9 @@ describe('gregorianLabel', () => {
   })
 })
 
-describe('PRAYER_LABELS', () => {
-  it('names every prayer in Hebrew', () => {
-    expect(PRAYER_LABELS).toEqual({ shacharit: 'שחרית', musaf: 'מוסף', mincha: 'מנחה', maariv: 'ערבית' })
-  })
-})
-
 describe('streakLabel', () => {
   it('reads as plain Hebrew counts', () => {
     expect([0, 1, 2, 12].map(streakLabel)).toEqual(['אין רצף', 'יום אחד ברצף', '2 ימים ברצף', '12 ימים ברצף'])
-  })
-})
-
-describe('emptyDayLabel', () => {
-  it('agrees in gender with the day', () => {
-    expect(emptyDayLabel('2026-10-24')).toBe('שבת 24.10 לא מולאה')
-    expect(emptyDayLabel('2026-10-27')).toBe('יום שלישי 27.10 לא מולא')
-  })
-})
-
-describe('blankMaarivLabel', () => {
-  it('names the eve whose ערבית is blank', () => {
-    expect(blankMaarivLabel('2026-10-23')).toBe('ערבית של יום שישי 23.10 לא סומנה')
   })
 })
 

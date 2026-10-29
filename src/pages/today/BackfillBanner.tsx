@@ -1,7 +1,7 @@
 import { IonItem, IonLabel, IonList } from '@ionic/react'
 import { backfillReminders } from '../../domain/backfill'
-import { blankMaarivLabel, emptyDayLabel } from '../../domain/format'
 import type { DayRecord } from '../../domain/types'
+import { reminderLabel } from './reminderLabel'
 
 interface BackfillBannerProps {
   records: DayRecord[]
@@ -18,9 +18,9 @@ export function BackfillBanner({ records, today, onOpen }: BackfillBannerProps) 
 
   return (
     <IonList inset className="backfill">
-      {reminders.map(({ date, kind }) => (
-        <IonItem key={date} button detail onClick={() => onOpen(date)}>
-          <IonLabel>{kind === 'empty' ? emptyDayLabel(date) : blankMaarivLabel(date)}</IonLabel>
+      {reminders.map((reminder) => (
+        <IonItem key={reminder.date} button detail onClick={() => onOpen(reminder.date)}>
+          <IonLabel>{reminderLabel(reminder)}</IonLabel>
         </IonItem>
       ))}
     </IonList>

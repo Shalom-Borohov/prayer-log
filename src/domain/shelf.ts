@@ -1,3 +1,5 @@
+import { COMMON_COPY } from '../copy/common'
+import { FORMAT_COPY } from '../copy/format'
 import { addDays, daysInRange } from './logicalDay'
 import { trackingStart } from './totals'
 import type { DayRecord, Prayer } from './types'
@@ -23,9 +25,9 @@ export function slotFor(record: DayRecord | undefined, key: Prayer | 'torah'): S
 }
 
 export function shelfLabel(slots: SlotState[], key: Prayer | 'torah'): string {
-  const done = key === 'torah' ? 'עם לימוד' : 'במניין'
+  const doneLabel = key === 'torah' ? FORMAT_COPY.withLearning : COMMON_COPY.attendance.minyan
 
-  return `${slots.filter((slot) => slot === 'gold').length} מתוך ${slots.length} הימים האחרונים ${done}`
+  return FORMAT_COPY.recentDays(slots.filter((slot) => slot === 'gold').length, slots.length, doneLabel)
 }
 
 export function shelfSlots(records: DayRecord[], key: Prayer | 'torah', end: string, count: number): SlotState[] {
