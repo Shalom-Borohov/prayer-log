@@ -16,6 +16,7 @@ import { useAllDays } from '../../data/hooks'
 import { LIST_SEPARATOR, gregorianLabel, weekdayName } from '../../domain/format'
 import { hebrewDateLabel, holidayNames } from '../../domain/hebrewCalendar'
 import { addDays } from '../../domain/logicalDay'
+import { defaultPlace, knownPlaces } from '../../domain/places'
 import { prayersForDay } from '../../domain/prayersForDay'
 import { shelfSlots } from '../../domain/shelf'
 import { streaks } from '../../domain/streaks'
@@ -35,6 +36,7 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
   const records = useAllDays()
   const record = records?.find((day) => day.date === date)
   const dayStreaks = records && streaks(records, date, today)
+  const places = records && knownPlaces(records)
   const router = useIonRouter()
   const title = date === today ? COMMON_COPY.today : weekdayName(date)
   const holidays = holidayNames(date)
@@ -71,7 +73,7 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
             {holidays.length > 0 && <p className="holidays">{holidays.join(LIST_SEPARATOR)}</p>}
           </div>
         </IonHeader>
-        {records && dayStreaks && (
+        {records && dayStreaks && places && (
           <>
             {date === today && <BackfillBanner records={records} today={today} onOpen={openDay} />}
             <div className="inset-group">
@@ -81,6 +83,9 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
                   date={date}
                   prayer={prayer}
                   attendance={record?.prayers[prayer]}
+                  place={record?.places?.[prayer]}
+                  rememberedPlace={defaultPlace(records, prayer)}
+                  knownPlaces={places}
                   streak={prayer === 'musaf' ? null : dayStreaks[prayer].current}
                   slots={prayer === 'musaf' ? null : shelfSlots(records, prayer, date, SHELF_DAYS)}
                 >

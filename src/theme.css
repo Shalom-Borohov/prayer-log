@@ -161,6 +161,10 @@ ion-note {
   color: var(--app-label-secondary);
 }
 
+.list-footer + .list-footer {
+  margin-top: 0;
+}
+
 .inset-group {
   margin: 16px;
   border-radius: 10px;

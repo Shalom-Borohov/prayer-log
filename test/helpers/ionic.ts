@@ -26,12 +26,6 @@ export function visibleAll(selector: string) {
   return Array.from(document.querySelectorAll(`${VISIBLE_PAGE} ${selector}`))
 }
 
-export function actionSheetPresented() {
-  return new Promise((resolve) => {
-    document.addEventListener('ionActionSheetDidPresent', resolve, { once: true })
-  })
-}
-
 export function ionElement(selector: string) {
   return waitFor(() => {
     const element = document.querySelector(`${VISIBLE_PAGE} ${selector}`)

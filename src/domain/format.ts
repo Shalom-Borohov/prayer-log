@@ -33,6 +33,10 @@ export function gregorianLabel(date: string): string {
   return `${parsed.getDate()}.${parsed.getMonth() + 1}`
 }
 
+export function fullDateLabel(date: string): string {
+  return `${gregorianLabel(date)}.${parseIsoDate(date).getFullYear()}`
+}
+
 export function dayLabel(date: string): string {
   return `${weekdayName(date)} ${gregorianLabel(date)}`
 }

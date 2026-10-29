@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { allDays, setPrayer, setTorah, setTorahNote, setWorn } from '../../src/data/repo'
+import { allDays, setPlace, setPrayer, setTorah, setTorahNote, setWorn } from '../../src/data/repo'
 import { resetDb } from '../helpers/db'
 
 describe('repo', () => {
@@ -121,6 +121,55 @@ describe('repo', () => {
     const dates = (await allDays()).map((day) => day.date)
 
     expect(dates).toEqual(['2025-12-31', '2026-01-05', '2026-10-28'])
+  })
+
+  it('stores the place a prayer was prayed במניין', async () => {
+    await setPrayer('2026-10-28', 'mincha', 'minyan', 'אוהל משה')
+
+    expect(await allDays()).toStrictEqual([
+      { date: '2026-10-28', prayers: { mincha: 'minyan' }, places: { mincha: 'אוהל משה' }, torah: false },
+    ])
+  })
+
+  it.each([
+    ['ביחידות', 'alone'],
+    ['ק״ש בלבד', 'shema'],
+    ['nothing', null],
+  ] as const)('marking %s drops only that prayer’s place', async (_label, attendance) => {
+    await setPrayer('2026-10-28', 'maariv', 'minyan', 'הגר"א')
+    await setPrayer('2026-10-28', 'shacharit', 'minyan', 'בית יוסף')
+    await setPrayer('2026-10-28', 'shacharit', attendance)
+
+    expect((await allDays())[0].places).toStrictEqual({ maariv: 'הגר"א' })
+  })
+
+  it('removes the places field with the last place', async () => {
+    await setPrayer('2026-10-28', 'shacharit', 'minyan', 'בית יוסף')
+    await setPrayer('2026-10-28', 'shacharit', 'alone')
+
+    expect(await allDays()).toStrictEqual([{ date: '2026-10-28', prayers: { shacharit: 'alone' }, torah: false }])
+  })
+
+  it('sets a place and removes it with null', async () => {
+    await setPrayer('2026-10-28', 'mincha', 'minyan')
+    await setPlace('2026-10-28', 'mincha', 'אוהל משה')
+
+    expect((await allDays())[0].places).toStrictEqual({ mincha: 'אוהל משה' })
+
+    await setPlace('2026-10-28', 'mincha', null)
+
+    expect(await allDays()).toStrictEqual([{ date: '2026-10-28', prayers: { mincha: 'minyan' }, torah: false }])
+  })
+
+  it.each([
+    ['ביחידות', 'alone'],
+    ['unmarked', null],
+  ] as const)('never stores a place on a prayer marked %s', async (_label, attendance) => {
+    await setPrayer('2026-10-28', 'shacharit', 'minyan')
+    await setPrayer('2026-10-28', 'mincha', attendance, 'אוהל משה')
+    await setPlace('2026-10-28', 'mincha', 'אוהל משה')
+
+    expect((await allDays())[0].places).toBeUndefined()
   })
 
   it('clearing a prayer on an empty day stores nothing', async () => {

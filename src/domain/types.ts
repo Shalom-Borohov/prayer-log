@@ -21,6 +21,7 @@ export type WornItem = (typeof WORN_ITEMS)[number]
 export interface DayRecord {
   date: string
   prayers: Partial<Record<Prayer, Attendance>>
+  places?: Partial<Record<Prayer, string>>
   torah: boolean
   torahNote?: string
   tefillin?: boolean

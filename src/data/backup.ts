@@ -3,12 +3,14 @@ import { APP_COPY } from '../copy/app'
 import { isIsoDate } from '../domain/logicalDay'
 import { ATTENDANCES, type DayRecord, isEmptyDay, PRAYERS } from '../domain/types'
 import { db } from './db'
+import { withMinyanPlacesOnly } from './repo'
 
 export type Backup = { version: 1; exportedAt: number; days: DayRecord[] }
 
 const dayRecordSchema = object({
   date: pipe(string(), check(isIsoDate)),
   prayers: record(picklist(PRAYERS), picklist(ATTENDANCES)),
+  places: optional(record(picklist(PRAYERS), string())),
   torah: boolean(),
   torahNote: optional(string()),
   tefillin: optional(boolean()),
@@ -46,6 +48,6 @@ export async function exportBackup(now: number): Promise<Backup> {
 export async function restoreBackup(backup: Backup): Promise<void> {
   await db.transaction('rw', db.days, async () => {
     await db.days.clear()
-    await db.days.bulkPut(backup.days.filter((day) => !isEmptyDay(day)))
+    await db.days.bulkPut(backup.days.map(withMinyanPlacesOnly).filter((day) => !isEmptyDay(day)))
   })
 }

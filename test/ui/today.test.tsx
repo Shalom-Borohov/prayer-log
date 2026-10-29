@@ -4,16 +4,11 @@ import { db } from '../../src/data/db'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { allMinyan, day, days } from '../helpers/days'
+import { markIn, markInMinyanSkippingPlace, row } from '../helpers/dayRows'
 import { buttonByLabel, ionChange, ionField } from '../helpers/ionic'
 import { currentPath, renderAt } from '../helpers/renderAt'
 
 const wednesday = new Date(2026, 9, 28, 10).getTime()
-
-const row = (label: string) => screen.findByRole('group', { name: label })
-
-async function markIn(label: string, state: 'במניין' | 'ביחידות' | 'ק״ש בלבד') {
-  fireEvent.click(within(await row(label)).getByRole('button', { name: state }))
-}
 
 describe('today', () => {
   beforeEach(resetDb)
@@ -39,7 +34,7 @@ describe('today', () => {
   it('marks a prayer and clears it with a second tap', async () => {
     renderAt('/tabs/today')
 
-    await markIn('שחרית', 'במניין')
+    await markInMinyanSkippingPlace('שחרית')
 
     await waitFor(async () => expect((await db.days.get('2026-10-28'))?.prayers).toEqual({ shacharit: 'minyan' }))
     expect(within(await row('שחרית')).getByRole('button', { name: 'במניין' })).toHaveAttribute('aria-pressed', 'true')
@@ -122,7 +117,7 @@ describe('today', () => {
     await waitFor(async () => expect(await lastSpine('ערבית')).toHaveClass('spine-gold'))
     expect(await lastSpine('ערבית')).not.toHaveClass('spine-stamp')
 
-    await markIn('שחרית', 'במניין')
+    await markInMinyanSkippingPlace('שחרית')
 
     await waitFor(async () => expect(await lastSpine('שחרית')).toHaveClass('spine-gold', 'spine-stamp'))
   })
