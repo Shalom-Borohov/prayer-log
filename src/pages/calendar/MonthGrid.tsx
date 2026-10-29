@@ -2,7 +2,7 @@ import { COMMON_COPY } from '../../copy/common'
 import { dayLabel, shortWeekday } from '../../domain/format'
 import { hebrewDateLabel, hebrewDayNumber } from '../../domain/hebrewCalendar'
 import { daysInRange, monthEnd, parseIsoDate } from '../../domain/logicalDay'
-import { prayersForDay } from '../../domain/prayersForDay'
+import { prayersForDay, wornItemsForDay } from '../../domain/prayersForDay'
 import { slotFor } from '../../domain/shelf'
 import { trackingStart, weekRange } from '../../domain/totals'
 import type { DayRecord, Prayer } from '../../domain/types'
@@ -18,12 +18,14 @@ interface MonthGridProps {
   onOpen: (date: string) => void
 }
 
-function marksLabel(record: DayRecord | undefined, prayers: Prayer[]): string {
+function marksLabel(record: DayRecord | undefined, date: string, prayers: Prayer[]): string {
   const marks = prayers.flatMap((prayer) => {
     const mark = record?.prayers[prayer]
 
     return mark ? [CALENDAR_COPY.prayerMark(COMMON_COPY.prayers[prayer], COMMON_COPY.attendance[mark])] : []
   })
+
+  marks.push(...wornItemsForDay(date).filter((item) => record?.[item]).map((item) => COMMON_COPY.worn[item]))
 
   if (record?.torah) {
     marks.push(COMMON_COPY.learnedTorah)
@@ -61,7 +63,7 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
             type="button"
             className={`month-day${date === today ? ' is-today' : ''}${holidayDates.has(date) ? ' is-holiday' : ''}`}
             disabled={date > today}
-            aria-label={CALENDAR_COPY.dayCell(dayLabel(date), hebrewDateLabel(date), marksLabel(record, prayers))}
+            aria-label={CALENDAR_COPY.dayCell(dayLabel(date), hebrewDateLabel(date), marksLabel(record, date, prayers))}
             onClick={() => onOpen(date)}
           >
             <span className="month-day-number">{parseIsoDate(date).getDate()}</span>

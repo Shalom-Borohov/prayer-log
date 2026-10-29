@@ -1,9 +1,11 @@
+import type { ReactNode } from 'react'
 import { Shelf } from '../../components/Shelf'
 import { COMMON_COPY } from '../../copy/common'
 import { setPrayer } from '../../data/repo'
 import { streakLabel } from '../../domain/format'
+import { attendancesFor } from '../../domain/prayersForDay'
 import { type SlotState, shelfLabel } from '../../domain/shelf'
-import { ATTENDANCES, type Attendance, type Prayer } from '../../domain/types'
+import type { Attendance, Prayer } from '../../domain/types'
 
 interface PrayerRowProps {
   date: string
@@ -11,9 +13,10 @@ interface PrayerRowProps {
   attendance: Attendance | undefined
   streak: number | null
   slots: SlotState[] | null
+  children?: ReactNode
 }
 
-export function PrayerRow({ date, prayer, attendance, streak, slots }: PrayerRowProps) {
+export function PrayerRow({ date, prayer, attendance, streak, slots, children }: PrayerRowProps) {
   const label = COMMON_COPY.prayers[prayer]
 
   return (
@@ -26,7 +29,7 @@ export function PrayerRow({ date, prayer, attendance, streak, slots }: PrayerRow
         {slots && <Shelf slots={slots} label={shelfLabel(slots, prayer)} stamp />}
       </div>
       <div className="attendance">
-        {ATTENDANCES.map((option) => (
+        {attendancesFor(prayer).map((option) => (
           <button
             key={option}
             type="button"
@@ -38,6 +41,7 @@ export function PrayerRow({ date, prayer, attendance, streak, slots }: PrayerRow
           </button>
         ))}
       </div>
+      {children}
     </section>
   )
 }

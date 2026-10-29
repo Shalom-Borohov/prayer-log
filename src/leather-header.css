@@ -1,0 +1,45 @@
+ion-header.leather-header {
+  --ion-background-color: var(--leather-band);
+  background: var(--leather-band);
+}
+
+.leather-header ion-toolbar {
+  --background: var(--leather-band);
+  --color: var(--gold-leaf);
+  --border-color: transparent;
+  --ion-color-primary: var(--gold-leaf);
+}
+
+.leather-header ion-title {
+  color: var(--gold-leaf);
+}
+
+ion-title.ion-cloned-element,
+ion-back-button.ion-cloned-element {
+  --color: var(--gold-leaf);
+}
+
+.day-heading {
+  padding: 0 20px 14px;
+  color: var(--leather-band-text);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.day-heading p {
+  margin: 0;
+}
+
+.day-heading .holidays {
+  color: var(--gold-leaf);
+  font-weight: 600;
+}
+
+ion-header[collapse='condense'].leather-header::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 100%;
+  height: 100vh;
+  background: var(--leather-band);
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { hasMusaf, hebrewDateLabel, hebrewDayNumber, holidayNames, isRestDay } from '../../src/domain/hebrewCalendar'
+import { hasMusaf, hasTefillin, hebrewDateLabel, hebrewDayNumber, holidayNames, isRestDay } from '../../src/domain/hebrewCalendar'
 
 describe('hebrewDateLabel', () => {
   it('is the gematriya day and the month with ב, without year or niqqud', () => {
@@ -123,5 +123,27 @@ describe('holidayNames civil observances', () => {
     expect(holidayNames('2027-05-12')).toContain('יום העצמאות')
     expect(holidayNames('2027-05-04')).toContain('יום השואה')
     expect(holidayNames('2026-10-05')).toContain('יום הזיכרון לחללי מלחמת חרבות ברזל')
+  })
+})
+
+describe('hasTefillin', () => {
+  it('is true on weekdays, ראש חודש, ט׳ באב and the day after a חג', () => {
+    expect(hasTefillin('2026-10-28')).toBe(true)
+    expect(hasTefillin('2026-11-10')).toBe(true)
+    expect(hasTefillin('2027-08-12')).toBe(true)
+    expect(hasTefillin('2026-10-04')).toBe(true)
+  })
+
+  it('is false on שבת, ראש השנה, יום כיפור and יום טוב', () => {
+    expect(hasTefillin('2026-10-24')).toBe(false)
+    expect(hasTefillin('2026-09-12')).toBe(false)
+    expect(hasTefillin('2026-09-21')).toBe(false)
+    expect(hasTefillin('2026-10-03')).toBe(false)
+  })
+
+  it('is false on חול המועד, הושענא רבה included', () => {
+    expect(hasTefillin('2026-09-28')).toBe(false)
+    expect(hasTefillin('2026-10-02')).toBe(false)
+    expect(hasTefillin('2027-04-25')).toBe(false)
   })
 })

@@ -33,15 +33,50 @@ describe('stats', () => {
 
     const totals = await screen.findByRole('table', { name: 'לפי תפילה' })
 
-    await waitFor(() => expect(cells(totals, 'שחרית')).toEqual(['1', '0', '4']))
-    expect(cells(totals, 'מנחה')).toEqual(['0', '1', '4'])
+    await waitFor(() => expect(cells(totals, 'שחרית')).toEqual(['1', '0', '0', '4']))
+    expect(cells(totals, 'מנחה')).toEqual(['0', '1', '–', '4'])
     expect(within(totals).queryByRole('rowheader', { name: 'תורה' })).not.toBeInTheDocument()
     expect(cells(await screen.findByRole('table', { name: 'תורה' }), 'ימים עם לימוד')).toEqual(['1 מתוך 4'])
 
     ionChange(await ionElement('ion-segment'), 'month')
 
-    await waitFor(() => expect(cells(totals, 'שחרית')).toEqual(['7', '0', '10']))
-    expect(cells(totals, 'מוסף')).toEqual(['0', '1', '1'])
+    await waitFor(() => expect(cells(totals, 'שחרית')).toEqual(['7', '0', '0', '10']))
+    expect(cells(totals, 'מוסף')).toEqual(['0', '1', '–', '1'])
+  })
+
+  it('counts ק״ש בלבד per prayer, with a dash where it does not apply', async () => {
+    await db.days.bulkPut([
+      day('2026-10-25', { prayers: { shacharit: 'shema', mincha: 'alone', maariv: 'shema' } }),
+      day('2026-10-26', { prayers: { shacharit: 'minyan', maariv: 'shema' } }),
+    ])
+    renderAt('/tabs/stats')
+
+    const totals = await screen.findByRole('table', { name: 'לפי תפילה' })
+
+    expect(within(totals).getByRole('columnheader', { name: 'ק״ש' })).toBeInTheDocument()
+    await waitFor(() => expect(cells(totals, 'שחרית')).toEqual(['1', '0', '1', '4']))
+    expect(cells(totals, 'מנחה')).toEqual(['0', '1', '–', '4'])
+    expect(cells(totals, 'ערבית')).toEqual(['0', '0', '2', '4'])
+  })
+
+  it('shows how many days תפילין and טלית were worn, leaving שבת out of תפילין', async () => {
+    await db.days.bulkPut([
+      day('2026-10-22', { tefillin: true, tallit: true }),
+      day('2026-10-24', { tallit: true }),
+      day('2026-10-26', { tefillin: true, tallit: true }),
+      day('2026-10-27', { tefillin: true }),
+    ])
+    renderAt('/tabs/stats')
+
+    const worn = await screen.findByRole('table', { name: 'תפילין וטלית' })
+
+    await waitFor(() => expect(cells(worn, 'תפילין')).toEqual(['2 מתוך 4']))
+    expect(cells(worn, 'טלית')).toEqual(['1 מתוך 4'])
+
+    ionChange(await ionElement('ion-segment'), 'month')
+
+    await waitFor(() => expect(cells(worn, 'תפילין')).toEqual(['3 מתוך 6']))
+    expect(cells(worn, 'טלית')).toEqual(['3 מתוך 7'])
   })
 
   it('shows current and best streaks', async () => {

@@ -75,13 +75,14 @@
 
 .month-day-spines {
   display: flex;
+  align-items: flex-end;
   gap: 2px;
   margin-top: 4px;
 }
 
 .month-day-spines .spine {
   --gold-band: 3px;
+  --spine-height: 14px;
   width: 4px;
-  height: 14px;
   border-radius: 1px;
 }

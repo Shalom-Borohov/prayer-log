@@ -33,6 +33,17 @@ describe('streaks', () => {
     expect(streaks(records, today).shacharit).toEqual({ current: 2, best: 2 })
   })
 
+  it('is broken by a ק״ש בלבד day', () => {
+    const records = [
+      ...days('2026-10-23', '2026-10-24', { prayers: allMinyan }),
+      day('2026-10-25', { prayers: { ...allMinyan, shacharit: 'shema' } }),
+      ...days('2026-10-26', '2026-10-27', { prayers: allMinyan }),
+    ]
+
+    expect(streaks(records, '2026-10-27', today).shacharit).toEqual({ current: 2, best: 2 })
+    expect(streaks(records, '2026-10-27', today).maariv).toEqual({ current: 5, best: 5 })
+  })
+
   it('is broken by a blank past day once that day has ended', () => {
     const records = days('2026-10-24', '2026-10-26', { prayers: allMinyan })
 

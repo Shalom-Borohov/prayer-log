@@ -22,12 +22,12 @@ export function TorahRow({ date, learned, note, streak, slots }: TorahRowProps) 
         <button
           type="button"
           role="checkbox"
-          className="torah-check"
+          className="check-button torah-check"
           aria-checked={learned}
           aria-label={COMMON_COPY.learnedTorah}
           onClick={() => setTorah(date, !learned)}
         >
-          {learned && <IonIcon icon={checkmark} aria-hidden="true" />}
+          <span className="round-check">{learned && <IonIcon icon={checkmark} aria-hidden="true" />}</span>
         </button>
         <div className="day-row-title">
           <h2>{COMMON_COPY.learnedTorah}</h2>

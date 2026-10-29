@@ -119,25 +119,6 @@ textarea {
   --hue-deep: var(--leather-torah-deep);
 }
 
-ion-header.leather-header {
-  background: var(--leather-band);
-}
-
-.leather-header ion-toolbar {
-  --background: var(--leather-band);
-  --color: var(--gold-leaf);
-  --border-color: transparent;
-  --ion-color-primary: var(--gold-leaf);
-}
-
-.leather-header ion-title {
-  color: var(--gold-leaf);
-}
-
-ion-header[collapse='condense'].leather-header ion-toolbar {
-  --background: var(--leather-band);
-}
-
 ion-content::part(scroll) {
   scrollbar-width: none;
 }

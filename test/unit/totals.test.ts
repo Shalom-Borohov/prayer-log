@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { monthRange, periodTotals, weekRange } from '../../src/domain/totals'
 import { allMinyan, day, days } from '../helpers/days'
 
-const tally = (minyan: number, alone: number, total: number) => ({ minyan, alone, total })
+const tally = (minyan: number, alone: number, total: number, shema = 0) => ({ minyan, alone, shema, total })
 
 describe('periodTotals', () => {
   it('is all zeros with no records', () => {
@@ -10,6 +10,8 @@ describe('periodTotals', () => {
       prayers: tally(0, 0, 0),
       perPrayer: { shacharit: tally(0, 0, 0), musaf: tally(0, 0, 0), mincha: tally(0, 0, 0), maariv: tally(0, 0, 0) },
       torah: { days: 0, total: 0 },
+      tefillin: { days: 0, total: 0 },
+      tallit: { days: 0, total: 0 },
     })
   })
 
@@ -24,6 +26,8 @@ describe('periodTotals', () => {
       prayers: tally(3, 2, 9),
       perPrayer: { shacharit: tally(1, 1, 3), musaf: tally(0, 0, 0), mincha: tally(1, 1, 3), maariv: tally(1, 0, 3) },
       torah: { days: 2, total: 3 },
+      tefillin: { days: 0, total: 3 },
+      tallit: { days: 0, total: 3 },
     })
   })
 
@@ -52,6 +56,40 @@ describe('periodTotals', () => {
 
     expect(totals.perPrayer.musaf).toEqual(tally(0, 0, 8))
     expect(totals.prayers).toEqual(tally(84, 0, 92))
+  })
+
+  it('counts ק״ש בלבד apart from במניין and ביחידות', () => {
+    const records = [
+      day('2026-10-26', { prayers: { shacharit: 'shema', maariv: 'shema' } }),
+      day('2026-10-27', { prayers: { shacharit: 'minyan' } }),
+    ]
+
+    const totals = periodTotals(records, '2026-10-25', '2026-10-31', '2026-10-28')
+
+    expect(totals.prayers).toEqual(tally(1, 0, 9, 2))
+    expect(totals.perPrayer.shacharit).toEqual(tally(1, 0, 3, 1))
+    expect(totals.perPrayer.maariv).toEqual(tally(0, 0, 3, 1))
+  })
+
+  it('counts טלית every day and תפילין only on days they are worn', () => {
+    const records = [
+      ...days('2026-10-25', '2026-10-29', { tefillin: true, tallit: true }),
+      day('2026-10-30', { tallit: true }),
+      day('2026-10-31', { tallit: true }),
+    ]
+
+    const totals = periodTotals(records, '2026-10-25', '2026-10-31', '2026-10-31')
+
+    expect(totals.tefillin).toEqual({ days: 5, total: 6 })
+    expect(totals.tallit).toEqual({ days: 7, total: 7 })
+  })
+
+  it('leaves חול המועד and the חג out of the תפילין count', () => {
+    const records = days('2026-09-27', '2026-10-06', { tallit: true })
+
+    expect(periodTotals(records, '2026-09-27', '2026-10-03', '2026-10-06').tefillin).toEqual({ days: 0, total: 0 })
+    expect(periodTotals(records, '2026-09-27', '2026-10-03', '2026-10-06').tallit).toEqual({ days: 7, total: 7 })
+    expect(periodTotals(records, '2026-10-04', '2026-10-10', '2026-10-06').tefillin).toEqual({ days: 0, total: 3 })
   })
 
   it('is all zeros for a period before the first record or after today', () => {

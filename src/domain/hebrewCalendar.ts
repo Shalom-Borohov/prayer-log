@@ -34,15 +34,19 @@ export function holidayNames(date: string): string[] {
     )
 }
 
+const hasHolidayFlag = (date: string, ...flags: FlagName[]) =>
+  israeliHolidays(date).some((holiday) => flags.some((flag) => holiday.hasFlag(flag)))
+
 export function isRestDay(date: string): boolean {
-  return isSaturday(date) || israeliHolidays(date).some((holiday) => holiday.hasFlag('CHAG'))
+  return isSaturday(date) || hasHolidayFlag(date, 'CHAG')
 }
 
 export function hasMusaf(date: string): boolean {
-  return (
-    isRestDay(date) ||
-    israeliHolidays(date).some((holiday) => holiday.hasFlag('CHOL_HAMOED') || holiday.hasFlag('ROSH_CHODESH'))
-  )
+  return isRestDay(date) || hasHolidayFlag(date, 'CHOL_HAMOED', 'ROSH_CHODESH')
+}
+
+export function hasTefillin(date: string): boolean {
+  return !isRestDay(date) && !hasHolidayFlag(date, 'CHOL_HAMOED')
 }
 
 export function hebrewDayNumber(date: string): string {
