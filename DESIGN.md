@@ -305,6 +305,11 @@ An inset list at the top of היום (today only) with one disclosure row per da
 ### Navigation
 Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with gold-leaf chevrons for previous and next day or month, a back button to לוח on past days, and a settings gear on סטטיסטיקה. Large titles collapse into the toolbar on scroll.
 
+The leather reaches the top of the screen. The page background is leather, and in the installed app a flat 12px leather strip is pinned to the top edge, so iOS 26 draws the status bar in leather rather than fading it.
+
+### Feedback sheet
+A "דיווח על באג / הצעה" disclosure-free row in its own inset group on הגדרות, above the version line. It opens a full-screen modal with a leather header: ביטול, the title דיווח, and a באג / הצעה segment. Below it are an inset "תיאור" text area, a footnote saying what is sent, and a full-width "פתיחה ב-GitHub" button that stays disabled until there is text.
+
 ## Do's and Don'ts
 
 ### Do:

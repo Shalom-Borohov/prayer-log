@@ -19,17 +19,17 @@ import { downloadOutline, shareOutline } from 'ionicons/icons'
 import { type ChangeEvent, useRef } from 'react'
 import { COMMON_COPY } from '../../copy/common'
 import { type Backup, exportBackup, restoreBackup } from '../../data/backup'
-import { LIST_SEPARATOR, fullDateLabel } from '../../domain/format'
-import { toIsoDate } from '../../domain/logicalDay'
+import { LIST_SEPARATOR, dateTimeLabel } from '../../domain/format'
 import { STATS_PATH } from '../../navigation/paths'
 import { BACKUP_FILE_ACCEPT, isShareCancel, readBackup, shareBackup } from './backupFile'
 import { SETTINGS_COPY } from './copy'
+import { FeedbackSettings } from './FeedbackSettings'
 
 const TOAST_DURATION_MS = 2500
 
 const versionLine = [
-  SETTINGS_COPY.version(__APP_COMMIT__),
-  SETTINGS_COPY.updated(fullDateLabel(toIsoDate(new Date(__APP_BUILT_AT__)))),
+  SETTINGS_COPY.version(__APP_VERSION__),
+  SETTINGS_COPY.updated(dateTimeLabel(Date.parse(__APP_BUILT_AT__))),
 ].join(LIST_SEPARATOR)
 
 const errorMessage = (error: unknown) => (error instanceof Error ? error.message : SETTINGS_COPY.actionFailed)
@@ -111,6 +111,7 @@ export function SettingsPage() {
           </IonItem>
         </IonList>
         <IonNote className="list-footer">{SETTINGS_COPY.storageNote}</IonNote>
+        <FeedbackSettings />
         <IonNote className="list-footer">{versionLine}</IonNote>
         <input
           ref={fileInput}

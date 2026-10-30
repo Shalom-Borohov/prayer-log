@@ -8,7 +8,7 @@ export const DAYS_PER_WEEK = 7
 
 const SATURDAY = 6
 
-const pad = (value: number) => String(value).padStart(2, '0')
+export const pad = (value: number) => String(value).padStart(2, '0')
 
 export const isIsoDate = (date: string) => ISO_DATE_PATTERN.test(date) && toIsoDate(parseIsoDate(date)) === date
 

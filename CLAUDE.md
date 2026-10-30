@@ -15,7 +15,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - One test by name: `npx vitest run test/ui/today.test.tsx -t "marks a prayer"`
 - `npm run lint`: oxlint.
 - `npm run build`: `tsc -b && vite build`. This is the type check; there is no separate `tsc` script.
-  - The build needs a git checkout, because `vite.config.ts` stamps `git rev-parse --short HEAD` and the build time into `__APP_COMMIT__` / `__APP_BUILT_AT__`.
+  - `vite.config.ts` stamps the `package.json` version and the build time into `__APP_VERSION__` / `__APP_BUILT_AT__`, which הגדרות shows.
+
+Every PR that ships raises `version` in `package.json`: the minor number for features, the patch number for fixes (spec decision 22).
 
 CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` deploys to GitHub Pages on every push to `main`, with base path `/prayer-log/`.
 
@@ -51,6 +53,7 @@ The code is split into layers, and imports go downward only: `pages` → `data` 
 - **UI**: Ionic React in iOS mode.
   - Overlays use the hooks (`useIonActionSheet`, `useIonAlert`, `useIonToast`).
   - Styling is plain CSS with tokens in `theme.css`. Gold is reserved for the במניין state.
+  - The page `body` is leather, and `index.html` has a static `.status-bar-strip` (styled in `leather-header.css`). iOS 26 colours the installed app's status bar from these, not from `theme-color` (spec decision 20), so keep both.
 
 ## Tests
 
