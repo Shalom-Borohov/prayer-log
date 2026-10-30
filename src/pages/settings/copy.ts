@@ -9,6 +9,17 @@ export const SETTINGS_COPY = {
   storageNote:
     'הנתונים נשמרים רק במכשיר הזה. הייצוא יוצר קובץ עם כל הימים שסומנו, שאפשר לשמור בקבצים ולשחזר ממנו בייבוא.',
   backupFile: 'קובץ גיבוי',
-  version: (commit: string) => `גרסה ${commit}`,
+  reportBugOrIdea: 'דיווח על באג / הצעה',
+  report: 'דיווח',
+  bug: 'באג',
+  idea: 'הצעה',
+  description: 'תיאור',
+  bugPlaceholder: 'מה קרה, ומה ציפית שיקרה?',
+  ideaPlaceholder: 'מה היה עוזר לך?',
+  feedbackFooter: 'הדיווח נפתח ב-GitHub, עם סוג הדפדפן והגרסה. נתוני התפילות לא נשלחים.',
+  openInGitHub: 'פתיחה ב-GitHub',
+  issueBody: (text: string, userAgent: string, version: string, builtAt: string) =>
+    `${text}\n\n### מכשיר\n${userAgent}\nגרסה: ${version} (${builtAt})`,
+  version: (version: string) => `גרסה ${version}`,
   updated: (date: string) => `עודכנה ${date}`,
 } as const

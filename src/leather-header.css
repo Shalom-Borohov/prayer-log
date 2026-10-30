@@ -1,3 +1,28 @@
+:root {
+  --status-bar-strip: 12px;
+}
+
+.status-bar-strip {
+  display: none;
+}
+
+@media (display-mode: standalone) {
+  :root {
+    --ion-safe-area-top: max(env(safe-area-inset-top), var(--status-bar-strip));
+  }
+
+  .status-bar-strip {
+    display: block;
+    position: fixed;
+    top: 0;
+    inset-inline: 0;
+    height: var(--status-bar-strip);
+    z-index: 2147483647;
+    pointer-events: none;
+    background: var(--leather-band);
+  }
+}
+
 ion-header.leather-header {
   --ion-background-color: var(--leather-band);
   background: var(--leather-band);

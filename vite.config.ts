@@ -1,14 +1,12 @@
-import { execSync } from 'node:child_process'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { defineConfig } from 'vitest/config'
-
-const commit = execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim()
+import packageJson from './package.json' with { type: 'json' }
 
 export default defineConfig(({ mode }) => ({
   base: '/prayer-log/',
   define: {
-    __APP_COMMIT__: JSON.stringify(commit),
+    __APP_VERSION__: JSON.stringify(packageJson.version),
     __APP_BUILT_AT__: JSON.stringify(new Date().toISOString()),
   },
   resolve: mode === 'test' ? { conditions: ['browser'] } : {},

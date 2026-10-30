@@ -4,6 +4,7 @@ import { db } from '../../src/data/db'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
+import { ionChange, ionField, ionInput } from '../helpers/ionic'
 import { renderAt } from '../helpers/renderAt'
 
 const shabbat = day('2026-10-24', { prayers: { shacharit: 'minyan', musaf: 'minyan' }, torah: true, torahNote: 'פרשת השבוע' })
@@ -57,7 +58,49 @@ describe('settings', () => {
   it('shows the running version and when it was last updated', async () => {
     renderAt('/tabs/stats/settings')
 
-    expect(await screen.findByText(/גרסה [0-9a-f]{7,} · עודכנה \d+\.\d+\.\d{4}/)).toBeVisible()
+    expect(await screen.findByText(/^גרסה \d+\.\d+\.\d+ · עודכנה \d{1,2}\.\d{1,2}\.\d{4} \d{2}:\d{2}$/)).toBeVisible()
+  })
+
+  it('opens a GitHub bug report with the text and device details', async () => {
+    const openWindow = vi.spyOn(window, 'open').mockReturnValue(null)
+
+    renderAt('/tabs/stats/settings')
+    fireEvent.click(await screen.findByText('דיווח על באג / הצעה'))
+    ionInput(await ionField('תיאור'), 'הרצף לא התעדכן\nסימנתי מנחה במניין')
+    fireEvent.click(await screen.findByText('פתיחה ב-GitHub'))
+
+    expect(openWindow).toHaveBeenCalledOnce()
+
+    const [url, target, features] = openWindow.mock.calls[0]
+    const { origin, pathname, searchParams } = new URL(String(url))
+
+    expect(target).toBe('_blank')
+    expect(features).toBe('noopener')
+    expect(`${origin}${pathname}`).toBe('https://github.com/Shalom-Borohov/prayer-log/issues/new')
+    expect(searchParams.get('title')).toBe('הרצף לא התעדכן')
+    expect(searchParams.get('labels')).toBe('bug')
+    expect(searchParams.get('body')).toBe(
+      `הרצף לא התעדכן\nסימנתי מנחה במניין\n\n### מכשיר\n${navigator.userAgent}\nגרסה: ${__APP_VERSION__} (${__APP_BUILT_AT__})`,
+    )
+  })
+
+  it('opens a suggestion with a shortened title, only once there is text', async () => {
+    const openWindow = vi.spyOn(window, 'open').mockReturnValue(null)
+    const idea = 'כדאי להוסיף תזכורת לפני השקיעה כשמנחה עוד לא סומנה, עם אפשרות לבחור כמה דקות לפני ובאילו ימים'
+
+    renderAt('/tabs/stats/settings')
+    fireEvent.click(await screen.findByText('דיווח על באג / הצעה'))
+    ionChange(await screen.findByText('הצעה', { selector: 'ion-segment-button ion-label' }), 'idea')
+
+    expect((await screen.findByText('פתיחה ב-GitHub')).closest('ion-button')).toHaveProperty('disabled', true)
+
+    ionInput(await ionField('תיאור'), idea)
+    fireEvent.click(screen.getByText('פתיחה ב-GitHub'))
+
+    const { searchParams } = new URL(String(openWindow.mock.calls[0][0]))
+
+    expect(searchParams.get('labels')).toBe('feature')
+    expect(searchParams.get('title')).toBe(`${idea.slice(0, 79)}…`)
   })
 
   it('rejects an invalid backup file and keeps the data', async () => {

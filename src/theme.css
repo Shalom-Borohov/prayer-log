@@ -78,6 +78,7 @@
 }
 
 body {
+  background: var(--leather-band);
   -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -163,6 +164,11 @@ ion-note {
 
 .list-footer + .list-footer {
   margin-top: 0;
+}
+
+.inset-segment {
+  width: calc(100% - 32px);
+  margin: 16px 16px 0;
 }
 
 .inset-group {

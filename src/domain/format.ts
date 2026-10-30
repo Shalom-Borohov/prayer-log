@@ -1,5 +1,5 @@
 import { FORMAT_COPY } from '../copy/format'
-import { parseIsoDate } from './logicalDay'
+import { pad, parseIsoDate, toIsoDate } from './logicalDay'
 
 const MONTH_LOCALE = 'he'
 
@@ -35,6 +35,12 @@ export function gregorianLabel(date: string): string {
 
 export function fullDateLabel(date: string): string {
   return `${gregorianLabel(date)}.${parseIsoDate(date).getFullYear()}`
+}
+
+export function dateTimeLabel(timestamp: number): string {
+  const date = new Date(timestamp)
+
+  return `${fullDateLabel(toIsoDate(date))} ${pad(date.getHours())}:${pad(date.getMinutes())}`
 }
 
 export function dayLabel(date: string): string {

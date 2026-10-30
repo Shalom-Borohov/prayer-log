@@ -60,7 +60,7 @@ export function StatsPage() {
         {records && records.length > 0 && (
           <>
             <IonSegment
-              className="period-segment"
+              className="inset-segment"
               value={period}
               onIonChange={(event) => isPeriod(event.detail.value) && setPeriod(event.detail.value)}
             >
