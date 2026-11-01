@@ -305,10 +305,16 @@ An inset list at the top of היום (today only) with one disclosure row per da
 ### Navigation
 Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with gold-leaf chevrons for previous and next day or month, a back button to לוח on past days, and a settings gear on סטטיסטיקה. Large titles collapse into the toolbar on scroll.
 
-The leather reaches the top of the screen. The page background is leather, and in the installed app a flat 12px leather strip is pinned to the top edge, so iOS 26 draws the status bar in leather rather than fading it.
+The leather reaches the top of the screen. The page background is leather, and in the installed app a flat 12px leather strip is pinned to the top edge, so iOS 26 draws the status bar in leather rather than fading it. The strip takes pointer events: with `pointer-events: none`, Safari skips it and hazes the top of the header.
 
 ### Feedback sheet
 A "דיווח על באג / הצעה" disclosure-free row in its own inset group on הגדרות, above the version line. It opens a full-screen modal with a leather header: ביטול, the title דיווח, and a באג / הצעה segment. Below it are an inset "תיאור" text area, a footnote saying what is sent, and a full-width "פתיחה ב-GitHub" button that stays disabled until there is text.
+
+### Version row and what's new sheet
+The version line "גרסה X · עודכנה …" is the last row on הגדרות, a disclosure row in its own inset group. It opens "מה חדש", a half-height sheet (it can be dragged to full height) with a leather header, the title מה חדש and סגירה at the end. Each release is an inset group headed "גרסה X", with "חדש" and "תיקונים" items holding bulleted lines. The same sheet opens by itself once after an update, with only the releases not seen yet.
+
+### Update bar
+When a new version is waiting, a flat bar sits directly above the tab bar on every tab: an item-background ground with a hairline top rule, a grey × (לא עכשיו) at the start, the label "גרסה חדשה זמינה", and a small round filled "עדכון" button in the primary ink at the end. No gold.
 
 ## Do's and Don'ts
 

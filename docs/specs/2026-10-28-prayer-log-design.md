@@ -23,7 +23,7 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
 17. **Short spine (added 2026-10-29, extends 14):** a ק״ש בלבד mark is a half-height bare leather spine on every shelf (היום, לוח cells, סטטיסטיקה).
 18. **תפילין and טלית (added 2026-10-29):** one check each per day, inside the שחרית row. תפילין is hidden on שבת, יום טוב (ראש השנה and יום כיפור included) and חול המועד (הושענא רבה included), following the Israeli custom; it shows on ט׳ באב, when they are worn at מנחה. טלית shows every day.
 19. **Counts (added 2026-10-29, extends 3):** השבוע on היום lists ק״ש בלבד, תפילין and טלית alongside the existing rows; סטטיסטיקה adds a ק״ש column to the per-prayer table and a תפילין וטלית group. The תפילין denominator counts only days they are worn. No streaks or shelves for תפילין and טלית.
-20. **One leather block (added 2026-10-29, clarifies 14):** the header band is one solid block from the status bar through the date line. It never shows the page ground during iOS page transitions, never fades while scrolling, and stays leather when the page is pulled down. On iOS 26 the installed app keeps the status bar leather too (clarified 2026-10-30): Safari ignores `theme-color` there and colours it from the page background or a fixed bar at the top edge, so both are leather.
+20. **One leather block (added 2026-10-29, clarifies 14):** the header band is one solid block from the status bar through the date line. It never shows the page ground during iOS page transitions, never fades while scrolling, and stays leather when the page is pulled down. On iOS 26 the installed app keeps the status bar leather too (clarified 2026-10-30): Safari ignores `theme-color` there and colours it from the page background or a fixed bar at the top edge, so both are leather. The fixed bar must take pointer events (clarified 2026-10-31): Safari skips a `pointer-events: none` bar and draws a soft haze over the top of the header instead.
 21. **בית כנסת (added 2026-10-29, extends 2):**
     - A prayer marked במניין can carry the place it was said in. Marking במניין stays one tap.
     - The prayer's default place is filled in automatically: the place from the latest day on which that prayer has one. Each prayer keeps its own default, so מנחה's place doesn't carry over to ערבית.
@@ -42,6 +42,14 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
     - It opens a sheet with a באג / הצעה switch and a description field.
     - "פתיחה ב-GitHub" opens a prefilled new issue in the public prayer-log repo, labelled `bug` or `feature`. The title is the first line of the text, cut at 80 characters with "…".
     - The issue carries the browser's user agent, the version and the build time. No prayer data is ever sent.
+24. **Updates (added 2026-10-31):**
+    - The app checks for a new version when it opens, when it comes back from the background, and every hour while open. It skips the check while offline.
+    - A downloaded version waits. A "גרסה חדשה זמינה · עדכון" bar sits above the tab bar on every tab, and "עדכון" reloads into the new version.
+    - × hides the bar until the app comes back from the background. An ignored update applies the next time the app is fully closed and reopened.
+25. **מה חדש (added 2026-10-31, extends 22):**
+    - After an update, a "מה חדש" sheet opens once with every release since the last one seen, newest first, each with "חדש" and "תיקונים". With nothing seen before, it shows only the current release.
+    - Tapping the version line in הגדרות opens the sheet with every release.
+    - The last seen version is kept on the phone and is not in the backup.
 
 ## Assumptions (accepted by the user)
 

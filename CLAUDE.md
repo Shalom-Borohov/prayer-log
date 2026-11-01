@@ -17,7 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run build`: `tsc -b && vite build`. This is the type check; there is no separate `tsc` script.
   - `vite.config.ts` stamps the `package.json` version and the build time into `__APP_VERSION__` / `__APP_BUILT_AT__`, which הגדרות shows.
 
-Every PR that ships raises `version` in `package.json`: the minor number for features, the patch number for fixes (spec decision 22).
+Every PR that ships raises `version` in `package.json`: the minor number for features, the patch number for fixes (spec decision 22). The same PR adds a release to `src/appUpdate/changelog.ts`: short Hebrew lines for what the user will notice, under `features` and `fixes`. The phone shows them once after updating (spec decision 25).
 
 CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` deploys to GitHub Pages on every push to `main`, with base path `/prayer-log/`.
 
@@ -31,7 +31,7 @@ CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` d
 
 ## Architecture
 
-The code is split into layers, and imports go downward only: `pages` → `data` / `domain` → `copy`.
+The code is split into layers, and imports go downward only: `pages` → `data` / `domain` → `copy`. `Tabs` and `pages/settings` also import `appUpdate`, which keeps its own release logic and seen-version storage and imports only `copy`.
 
 - **`src/domain/`**: pure functions over `DayRecord[]`, with no React and no Dexie.
   - Types live in `types.ts`.
@@ -53,7 +53,11 @@ The code is split into layers, and imports go downward only: `pages` → `data` 
 - **UI**: Ionic React in iOS mode.
   - Overlays use the hooks (`useIonActionSheet`, `useIonAlert`, `useIonToast`).
   - Styling is plain CSS with tokens in `theme.css`. Gold is reserved for the במניין state.
-  - The page `body` is leather, and `index.html` has a static `.status-bar-strip` (styled in `leather-header.css`). iOS 26 colours the installed app's status bar from these, not from `theme-color` (spec decision 20), so keep both.
+  - The page `body` is leather, and `index.html` has a static `.status-bar-strip` (styled in `leather-header.css`). iOS 26 colours the installed app's status bar from these, not from `theme-color` (spec decision 20), so keep both. Don't give the strip `pointer-events: none`: Safari then skips it and hazes the top of the header.
+- **`src/appUpdate/`**: the update bar, the "מה חדש" sheet and `changelog.ts`, rendered by `Tabs.tsx` and הגדרות (spec decisions 24, 25).
+  - `registerType: 'prompt'`, so a new service worker waits until the user taps "עדכון" (`UpdateBar`, through `useRegisterSW`).
+  - `updateChecks.ts` calls `registration.update()` when the app becomes visible and every hour. iOS doesn't check on its own when a Home Screen app resumes.
+  - The last seen version is kept in `localStorage`, outside the backup. `test/setup.ts` marks the running version as seen before each test, so the sheet stays out of unrelated tests.
 
 ## Tests
 

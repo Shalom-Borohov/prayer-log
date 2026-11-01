@@ -1,6 +1,9 @@
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react'
 import { calendarOutline, statsChartOutline, sunnyOutline } from 'ionicons/icons'
 import { Navigate, Route } from 'react-router-dom'
+import { UpdateBar } from './appUpdate/UpdateBar'
+import { useWhatsNew } from './appUpdate/useWhatsNew'
+import { WhatsNewSheet } from './appUpdate/WhatsNewSheet'
 import { COMMON_COPY } from './copy/common'
 import { CALENDAR_PATH, STATS_PATH, TODAY_PATH } from './navigation/paths'
 import { CalendarPage } from './pages/calendar/CalendarPage'
@@ -9,6 +12,8 @@ import { StatsPage } from './pages/stats/StatsPage'
 import { DateRoute, TodayRoute } from './pages/today/DayRoutes'
 
 export function Tabs() {
+  const whatsNew = useWhatsNew()
+
   return (
     <IonTabs>
       <IonRouterOutlet>
@@ -20,6 +25,7 @@ export function Tabs() {
         <Route path="stats/settings" element={<SettingsPage />} />
         <Route index element={<Navigate to="today" replace />} />
       </IonRouterOutlet>
+      <UpdateBar />
       <IonTabBar slot="bottom">
         <IonTabButton tab="today" href={TODAY_PATH}>
           <IonIcon icon={sunnyOutline} />
@@ -34,6 +40,7 @@ export function Tabs() {
           <IonLabel>{COMMON_COPY.stats}</IonLabel>
         </IonTabButton>
       </IonTabBar>
+      <WhatsNewSheet {...whatsNew} />
     </IonTabs>
   )
 }

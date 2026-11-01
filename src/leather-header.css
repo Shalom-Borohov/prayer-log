@@ -11,6 +11,7 @@
     --ion-safe-area-top: max(env(safe-area-inset-top), var(--status-bar-strip));
   }
 
+  /* No pointer-events: none here: Safari then skips the strip and hazes the top of the header. */
   .status-bar-strip {
     display: block;
     position: fixed;
@@ -18,7 +19,6 @@
     inset-inline: 0;
     height: var(--status-bar-strip);
     z-index: 2147483647;
-    pointer-events: none;
     background: var(--leather-band);
   }
 }
