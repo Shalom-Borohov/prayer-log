@@ -1,0 +1,58 @@
+import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { resetDb } from '../helpers/db'
+import { buttonByLabel } from '../helpers/ionic'
+import { renderAt } from '../helpers/renderAt'
+import { setVisibility } from '../helpers/visibility'
+
+const pwa = vi.hoisted(() => ({ needRefresh: true, updateServiceWorker: vi.fn(async () => {}) }))
+
+vi.mock('virtual:pwa-register/react', () => ({
+  useRegisterSW: () => ({
+    needRefresh: [pwa.needRefresh, vi.fn()],
+    updateServiceWorker: pwa.updateServiceWorker,
+  }),
+}))
+
+const READY = 'גרסה חדשה זמינה'
+
+beforeEach(async () => {
+  await resetDb()
+  pwa.needRefresh = true
+  pwa.updateServiceWorker.mockClear()
+})
+
+describe('a new version of the app', () => {
+  it.each(['/tabs/today', '/tabs/calendar', '/tabs/stats', '/tabs/stats/settings'])('is offered on %s', async (path) => {
+    renderAt(path)
+
+    expect(await screen.findByText(READY)).toBeInTheDocument()
+  })
+
+  it('updates when עדכון is tapped', async () => {
+    renderAt('/tabs/today')
+
+    fireEvent.click(await screen.findByText('עדכון'))
+
+    expect(pwa.updateServiceWorker).toHaveBeenCalledTimes(1)
+  })
+
+  it('can be put off until the app is opened again', async () => {
+    renderAt('/tabs/today')
+
+    fireEvent.click(await buttonByLabel('לא עכשיו'))
+    await waitFor(() => expect(screen.queryByText(READY)).not.toBeInTheDocument())
+
+    setVisibility('visible')
+
+    expect(await screen.findByText(READY)).toBeInTheDocument()
+  })
+
+  it('shows nothing while there is no new version', async () => {
+    pwa.needRefresh = false
+    renderAt('/tabs/calendar')
+
+    expect(await screen.findAllByText('לוח')).not.toHaveLength(0)
+    expect(screen.queryByText(READY)).not.toBeInTheDocument()
+  })
+})
