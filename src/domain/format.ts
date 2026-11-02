@@ -7,8 +7,14 @@ export const LIST_SEPARATOR = ' · '
 
 const monthFormat = new Intl.DateTimeFormat(MONTH_LOCALE, { month: 'long', year: 'numeric' })
 
+const shortMonthFormat = new Intl.DateTimeFormat(MONTH_LOCALE, { month: 'short' })
+
 export function monthTitle(date: string): string {
   return monthFormat.format(parseIsoDate(date))
+}
+
+export function shortMonth(date: string): string {
+  return shortMonthFormat.format(parseIsoDate(date))
 }
 
 export function weekdayName(date: string): string {

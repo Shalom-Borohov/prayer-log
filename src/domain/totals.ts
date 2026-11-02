@@ -7,6 +7,8 @@ export interface DateRange {
   to: string
 }
 
+export type StatsPeriod = 'week' | 'month' | 'all'
+
 export function weekRange(today: string): DateRange {
   const from = weekStart(today)
 
@@ -47,6 +49,18 @@ function countDay(tally: DayTally, done: boolean | undefined) {
 
 export function trackingStart(records: DayRecord[]): string | null {
   return records.reduce<string | null>((first, day) => (first === null || day.date < first ? day.date : first), null)
+}
+
+export function allTimeRange(records: DayRecord[], today: string): DateRange {
+  return { from: trackingStart(records) ?? today, to: today }
+}
+
+export function periodRange(period: StatsPeriod, records: DayRecord[], today: string): DateRange {
+  if (period === 'week') {
+    return weekRange(today)
+  }
+
+  return period === 'month' ? monthRange(today) : allTimeRange(records, today)
 }
 
 export function periodTotals(records: DayRecord[], from: string, to: string, today: string): PeriodTotals {

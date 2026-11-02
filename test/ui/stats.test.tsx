@@ -93,6 +93,32 @@ describe('stats', () => {
     expect(cells(table, 'ערבית')).toEqual(['0', '0'])
   })
 
+  it('charts this week by day, with the shelves under the tables', async () => {
+    await db.days.bulkPut([day('2026-10-26', { prayers: { shacharit: 'minyan', mincha: 'alone', maariv: 'shema' } })])
+    renderAt('/tabs/stats')
+
+    expect(await screen.findByRole('group', { name: 'לפי יום' })).toBeInTheDocument()
+    expect(await screen.findByRole('img', { name: /יום שני 26\.10: 1 במניין, 2 ביחידות או ק״ש, מתוך 3/ })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'מדף' })).toBeInTheDocument()
+  })
+
+  it('shows all time since the first record, without the shelves', async () => {
+    await db.days.bulkPut([
+      ...days('2026-09-14', '2026-09-18', { prayers: { shacharit: 'minyan' } }),
+      day('2026-10-26', { prayers: { shacharit: 'minyan', mincha: 'alone' } }),
+    ])
+    renderAt('/tabs/stats')
+
+    const totals = await screen.findByRole('table', { name: 'לפי תפילה' })
+
+    ionChange(await ionElement('ion-segment'), 'all')
+
+    await waitFor(() => expect(cells(totals, 'שחרית')).toEqual(['6', '0', '0', '45']))
+    expect(screen.getByRole('group', { name: 'לפי שבוע' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /25\.10–28\.10: 1 במניין, 1 ביחידות או ק״ש, מתוך 9/ })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'מדף' })).not.toBeInTheDocument()
+  })
+
   it('explains the empty state', async () => {
     renderAt('/tabs/stats')
 

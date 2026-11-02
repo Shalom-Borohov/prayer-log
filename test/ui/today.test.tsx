@@ -210,8 +210,13 @@ describe('today', () => {
   it('steps back through past days but never into the future', async () => {
     renderAt('/tabs/today')
 
-    expect(await buttonByLabel('היום הבא')).toHaveAttribute('disabled')
-    fireEvent.click(await buttonByLabel('היום הקודם'))
+    const next = await buttonByLabel('היום הבא')
+    const previous = await buttonByLabel('היום הקודם')
+
+    expect(next).toHaveAttribute('disabled')
+    expect(next.closest('ion-footer')).not.toBeNull()
+    expect(previous.closest('ion-footer')).not.toBeNull()
+    fireEvent.click(previous)
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/today/2026-10-27'))
     expect(await screen.findByText('יום שלישי · ט״ז בחשון · 27.10')).toBeInTheDocument()

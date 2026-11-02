@@ -9,6 +9,7 @@ colors:
   gold-stamp-dark: "#d9ae4e"
   leather-band: "#2b2320"
   leather-band-dark: "#1f1916"
+  leather-plain-dark: "#806a5b"
   leather-band-text: "#e8d7ad"
   leather-shacharit: "#1f4d3a"
   leather-shacharit-dark: "#3e7a5e"
@@ -171,7 +172,7 @@ Every day is a spine on a shelf of sefarim, and a prayer במניין earns its 
 
 The shelf is the one signature and it repeats at every scale: a 7-day mini shelf at the trailing edge of each row on היום, a row of tiny spines under each day number in לוח, and full-period shelves per prayer in סטטיסטיקה. A slot is always one of five states (gold, bare leather, short bare leather for ק״ש בלבד, empty dashed, nothing), stamped in place; rows never move and nothing reflows.
 
-Density is Operate-mode: one tap per prayer, one-handed, seconds at a time. Numbers live in hairline-ruled tables with tabular figures, not in card stacks or charts. Everything is flat colour; the only shadows are the native segmented-control thumb and the inset bands that paint gold onto a spine.
+Density is Operate-mode: one tap per prayer, one-handed, seconds at a time. Numbers live in hairline-ruled tables with tabular figures, not in card stacks. The one chart is the trend columns on סטטיסטיקה, built from the same materials: gold, bare leather and the dashed empty outline. Everything is flat colour; the only shadows are the native segmented-control thumb and the inset bands that paint gold onto a spine.
 
 **Key Characteristics:**
 - Native iOS skeleton (grouped ground, inset groups, large title, tab bar) with a dark leather shell band.
@@ -201,6 +202,7 @@ Spines use the display hue, so they lift in dark mode to stay visible on black. 
 
 ### Neutral
 - **Shell Leather** (leather-band, leather-band-dark): one solid block holding the toolbar, the condensed large-title header and the date (or month) line inside it. It stays leather during iOS page transitions and above the page when it is pulled down. Also the today circle in the month grid.
+- **Plain Leather** (leather-band, leather-plain-dark): the ביחידות and ק״ש בלבד fill in the trend columns. It is the shell leather in light mode and a lighter warm leather in dark mode, where the shell leather would vanish into the card (3.35:1 on the dark card). It is not a prayer hue.
 - **Parchment Text** (leather-band-text): the date line (weekday · Hebrew date · Gregorian) on the band.
 - **Grouped Ground** (grouped-ground / grouped-ground-dark) and **Cell** (cell / cell-dark): the iOS system grouped background and its inset cells. Modals in dark mode step to #1c1c1e ground and #2c2c2e cells.
 - **Labels** (label, label-secondary, label-tertiary and dark pairs): primary text, secondary text for streak lines, group labels, footers and table column heads; tertiary for disabled future days and the unchecked Torah ring. Secondary is raised to 0.75 alpha in light mode for legibility.
@@ -241,7 +243,7 @@ Single column, phone-first, RTL. Content sits on the grouped ground in inset gro
 
 Day rows are 12px/16px/14px padded with a 44px minimum top line: title and streak line on the leading side, the mini shelf on the trailing side, then a full-width attendance control 10px below. Every interactive target is at least 44px; the attendance segments are 40px inside a 2px-padded track (44px total).
 
-The month grid is seven equal columns with 4px gaps inside one 10px-cornered cell, 8–12px inner padding, each day at least 62px tall. Statistics stack: period switch, per-prayer table, Torah table, period shelves, streaks table, top to bottom with 24px between tables.
+The month grid is seven equal columns with 4px gaps inside one 10px-cornered cell, 8–12px inner padding, each day at least 62px tall. Statistics stack: period switch (השבוע, החודש, כל הזמנים), trend columns, per-prayer table, Torah table, תפילין וטלית table, period shelves (not on כל הזמנים), streaks table, top to bottom with 24px between tables.
 
 Spacing steps observed: 2, 3, 4, 8, 12, 16, 20, 32px.
 
@@ -303,7 +305,9 @@ Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px bo
 An inset list at the top of היום (today only) with one disclosure row per day that needs filling, such as an unmarked day or a blank Friday-night ערבית. Label text is gilded; rows navigate to that day. Absent when nothing needs filling.
 
 ### Navigation
-Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with gold-leaf chevrons for previous and next day or month, a back button to לוח on past days, and a settings gear on סטטיסטיקה. Large titles collapse into the toolbar on scroll.
+Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with a back button to לוח on past days and a settings gear on סטטיסטיקה. Large titles collapse into the toolbar on scroll.
+
+Previous and next day (היום and days opened from לוח) or month (לוח) sit in a footer bar just above the tab bar, in thumb reach: item-background ground with the iOS hairline top rule, "› הקודם" at the start and "הבא ‹" at the end in the primary ink. Next is disabled on today and on the current month.
 
 The leather reaches the top of the screen. The page background is leather, and in the installed app a flat 12px leather strip is pinned to the top edge, so iOS 26 draws the status bar in leather rather than fading it. The strip takes pointer events: with `pointer-events: none`, Safari skips it and hazes the top of the header.
 
@@ -331,5 +335,5 @@ When a new version is waiting, a flat bar sits directly above the tab bar on eve
 - **Don't** mark a row's prayer with a coloured border along the row edge; hue lives in spines, the selected segment and the table key.
 - **Don't** use the habit-tracker idiom of green checkmarks, flames or heat grids for completion; completion is the gold spine. (The native checkbox in the Torah check is an input, not a completion badge.)
 - **Don't** give a prayer a colour other than its leather, or let one leather stand in for another.
-- **Don't** stack statistics into cards or charts; use the ruled tables and shelves.
+- **Don't** stack statistics into cards, or add charts beyond the trend columns; use the ruled tables and shelves.
 - **Don't** introduce a display face or a custom type scale; SF at iOS text-style sizes only.

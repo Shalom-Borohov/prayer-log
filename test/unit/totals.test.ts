@@ -1,8 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { monthRange, periodTotals, weekRange } from '../../src/domain/totals'
-import { allMinyan, day, days } from '../helpers/days'
-
-const tally = (minyan: number, alone: number, total: number, shema = 0) => ({ minyan, alone, shema, total })
+import { allTimeRange, monthRange, periodTotals, weekRange } from '../../src/domain/totals'
+import { allMinyan, day, days, tally } from '../helpers/days'
 
 describe('periodTotals', () => {
   it('is all zeros with no records', () => {
@@ -110,5 +108,17 @@ describe('weekRange', () => {
 describe('monthRange', () => {
   it('is the Gregorian month', () => {
     expect(monthRange('2026-10-28')).toEqual({ from: '2026-10-01', to: '2026-10-31' })
+  })
+})
+
+describe('allTimeRange', () => {
+  it('runs from the first record through today', () => {
+    const records = [day('2026-10-20'), day('2026-09-14'), day('2026-10-27')]
+
+    expect(allTimeRange(records, '2026-10-28')).toEqual({ from: '2026-09-14', to: '2026-10-28' })
+  })
+
+  it('is just today with no records', () => {
+    expect(allTimeRange([], '2026-10-28')).toEqual({ from: '2026-10-28', to: '2026-10-28' })
   })
 })

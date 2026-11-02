@@ -16,22 +16,22 @@ import { settingsOutline } from 'ionicons/icons'
 import { useState } from 'react'
 import { COMMON_COPY } from '../../copy/common'
 import { useAllDays } from '../../data/hooks'
-import { monthRange, weekRange } from '../../domain/totals'
+import { periodRange, type StatsPeriod } from '../../domain/totals'
 import { useToday } from '../../hooks/useToday'
 import { SETTINGS_PATH } from '../../navigation/paths'
 import { STATS_COPY } from './copy'
 import { PeriodShelves, PeriodTable, StreakTable } from './StatsTables'
+import { TrendChart } from './TrendChart'
 import './stats.css'
 
-type Period = 'week' | 'month'
-
-const isPeriod = (selected: SegmentValue | undefined): selected is Period => selected === 'week' || selected === 'month'
+const isPeriod = (selected: SegmentValue | undefined): selected is StatsPeriod =>
+  selected === 'week' || selected === 'month' || selected === 'all'
 
 export function StatsPage() {
   const today = useToday()
   const records = useAllDays()
-  const [period, setPeriod] = useState<Period>('week')
-  const range = period === 'week' ? weekRange(today) : monthRange(today)
+  const [period, setPeriod] = useState<StatsPeriod>('week')
+  const range = records && periodRange(period, records, today)
 
   return (
     <IonPage>
@@ -57,7 +57,7 @@ export function StatsPage() {
             <p>{STATS_COPY.emptyBody}</p>
           </div>
         )}
-        {records && records.length > 0 && (
+        {records && range && records.length > 0 && (
           <>
             <IonSegment
               className="inset-segment"
@@ -70,9 +70,13 @@ export function StatsPage() {
               <IonSegmentButton value="month">
                 <IonLabel>{STATS_COPY.thisMonth}</IonLabel>
               </IonSegmentButton>
+              <IonSegmentButton value="all">
+                <IonLabel>{STATS_COPY.allTime}</IonLabel>
+              </IonSegmentButton>
             </IonSegment>
+            <TrendChart records={records} range={range} period={period} today={today} />
             <PeriodTable records={records} range={range} today={today} />
-            <PeriodShelves records={records} range={range} today={today} />
+            {period !== 'all' && <PeriodShelves records={records} range={range} today={today} />}
             <StreakTable records={records} today={today} />
           </>
         )}

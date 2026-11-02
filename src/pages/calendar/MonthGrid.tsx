@@ -31,7 +31,7 @@ function marksLabel(record: DayRecord | undefined, date: string, prayers: Prayer
     marks.push(COMMON_COPY.learnedTorah)
   }
 
-  return marks.length > 0 ? marks.join(MARKS_SEPARATOR) : CALENDAR_COPY.unmarked
+  return marks.length > 0 ? marks.join(MARKS_SEPARATOR) : COMMON_COPY.unmarked
 }
 
 export function MonthGrid({ month, today, records, holidayDates, onOpen }: MonthGridProps) {
