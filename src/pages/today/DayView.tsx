@@ -1,16 +1,14 @@
 import {
   IonBackButton,
-  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
-  IonIcon,
   IonPage,
   IonTitle,
   IonToolbar,
   useIonRouter,
 } from '@ionic/react'
-import { chevronBack, chevronForward } from 'ionicons/icons'
+import { PeriodNav } from '../../components/PeriodNav'
 import { COMMON_COPY } from '../../copy/common'
 import { useAllDays } from '../../data/hooks'
 import { LIST_SEPARATOR, gregorianLabel, weekdayName } from '../../domain/format'
@@ -52,14 +50,6 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
               <IonBackButton defaultHref={CALENDAR_PATH} text={COMMON_COPY.calendar} />
             </IonButtons>
           )}
-          <IonButtons slot="end">
-            <IonButton aria-label={TODAY_COPY.previousDay} onClick={() => openDay(addDays(date, -1))}>
-              <IonIcon slot="icon-only" icon={chevronForward} />
-            </IonButton>
-            <IonButton aria-label={TODAY_COPY.nextDay} disabled={date >= today} onClick={() => openDay(addDays(date, 1))}>
-              <IonIcon slot="icon-only" icon={chevronBack} />
-            </IonButton>
-          </IonButtons>
           <IonTitle>{title}</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -107,6 +97,13 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
           </>
         )}
       </IonContent>
+      <PeriodNav
+        previousLabel={TODAY_COPY.previousDay}
+        nextLabel={TODAY_COPY.nextDay}
+        onPrevious={() => openDay(addDays(date, -1))}
+        onNext={() => openDay(addDays(date, 1))}
+        nextDisabled={date >= today}
+      />
     </IonPage>
   )
 }

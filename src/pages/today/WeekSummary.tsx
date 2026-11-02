@@ -3,7 +3,6 @@ import { COMMON_COPY } from '../../copy/common'
 import { gregorianLabel } from '../../domain/format'
 import { periodTotals, weekRange } from '../../domain/totals'
 import type { DayRecord } from '../../domain/types'
-import { TODAY_COPY } from './copy'
 
 export function WeekSummary({ records, date, today }: { records: DayRecord[]; date: string; today: string }) {
   const week = weekRange(date)
@@ -11,7 +10,7 @@ export function WeekSummary({ records, date, today }: { records: DayRecord[]; da
   const title =
     week.from === weekRange(today).from
       ? COMMON_COPY.thisWeek
-      : TODAY_COPY.weekRange(gregorianLabel(week.from), gregorianLabel(week.to))
+      : COMMON_COPY.dateRange(gregorianLabel(week.from), gregorianLabel(week.to))
 
   const { prayers, tefillin, tallit, torah } = periodTotals(records, week.from, week.to, today)
 

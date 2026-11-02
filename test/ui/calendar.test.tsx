@@ -64,13 +64,20 @@ describe('calendar', () => {
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/calendar/2026-10-15'))
     expect(await screen.findByText('יום חמישי · ד׳ בחשון · 15.10')).toBeInTheDocument()
+    expect((await buttonByLabel('היום הקודם')).closest('ion-footer')).not.toBeNull()
+    expect((await buttonByLabel('היום הבא')).closest('ion-footer')).not.toBeNull()
   })
 
   it('moves between months but not past this one', async () => {
     renderAt('/tabs/calendar')
 
-    expect(await buttonByLabel('החודש הבא')).toHaveAttribute('disabled')
-    fireEvent.click(await buttonByLabel('החודש הקודם'))
+    const next = await buttonByLabel('החודש הבא')
+    const previous = await buttonByLabel('החודש הקודם')
+
+    expect(next).toHaveAttribute('disabled')
+    expect(next.closest('ion-footer')).not.toBeNull()
+    expect(previous.closest('ion-footer')).not.toBeNull()
+    fireEvent.click(previous)
 
     expect(await screen.findByText('ספטמבר 2026')).toBeInTheDocument()
     expect(await screen.findByText('יום כיפור')).toBeInTheDocument()

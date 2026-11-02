@@ -4,6 +4,7 @@ import {
   fullDateLabel,
   gregorianLabel,
   monthTitle,
+  shortMonth,
   shortWeekday,
   streakLabel,
   weekdayName,
@@ -63,5 +64,11 @@ describe('streakLabel', () => {
 describe('monthTitle', () => {
   it('names the Gregorian month in Hebrew', () => {
     expect(monthTitle('2026-10-28')).toBe('אוקטובר 2026')
+  })
+})
+
+describe('shortMonth', () => {
+  it('abbreviates the Gregorian month in Hebrew', () => {
+    expect(shortMonth('2026-10-28')).toBe('אוק׳')
   })
 })

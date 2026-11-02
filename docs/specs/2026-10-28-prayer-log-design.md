@@ -50,6 +50,12 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
     - After an update, a "מה חדש" sheet opens once with every release since the last one seen, newest first, each with "חדש" and "תיקונים". With nothing seen before, it shows only the current release.
     - Tapping the version line in הגדרות opens the sheet with every release.
     - The last seen version is kept on the phone and is not in the backup.
+26. **כל הזמנים and the trend graph (added 2026-11-02, extends 3 and 14):**
+    - סטטיסטיקה switches between השבוע, החודש and כל הזמנים. כל הזמנים runs from the first day with any record to today (assumption 3).
+    - Above the per-prayer table, a graph shows one column per day (השבוע), per Sunday-start week clipped to the month (החודש), or for כל הזמנים per week while the record spans at most 12 weeks and per month after that.
+    - Every column with prayers due is full height, so a period still in progress or starting mid-way doesn't look like a drop. It shows shares of the prayers due, counted like the tables (מוסף included, nothing before the first record or after today): gold for במניין, plain leather (not a prayer hue) for ביחידות and ק״ש בלבד together, and the dashed rest for unmarked. Unlike the tables (assumption 4), the graph counts today's prayers only once they are marked, so prayers still ahead today never show as a gap. Days of the week still ahead keep an empty slot. The counts stay in the tables and in the graph's spoken label, which names a week by its first and last day.
+    - The period shelves show on השבוע and החודש only.
+27. **Bottom navigation bar (added 2026-11-02, clarifies 7):** the ‹ › that step a day on היום (and on a day opened from לוח) and a month on לוח sit in a bar just above the tab bar, in reach of the thumb, as "הקודם" and "הבא". The header keeps only the title, date line, back button and gear.
 
 ## Assumptions (accepted by the user)
 

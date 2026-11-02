@@ -7,7 +7,6 @@ export const TODAY_COPY = {
   nextDay: 'היום הבא',
   torahNote: 'מה למדתי',
   torahNotePlaceholder: 'מה למדתי…',
-  weekRange: (from: string, to: string) => `${from}–${to}`,
   placeLabel: (prayer: string, place: string) => `בית כנסת ב${prayer}: ${place}`,
   placeSheet: (prayer: string) => `בית כנסת · ${prayer}`,
   newPlace: 'מקום חדש…',

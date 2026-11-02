@@ -1,9 +1,6 @@
 import {
-  IonButton,
-  IonButtons,
   IonContent,
   IonHeader,
-  IonIcon,
   IonItem,
   IonLabel,
   IonList,
@@ -13,8 +10,8 @@ import {
   IonToolbar,
   useIonRouter,
 } from '@ionic/react'
-import { chevronBack, chevronForward } from 'ionicons/icons'
 import { useState } from 'react'
+import { PeriodNav } from '../../components/PeriodNav'
 import { COMMON_COPY } from '../../copy/common'
 import { useAllDays } from '../../data/hooks'
 import { LIST_SEPARATOR, gregorianLabel, monthTitle } from '../../domain/format'
@@ -44,18 +41,6 @@ export function CalendarPage() {
     <IonPage>
       <IonHeader className="leather-header">
         <IonToolbar>
-          <IonButtons slot="end">
-            <IonButton aria-label={CALENDAR_COPY.previousMonth} onClick={() => setMonth(monthStart(addDays(month, -1)))}>
-              <IonIcon slot="icon-only" icon={chevronForward} />
-            </IonButton>
-            <IonButton
-              aria-label={CALENDAR_COPY.nextMonth}
-              disabled={month >= monthStart(today)}
-              onClick={() => setMonth(addDays(monthEnd(month), 1))}
-            >
-              <IonIcon slot="icon-only" icon={chevronBack} />
-            </IonButton>
-          </IonButtons>
           <IonTitle>{COMMON_COPY.calendar}</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -88,6 +73,13 @@ export function CalendarPage() {
           </IonList>
         )}
       </IonContent>
+      <PeriodNav
+        previousLabel={CALENDAR_COPY.previousMonth}
+        nextLabel={CALENDAR_COPY.nextMonth}
+        onPrevious={() => setMonth(monthStart(addDays(month, -1)))}
+        onNext={() => setMonth(addDays(monthEnd(month), 1))}
+        nextDisabled={month >= monthStart(today)}
+      />
     </IonPage>
   )
 }

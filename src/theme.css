@@ -20,6 +20,7 @@
   --app-raised: #ffffff;
 
   --leather-band: #2b2320;
+  --leather-plain: var(--leather-band);
   --leather-band-text: #e8d7ad;
   --gold-leaf: #e2c27a;
   --gold: #a87a1f;
@@ -59,6 +60,7 @@
     --app-raised: #636366;
 
     --leather-band: #1f1916;
+    --leather-plain: #806a5b;
     --gold: #d9ae4e;
 
     --leather-shacharit: #3e7a5e;
