@@ -1,9 +1,6 @@
 import {
-  IonButton,
-  IonButtons,
   IonContent,
   IonHeader,
-  IonIcon,
   IonLabel,
   IonPage,
   IonSegment,
@@ -12,13 +9,12 @@ import {
   IonToolbar,
   type SegmentValue,
 } from '@ionic/react'
-import { settingsOutline } from 'ionicons/icons'
 import { useState } from 'react'
+import { SettingsButton } from '../../components/SettingsButton'
 import { COMMON_COPY } from '../../copy/common'
 import { useAllDays } from '../../data/hooks'
 import { periodRange, type StatsPeriod } from '../../domain/totals'
 import { useToday } from '../../hooks/useToday'
-import { SETTINGS_PATH } from '../../navigation/paths'
 import { STATS_COPY } from './copy'
 import { PeriodShelves, PeriodTable, StreakTable } from './StatsTables'
 import { TrendChart } from './TrendChart'
@@ -37,11 +33,7 @@ export function StatsPage() {
     <IonPage>
       <IonHeader className="leather-header">
         <IonToolbar>
-          <IonButtons slot="end">
-            <IonButton aria-label={COMMON_COPY.settings} routerLink={SETTINGS_PATH}>
-              <IonIcon slot="icon-only" icon={settingsOutline} />
-            </IonButton>
-          </IonButtons>
+          <SettingsButton tab="stats" />
           <IonTitle>{COMMON_COPY.stats}</IonTitle>
         </IonToolbar>
       </IonHeader>

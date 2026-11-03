@@ -305,9 +305,11 @@ Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px bo
 An inset list at the top of היום (today only) with one disclosure row per day that needs filling, such as an unmarked day or a blank Friday-night ערבית. Label text is gilded; rows navigate to that day. Absent when nothing needs filling.
 
 ### Navigation
-Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with a back button to לוח on past days and a settings gear on סטטיסטיקה. Large titles collapse into the toolbar on scroll.
+Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with a back button to לוח on days opened from לוח, and a settings gear at the end of the toolbar on every page but הגדרות. הגדרות opens inside the current tab, with a back button named for the tab. Large titles collapse into the toolbar on scroll.
 
 Previous and next day (היום and days opened from לוח) or month (לוח) sit in a footer bar just above the tab bar, in thumb reach: item-background ground with the iOS hairline top rule, "› הקודם" at the start and "הבא ‹" at the end in the primary ink. Next is disabled on today and on the current month.
+
+A horizontal swipe on the content does the same: drag left for הקודם, right for הבא. Only the content under the date line follows the finger; the leather band, the footer bar and the tab bar stay put. A committed swipe slides the content off (180ms ease-out) and the new day or month in from the other side; a short drag springs back, and a drag toward the future moves at a fifth of the finger's distance before springing back. Reduce motion drops the slides.
 
 The leather reaches the top of the screen. The page background is leather, and in the installed app a flat 12px leather strip is pinned to the top edge, so iOS 26 draws the status bar in leather rather than fading it. The strip takes pointer events: with `pointer-events: none`, Safari skips it and hazes the top of the header.
 

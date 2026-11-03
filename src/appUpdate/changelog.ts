@@ -2,6 +2,14 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.3.0',
+    features: [
+      'גלגל השיניים של ההגדרות נמצא עכשיו בכל מסך',
+      'אפשר להחליק ימינה ושמאלה כדי לעבור בין ימים ובין חודשים',
+    ],
+    fixes: [],
+  },
+  {
     version: '1.2.0',
     features: [
       'בסטטיסטיקה יש גרף שמראה כמה תפילות היו במניין בכל יום, שבוע או חודש',

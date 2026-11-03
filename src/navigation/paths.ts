@@ -1,17 +1,19 @@
 const TABS_PATH = '/tabs'
 
-export const TODAY_PATH = `${TABS_PATH}/today`
-
-export const CALENDAR_PATH = `${TABS_PATH}/calendar`
-
-export const STATS_PATH = `${TABS_PATH}/stats`
-
-export const SETTINGS_PATH = `${STATS_PATH}/settings`
-
 export type DayTab = 'today' | 'calendar'
 
-export const dayTabPath = (tab: DayTab) => `${TABS_PATH}/${tab}`
+export type Tab = DayTab | 'stats'
+
+export const tabPath = (tab: Tab) => `${TABS_PATH}/${tab}`
+
+export const TODAY_PATH = tabPath('today')
+
+export const CALENDAR_PATH = tabPath('calendar')
+
+export const STATS_PATH = tabPath('stats')
+
+export const settingsPath = (tab: Tab) => `${tabPath(tab)}/settings`
 
 export function dayPath(tab: DayTab, date: string, today: string): string {
-  return tab === 'today' && date === today ? TODAY_PATH : `${dayTabPath(tab)}/${date}`
+  return tab === 'today' && date === today ? TODAY_PATH : `${tabPath(tab)}/${date}`
 }

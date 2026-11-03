@@ -19,7 +19,7 @@ import { downloadOutline, shareOutline } from 'ionicons/icons'
 import { type ChangeEvent, useRef } from 'react'
 import { COMMON_COPY } from '../../copy/common'
 import { type Backup, exportBackup, restoreBackup } from '../../data/backup'
-import { STATS_PATH } from '../../navigation/paths'
+import { type Tab, tabPath } from '../../navigation/paths'
 import { BACKUP_FILE_ACCEPT, isShareCancel, readBackup, shareBackup } from './backupFile'
 import { SETTINGS_COPY } from './copy'
 import { FeedbackSettings } from './FeedbackSettings'
@@ -29,7 +29,7 @@ const TOAST_DURATION_MS = 2500
 
 const errorMessage = (error: unknown) => (error instanceof Error ? error.message : SETTINGS_COPY.actionFailed)
 
-export function SettingsPage() {
+export function SettingsPage({ tab }: { tab: Tab }) {
   const fileInput = useRef<HTMLInputElement>(null)
   const [presentAlert] = useIonAlert()
   const [presentToast] = useIonToast()
@@ -86,7 +86,7 @@ export function SettingsPage() {
       <IonHeader className="leather-header">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref={STATS_PATH} text={COMMON_COPY.stats} />
+            <IonBackButton defaultHref={tabPath(tab)} text={COMMON_COPY[tab]} />
           </IonButtons>
           <IonTitle>{COMMON_COPY.settings}</IonTitle>
         </IonToolbar>
