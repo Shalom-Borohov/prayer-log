@@ -18,11 +18,13 @@ export function Tabs() {
     <IonTabs>
       <IonRouterOutlet>
         <Route path="today" element={<TodayRoute />} />
+        <Route path="today/settings" element={<SettingsPage tab="today" />} />
         <Route path="today/:date" element={<DateRoute tab="today" />} />
         <Route path="calendar" element={<CalendarPage />} />
+        <Route path="calendar/settings" element={<SettingsPage tab="calendar" />} />
         <Route path="calendar/:date" element={<DateRoute tab="calendar" />} />
         <Route path="stats" element={<StatsPage />} />
-        <Route path="stats/settings" element={<SettingsPage />} />
+        <Route path="stats/settings" element={<SettingsPage tab="stats" />} />
         <Route index element={<Navigate to="today" replace />} />
       </IonRouterOutlet>
       <UpdateBar />
