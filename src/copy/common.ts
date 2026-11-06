@@ -16,6 +16,8 @@ export const COMMON_COPY = {
   settings: 'הגדרות',
   cancel: 'ביטול',
   close: 'סגירה',
+  actionFailed: 'הפעולה נכשלה',
+  noBackupYet: 'עדיין לא נעשה גיבוי',
   previous: 'הקודם',
   next: 'הבא',
   unmarked: 'לא סומן',

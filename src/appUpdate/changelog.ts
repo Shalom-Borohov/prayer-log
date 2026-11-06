@@ -2,6 +2,14 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.4.0',
+    features: [
+      'אחרי שבוע בלי גיבוי מופיעה שורה במסך היום, ולחיצה עליה פותחת את השיתוף של הגיבוי',
+      'בהגדרות כתוב מתי היה הגיבוי האחרון',
+    ],
+    fixes: [],
+  },
+  {
     version: '1.3.0',
     features: [
       'גלגל השיניים של ההגדרות נמצא עכשיו בכל מסך',

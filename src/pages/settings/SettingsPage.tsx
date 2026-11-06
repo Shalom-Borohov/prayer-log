@@ -13,45 +13,35 @@ import {
   IonTitle,
   IonToolbar,
   useIonAlert,
-  useIonToast,
 } from '@ionic/react'
 import { downloadOutline, shareOutline } from 'ionicons/icons'
 import { type ChangeEvent, useRef } from 'react'
+import { BACKUP_FILE_ACCEPT, readBackup } from '../../backup/backupFile'
+import { saveLastBackup, useLastBackup } from '../../backup/lastBackup'
+import { useExportBackup } from '../../backup/useExportBackup'
 import { COMMON_COPY } from '../../copy/common'
-import { type Backup, exportBackup, restoreBackup } from '../../data/backup'
+import { type Backup, restoreBackup } from '../../data/backup'
+import { dateTimeLabel } from '../../domain/format'
+import { useToast } from '../../hooks/useToast'
 import { type Tab, tabPath } from '../../navigation/paths'
-import { BACKUP_FILE_ACCEPT, isShareCancel, readBackup, shareBackup } from './backupFile'
 import { SETTINGS_COPY } from './copy'
 import { FeedbackSettings } from './FeedbackSettings'
 import { VersionSettings } from './VersionSettings'
 
-const TOAST_DURATION_MS = 2500
-
-const errorMessage = (error: unknown) => (error instanceof Error ? error.message : SETTINGS_COPY.actionFailed)
-
 export function SettingsPage({ tab }: { tab: Tab }) {
   const fileInput = useRef<HTMLInputElement>(null)
   const [presentAlert] = useIonAlert()
-  const [presentToast] = useIonToast()
-
-  const toast = (message: string) => presentToast({ message, duration: TOAST_DURATION_MS, position: 'top' })
-
-  async function exportData() {
-    try {
-      await shareBackup(await exportBackup(Date.now()))
-    } catch (error) {
-      if (!isShareCancel(error)) {
-        void toast(errorMessage(error))
-      }
-    }
-  }
+  const { toast, toastError } = useToast()
+  const exportData = useExportBackup()
+  const lastBackup = useLastBackup()
 
   async function restore(backup: Backup) {
     try {
       await restoreBackup(backup)
+      saveLastBackup(backup.exportedAt)
       void toast(SETTINGS_COPY.backupRestored)
     } catch (error) {
-      void toast(errorMessage(error))
+      void toastError(error)
     }
   }
 
@@ -77,7 +67,7 @@ export function SettingsPage({ tab }: { tab: Tab }) {
         ],
       })
     } catch (error) {
-      void toast(errorMessage(error))
+      void toastError(error)
     }
   }
 
@@ -105,6 +95,9 @@ export function SettingsPage({ tab }: { tab: Tab }) {
             <IonLabel>{SETTINGS_COPY.importBackup}</IonLabel>
           </IonItem>
         </IonList>
+        <IonNote className="list-footer">
+          {lastBackup === null ? COMMON_COPY.noBackupYet : SETTINGS_COPY.lastBackup(dateTimeLabel(lastBackup))}
+        </IonNote>
         <IonNote className="list-footer">{SETTINGS_COPY.storageNote}</IonNote>
         <FeedbackSettings />
         <VersionSettings />

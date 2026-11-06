@@ -1,10 +1,12 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/data/db'
+import { chooseBackupFile } from '../helpers/backupFile'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
 import { ionChange, ionField, ionInput } from '../helpers/ionic'
+import { toasts } from '../helpers/overlays'
 import { renderAt } from '../helpers/renderAt'
 
 const shabbat = day('2026-10-24', { prayers: { shacharit: 'minyan', musaf: 'minyan' }, torah: true, torahNote: 'פרשת השבוע' })
@@ -15,14 +17,6 @@ async function readJson(file: Blob | undefined) {
   }
 
   return JSON.parse(await file.text())
-}
-
-const toasts = () => Array.from(document.querySelectorAll('ion-toast'), (toast) => toast.message)
-
-function chooseFile(text: string) {
-  fireEvent.change(screen.getByLabelText('קובץ גיבוי'), {
-    target: { files: [new File([text], 'backup.json', { type: 'application/json' })] },
-  })
 }
 
 describe('settings', () => {
@@ -108,7 +102,7 @@ describe('settings', () => {
     renderAt('/tabs/stats/settings')
     await screen.findByText('ייבוא גיבוי')
 
-    chooseFile('{"version":1}')
+    chooseBackupFile('{"version":1}')
 
     await waitFor(() => expect(toasts()).toContain('קובץ הגיבוי לא תקין'))
     expect(await db.days.toArray()).toEqual([shabbat])

@@ -1,5 +1,5 @@
-import { type Backup, parseBackup } from '../../data/backup'
-import { toIsoDate } from '../../domain/logicalDay'
+import { type Backup, parseBackup } from '../data/backup'
+import { toIsoDate } from '../domain/logicalDay'
 
 const BACKUP_FILE_PREFIX = 'prayers-backup-'
 
