@@ -74,6 +74,7 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
     - The last backup time is kept on the phone and is not in the backup.
 32. **Recovery screen (added 2026-11-07):** if a page can't draw, for example because a stored record is malformed, the app shows a plain "משהו השתבש" screen instead of a blank page, with "ייצוא גיבוי" and "טעינה מחדש". The data lives only on the phone, so a bad record must never cut off the way out. Bad records aren't skipped on read, and the app never deletes or rewrites them on its own, because only the owner can decide what a damaged record was. The screen has no bug report link, so nothing from a record can reach a public repo.
 33. **A backup with a bad record (added 2026-11-07, extends 31):** an export checks each record with the import's own rules. The file is still produced, so no data becomes unreachable, and a message says how many records are bad and that importing the file will fail, because finding that out on the day of a restore is too late. It still counts as a backup under decision 31.
+34. **A failed save (added 2026-11-07):** when a write fails, the mark isn't shown as done and "לא נשמר. אפשר לנסות שוב." appears as a toast, so nothing ever looks saved when it isn't. Marks already show what's stored. A במניין mark that didn't save doesn't go on to ask for a place.
 
 ## Assumptions (accepted by the user)
 

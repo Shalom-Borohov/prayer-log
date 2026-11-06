@@ -5,6 +5,7 @@ import { COMMON_COPY } from '../../copy/common'
 import { setTorah, setTorahNote } from '../../data/repo'
 import { streakLabel } from '../../domain/format'
 import { type SlotState, shelfLabel } from '../../domain/shelf'
+import { useSave } from '../../hooks/useSave'
 import { TODAY_COPY } from './copy'
 
 interface TorahRowProps {
@@ -16,6 +17,8 @@ interface TorahRowProps {
 }
 
 export function TorahRow({ date, learned, note, streak, slots }: TorahRowProps) {
+  const save = useSave()
+
   return (
     <section className="day-row hue-torah" role="group" aria-label={COMMON_COPY.torah}>
       <div className="day-row-top">
@@ -25,7 +28,7 @@ export function TorahRow({ date, learned, note, streak, slots }: TorahRowProps) 
           className="check-button torah-check"
           aria-checked={learned}
           aria-label={COMMON_COPY.learnedTorah}
-          onClick={() => setTorah(date, !learned)}
+          onClick={() => save(setTorah(date, !learned))}
         >
           <span className="round-check">{learned && <IonIcon icon={checkmark} aria-hidden="true" />}</span>
         </button>
@@ -41,7 +44,7 @@ export function TorahRow({ date, learned, note, streak, slots }: TorahRowProps) 
         placeholder={TODAY_COPY.torahNotePlaceholder}
         enterkeyhint="done"
         value={note}
-        onIonChange={(event) => typeof event.detail.value === 'string' && setTorahNote(date, event.detail.value)}
+        onIonChange={(event) => typeof event.detail.value === 'string' && save(setTorahNote(date, event.detail.value))}
       />
     </section>
   )
