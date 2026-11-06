@@ -72,6 +72,8 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
     - A successful import counts as a backup made at the file's export time, so restoring on a new phone doesn't claim there was never a backup. An older file moves the time back, because the phone now holds that older data, and one tap clears the row. A file dated in the future counts as made now, so it can't silence the reminder.
     - הגדרות shows "גיבוי אחרון: <date and time>" or "עדיין לא נעשה גיבוי" in the גיבוי section.
     - The last backup time is kept on the phone and is not in the backup.
+32. **Recovery screen (added 2026-11-07):** if a page can't draw, for example because a stored record is malformed, the app shows a plain "משהו השתבש" screen instead of a blank page, with "ייצוא גיבוי" and "טעינה מחדש". The data lives only on the phone, so a bad record must never cut off the way out. Bad records aren't skipped on read, and the app never deletes or rewrites them on its own, because only the owner can decide what a damaged record was. The screen has no bug report link, so nothing from a record can reach a public repo.
+33. **A backup with a bad record (added 2026-11-07, extends 31):** an export checks each record with the import's own rules. The file is still produced, so no data becomes unreachable, and a message says how many records are bad and that importing the file will fail, because finding that out on the day of a restore is too late. It still counts as a backup under decision 31.
 
 ## Assumptions (accepted by the user)
 

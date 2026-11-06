@@ -1,32 +1,19 @@
-import { useRef } from 'react'
+import { useIonAlert } from '@ionic/react'
 import { COMMON_COPY } from '../copy/common'
-import { exportBackup } from '../data/backup'
 import { useToast } from '../hooks/useToast'
-import { isShareCancel, shareBackup } from './backupFile'
-import { saveLastBackup } from './lastBackup'
+import { useBackupExport } from './useBackupExport'
 
 export function useExportBackup() {
   const { toast } = useToast()
-  const exporting = useRef(false)
+  const [presentAlert] = useIonAlert()
 
-  return async function exportData() {
-    if (exporting.current) {
-      return
+  return useBackupExport(({ failed, badRecords }) => {
+    if (failed) {
+      void toast(COMMON_COPY.actionFailed)
     }
 
-    const now = Date.now()
-
-    exporting.current = true
-
-    try {
-      await shareBackup(await exportBackup(now))
-      saveLastBackup(now)
-    } catch (error) {
-      if (!isShareCancel(error)) {
-        void toast(COMMON_COPY.actionFailed)
-      }
-    } finally {
-      exporting.current = false
+    if (badRecords > 0) {
+      void presentAlert({ message: COMMON_COPY.badRecordsInBackup(badRecords), buttons: [COMMON_COPY.ok] })
     }
-  }
+  })
 }

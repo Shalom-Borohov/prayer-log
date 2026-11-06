@@ -45,6 +45,9 @@ export async function exportBackup(now: number): Promise<Backup> {
   return { version: 1, exportedAt: now, days: await db.days.toArray() }
 }
 
+export const countBadRecords = (backup: Backup) =>
+  backup.days.filter((day) => !safeParse(dayRecordSchema, JSON.parse(JSON.stringify(day))).success).length
+
 export async function restoreBackup(backup: Backup): Promise<void> {
   await db.transaction('rw', db.days, async () => {
     await db.days.clear()

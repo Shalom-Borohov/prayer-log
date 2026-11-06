@@ -54,6 +54,7 @@ The code is split into layers, and imports go downward only: `pages` → `data` 
   - Overlays use the hooks (`useIonActionSheet`, `useIonAlert`, `useIonToast`).
   - Styling is plain CSS with tokens in `theme.css`. Gold is reserved for the במניין state.
   - The page `body` is leather, and `index.html` has a static `.status-bar-strip` (styled in `leather-header.css`). iOS 26 colours the installed app's status bar from these, not from `theme-color` (spec decision 20), so keep both. Don't give the strip `pointer-events: none`: Safari then skips it and hazes the top of the header.
+- **`src/recovery/`**: an error boundary above `IonApp`, and a plain screen with no Ionic and no router that can still export a backup (spec decision 32).
 - **`src/appUpdate/`**: the update bar, the "מה חדש" sheet and `changelog.ts`, rendered by `Tabs.tsx` and הגדרות (spec decisions 24, 25).
   - `registerType: 'prompt'`, so a new service worker waits until the user taps "עדכון" (`UpdateBar`, through `useRegisterSW`).
   - `updateChecks.ts` calls `registration.update()` when the app becomes visible and every hour. iOS doesn't check on its own when a Home Screen app resumes.
