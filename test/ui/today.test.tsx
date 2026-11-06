@@ -5,7 +5,7 @@ import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { allMinyan, day, days } from '../helpers/days'
 import { markIn, markInMinyanSkippingPlace, row } from '../helpers/dayRows'
-import { buttonByLabel, ionChange, ionField } from '../helpers/ionic'
+import { buttonByLabel, ionField, ionInput } from '../helpers/ionic'
 import { currentPath, renderAt } from '../helpers/renderAt'
 
 const wednesday = new Date(2026, 9, 28, 10).getTime()
@@ -154,7 +154,7 @@ describe('today', () => {
     fireEvent.click(await screen.findByRole('checkbox', { name: 'למדתי תורה' }))
     await waitFor(async () => expect((await db.days.get('2026-10-28'))?.torah).toBe(true))
 
-    ionChange(await ionField('מה למדתי'), ' דף יומי ברכות ה׳ ')
+    ionInput(await ionField('מה למדתי'), ' דף יומי ברכות ה׳ ')
     await waitFor(async () => expect((await db.days.get('2026-10-28'))?.torahNote).toBe('דף יומי ברכות ה׳'))
   })
 

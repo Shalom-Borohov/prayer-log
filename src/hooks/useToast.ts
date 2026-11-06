@@ -1,7 +1,7 @@
 import { useIonToast } from '@ionic/react'
 import { COMMON_COPY } from '../copy/common'
 
-const TOAST_DURATION_MS = 2500
+export const TOAST_DURATION_MS = 2500
 
 export function useToast() {
   const [presentToast] = useIonToast()
