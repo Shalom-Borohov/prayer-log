@@ -2,6 +2,11 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.4.0',
+    features: ['בלוח מופיעים עכשיו סימנים קטנים לתפילין ולטלית'],
+    fixes: [],
+  },
+  {
     version: '1.3.0',
     features: [
       'גלגל השיניים של ההגדרות נמצא עכשיו בכל מסך',

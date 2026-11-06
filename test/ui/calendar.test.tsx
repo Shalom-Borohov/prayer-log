@@ -49,6 +49,57 @@ describe('calendar', () => {
     expect(shortSpines[0]).toHaveClass('hue-shacharit')
   })
 
+  it('draws a mark for each of תפילין and טלית on a day with both', async () => {
+    await db.days.put(day('2026-10-20', { tefillin: true, tallit: true }))
+    renderAt('/tabs/calendar')
+
+    const dayCell = await cell('20.10')
+
+    expect(dayCell.querySelector('.month-day-worn')).toHaveClass('hue-shacharit')
+    expect(dayCell.querySelector('.worn-mark-tefillin')).toHaveClass('is-marked')
+    expect(dayCell.querySelector('.worn-mark-tallit')).toHaveClass('is-marked')
+  })
+
+  it('keeps the תפילין place blank on a day with only טלית', async () => {
+    await db.days.put(day('2026-10-20', { tallit: true }))
+    renderAt('/tabs/calendar')
+
+    const dayCell = await cell('20.10')
+
+    expect(dayCell.querySelector('.worn-mark-tefillin')).not.toHaveClass('is-marked')
+    expect(dayCell.querySelector('.worn-mark-tallit')).toHaveClass('is-marked')
+  })
+
+  it('draws no תפילין or טלית mark on a blank day', async () => {
+    await db.days.put(day('2026-10-15', { prayers: { shacharit: 'minyan' } }))
+    renderAt('/tabs/calendar')
+
+    const blankDay = await cell('16.10')
+
+    expect(blankDay.querySelectorAll('.worn-mark')).toHaveLength(2)
+    expect(blankDay.querySelectorAll('.is-marked')).toHaveLength(0)
+  })
+
+  it('shows the mark alongside dashed spines on a day with only תפילין', async () => {
+    await db.days.put(day('2026-10-20', { tefillin: true }))
+    renderAt('/tabs/calendar')
+
+    const dayCell = await cell('20.10')
+
+    expect(dayCell.querySelectorAll('.spine-empty')).toHaveLength(4)
+    expect(dayCell.querySelector('.worn-mark-tefillin')).toHaveClass('is-marked')
+  })
+
+  it('does not draw תפילין stored on שבת', async () => {
+    await db.days.put(day('2026-10-17', { tefillin: true, tallit: true }))
+    renderAt('/tabs/calendar')
+
+    const shabbat = await cell('17.10')
+
+    expect(shabbat.querySelector('.worn-mark-tefillin')).not.toHaveClass('is-marked')
+    expect(shabbat.querySelector('.worn-mark-tallit')).toHaveClass('is-marked')
+  })
+
   it('leaves days before tracking started without slots', async () => {
     await db.days.put(day('2026-10-15', { prayers: { shacharit: 'minyan' } }))
     renderAt('/tabs/calendar')
