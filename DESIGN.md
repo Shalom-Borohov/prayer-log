@@ -150,7 +150,17 @@ components:
     textColor: "{colors.label}"
     rounded: "{rounded.cell}"
     height: "62px"
-    padding: "2px 0 6px"
+    padding: "2px 0 4px"
+  worn-mark-tefillin:
+    backgroundColor: "{colors.leather-shacharit}"
+    rounded: "{rounded.spine-small}"
+    width: "5px"
+    height: "5px"
+  worn-mark-tallit:
+    backgroundColor: "{colors.leather-shacharit}"
+    rounded: "{rounded.spine-small}"
+    width: "9px"
+    height: "3px"
   month-day-today:
     backgroundColor: "{colors.leather-band}"
     textColor: "{colors.gold-leaf}"
@@ -261,7 +271,7 @@ Flat. Depth comes from the iOS grouped model (light cells on a grey or black gro
 
 ## Shapes
 
-Small, square-shouldered forms. Spines are narrow upright rectangles with barely softened corners (1.5px, or 1px at the small sizes). Containers follow iOS: 10px for inset groups, tables and the month grid, 9px/7px for the segmented track and thumb, 8px for month cells. Two round forms exist: the 26px Torah check circle and the 30px today circle. Hairlines are 0.5px. The only dashed line in the system is the empty spine slot.
+Small, square-shouldered forms. Spines are narrow upright rectangles with barely softened corners (1.5px, or 1px at the small sizes). Containers follow iOS: 10px for inset groups, tables and the month grid, 9px/7px for the segmented track and thumb, 8px for month cells. Two round forms exist: the 26px Torah check circle and the 30px today circle. The smallest forms are the 5px תפילין square and the 9×3px טלית bar in the month grid. Hairlines are 0.5px. The only dashed line in the system is the empty spine slot.
 
 ## Components
 
@@ -299,7 +309,7 @@ Hairline-ruled data tables in place of cards: cell background, 10px corners, 16p
 iOS inset grouped lists: 16px margin, 10px corners, cell background, rows separated by 0.5px hairlines. Used for day rows, the Torah row, period shelves and Ionic inset lists (backfill banner, holiday list, settings).
 
 ### Month grid cells
-Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px box), Hebrew day letter (caption, secondary), then the day's spines, one per applicable prayer plus Torah. Today's number sits in a 30px leather circle with gold-leaf bold text. Holidays turn the Hebrew letter gilded and bold. Future days are disabled and tertiary with spines hidden. Pressed shows the fill colour; focus is an inset 2px gilded ring.
+Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px box), Hebrew day letter (caption, secondary), then the day's spines, one per applicable prayer plus Torah, then a 5px line for תפילין and טלית. That line holds a 5px square for תפילין and a 9×3px bar for טלית, in the שחרית hue and in the same order as their checks. They are not shelf slots: an item that isn't marked leaves its place blank, with no dashed outline and no gold. Today's number sits in a 30px leather circle with gold-leaf bold text. Holidays turn the Hebrew letter gilded and bold. Future days are disabled and tertiary with spines and marks hidden. Pressed shows the fill colour; focus is an inset 2px gilded ring.
 
 ### Backfill banner
 An inset list at the top of היום (today only) with one disclosure row per day that needs filling, such as an unmarked day or a blank Friday-night ערבית. Label text is gilded; rows navigate to that day. When a backup is due, a last row without a disclosure chevron opens the share sheet. Absent when nothing needs filling and no backup is due.

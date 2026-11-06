@@ -5,7 +5,7 @@ import { daysInRange, monthEnd, parseIsoDate } from '../../domain/logicalDay'
 import { prayersForDay, wornItemsForDay } from '../../domain/prayersForDay'
 import { slotFor } from '../../domain/shelf'
 import { trackingStart, weekRange } from '../../domain/totals'
-import type { DayRecord, Prayer } from '../../domain/types'
+import { type DayRecord, type Prayer, WORN_AT_PRAYER, WORN_ITEMS, type WornItem } from '../../domain/types'
 import { CALENDAR_COPY } from './copy'
 
 const MARKS_SEPARATOR = ', '
@@ -18,14 +18,14 @@ interface MonthGridProps {
   onOpen: (date: string) => void
 }
 
-function marksLabel(record: DayRecord | undefined, date: string, prayers: Prayer[]): string {
+function marksLabel(record: DayRecord | undefined, prayers: Prayer[], markedWorn: WornItem[]): string {
   const marks = prayers.flatMap((prayer) => {
     const mark = record?.prayers[prayer]
 
     return mark ? [CALENDAR_COPY.prayerMark(COMMON_COPY.prayers[prayer], COMMON_COPY.attendance[mark])] : []
   })
 
-  marks.push(...wornItemsForDay(date).filter((item) => record?.[item]).map((item) => COMMON_COPY.worn[item]))
+  marks.push(...markedWorn.map((item) => COMMON_COPY.worn[item]))
 
   if (record?.torah) {
     marks.push(COMMON_COPY.learnedTorah)
@@ -56,6 +56,7 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
         const record = recordsByDate.get(date)
         const prayers = prayersForDay(date)
         const tracked = trackedFrom !== null && date >= trackedFrom
+        const markedWorn = wornItemsForDay(date).filter((item) => record?.[item])
 
         return (
           <button
@@ -63,7 +64,11 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
             type="button"
             className={`month-day${date === today ? ' is-today' : ''}${holidayDates.has(date) ? ' is-holiday' : ''}`}
             disabled={date > today}
-            aria-label={CALENDAR_COPY.dayCell(dayLabel(date), hebrewDateLabel(date), marksLabel(record, date, prayers))}
+            aria-label={CALENDAR_COPY.dayCell(
+              dayLabel(date),
+              hebrewDateLabel(date),
+              marksLabel(record, prayers, markedWorn),
+            )}
             onClick={() => onOpen(date)}
           >
             <span className="month-day-number">{parseIsoDate(date).getDate()}</span>
@@ -71,6 +76,11 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
             <span className="month-day-spines" aria-hidden="true">
               {[...prayers, 'torah' as const].map((track) => (
                 <i key={track} className={`spine hue-${track} spine-${tracked ? slotFor(record, track) : 'none'}`} />
+              ))}
+            </span>
+            <span className={`month-day-worn hue-${WORN_AT_PRAYER}`} aria-hidden="true">
+              {WORN_ITEMS.map((item) => (
+                <i key={item} className={`worn-mark worn-mark-${item}${markedWorn.includes(item) ? ' is-marked' : ''}`} />
               ))}
             </span>
           </button>
