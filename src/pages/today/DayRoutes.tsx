@@ -3,6 +3,7 @@ import { isIsoDate } from '../../domain/logicalDay'
 import { useToday } from '../../hooks/useToday'
 import { type DayTab, tabPath } from '../../navigation/paths'
 import { DayView } from './DayView'
+import { useBackToTodayOnNewDay } from './useBackToTodayOnNewDay'
 
 export function TodayRoute() {
   const today = useToday()
@@ -13,6 +14,8 @@ export function TodayRoute() {
 export function DateRoute({ tab }: { tab: DayTab }) {
   const { date } = useParams()
   const today = useToday()
+
+  useBackToTodayOnNewDay(tab === 'today')
 
   if (!date || !isIsoDate(date) || date > today) {
     return <Navigate to={tabPath(tab)} replace />
