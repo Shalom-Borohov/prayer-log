@@ -62,6 +62,7 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
     - The iOS edge swipe-back on a day opened from לוח still goes back to לוח. With reduce motion on, the content changes without sliding.
     - A drag that starts in the מה למדתי field stays with the field, so moving the caret or selecting text never changes the day.
 29. **Gear on every page (added 2026-11-03, clarifies 27 and assumption 2):** every page except הגדרות has the gear at the end of its toolbar. הגדרות opens inside the current tab, and its back button, labelled with the tab's name, returns to the page it was opened from.
+30. **תפילין and טלית in לוח (added 2026-11-06, extends 19):** each לוח cell has a line under its spines with a small square for תפילין and a small bar for טלית, in the שחרית hue, in the same order as their checks. A mark shows only when the item is marked on a day it applies (decision 18). Otherwise its place stays blank, so marks never move and rows stay the same height. These are not shelf slots: they have no empty state, no streak and no gold.
 
 ## Assumptions (accepted by the user)
 

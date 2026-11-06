@@ -22,7 +22,7 @@
   align-content: start;
   gap: 1px;
   min-height: 62px;
-  padding: 2px 0 6px;
+  padding: 2px 0 4px;
   border: 0;
   border-radius: 8px;
   background: transparent;
@@ -35,7 +35,8 @@
   color: var(--app-label-tertiary);
 }
 
-.month-day:disabled .month-day-spines {
+.month-day:disabled .month-day-spines,
+.month-day:disabled .month-day-worn {
   visibility: hidden;
 }
 
@@ -88,4 +89,30 @@
   --spine-height: 14px;
   width: 4px;
   border-radius: 1px;
+}
+
+.month-day-worn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 5px;
+  margin-top: 2px;
+}
+
+.worn-mark {
+  border-radius: 1px;
+}
+
+.worn-mark.is-marked {
+  background: var(--hue);
+}
+
+.worn-mark-tefillin {
+  width: 5px;
+  height: 5px;
+}
+
+.worn-mark-tallit {
+  width: 9px;
+  height: 3px;
 }
