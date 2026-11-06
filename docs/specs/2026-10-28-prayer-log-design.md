@@ -63,6 +63,15 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
     - A drag that starts in the מה למדתי field stays with the field, so moving the caret or selecting text never changes the day.
 29. **Gear on every page (added 2026-11-03, clarifies 27 and assumption 2):** every page except הגדרות has the gear at the end of its toolbar. הגדרות opens inside the current tab, and its back button, labelled with the tab's name, returns to the page it was opened from.
 30. **תפילין and טלית in לוח (added 2026-11-06, extends 19):** each לוח cell has a line under its spines with a small square for תפילין and a small bar for טלית, in the שחרית hue, in the same order as their checks. A mark shows only when the item is marked on a day it applies (decision 18). Otherwise its place stays blank, so marks never move and rows stay the same height. These are not shelf slots: they have no empty state, no streak and no gold.
+31. **Backup reminder (added 2026-11-06, extends 9 and 25):** the data lives only on the phone, so היום says when a backup is overdue. It stays inside the app (assumption 6).
+    - On today only, the banner ends with "הגיבוי האחרון לפני 8 ימים", or "עדיין לא נעשה גיבוי" if there has never been one.
+    - A backup is due 7 logical days after the last one (decision 6), the same reach as the backfill rows. With none yet, the days count from the first record (assumption 3). An empty app shows no row, and nothing checks whether the data changed since the last backup.
+    - Tapping the row opens the share sheet, with no stop in הגדרות. There is no ×: the row blocks nothing and one tap clears it.
+    - An export from the row or from הגדרות counts as a backup once the share completes. iOS reports only that, not where the file went, so sharing anywhere counts. A cancel changes nothing. A failure shows "הפעולה נכשלה", never the browser's own message (decision 11), and keeps the row. A second tap while the share is open does nothing, since a second share would fail over a working one.
+    - Where the browser can't share a file, the export downloads it and counts as a backup at once, since the browser reports nothing further. This happens only outside the installed iPhone app, and a reminder that can't be cleared would be worse.
+    - A successful import counts as a backup made at the file's export time, so restoring on a new phone doesn't claim there was never a backup. An older file moves the time back, because the phone now holds that older data, and one tap clears the row. A file dated in the future counts as made now, so it can't silence the reminder.
+    - הגדרות shows "גיבוי אחרון: <date and time>" or "עדיין לא נעשה גיבוי" in the גיבוי section.
+    - The last backup time is kept on the phone and is not in the backup.
 
 ## Assumptions (accepted by the user)
 

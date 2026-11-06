@@ -54,3 +54,5 @@ export const alertHeader = () => last('ion-alert .alert-title').textContent
 export const typeInAlert = (value: string) => fireEvent.input(last('ion-alert input'), { target: { value } })
 
 export const clickAlertButton = (text: string) => fireEvent.click(buttonIn('ion-alert', '.alert-button', text))
+
+export const toasts = () => Array.from(document.querySelectorAll('ion-toast'), (toast) => toast.message)

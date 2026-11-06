@@ -3,6 +3,7 @@ import { COMMON_COPY } from '../../copy/common'
 export const TODAY_COPY = {
   emptyDay: (day: string, isShabbat: boolean) => (isShabbat ? `${day} לא מולאה` : `${day} לא מולא`),
   blankMaariv: (day: string) => `${COMMON_COPY.prayers.maariv} של ${day} לא סומנה`,
+  backupDaysAgo: (days: number) => `הגיבוי האחרון לפני ${days} ימים`,
   previousDay: 'היום הקודם',
   nextDay: 'היום הבא',
   torahNote: 'מה למדתי',

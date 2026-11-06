@@ -1,7 +1,7 @@
 export const SETTINGS_COPY = {
-  actionFailed: 'הפעולה נכשלה',
   backupRestored: 'הגיבוי שוחזר',
   backup: 'גיבוי',
+  lastBackup: (date: string) => `גיבוי אחרון: ${date}`,
   exportBackup: 'ייצוא גיבוי',
   importBackup: 'ייבוא גיבוי',
   importWarning: 'הייבוא יחליף את כל הנתונים',
