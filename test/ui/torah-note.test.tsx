@@ -107,6 +107,22 @@ describe('the מה למדתי note', () => {
     expect(toasts()).toEqual(['לא נשמר. אפשר לנסות שוב.'])
   })
 
+  it('goes back to the stored note on leaving the field when the writes failed', async () => {
+    await db.days.put(day(TODAY, { torahNote: 'דף' }))
+    renderAt('/tabs/today')
+    const field = await noteField()
+
+    await waitFor(() => expect(field.value).toBe('דף'))
+    vi.spyOn(db.days, 'put').mockRejectedValue(new DOMException('lost', 'UnknownError'))
+    ionInput(field, 'דף יומי')
+
+    await waitFor(() => expect(toasts()).toContain('לא נשמר. אפשר לנסות שוב.'))
+    expect(field.value).toBe('דף יומי')
+    fireEvent(field, new CustomEvent('ionBlur', { bubbles: true }))
+
+    await waitFor(() => expect(field.value).toBe('דף'))
+  })
+
   it('does not put text in the field from another day', async () => {
     await db.days.put(day('2026-10-27', { torahNote: 'אתמול' }))
     renderAt('/tabs/today')
