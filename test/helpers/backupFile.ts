@@ -9,8 +9,16 @@ export function stubShare(share: (data: ShareData) => Promise<void>) {
   return stub
 }
 
+const backupFile = (text: string) => new File([text], 'backup.json', { type: 'application/json' })
+
+const chooseFile = (file: File) => fireEvent.change(screen.getByLabelText('קובץ גיבוי'), { target: { files: [file] } })
+
 export function chooseBackupFile(text: string) {
-  fireEvent.change(screen.getByLabelText('קובץ גיבוי'), {
-    target: { files: [new File([text], 'backup.json', { type: 'application/json' })] },
-  })
+  chooseFile(backupFile(text))
+}
+
+export function chooseUnreadableBackupFile(browserMessage: string) {
+  const unreadable = () => Promise.reject(new Error(browserMessage))
+
+  chooseFile(Object.assign(backupFile(''), { text: unreadable }))
 }

@@ -18,6 +18,10 @@ export const COMMON_COPY = {
   close: 'סגירה',
   ok: 'אישור',
   exportBackup: 'ייצוא גיבוי',
+  importBackup: 'ייבוא גיבוי',
+  importWarning: 'הייבוא יחליף את כל הנתונים',
+  confirmImport: 'ייבוא',
+  backupFile: 'קובץ גיבוי',
   actionFailed: 'הפעולה נכשלה',
   saveFailed: 'לא נשמר. אפשר לנסות שוב.',
   badRecordsInBackup: (count: number) =>
