@@ -62,12 +62,13 @@ export function TrendChart({ records, range, period, today }: TrendChartProps) {
   const hasTick = (start: string, index: number) =>
     unit === 'quarter' ? isInFirstQuarter(start) : index % tickStep === 0
 
-  const label = columns
-    .filter(({ total }) => total > 0)
-    .map(({ start, end, minyan, other, total }) =>
-      STATS_COPY.trendBucket(SPOKEN_LABEL[unit]({ from: start, to: end }), minyan, other, total),
-    )
-    .join(LIST_SEPARATOR)
+  const label =
+    columns
+      .filter(({ total }) => total > 0)
+      .map(({ start, end, minyan, other, total }) =>
+        STATS_COPY.trendBucket(SPOKEN_LABEL[unit]({ from: start, to: end }), minyan, other, total),
+      )
+      .join(LIST_SEPARATOR) || COMMON_COPY.noData
 
   return (
     <>

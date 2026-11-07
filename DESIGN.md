@@ -251,9 +251,9 @@ Spines use the display hue, so they lift in dark mode to stay visible on black. 
 
 Single column, phone-first, RTL. Content sits on the grouped ground in inset groups and tables with 16px side margins and 10px corners; group labels hang 32px in from the edge, 22px above and 6px below. The leather band spans full width at the top and carries the date line with 20px side padding.
 
-Day rows are 12px/16px/14px padded with a 44px minimum top line: title and streak line on the leading side, the mini shelf on the trailing side, then a full-width attendance control 10px below. Every interactive target is at least 44px; the attendance segments are 40px inside a 2px-padded track (44px total).
+Day rows are 12px/16px/14px padded with a 44px minimum top line: title and streak line on the leading side, the mini shelf on the trailing side, then a full-width attendance control 10px below. Every interactive target is at least 44px, except that month cells can be about 43px wide on the narrowest phones, because seven must fit across. Where a control looks smaller, an invisible layer carries the tap area to 44px: the attendance segments are 40px inside a 2px-padded track, and a tap anywhere across the 44px track counts.
 
-The month grid is seven equal columns with 4px gaps inside one 10px-cornered cell, 8–12px inner padding, each day at least 62px tall. Statistics stack: period switch (השבוע, החודש, כל הזמנים), trend columns, per-prayer table, Torah table, תפילין וטלית table, period shelves (not on כל הזמנים), streaks table, top to bottom with 24px between tables.
+The month grid is seven equal columns with 4px gaps inside one 10px-cornered cell, 8–12px inner padding, each day at least 62px tall. Statistics stack: period switch (השבוע, החודש, כל הזמנים; a 44px track with a 40px thumb and subhead labels, matching the attendance control, as is the באג / הצעה switch), trend columns, per-prayer table, Torah table, תפילין וטלית table, period shelves (not on כל הזמנים), streaks table, top to bottom with 24px between tables.
 
 Spacing steps observed: 2, 3, 4, 8, 12, 16, 20, 32px.
 
@@ -280,7 +280,7 @@ A row of spines standing on a common baseline, one per day, oldest to newest in 
 - **Sizes:** day row 6×22px with 3px gaps and 4px gold bands; month cell 4×14px with 2px gaps and 3px bands; stats table key 5×18px with 3px bands. Period shelves on סטטיסטיקה use the day-row size and wrap with 4px row gaps.
 - **States:** *gold*: leather spine with gold bands at head and foot (במניין, or a day of learning); *plain*: bare leather (ביחידות); *short*: bare leather at half height on the same baseline (ק״ש בלבד, said instead of the prayer); *empty*: transparent with a 1px dashed secondary-label outline (tracked but unmarked); *none*: an invisible slot (before tracking began). Future days in the month grid hide their spines.
 - **Stamp motion:** when the newest slot turns gold on היום, its bands grow in from zero (220ms, cubic-bezier(0.16, 1, 0.3, 1)). Nothing else moves. Disabled under reduced motion.
-- **Accessibility:** the shelf is one image with a label like "5 מתוך 7 הימים האחרונים במניין".
+- **Accessibility:** the shelf is one image with a label like "5 מתוך 7 הימים האחרונים במניין". The count leaves out *none* slots, and a shelf with only *none* slots reads "עוד אין נתונים", as does a trend chart with no column to speak.
 
 ### Attendance control (segmented)
 A native-styled segmented control, full row width: במניין | ביחידות | ק״ש בלבד on שחרית and ערבית, במניין | ביחידות on מנחה and מוסף (they have no קריאת שמע).
@@ -309,13 +309,13 @@ Hairline-ruled data tables in place of cards: cell background, 10px corners, 16p
 iOS inset grouped lists: 16px margin, 10px corners, cell background, rows separated by 0.5px hairlines. Used for day rows, the Torah row, period shelves and Ionic inset lists (backfill banner, holiday list, settings).
 
 ### Month grid cells
-Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px box), Hebrew day letter (caption, secondary), then the day's spines, one per applicable prayer plus Torah, then a 5px line for תפילין and טלית. That line holds a 5px square for תפילין and a 9×3px bar for טלית, in the שחרית hue and in the same order as their checks. They are not shelf slots: an item that isn't marked leaves its place blank, with no dashed outline and no gold. Today's number sits in a 30px leather circle with gold-leaf bold text. Holidays turn the Hebrew letter gilded and bold. Future days are disabled and tertiary with spines and marks hidden. Pressed shows the fill colour; focus is an inset 2px gilded ring.
+Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px box), Hebrew day letter (caption, secondary), then the day's spines, one per applicable prayer plus Torah, then a 5px line for תפילין and טלית. That line holds a 5px square for תפילין and a 9×3px bar for טלית, in the שחרית hue and in the same order as their checks. They are not shelf slots: an item that isn't marked leaves its place blank, with no dashed outline and no gold. Today's number sits in a 30px leather circle with gold-leaf bold text. Holidays turn the Hebrew letter gilded and bold. Future days are disabled and tertiary with spines and marks hidden. Pressed shows the fill colour; focus is an inset 2px gilded ring. A cell's accessible name starts with what it shows, as in "1 כ״א בחשון, יום ראשון: לא סומן".
 
 ### Backfill banner
 An inset list at the top of היום (today only) with one disclosure row per day that needs filling, such as an unmarked day or a blank Friday-night ערבית. Label text is gilded; rows navigate to that day. When a backup is due, a last row without a disclosure chevron opens the share sheet. Absent when nothing needs filling and no backup is due.
 
 ### Navigation
-Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with a back button to לוח on days opened from לוח, and a settings gear at the end of the toolbar on every page but הגדרות. הגדרות opens inside the current tab, with a back button named for the tab. Large titles collapse into the toolbar on scroll.
+Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with a back button to לוח on days opened from לוח, and a settings gear at the end of the toolbar on every page but הגדרות. הגדרות opens inside the current tab, with a back button named for the tab. Large titles collapse into the toolbar on scroll. Toolbar buttons keep Ionic's size, and an invisible centred layer carries each tap area to at least 44×44px. Icons beside a label are hidden from screen readers.
 
 Previous and next day (היום and days opened from לוח) or month (לוח) sit in a footer bar just above the tab bar, in thumb reach: item-background ground with the iOS hairline top rule, "› הקודם" at the start and "הבא ‹" at the end in the primary ink. Next is disabled on today and on the current month.
 
@@ -330,7 +330,7 @@ A "דיווח על באג / הצעה" disclosure-free row in its own inset group
 The version line "גרסה X · עודכנה …" is the last row on הגדרות, a disclosure row in its own inset group. It opens "מה חדש", a half-height sheet (it can be dragged to full height) with a leather header, the title מה חדש and סגירה at the end. Each release is an inset group headed "גרסה X", with "חדש" and "תיקונים" items holding bulleted lines. The same sheet opens by itself once after an update, with only the releases not seen yet.
 
 ### Update bar
-When a new version is waiting, a flat bar sits directly above the tab bar on every tab: an item-background ground with a hairline top rule, a grey × (לא עכשיו) at the start, the label "גרסה חדשה זמינה", and a small round filled "עדכון" button in the primary ink at the end. No gold.
+When a new version is waiting, a flat bar sits directly above the tab bar on every tab: an item-background ground with a hairline top rule, a grey × (לא עכשיו) at the start, the label "גרסה חדשה זמינה", and a small round filled "עדכון" button in the primary ink at the end. Both buttons have a 44px tap area; the pill stays small. No gold.
 
 ### Recovery screen
 When a page can't draw, a plain full-screen page replaces the whole app, with no Ionic, no leather header and no tab bar: the page background, the title "משהו השתבש" (28px, 700), a line of body text, a full-width filled "ייצוא גיבוי" button in the primary ink, any export message, a full-width "ייבוא גיבוי" button on the quiet fill, and a full-width "טעינה מחדש" button on the quiet fill. A chosen file replaces "ייבוא גיבוי" with its warning line, "ייבוא" in the destructive red on the quiet fill, and "ביטול". An import failure is a line of body text above the import buttons. While a new version is waiting, the line "גרסה חדשה זמינה" sits above the last button, which reads "עדכון". All buttons are at least 44px tall with a 10px radius. No gold.

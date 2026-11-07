@@ -23,9 +23,15 @@ export function slotFor(record: DayRecord | undefined, key: Prayer | 'torah'): S
 }
 
 export function shelfLabel(slots: SlotState[], key: Prayer | 'torah'): string {
+  const trackedSlots = slots.filter((slot) => slot !== 'none')
+
+  if (trackedSlots.length === 0) {
+    return COMMON_COPY.noData
+  }
+
   const doneLabel = key === 'torah' ? FORMAT_COPY.withLearning : COMMON_COPY.attendance.minyan
 
-  return FORMAT_COPY.recentDays(slots.filter((slot) => slot === 'gold').length, slots.length, doneLabel)
+  return FORMAT_COPY.recentDays(slots.filter((slot) => slot === 'gold').length, trackedSlots.length, doneLabel)
 }
 
 export function shelfSlots(records: DayRecord[], key: Prayer | 'torah', end: string, count: number): SlotState[] {

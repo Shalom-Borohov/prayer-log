@@ -28,7 +28,7 @@ export function UpdateBar() {
   return (
     <div slot="bottom" className="update-bar">
       <IonButton fill="clear" color="medium" aria-label={APP_UPDATE_COPY.dismissUpdate} onClick={() => setDismissed(true)}>
-        <IonIcon slot="icon-only" icon={close} />
+        <IonIcon slot="icon-only" icon={close} aria-hidden="true" />
       </IonButton>
       <IonLabel>{APP_UPDATE_COPY.newVersionReady}</IonLabel>
       <IonButton fill="solid" size="small" shape="round" onClick={applyUpdate}>

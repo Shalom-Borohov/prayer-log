@@ -4,7 +4,6 @@ import type { TrendUnit } from '../../domain/trend'
 const ALONE_OR_SHEMA = 'ביחידות או ק״ש'
 
 export const STATS_COPY = {
-  emptyTitle: 'עוד אין נתונים',
   emptyBody: 'מסמנים תפילה במסך היום, והסיכומים והרצפים יופיעו כאן.',
   thisMonth: 'החודש',
   allTime: 'כל הזמנים',

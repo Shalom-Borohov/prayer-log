@@ -168,9 +168,38 @@ ion-note {
   margin-top: 0;
 }
 
+ion-buttons ion-button,
+ion-buttons ion-back-button,
+.update-bar ion-button {
+  position: relative;
+}
+
+ion-buttons ion-button::after,
+ion-buttons ion-back-button::after,
+.update-bar ion-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  translate: -50% -50%;
+}
+
 .inset-segment {
   width: calc(100% - 32px);
   margin: 16px 16px 0;
+}
+
+.inset-segment ion-segment-button {
+  min-height: 44px;
+  margin-block: 0;
+  font-size: 0.9375rem;
+}
+
+.inset-segment ion-segment-button::part(indicator) {
+  top: 2px;
+  bottom: 2px;
 }
 
 .inset-group {
