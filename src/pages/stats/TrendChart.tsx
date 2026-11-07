@@ -1,6 +1,16 @@
 import { useId } from 'react'
 import { COMMON_COPY } from '../../copy/common'
-import { dayLabel, gregorianLabel, LIST_SEPARATOR, monthTitle, shortMonth, shortWeekday } from '../../domain/format'
+import {
+  dayLabel,
+  gregorianLabel,
+  LIST_SEPARATOR,
+  monthName,
+  monthTitle,
+  shortMonth,
+  shortWeekday,
+  yearLabel,
+} from '../../domain/format'
+import { quarterEnd, quarterStart, yearStart } from '../../domain/logicalDay'
 import type { DateRange, StatsPeriod } from '../../domain/totals'
 import { trendBuckets, type TrendUnit, trendUnit } from '../../domain/trend'
 import type { DayRecord } from '../../domain/types'
@@ -12,13 +22,19 @@ const TICK_LABEL: Record<TrendUnit, (date: string) => string> = {
   day: shortWeekday,
   week: gregorianLabel,
   month: shortMonth,
+  quarter: yearLabel,
+  year: yearLabel,
 }
 
 const SPOKEN_LABEL: Record<TrendUnit, (bucket: DateRange) => string> = {
   day: ({ from }) => dayLabel(from),
   week: ({ from, to }) => COMMON_COPY.dateRange(gregorianLabel(from), gregorianLabel(to)),
   month: ({ from }) => monthTitle(from),
+  quarter: ({ from }) => COMMON_COPY.dateRange(monthName(quarterStart(from)), monthTitle(quarterEnd(from))),
+  year: ({ from }) => yearLabel(from),
 }
+
+const isInFirstQuarter = (date: string) => quarterStart(date) === yearStart(date)
 
 const percent = (part: number, whole: number) => `${(part / whole) * 100}%`
 
@@ -42,6 +58,9 @@ export function TrendChart({ records, range, period, today }: TrendChartProps) {
   }))
 
   const tickStep = Math.ceil(columns.length / MAX_TICKS)
+
+  const hasTick = (start: string, index: number) =>
+    unit === 'quarter' ? isInFirstQuarter(start) : index % tickStep === 0
 
   const label =
     columns
@@ -71,7 +90,7 @@ export function TrendChart({ records, range, period, today }: TrendChartProps) {
         </div>
         <div className="trend-ticks" aria-hidden="true">
           {columns.map(({ start }, index) => (
-            <span key={start}>{index % tickStep === 0 && TICK_LABEL[unit](start)}</span>
+            <span key={start}>{hasTick(start, index) && TICK_LABEL[unit](start)}</span>
           ))}
         </div>
         <ul className="trend-key">

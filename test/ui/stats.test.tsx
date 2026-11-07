@@ -4,7 +4,7 @@ import { db } from '../../src/data/db'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { allMinyan, day, days } from '../helpers/days'
-import { ionChange, ionElement } from '../helpers/ionic'
+import { ionChange, ionElement, visibleAll } from '../helpers/ionic'
 import { renderAt } from '../helpers/renderAt'
 
 function cells(table: HTMLElement, rowName: string) {
@@ -17,6 +17,12 @@ function cells(table: HTMLElement, rowName: string) {
   return within(row)
     .getAllByRole('cell')
     .map((cell) => cell.textContent)
+}
+
+function trendTicks() {
+  return visibleAll('.trend-ticks span')
+    .map((tick) => tick.textContent)
+    .filter(Boolean)
 }
 
 describe('stats', () => {
@@ -117,6 +123,44 @@ describe('stats', () => {
     expect(screen.getByRole('group', { name: 'לפי שבוע' })).toBeInTheDocument()
     expect(screen.getByRole('img', { name: /25\.10–28\.10: 1 במניין, 1 ביחידות או ק״ש, מתוך 9/ })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'מדף' })).not.toBeInTheDocument()
+  })
+
+  it('charts a long history by quarter, marking the axis with the year on each first quarter', async () => {
+    await db.days.bulkPut([
+      day('2022-09-15', { prayers: { shacharit: 'alone' } }),
+      day('2026-02-10', { prayers: { shacharit: 'minyan', mincha: 'alone' } }),
+    ])
+    renderAt('/tabs/stats')
+
+    ionChange(await ionElement('ion-segment'), 'all')
+
+    expect(await screen.findByRole('group', { name: 'לפי רבעון' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /ינואר–מרץ 2026: 1 במניין, 1 ביחידות או ק״ש, מתוך \d+/ })).toBeInTheDocument()
+    expect(trendTicks()).toEqual(['2023', '2024', '2025', '2026'])
+  })
+
+  it('labels a first quarter that starts at the first record', async () => {
+    await db.days.bulkPut([day('2023-02-10', { prayers: { shacharit: 'minyan' } })])
+    renderAt('/tabs/stats')
+
+    ionChange(await ionElement('ion-segment'), 'all')
+
+    await screen.findByRole('group', { name: 'לפי רבעון' })
+    expect(trendTicks()).toEqual(['2023', '2024', '2025', '2026'])
+  })
+
+  it('charts a very long history by year', async () => {
+    await db.days.bulkPut([
+      day('2015-03-01', { prayers: { shacharit: 'alone' } }),
+      day('2026-02-10', { prayers: { shacharit: 'minyan' } }),
+    ])
+    renderAt('/tabs/stats')
+
+    ionChange(await ionElement('ion-segment'), 'all')
+
+    expect(await screen.findByRole('group', { name: 'לפי שנה' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /(^| · )2026: 1 במניין, 0 ביחידות או ק״ש, מתוך \d+/ })).toBeInTheDocument()
+    expect(trendTicks()).toEqual(['2015', '2017', '2019', '2021', '2023', '2025'])
   })
 
   it('leaves days before tracking out of a shelf’s count', async () => {

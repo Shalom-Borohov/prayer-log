@@ -2,6 +2,11 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.6.2',
+    features: [],
+    fixes: ['הצבעים בגרף של כל הזמנים לא נעלמים אחרי כמה שנים: העמודות עוברות לרבעונים ואז לשנים'],
+  },
+  {
     version: '1.6.1',
     features: [],
     fixes: [

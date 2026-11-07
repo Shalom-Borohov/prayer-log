@@ -122,8 +122,9 @@
 }
 
 .trend-ticks span {
+  display: flex;
+  justify-content: center;
   font-size: 0.6875rem;
-  text-align: center;
   white-space: nowrap;
   color: var(--app-label-secondary);
 }
