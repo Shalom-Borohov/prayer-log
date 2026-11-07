@@ -2,9 +2,9 @@ import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
-import { buttonByLabel } from '../helpers/ionic'
+import { buttonByLabel, ionElement } from '../helpers/ionic'
 import { currentPath, renderAt } from '../helpers/renderAt'
-import { setVisibility } from '../helpers/visibility'
+import { leaveAndComeBackAt } from '../helpers/visibility'
 
 const tuesdayEvening = new Date(2026, 9, 27, 21).getTime()
 
@@ -14,14 +14,6 @@ const lateWednesdayNight = new Date(2026, 9, 29, 2, 30).getTime()
 
 const thursdayMorning = new Date(2026, 9, 29, 8).getTime()
 
-async function leaveAndComeBackAt(time: number) {
-  await act(async () => {
-    setVisibility('hidden')
-    vi.setSystemTime(time)
-    setVisibility('visible')
-  })
-}
-
 async function stepBackFromToday() {
   renderAt('/tabs/today')
   fireEvent.click(await buttonByLabel('היום הקודם'))
@@ -29,6 +21,23 @@ async function stepBackFromToday() {
 }
 
 const pauseForRouting = () => act(() => new Promise((resolve) => setTimeout(resolve, 100)))
+
+async function comeBackOnSettingsAndGoBack(settingsPath: string, comeBackAt: number, endsOn: string) {
+  await pauseForRouting()
+  fireEvent.click(await buttonByLabel('הגדרות'))
+  await waitFor(() => expect(currentPath()).toBe(settingsPath))
+  await pauseForRouting()
+
+  await leaveAndComeBackAt(comeBackAt)
+  await pauseForRouting()
+  expect(currentPath()).toBe(settingsPath)
+
+  fireEvent.click(await ionElement('ion-back-button'))
+
+  await waitFor(() => expect(currentPath()).toBe(endsOn))
+  await pauseForRouting()
+  expect(currentPath()).toBe(endsOn)
+}
 
 const tabButton = (name: string) => {
   const button = Array.from(document.querySelectorAll('ion-tab-button')).find((tab) => tab.textContent?.includes(name))
@@ -156,5 +165,45 @@ describe('היום when the app comes back', () => {
     fireEvent.click(tabButton('היום'))
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/today'))
+  })
+
+  it('keeps הגדרות opened from a past day open on a new day, and back ends on today', async () => {
+    await stepBackFromToday()
+
+    await comeBackOnSettingsAndGoBack('/tabs/today/settings', thursdayMorning, '/tabs/today')
+  })
+
+  it('goes back from הגדרות to the past day on the same logical day', async () => {
+    await stepBackFromToday()
+
+    await comeBackOnSettingsAndGoBack('/tabs/today/settings', wednesdayEvening + 60_000, '/tabs/today/2026-10-27')
+  })
+
+  it('goes back from הגדרות to a day opened from לוח on a new day', async () => {
+    renderAt('/tabs/calendar/2026-10-27')
+    await buttonByLabel('היום הקודם')
+
+    await comeBackOnSettingsAndGoBack('/tabs/calendar/settings', thursdayMorning, '/tabs/calendar/2026-10-27')
+  })
+
+  it('reopens הגדרות on the היום tab after coming back on another tab, and back ends on today', async () => {
+    await stepBackFromToday()
+    await pauseForRouting()
+    fireEvent.click(await buttonByLabel('הגדרות'))
+    await waitFor(() => expect(currentPath()).toBe('/tabs/today/settings'))
+    await pauseForRouting()
+    fireEvent.click(tabButton('לוח'))
+    await waitFor(() => expect(currentPath()).toBe('/tabs/calendar'))
+
+    await leaveAndComeBackAt(thursdayMorning)
+    await pauseForRouting()
+    fireEvent.click(tabButton('היום'))
+    await waitFor(() => expect(currentPath()).toBe('/tabs/today/settings'))
+    await pauseForRouting()
+    fireEvent.click(await ionElement('ion-back-button'))
+
+    await waitFor(() => expect(currentPath()).toBe('/tabs/today'))
+    await pauseForRouting()
+    expect(currentPath()).toBe('/tabs/today')
   })
 })

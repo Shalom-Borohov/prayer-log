@@ -29,7 +29,9 @@ export function CalendarPage() {
   const today = useToday()
   const records = useAllDays()
   const router = useIonRouter()
-  const [month, setMonth] = useState(() => monthStart(today))
+  const currentMonth = monthStart(today)
+  const [chosenPastMonth, setChosenPastMonth] = useState<string | null>(null)
+  const month = chosenPastMonth ?? currentMonth
 
   const holidays = daysInRange(month, monthEnd(month)).flatMap((date) => {
     const names = holidayNames(date)
@@ -39,10 +41,12 @@ export function CalendarPage() {
 
   const holidayDates = new Set(holidays.map((holiday) => holiday.date))
 
+  const showMonth = (target: string) => setChosenPastMonth(target < currentMonth ? target : null)
+
   const period = {
-    onPrevious: () => setMonth(monthStart(addDays(month, -1))),
-    onNext: () => setMonth(addDays(monthEnd(month), 1)),
-    nextDisabled: month >= monthStart(today),
+    onPrevious: () => showMonth(monthStart(addDays(month, -1))),
+    onNext: () => showMonth(addDays(monthEnd(month), 1)),
+    nextDisabled: month >= currentMonth,
   }
 
   const { areaRef, paneRef } = usePeriodSwipe({ ...period, periodKey: month })

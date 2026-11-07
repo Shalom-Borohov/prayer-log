@@ -8,6 +8,8 @@ const IN_ISRAEL = true
 
 const ROSH_HASHANA_DAY_ONE = 'Rosh Hashana I'
 
+const OBSERVED_TISHA_BAV = "Tish'a B'Av (observed)"
+
 const hiddenFlags: FlagName[] = ['SPECIAL_SHABBAT', 'YOM_KIPPUR_KATAN', 'BEHAB']
 
 const toHDate = (date: string) => new HDate(parseIsoDate(date))
@@ -26,12 +28,20 @@ const isShown = (holiday: HolidayEvent) =>
   !hiddenFlags.some((flag) => holiday.hasFlag(flag)) &&
   (!holiday.hasFlag('MODERN_HOLIDAY') || nationalDays.includes(holiday.getDesc()))
 
+function holidayName(holiday: HolidayEvent): string {
+  if (holiday instanceof RoshHashanaEvent) {
+    return Locale.gettext(ROSH_HASHANA_DAY_ONE, LOCALE)
+  }
+
+  if (holiday.getDesc() === OBSERVED_TISHA_BAV) {
+    return FORMAT_COPY.observedTishaBav
+  }
+
+  return holiday.render(LOCALE)
+}
+
 export function holidayNames(date: string): string[] {
-  return israeliHolidays(date)
-    .filter(isShown)
-    .map((holiday) =>
-      holiday instanceof RoshHashanaEvent ? Locale.gettext(ROSH_HASHANA_DAY_ONE, LOCALE) : holiday.render(LOCALE),
-    )
+  return israeliHolidays(date).filter(isShown).map(holidayName)
 }
 
 const hasHolidayFlag = (date: string, ...flags: FlagName[]) =>
