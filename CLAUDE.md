@@ -52,9 +52,9 @@ The code is split into layers, and imports go downward only: `pages` → `data` 
 - **`src/copy/`** and each page's `copy.ts`: every user-visible string is an `as const` copy constant. Strings with values are functions. Don't inline Hebrew text in components.
 - **UI**: Ionic React in iOS mode.
   - Overlays use the hooks (`useIonActionSheet`, `useIonAlert`, `useIonToast`).
-  - Styling is plain CSS with tokens in `theme.css`. Gold is reserved for the במניין state.
+  - Styling is plain CSS with tokens in `theme.css`. On marks, gold means only done (a prayer במניין, a day of learning or a checked round check; `DESIGN.md`, The Gold Means Minyan Rule). The shell and the accents listed under Colors in `DESIGN.md`, such as the backfill banner and holiday dates in לוח, use it too.
   - The page `body` is leather, and `index.html` has a static `.status-bar-strip` (styled in `leather-header.css`). iOS 26 colours the installed app's status bar from these, not from `theme-color` (spec decision 20), so keep both. Don't give the strip `pointer-events: none`: Safari then skips it and hazes the top of the header.
-- **`src/recovery/`**: an error boundary above `IonApp`, and a plain screen with no Ionic and no router that can still export and import a backup and apply a waiting update (spec decisions 32, 39, 40).
+- **`src/recovery/`**: an error boundary above `IonApp`, and a plain screen with no Ionic and no router that can still export and import a backup and apply a waiting update (spec decisions 32, 42, 43).
 - **`src/appUpdate/`**: the update bar, the "מה חדש" sheet and `changelog.ts`, rendered by `Tabs.tsx` and הגדרות (spec decisions 24, 25). `useAppUpdate` is shared with the recovery screen.
   - `registerType: 'prompt'`, so a new service worker waits until the user taps "עדכון" (`UpdateBar`, through `useRegisterSW`).
   - `updateChecks.ts` calls `registration.update()` when the app becomes visible and every hour. iOS doesn't check on its own when a Home Screen app resumes.

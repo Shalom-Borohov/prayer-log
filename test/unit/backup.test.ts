@@ -112,6 +112,14 @@ describe('backup', () => {
     expect(await allDays()).toStrictEqual(wornOnly)
   })
 
+  it('restores a day with only a note', async () => {
+    const noteOnly = [{ date: '2026-10-20', prayers: {}, torah: false, torahNote: 'דף יומי' }]
+
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: noteOnly })))
+
+    expect(await allDays()).toStrictEqual(noteOnly)
+  })
+
   it('invalid backup leaves data intact', async () => {
     await logTwoDays()
 

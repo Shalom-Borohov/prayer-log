@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import {
   addDays,
   daysInRange,
@@ -38,6 +38,22 @@ describe('logicalToday', () => {
   it('rolls over at 03:00 on the night summer time starts', () => {
     expect(logicalToday(at(3, 27, 1, 59))).toBe('2026-03-26')
     expect(logicalToday(at(3, 27, 3, 0))).toBe('2026-03-27')
+  })
+
+  describe('abroad', () => {
+    const sameInstant = Date.UTC(2026, 10, 8, 5)
+
+    afterEach(() => {
+      vi.stubEnv('TZ', 'Asia/Jerusalem')
+    })
+
+    it('rolls over by the phone clock, not by Israel time', () => {
+      expect(logicalToday(sameInstant)).toBe('2026-11-08')
+
+      vi.stubEnv('TZ', 'America/New_York')
+
+      expect(logicalToday(sameInstant)).toBe('2026-11-07')
+    })
   })
 })
 
