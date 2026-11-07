@@ -6,6 +6,8 @@ import { buttonByLabel } from '../helpers/ionic'
 import { currentPath, renderAt } from '../helpers/renderAt'
 import { setVisibility } from '../helpers/visibility'
 
+const tuesdayEvening = new Date(2026, 9, 27, 21).getTime()
+
 const wednesdayEvening = new Date(2026, 9, 28, 21).getTime()
 
 const lateWednesdayNight = new Date(2026, 9, 29, 2, 30).getTime()
@@ -91,6 +93,42 @@ describe('היום when the app comes back', () => {
     await act(async () => {
       vi.setSystemTime(thursdayMorning)
     })
+    await pauseForRouting()
+
+    expect(currentPath()).toBe('/tabs/today/2026-10-27')
+  })
+
+  it('stays on the past day when the rollover happened before it left the app', async () => {
+    await stepBackFromToday()
+
+    await act(async () => {
+      vi.setSystemTime(thursdayMorning)
+    })
+    await leaveAndComeBackAt(thursdayMorning + 60_000)
+    await pauseForRouting()
+
+    expect(currentPath()).toBe('/tabs/today/2026-10-27')
+  })
+
+  it('stays on the past day when it changes tabs after a rollover it stayed open across', async () => {
+    await stepBackFromToday()
+
+    await act(async () => {
+      vi.setSystemTime(thursdayMorning)
+    })
+    fireEvent.click(tabButton('לוח'))
+    await waitFor(() => expect(currentPath()).toBe('/tabs/calendar'))
+    fireEvent.click(tabButton('היום'))
+    await waitFor(() => expect(currentPath()).toBe('/tabs/today/2026-10-27'))
+    await pauseForRouting()
+
+    expect(currentPath()).toBe('/tabs/today/2026-10-27')
+  })
+
+  it('stays on the past day when the clock has moved back to an earlier logical day', async () => {
+    await stepBackFromToday()
+
+    await leaveAndComeBackAt(tuesdayEvening)
     await pauseForRouting()
 
     expect(currentPath()).toBe('/tabs/today/2026-10-27')

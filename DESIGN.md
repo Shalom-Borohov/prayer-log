@@ -332,6 +332,9 @@ The version line "גרסה X · עודכנה …" is the last row on הגדרו�
 ### Update bar
 When a new version is waiting, a flat bar sits directly above the tab bar on every tab: an item-background ground with a hairline top rule, a grey × (לא עכשיו) at the start, the label "גרסה חדשה זמינה", and a small round filled "עדכון" button in the primary ink at the end. No gold.
 
+### Recovery screen
+When a page can't draw, a plain full-screen page replaces the whole app, with no Ionic, no leather header and no tab bar: the page background, the title "משהו השתבש" (28px, 700), a line of body text, a full-width filled "ייצוא גיבוי" button in the primary ink, any export message, and a full-width "טעינה מחדש" button on the quiet fill. Both buttons are at least 44px tall with a 10px radius. No gold.
+
 ## Do's and Don'ts
 
 ### Do:

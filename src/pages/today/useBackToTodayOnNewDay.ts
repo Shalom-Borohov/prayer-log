@@ -8,21 +8,17 @@ export function useBackToTodayOnNewDay() {
   const [dayOnMount] = useState(() => logicalToday(Date.now()))
   const lastSeenDay = useRef(dayOnMount)
   const onScreen = useRef(true)
+  const cameBackOnNewDayElsewhere = useRef(false)
 
-  function goBackIfNewDay() {
-    const today = logicalToday(Date.now())
-    const isNewDay = today !== lastSeenDay.current
-
-    lastSeenDay.current = today
-
-    if (isNewDay) {
-      router.push(TODAY_PATH, 'none', 'replace')
-    }
-  }
+  const goToToday = () => router.push(TODAY_PATH, 'none', 'replace')
 
   useIonViewWillEnter(() => {
     onScreen.current = true
-    goBackIfNewDay()
+
+    if (cameBackOnNewDayElsewhere.current) {
+      cameBackOnNewDayElsewhere.current = false
+      goToToday()
+    }
   })
 
   useIonViewWillLeave(() => {
@@ -31,8 +27,19 @@ export function useBackToTodayOnNewDay() {
 
   useEffect(() => {
     const onVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && onScreen.current) {
-        goBackIfNewDay()
+      const today = logicalToday(Date.now())
+      const isLaterDay = today > lastSeenDay.current
+
+      lastSeenDay.current = today
+
+      if (document.visibilityState !== 'visible' || !isLaterDay) {
+        return
+      }
+
+      if (onScreen.current) {
+        goToToday()
+      } else {
+        cameBackOnNewDayElsewhere.current = true
       }
     }
 
