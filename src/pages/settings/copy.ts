@@ -17,6 +17,9 @@ export const SETTINGS_COPY = {
   ideaPlaceholder: 'מה היה עוזר לך?',
   feedbackFooter: 'הדיווח נפתח ב-GitHub, עם סוג הדפדפן והגרסה. נתוני התפילות לא נשלחים.',
   openInGitHub: 'פתיחה ב-GitHub',
+  feedbackOpened: 'אם GitHub לא נפתח, אפשר ללחוץ שוב או להעתיק את הטקסט.',
+  feedbackTooLong: 'הדיווח ארוך מדי לקישור. ב-GitHub תופיע רק ההתחלה, ואת השאר אפשר להעתיק מכאן ולהדביק שם.',
+  issueCutMarker: '… (הדיווח נחתך כאן)',
   issueBody: (text: string, userAgent: string, version: string, builtAt: string) =>
     `${text}\n\n### מכשיר\n${userAgent}\nגרסה: ${version} (${builtAt})`,
   version: (version: string) => `גרסה ${version}`,

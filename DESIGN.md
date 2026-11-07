@@ -222,7 +222,7 @@ Spines use the display hue, so they lift in dark mode to stay visible on black. 
 ### Named Rules
 **The Fixed Hue Rule.** A prayer's leather is the same on every tab, every table and every shelf. A new surface showing a prayer uses that prayer's hue class, never a new colour.
 
-**The Gold Means Minyan Rule.** Gold appears on data only as the done state: a spine stamped for a prayer במניין or a day of learning, and the gold text of the selected במניין segment. Never use gold to decorate a neutral or partial state.
+**The Gold Means Minyan Rule.** On marks, gold appears only as the done state: a spine stamped for a prayer במניין or a day of learning, the gold text of the selected במניין segment, the tick of a checked round check, and the במניין share of a trend column. Never use gold to decorate a neutral or partial state. The shell, the stats tables' hue key and the accents listed under Colors are outside this rule.
 
 **The Deep Fill Rule.** Anything filled behind gold-leaf text takes `--hue-deep`, which does not lighten in dark mode. Only spines take the lightened `--hue`.
 
@@ -324,7 +324,7 @@ A horizontal swipe on the content does the same: drag left for הקודם, right
 The leather reaches the top of the screen. The page background is leather, and in the installed app a flat 12px leather strip is pinned to the top edge, so iOS 26 draws the status bar in leather rather than fading it. The strip takes pointer events: with `pointer-events: none`, Safari skips it and hazes the top of the header.
 
 ### Feedback sheet
-A "דיווח על באג / הצעה" disclosure-free row in its own inset group on הגדרות, above the version line. It opens a full-screen modal with a leather header: ביטול, the title דיווח, and a באג / הצעה segment. Below it are an inset "תיאור" text area, a footnote saying what is sent, and a full-width "פתיחה ב-GitHub" button that stays disabled until there is text.
+A "דיווח על באג / הצעה" disclosure-free row in its own inset group on הגדרות, above the version line. It opens a full-screen modal with a leather header: ביטול, the title דיווח, and a באג / הצעה segment. Below it are an inset "תיאור" text area, a footnote saying what is sent, and a full-width "פתיחה ב-GitHub" button that stays disabled until there is text. Tapping the button leaves the sheet open and changes ביטול to סגירה. Under the footnote, in the same style, a note appears when the report is too long for the link, and another after the first tap.
 
 ### Version row and what's new sheet
 The version line "גרסה X · עודכנה …" is the last row on הגדרות, a disclosure row in its own inset group. It opens "מה חדש", a half-height sheet (it can be dragged to full height) with a leather header, the title מה חדש and סגירה at the end. Each release is an inset group headed "גרסה X", with "חדש" and "תיקונים" items holding bulleted lines. The same sheet opens by itself once after an update, with only the releases not seen yet.
