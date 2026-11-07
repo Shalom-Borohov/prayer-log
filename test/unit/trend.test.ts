@@ -22,6 +22,21 @@ describe('trendUnit', () => {
     expect(trendUnit('all', { from: '2026-08-06', to: '2026-10-28' })).toBe('week')
     expect(trendUnit('all', { from: '2026-08-05', to: '2026-10-28' })).toBe('month')
   })
+
+  it('moves all time to quarters once months take more than 36 columns', () => {
+    expect(trendUnit('all', { from: '2026-08-20', to: '2029-07-31' })).toBe('month')
+    expect(trendUnit('all', { from: '2026-08-20', to: '2029-08-01' })).toBe('quarter')
+  })
+
+  it('moves all time to years once quarters take more than 36 columns', () => {
+    expect(trendUnit('all', { from: '2026-01-01', to: '2034-12-31' })).toBe('quarter')
+    expect(trendUnit('all', { from: '2026-01-01', to: '2035-01-01' })).toBe('year')
+  })
+
+  it('counts a partial first quarter as a column', () => {
+    expect(trendUnit('all', { from: '2026-03-31', to: '2034-12-31' })).toBe('quarter')
+    expect(trendUnit('all', { from: '2026-03-31', to: '2035-01-01' })).toBe('year')
+  })
 })
 
 describe('trendBuckets', () => {
@@ -65,6 +80,33 @@ describe('trendBuckets', () => {
     expect(buckets[2].tally.alone).toBe(1)
   })
 
+  it('splits all time into calendar quarters, the first one starting at the first record', () => {
+    const buckets = trendBuckets([], { from: '2026-08-20', to: '2027-02-10' }, 'quarter', '2027-02-10')
+
+    expect(buckets.map(({ start, end }) => [start, end])).toEqual([
+      ['2026-08-20', '2026-09-30'],
+      ['2026-10-01', '2026-12-31'],
+      ['2027-01-01', '2027-02-10'],
+    ])
+  })
+
+  it('splits all time into calendar years, the first one starting at the first record', () => {
+    const buckets = trendBuckets([], { from: '2026-08-20', to: '2028-02-10' }, 'year', '2028-02-10')
+
+    expect(buckets.map(({ start, end }) => [start, end])).toEqual([
+      ['2026-08-20', '2026-12-31'],
+      ['2027-01-01', '2027-12-31'],
+      ['2028-01-01', '2028-02-10'],
+    ])
+  })
+
+  it('keeps five years of history to 21 quarterly columns', () => {
+    const range = { from: '2021-11-08', to: '2026-11-07' }
+
+    expect(trendUnit('all', range)).toBe('quarter')
+    expect(trendBuckets([], range, 'quarter', '2026-11-07')).toHaveLength(21)
+  })
+
   it('adds up to the period totals, leaving out an unmarked today', () => {
     const records = [
       ...days('2026-08-20', '2026-09-30', { prayers: { shacharit: 'minyan', maariv: 'shema' } }),
@@ -73,7 +115,7 @@ describe('trendBuckets', () => {
 
     const range = allTimeRange(records, '2026-10-28')
 
-    for (const unit of ['day', 'week', 'month'] as const) {
+    for (const unit of ['day', 'week', 'month', 'quarter', 'year'] as const) {
       expect(sum(trendBuckets(records, range, unit, '2026-10-28').map(({ tally }) => tally))).toEqual(
         periodTotals(records, range.from, '2026-10-27', '2026-10-28').prayers,
       )

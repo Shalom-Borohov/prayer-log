@@ -1,9 +1,19 @@
-import { DAYS_PER_WEEK, addDays, daysInRange, monthStart, weekStart } from './logicalDay'
+import {
+  DAYS_PER_WEEK,
+  MONTHS_PER_QUARTER,
+  addDays,
+  daysInRange,
+  monthStart,
+  parseIsoDate,
+  quarterStart,
+  weekStart,
+  yearStart,
+} from './logicalDay'
 import { prayersForDay } from './prayersForDay'
 import { type DateRange, periodTotals, type StatsPeriod } from './totals'
 import type { DayRecord, PrayerTally } from './types'
 
-export type TrendUnit = 'day' | 'week' | 'month'
+export type TrendUnit = 'day' | 'week' | 'month' | 'quarter' | 'year'
 
 export interface TrendBucket {
   start: string
@@ -13,11 +23,26 @@ export interface TrendBucket {
 
 const WEEKLY_SPAN_WEEKS = 12
 
+const MAX_COLUMNS = 36
+
+const MONTHS_PER_YEAR = 12
+
 const UNIT_START: Record<TrendUnit, (date: string) => string> = {
   day: (date) => date,
   week: weekStart,
   month: monthStart,
+  quarter: quarterStart,
+  year: yearStart,
 }
+
+function monthIndex(date: string): number {
+  const parsed = parseIsoDate(date)
+
+  return parsed.getFullYear() * MONTHS_PER_YEAR + parsed.getMonth()
+}
+
+const columnCount = ({ from, to }: DateRange, monthsPerColumn: number) =>
+  Math.floor(monthIndex(to) / monthsPerColumn) - Math.floor(monthIndex(from) / monthsPerColumn) + 1
 
 export function trendUnit(period: StatsPeriod, range: DateRange): TrendUnit {
   if (period === 'week') {
@@ -27,7 +52,14 @@ export function trendUnit(period: StatsPeriod, range: DateRange): TrendUnit {
     return 'week'
   }
 
-  return range.from >= addDays(range.to, 1 - WEEKLY_SPAN_WEEKS * DAYS_PER_WEEK) ? 'week' : 'month'
+  if (range.from >= addDays(range.to, 1 - WEEKLY_SPAN_WEEKS * DAYS_PER_WEEK)) {
+    return 'week'
+  }
+  if (columnCount(range, 1) <= MAX_COLUMNS) {
+    return 'month'
+  }
+
+  return columnCount(range, MONTHS_PER_QUARTER) <= MAX_COLUMNS ? 'quarter' : 'year'
 }
 
 export function trendBuckets(records: DayRecord[], range: DateRange, unit: TrendUnit, today: string): TrendBucket[] {

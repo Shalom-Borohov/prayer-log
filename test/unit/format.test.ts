@@ -3,11 +3,13 @@ import {
   dateTimeLabel,
   fullDateLabel,
   gregorianLabel,
+  monthName,
   monthTitle,
   shortMonth,
   shortWeekday,
   streakLabel,
   weekdayName,
+  yearLabel,
 } from '../../src/domain/format'
 
 describe('weekdayName', () => {
@@ -70,5 +72,17 @@ describe('monthTitle', () => {
 describe('shortMonth', () => {
   it('abbreviates the Gregorian month in Hebrew', () => {
     expect(shortMonth('2026-10-28')).toBe('אוק׳')
+  })
+})
+
+describe('monthName', () => {
+  it('names the Gregorian month in Hebrew without the year', () => {
+    expect(monthName('2026-10-28')).toBe('אוקטובר')
+  })
+})
+
+describe('yearLabel', () => {
+  it('is the Gregorian year', () => {
+    expect(yearLabel('2026-10-28')).toBe('2026')
   })
 })

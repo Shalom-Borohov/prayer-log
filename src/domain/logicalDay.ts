@@ -8,6 +8,8 @@ export const DAYS_PER_WEEK = 7
 
 const SATURDAY = 6
 
+export const MONTHS_PER_QUARTER = 3
+
 export const pad = (value: number) => String(value).padStart(2, '0')
 
 export const isIsoDate = (date: string) => ISO_DATE_PATTERN.test(date) && toIsoDate(parseIsoDate(date)) === date
@@ -49,6 +51,24 @@ export function monthEnd(date: string): string {
   const parsed = parseIsoDate(date)
 
   return toIsoDate(new Date(parsed.getFullYear(), parsed.getMonth() + 1, 0, NOON))
+}
+
+const firstMonthOfQuarter = (parsed: Date) => parsed.getMonth() - (parsed.getMonth() % MONTHS_PER_QUARTER)
+
+export function quarterStart(date: string): string {
+  const parsed = parseIsoDate(date)
+
+  return toIsoDate(new Date(parsed.getFullYear(), firstMonthOfQuarter(parsed), 1, NOON))
+}
+
+export function quarterEnd(date: string): string {
+  const parsed = parseIsoDate(date)
+
+  return toIsoDate(new Date(parsed.getFullYear(), firstMonthOfQuarter(parsed) + MONTHS_PER_QUARTER, 0, NOON))
+}
+
+export function yearStart(date: string): string {
+  return `${date.slice(0, 4)}-01-01`
 }
 
 export function daysInRange(from: string, to: string): string[] {
