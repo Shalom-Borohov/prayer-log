@@ -43,12 +43,13 @@ export function TrendChart({ records, range, period, today }: TrendChartProps) {
 
   const tickStep = Math.ceil(columns.length / MAX_TICKS)
 
-  const label = columns
-    .filter(({ total }) => total > 0)
-    .map(({ start, end, minyan, other, total }) =>
-      STATS_COPY.trendBucket(SPOKEN_LABEL[unit]({ from: start, to: end }), minyan, other, total),
-    )
-    .join(LIST_SEPARATOR)
+  const label =
+    columns
+      .filter(({ total }) => total > 0)
+      .map(({ start, end, minyan, other, total }) =>
+        STATS_COPY.trendBucket(SPOKEN_LABEL[unit]({ from: start, to: end }), minyan, other, total),
+      )
+      .join(LIST_SEPARATOR) || COMMON_COPY.noData
 
   return (
     <>

@@ -119,9 +119,31 @@ describe('stats', () => {
     expect(screen.queryByRole('heading', { name: 'מדף' })).not.toBeInTheDocument()
   })
 
+  it('leaves days before tracking out of a shelf’s count', async () => {
+    await db.days.put(day('2026-10-27', { prayers: { shacharit: 'minyan' } }))
+    renderAt('/tabs/stats')
+
+    expect(await screen.findByRole('img', { name: '1 מתוך 2 הימים האחרונים במניין' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: '0 מתוך 2 הימים האחרונים עם לימוד' })).toBeInTheDocument()
+  })
+
   it('explains the empty state', async () => {
     renderAt('/tabs/stats')
 
     expect(await screen.findByText('עוד אין נתונים')).toBeInTheDocument()
+  })
+})
+
+describe('stats at the start of a week', () => {
+  beforeEach(resetDb)
+  freezeDate(new Date(2026, 9, 25, 10).getTime())
+
+  it('names the chart when no day of the week has a count yet', async () => {
+    await db.days.put(day('2026-10-20', { prayers: { shacharit: 'minyan' } }))
+    renderAt('/tabs/stats')
+
+    const chart = await screen.findByRole('group', { name: 'לפי יום' })
+
+    expect(within(chart).getByRole('img')).toHaveAccessibleName('עוד אין נתונים')
   })
 })

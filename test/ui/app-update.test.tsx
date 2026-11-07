@@ -29,6 +29,12 @@ describe('a new version of the app', () => {
     expect(await screen.findByText(READY)).toBeInTheDocument()
   })
 
+  it('hides the dismiss icon from screen readers', async () => {
+    renderAt('/tabs/today')
+
+    expect((await buttonByLabel('לא עכשיו')).querySelector('ion-icon')).toHaveAttribute('aria-hidden', 'true')
+  })
+
   it('updates when עדכון is tapped', async () => {
     renderAt('/tabs/today')
 

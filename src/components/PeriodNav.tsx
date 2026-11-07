@@ -17,14 +17,14 @@ export function PeriodNav({ previousLabel, nextLabel, onPrevious, onNext, nextDi
       <IonToolbar>
         <IonButtons slot="start">
           <IonButton aria-label={previousLabel} onClick={onPrevious}>
-            <IonIcon slot="start" icon={chevronForward} />
+            <IonIcon slot="start" icon={chevronForward} aria-hidden="true" />
             {COMMON_COPY.previous}
           </IonButton>
         </IonButtons>
         <IonButtons slot="end">
           <IonButton aria-label={nextLabel} disabled={nextDisabled} onClick={onNext}>
             {COMMON_COPY.next}
-            <IonIcon slot="end" icon={chevronBack} />
+            <IonIcon slot="end" icon={chevronBack} aria-hidden="true" />
           </IonButton>
         </IonButtons>
       </IonToolbar>

@@ -122,6 +122,15 @@ describe('today', () => {
     await waitFor(async () => expect(await lastSpine('שחרית')).toHaveClass('spine-gold', 'spine-stamp'))
   })
 
+  it('names a prayer’s shelf by the days since tracking started', async () => {
+    await db.days.put(day('2026-10-27', { prayers: { shacharit: 'minyan' } }))
+    renderAt('/tabs/today')
+
+    expect(
+      await within(await row('שחרית')).findByRole('img', { name: '1 מתוך 2 הימים האחרונים במניין' }),
+    ).toBeInTheDocument()
+  })
+
   it('shows each prayer streak, counting a still-blank today', async () => {
     await db.days.bulkPut([
       ...days('2026-10-24', '2026-10-27', { prayers: { shacharit: 'minyan' } }),

@@ -86,11 +86,11 @@ export function SettingsPage({ tab }: { tab: Tab }) {
         </IonListHeader>
         <IonList inset>
           <IonItem button detail={false} onClick={exportData}>
-            <IonIcon slot="start" color="primary" icon={shareOutline} />
+            <IonIcon slot="start" color="primary" icon={shareOutline} aria-hidden="true" />
             <IonLabel>{COMMON_COPY.exportBackup}</IonLabel>
           </IonItem>
           <IonItem button detail={false} onClick={() => fileInput.current?.click()}>
-            <IonIcon slot="start" color="primary" icon={downloadOutline} />
+            <IonIcon slot="start" color="primary" icon={downloadOutline} aria-hidden="true" />
             <IonLabel>{SETTINGS_COPY.importBackup}</IonLabel>
           </IonItem>
         </IonList>
