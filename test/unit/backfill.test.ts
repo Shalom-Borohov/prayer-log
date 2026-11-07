@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { backfillReminders, blankEveMaariv, emptyRecentDays } from '../../src/domain/backfill'
-import { allMinyan, day } from '../helpers/days'
+import { allMinyan, day, days } from '../helpers/days'
 
 const today = '2026-10-28'
 
@@ -30,7 +30,13 @@ describe('emptyRecentDays', () => {
       day('2026-10-27', { prayers: { maariv: 'minyan' } }),
     ]
 
-    expect(emptyRecentDays(records, today)).toEqual(['2026-10-22', '2026-10-23'])
+    expect(emptyRecentDays(records, today)).toEqual(['2026-10-22', '2026-10-23', '2026-10-26'])
+  })
+
+  it('does not list a day with only תפילין or טלית marked', () => {
+    const records = [day('2026-10-26', { tefillin: true }), day('2026-10-27', { tallit: true })]
+
+    expect(emptyRecentDays(records, today)).toEqual([])
   })
 
   it('never lists days before the first record', () => {
@@ -38,6 +44,12 @@ describe('emptyRecentDays', () => {
 
     expect(emptyRecentDays(records, today)).toEqual(['2026-10-27'])
     expect(emptyRecentDays([day(today, { torah: true })], today)).toEqual([])
+  })
+
+  it('starts tracking on a first day with only a note, and lists that day', () => {
+    const records = [day('2026-10-26', { torahNote: 'משנה ברורה' })]
+
+    expect(emptyRecentDays(records, today)).toEqual(['2026-10-26', '2026-10-27'])
   })
 })
 
@@ -61,6 +73,14 @@ describe('blankEveMaariv', () => {
     expect(blankEveMaariv(records, today)).toEqual([])
     expect(blankEveMaariv([day('2026-10-20', { torah: true })], today)).toEqual([])
   })
+
+  it('lists an eve with only למדתי ticked', () => {
+    expect(blankEveMaariv([day('2026-10-23', { torah: true })], today)).toEqual(['2026-10-23'])
+  })
+
+  it('skips an eve with only a note', () => {
+    expect(blankEveMaariv([day('2026-10-23', { torahNote: 'משנה ברורה' })], today)).toEqual([])
+  })
 })
 
 describe('backfillReminders', () => {
@@ -79,5 +99,11 @@ describe('backfillReminders', () => {
       { date: '2026-10-24', kind: 'empty' },
       { date: '2026-10-25', kind: 'empty' },
     ])
+  })
+
+  it('gives an eve with only a note one row, not two', () => {
+    const records = [day('2026-10-23', { torahNote: 'משנה ברורה' }), ...days('2026-10-24', '2026-10-27', { prayers: allMinyan })]
+
+    expect(backfillReminders(records, today)).toEqual([{ date: '2026-10-23', kind: 'empty' }])
   })
 })
