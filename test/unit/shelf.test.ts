@@ -1,6 +1,29 @@
 import { describe, expect, it } from 'vitest'
-import { shelfSlots } from '../../src/domain/shelf'
+import { shelfLabel, shelfSlots } from '../../src/domain/shelf'
 import { day } from '../helpers/days'
+
+describe('shelfLabel', () => {
+  it('leaves days before tracking out of the count', () => {
+    expect(shelfLabel(['none', 'none', 'none', 'none', 'none', 'gold', 'empty'], 'shacharit')).toBe(
+      '1 מתוך 2 הימים האחרונים במניין',
+    )
+  })
+
+  it('names Torah days as learning', () => {
+    expect(shelfLabel(['none', 'none', 'none', 'none', 'none', 'gold', 'empty'], 'torah')).toBe(
+      '1 מתוך 2 הימים האחרונים עם לימוד',
+    )
+  })
+
+  it('reads naturally on the first tracked day', () => {
+    expect(shelfLabel(['none', 'none', 'gold'], 'shacharit')).toBe('1 מתוך יום אחד במניין')
+    expect(shelfLabel(['none', 'none', 'empty'], 'torah')).toBe('0 מתוך יום אחד עם לימוד')
+  })
+
+  it('has no count when every slot is before tracking', () => {
+    expect(shelfLabel(['none', 'none', 'none'], 'shacharit')).toBe('עוד אין נתונים')
+  })
+})
 
 describe('shelfSlots', () => {
   const records = [

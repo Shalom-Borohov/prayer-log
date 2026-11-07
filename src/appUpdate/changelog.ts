@@ -2,6 +2,14 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.6.1',
+    features: [],
+    fixes: [
+      'קל יותר ללחוץ על כפתורי התפילה, הקודם והבא, ההגדרות, בורר התקופה ושורת העדכון',
+      'VoiceOver סופר רק ימים מאז תחילת המעקב, ומקריא נכון ימים בלוח וגרף ריק',
+    ],
+  },
+  {
     version: '1.6.0',
     features: [
       'כשמסך לא מצליח להיטען, אפשר לייבא ממנו גיבוי',

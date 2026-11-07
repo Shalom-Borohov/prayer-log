@@ -7,7 +7,7 @@ export function SettingsButton({ tab }: { tab: Tab }) {
   return (
     <IonButtons slot="end">
       <IonButton aria-label={COMMON_COPY.settings} routerLink={settingsPath(tab)}>
-        <IonIcon slot="icon-only" icon={settingsOutline} />
+        <IonIcon slot="icon-only" icon={settingsOutline} aria-hidden="true" />
       </IonButton>
     </IonButtons>
   )

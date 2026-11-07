@@ -45,7 +45,7 @@ export function StatsPage() {
         </IonHeader>
         {records && records.length === 0 && (
           <div className="empty-state">
-            <h2>{STATS_COPY.emptyTitle}</h2>
+            <h2>{COMMON_COPY.noData}</h2>
             <p>{STATS_COPY.emptyBody}</p>
           </div>
         )}
