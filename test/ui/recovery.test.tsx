@@ -1,16 +1,15 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { App } from '../../src/App'
 import { db } from '../../src/data/db'
 import { stubShare } from '../helpers/backupFile'
 import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
+import { missingPrayers, openRecoveryScreen, prepareRecoveryScreen } from '../helpers/recovery'
 
 const RECOVERY_HEADING = 'משהו השתבש'
 
 const EXPORT_BUTTON = 'ייצוא גיבוי'
-
-const missingPrayers = JSON.parse('{"date":"2026-11-02","torah":false}')
 
 const goodDay = day('2026-11-01', { prayers: { shacharit: 'minyan' } })
 
@@ -21,24 +20,10 @@ async function sharedFileText(share: ReturnType<typeof stubShare>) {
   return file.text()
 }
 
-async function openOnStoredRecords() {
-  await db.days.bulkPut([goodDay, missingPrayers])
-  window.location.hash = '#/tabs/today'
-  render(<App />)
-
-  return screen.findByRole('heading', { name: RECOVERY_HEADING })
-}
+const openOnStoredRecords = () => openRecoveryScreen([goodDay])
 
 describe('a malformed stored record', () => {
-  beforeEach(async () => {
-    await resetDb()
-    vi.spyOn(console, 'error').mockImplementation(() => {})
-  })
-
-  afterEach(() => {
-    vi.restoreAllMocks()
-    window.location.hash = ''
-  })
+  prepareRecoveryScreen()
 
   it('shows the recovery screen instead of a blank page', async () => {
     expect(await openOnStoredRecords()).toBeVisible()

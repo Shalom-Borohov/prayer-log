@@ -39,7 +39,7 @@ describe('לוח when the app comes back in a new month', () => {
     await leaveAndComeBackAt(firstMorningOfNovember)
 
     expect(await screen.findByText('נובמבר 2026')).toBeInTheDocument()
-    expect(await cell('1.11')).toHaveClass('is-today')
+    expect(await cell(1)).toHaveClass('is-today')
     expect(await buttonByLabel('החודש הבא')).toHaveAttribute('disabled')
   })
 
@@ -48,7 +48,7 @@ describe('לוח when the app comes back in a new month', () => {
 
     await leaveAndComeBackAt(lateOctoberNight)
 
-    expect(await cell('31.10')).toHaveClass('is-today')
+    expect(await cell(31)).toHaveClass('is-today')
     expect(screen.getByText('אוקטובר 2026')).toBeInTheDocument()
   })
 
@@ -57,7 +57,7 @@ describe('לוח when the app comes back in a new month', () => {
 
     await leaveAndComeBackAt(firstMorningOfNovember)
 
-    expect(await cell('1.9')).toBeInTheDocument()
+    expect(await cell(1)).toBeInTheDocument()
     expect(screen.getByText('ספטמבר 2026')).toBeInTheDocument()
 
     const next = await buttonByLabel('החודש הבא')
@@ -84,7 +84,7 @@ describe('לוח when the app comes back in a new month', () => {
 
   it('shows the new month on the way back from a day opened before the month changed', async () => {
     await openOctober()
-    fireEvent.click(await cell('30.10'))
+    fireEvent.click(await cell(30))
     await waitFor(() => expect(currentPath()).toBe('/tabs/calendar/2026-10-30'))
 
     await leaveAndComeBackAt(firstMorningOfNovember)

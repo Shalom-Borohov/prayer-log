@@ -4,7 +4,7 @@ import { db } from '../../src/data/db'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { allMinyan, day, days } from '../helpers/days'
-import { ionChange, ionElement } from '../helpers/ionic'
+import { ionChange, ionElement, visibleAll } from '../helpers/ionic'
 import { renderAt } from '../helpers/renderAt'
 
 function cells(table: HTMLElement, rowName: string) {
@@ -17,6 +17,12 @@ function cells(table: HTMLElement, rowName: string) {
   return within(row)
     .getAllByRole('cell')
     .map((cell) => cell.textContent)
+}
+
+function trendTicks() {
+  return visibleAll('.trend-ticks span')
+    .map((tick) => tick.textContent)
+    .filter(Boolean)
 }
 
 describe('stats', () => {
@@ -119,9 +125,69 @@ describe('stats', () => {
     expect(screen.queryByRole('heading', { name: 'מדף' })).not.toBeInTheDocument()
   })
 
+  it('charts a long history by quarter, marking the axis with the year on each first quarter', async () => {
+    await db.days.bulkPut([
+      day('2022-09-15', { prayers: { shacharit: 'alone' } }),
+      day('2026-02-10', { prayers: { shacharit: 'minyan', mincha: 'alone' } }),
+    ])
+    renderAt('/tabs/stats')
+
+    ionChange(await ionElement('ion-segment'), 'all')
+
+    expect(await screen.findByRole('group', { name: 'לפי רבעון' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /ינואר–מרץ 2026: 1 במניין, 1 ביחידות או ק״ש, מתוך \d+/ })).toBeInTheDocument()
+    expect(trendTicks()).toEqual(['2023', '2024', '2025', '2026'])
+  })
+
+  it('labels a first quarter that starts at the first record', async () => {
+    await db.days.bulkPut([day('2023-02-10', { prayers: { shacharit: 'minyan' } })])
+    renderAt('/tabs/stats')
+
+    ionChange(await ionElement('ion-segment'), 'all')
+
+    await screen.findByRole('group', { name: 'לפי רבעון' })
+    expect(trendTicks()).toEqual(['2023', '2024', '2025', '2026'])
+  })
+
+  it('charts a very long history by year', async () => {
+    await db.days.bulkPut([
+      day('2015-03-01', { prayers: { shacharit: 'alone' } }),
+      day('2026-02-10', { prayers: { shacharit: 'minyan' } }),
+    ])
+    renderAt('/tabs/stats')
+
+    ionChange(await ionElement('ion-segment'), 'all')
+
+    expect(await screen.findByRole('group', { name: 'לפי שנה' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /(^| · )2026: 1 במניין, 0 ביחידות או ק״ש, מתוך \d+/ })).toBeInTheDocument()
+    expect(trendTicks()).toEqual(['2015', '2017', '2019', '2021', '2023', '2025'])
+  })
+
+  it('leaves days before tracking out of a shelf’s count', async () => {
+    await db.days.put(day('2026-10-27', { prayers: { shacharit: 'minyan' } }))
+    renderAt('/tabs/stats')
+
+    expect(await screen.findByRole('img', { name: '1 מתוך 2 הימים האחרונים במניין' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: '0 מתוך 2 הימים האחרונים עם לימוד' })).toBeInTheDocument()
+  })
+
   it('explains the empty state', async () => {
     renderAt('/tabs/stats')
 
     expect(await screen.findByText('עוד אין נתונים')).toBeInTheDocument()
+  })
+})
+
+describe('stats at the start of a week', () => {
+  beforeEach(resetDb)
+  freezeDate(new Date(2026, 9, 25, 10).getTime())
+
+  it('names the chart when no day of the week has a count yet', async () => {
+    await db.days.put(day('2026-10-20', { prayers: { shacharit: 'minyan' } }))
+    renderAt('/tabs/stats')
+
+    const chart = await screen.findByRole('group', { name: 'לפי יום' })
+
+    expect(within(chart).getByRole('img')).toHaveAccessibleName('עוד אין נתונים')
   })
 })

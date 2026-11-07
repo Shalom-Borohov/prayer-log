@@ -2,12 +2,8 @@ export const SETTINGS_COPY = {
   backupRestored: 'הגיבוי שוחזר',
   backup: 'גיבוי',
   lastBackup: (date: string) => `גיבוי אחרון: ${date}`,
-  importBackup: 'ייבוא גיבוי',
-  importWarning: 'הייבוא יחליף את כל הנתונים',
-  confirmImport: 'ייבוא',
   storageNote:
     'הנתונים נשמרים רק במכשיר הזה. הייצוא יוצר קובץ עם כל הימים שסומנו, שאפשר לשמור בקבצים ולשחזר ממנו בייבוא.',
-  backupFile: 'קובץ גיבוי',
   reportBugOrIdea: 'דיווח על באג / הצעה',
   report: 'דיווח',
   bug: 'באג',
@@ -17,6 +13,9 @@ export const SETTINGS_COPY = {
   ideaPlaceholder: 'מה היה עוזר לך?',
   feedbackFooter: 'הדיווח נפתח ב-GitHub, עם סוג הדפדפן והגרסה. נתוני התפילות לא נשלחים.',
   openInGitHub: 'פתיחה ב-GitHub',
+  feedbackOpened: 'אם GitHub לא נפתח, אפשר ללחוץ שוב או להעתיק את הטקסט.',
+  feedbackTooLong: 'הדיווח ארוך מדי לקישור. ב-GitHub תופיע רק ההתחלה, ואת השאר אפשר להעתיק מכאן ולהדביק שם.',
+  issueCutMarker: '… (הדיווח נחתך כאן)',
   issueBody: (text: string, userAgent: string, version: string, builtAt: string) =>
     `${text}\n\n### מכשיר\n${userAgent}\nגרסה: ${version} (${builtAt})`,
   version: (version: string) => `גרסה ${version}`,

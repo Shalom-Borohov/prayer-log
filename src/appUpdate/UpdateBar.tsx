@@ -1,24 +1,13 @@
 import { IonButton, IonIcon, IonLabel } from '@ionic/react'
 import { close } from 'ionicons/icons'
 import { useEffect, useState } from 'react'
-import { useRegisterSW } from 'virtual:pwa-register/react'
 import { APP_UPDATE_COPY } from './copy'
-import { checkForUpdates } from './updateChecks'
+import { useAppUpdate } from './useAppUpdate'
 import './appUpdate.css'
 
 export function UpdateBar() {
   const [dismissed, setDismissed] = useState(false)
-
-  const {
-    needRefresh: [needRefresh],
-    updateServiceWorker,
-  } = useRegisterSW({
-    onRegisteredSW(swUrl, registration) {
-      if (registration) {
-        checkForUpdates(swUrl, registration)
-      }
-    },
-  })
+  const { updateWaiting, applyUpdate } = useAppUpdate()
 
   useEffect(() => {
     function offerAgain() {
@@ -32,17 +21,17 @@ export function UpdateBar() {
     return () => document.removeEventListener('visibilitychange', offerAgain)
   }, [])
 
-  if (!needRefresh || dismissed) {
+  if (!updateWaiting || dismissed) {
     return null
   }
 
   return (
     <div slot="bottom" className="update-bar">
       <IonButton fill="clear" color="medium" aria-label={APP_UPDATE_COPY.dismissUpdate} onClick={() => setDismissed(true)}>
-        <IonIcon slot="icon-only" icon={close} />
+        <IonIcon slot="icon-only" icon={close} aria-hidden="true" />
       </IonButton>
       <IonLabel>{APP_UPDATE_COPY.newVersionReady}</IonLabel>
-      <IonButton fill="solid" size="small" shape="round" onClick={() => void updateServiceWorker()}>
+      <IonButton fill="solid" size="small" shape="round" onClick={applyUpdate}>
         {APP_UPDATE_COPY.update}
       </IonButton>
     </div>

@@ -1,5 +1,5 @@
 import { COMMON_COPY } from '../../copy/common'
-import { dayLabel, shortWeekday } from '../../domain/format'
+import { shortWeekday, weekdayName } from '../../domain/format'
 import { hebrewDateLabel, hebrewDayNumber } from '../../domain/hebrewCalendar'
 import { daysInRange, monthEnd, parseIsoDate } from '../../domain/logicalDay'
 import { prayersForDay, wornItemsForDay } from '../../domain/prayersForDay'
@@ -53,6 +53,7 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
         <span key={`blank-${index}`} aria-hidden="true" />
       ))}
       {monthDates.map((date) => {
+        const dayNumber = parseIsoDate(date).getDate()
         const record = recordsByDate.get(date)
         const prayers = prayersForDay(date)
         const tracked = trackedFrom !== null && date >= trackedFrom
@@ -65,13 +66,14 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
             className={`month-day${date === today ? ' is-today' : ''}${holidayDates.has(date) ? ' is-holiday' : ''}`}
             disabled={date > today}
             aria-label={CALENDAR_COPY.dayCell(
-              dayLabel(date),
+              dayNumber,
               hebrewDateLabel(date),
+              weekdayName(date),
               marksLabel(record, prayers, markedWorn),
             )}
             onClick={() => onOpen(date)}
           >
-            <span className="month-day-number">{parseIsoDate(date).getDate()}</span>
+            <span className="month-day-number">{dayNumber}</span>{' '}
             <span className="month-day-hebrew">{hebrewDayNumber(date)}</span>
             <span className="month-day-spines" aria-hidden="true">
               {[...prayers, 'torah' as const].map((track) => (

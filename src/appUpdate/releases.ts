@@ -4,7 +4,8 @@ export interface Release {
   fixes: string[]
 }
 
-const compareVersions = (first: string, second: string) => first.localeCompare(second, undefined, { numeric: true })
+export const compareVersions = (first: string, second: string) =>
+  first.localeCompare(second, undefined, { numeric: true })
 
 export const newestFirst = (releases: Release[]) =>
   [...releases].sort((first, second) => compareVersions(second.version, first.version))

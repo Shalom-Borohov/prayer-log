@@ -10,5 +10,5 @@ export const FORMAT_COPY = {
   observedTishaBav: 'תשעה באב (נדחה)',
   withLearning: 'עם לימוד',
   recentDays: (done: number, total: number, doneLabel: string) =>
-    `${COMMON_COPY.outOf(done, total)} הימים האחרונים ${doneLabel}`,
+    total === 1 ? `${done} מתוך יום אחד ${doneLabel}` : `${COMMON_COPY.outOf(done, total)} הימים האחרונים ${doneLabel}`,
 } as const

@@ -572,7 +572,7 @@
       },
       {
         "name": "The Gold Means Minyan Rule",
-        "body": "Gold appears on data only as the done state: a spine stamped for a prayer במניין or a day of learning, and the gold text of the selected במניין segment. Never use gold to decorate a neutral or partial state.",
+        "body": "On marks, gold appears only as the done state: a spine stamped for a prayer במניין or a day of learning, the gold text of the selected במניין segment, the tick of a checked round check, and the במניין share of a trend column. Never use gold to decorate a neutral or partial state. The shell, the stats tables' hue key and the accents listed under Colors are outside this rule.",
         "section": "colors"
       },
       {

@@ -18,6 +18,10 @@ export const COMMON_COPY = {
   close: 'סגירה',
   ok: 'אישור',
   exportBackup: 'ייצוא גיבוי',
+  importBackup: 'ייבוא גיבוי',
+  importWarning: 'הייבוא יחליף את כל הנתונים',
+  confirmImport: 'ייבוא',
+  backupFile: 'קובץ גיבוי',
   actionFailed: 'הפעולה נכשלה',
   saveFailed: 'לא נשמר. אפשר לנסות שוב.',
   badRecordsInBackup: (count: number) =>
@@ -26,6 +30,7 @@ export const COMMON_COPY = {
   previous: 'הקודם',
   next: 'הבא',
   unmarked: 'לא סומן',
+  noData: 'עוד אין נתונים',
   dateRange: (from: string, to: string) => `${from}–${to}`,
   thisWeek: 'השבוע',
   torah: TORAH,

@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import {
   addDays,
   daysInRange,
@@ -6,8 +6,11 @@ import {
   monthEnd,
   monthStart,
   parseIsoDate,
+  quarterEnd,
+  quarterStart,
   toIsoDate,
   weekStart,
+  yearStart,
 } from '../../src/domain/logicalDay'
 
 beforeAll(() => {
@@ -38,6 +41,22 @@ describe('logicalToday', () => {
   it('rolls over at 03:00 on the night summer time starts', () => {
     expect(logicalToday(at(3, 27, 1, 59))).toBe('2026-03-26')
     expect(logicalToday(at(3, 27, 3, 0))).toBe('2026-03-27')
+  })
+
+  describe('abroad', () => {
+    const sameInstant = Date.UTC(2026, 10, 8, 5)
+
+    afterEach(() => {
+      vi.stubEnv('TZ', 'Asia/Jerusalem')
+    })
+
+    it('rolls over by the phone clock, not by Israel time', () => {
+      expect(logicalToday(sameInstant)).toBe('2026-11-08')
+
+      vi.stubEnv('TZ', 'America/New_York')
+
+      expect(logicalToday(sameInstant)).toBe('2026-11-07')
+    })
   })
 })
 
@@ -104,5 +123,27 @@ describe('monthStart and monthEnd', () => {
   it('handles February in common and leap years', () => {
     expect(monthEnd('2027-02-10')).toBe('2027-02-28')
     expect(monthEnd('2028-02-10')).toBe('2028-02-29')
+  })
+})
+
+describe('quarterStart and quarterEnd', () => {
+  it.each([
+    ['2026-01-01', '2026-01-01', '2026-03-31'],
+    ['2028-02-29', '2028-01-01', '2028-03-31'],
+    ['2026-03-31', '2026-01-01', '2026-03-31'],
+    ['2026-04-01', '2026-04-01', '2026-06-30'],
+    ['2026-08-20', '2026-07-01', '2026-09-30'],
+    ['2026-10-28', '2026-10-01', '2026-12-31'],
+    ['2026-12-31', '2026-10-01', '2026-12-31'],
+  ])('bound the Gregorian quarter of %s', (date, start, end) => {
+    expect(quarterStart(date)).toBe(start)
+    expect(quarterEnd(date)).toBe(end)
+  })
+})
+
+describe('yearStart', () => {
+  it('is the first of January of the Gregorian year', () => {
+    expect(yearStart('2026-10-28')).toBe('2026-01-01')
+    expect(yearStart('2026-01-01')).toBe('2026-01-01')
   })
 })

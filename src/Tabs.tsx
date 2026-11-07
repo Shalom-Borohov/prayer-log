@@ -30,15 +30,15 @@ export function Tabs() {
       <UpdateBar />
       <IonTabBar slot="bottom">
         <IonTabButton tab="today" href={TODAY_PATH}>
-          <IonIcon icon={sunnyOutline} />
+          <IonIcon icon={sunnyOutline} aria-hidden="true" />
           <IonLabel>{COMMON_COPY.today}</IonLabel>
         </IonTabButton>
         <IonTabButton tab="calendar" href={CALENDAR_PATH}>
-          <IonIcon icon={calendarOutline} />
+          <IonIcon icon={calendarOutline} aria-hidden="true" />
           <IonLabel>{COMMON_COPY.calendar}</IonLabel>
         </IonTabButton>
         <IonTabButton tab="stats" href={STATS_PATH}>
-          <IonIcon icon={statsChartOutline} />
+          <IonIcon icon={statsChartOutline} aria-hidden="true" />
           <IonLabel>{COMMON_COPY.stats}</IonLabel>
         </IonTabButton>
       </IonTabBar>

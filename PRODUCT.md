@@ -8,7 +8,7 @@ ios
 
 ## Stack
 
-React + TypeScript + Vite, Ionic React forced to iOS mode, Dexie (IndexedDB), `vite-plugin-pwa`, `@hebcal/core` for the Hebrew calendar. Same stack as the owner's אימונים app (`~/Projects/workout-log`). Hosted on GitHub Pages.
+React + TypeScript + Vite, Ionic React forced to iOS mode, Dexie (IndexedDB), `vite-plugin-pwa`, `@hebcal/core` for the Hebrew calendar. Same stack as the owner's אימונים app (`~/Personal/workout-log`). Hosted on GitHub Pages.
 
 ## Users
 
@@ -16,7 +16,7 @@ One person, the owner. They go to shul for שחרית, מנחה and ערבית, 
 
 ## Product Purpose
 
-Log each prayer as במניין or ביחידות (מוסף only on the days it applies), plus a daily "למדתי תורה" with an optional note. Success means logging a prayer takes seconds, and weekly/monthly totals, per-prayer streaks and per-prayer stats show the pattern without digging.
+Log each prayer as במניין or ביחידות (מוסף only on the days it applies), with ק״ש בלבד as a third state for שחרית and ערבית (spec decision 16), plus a daily "למדתי תורה" with an optional note. Success means logging a prayer takes seconds, and weekly/monthly totals, per-prayer streaks and per-prayer stats show the pattern without digging.
 
 ## Positioning
 
@@ -30,7 +30,7 @@ Used for a few seconds at a time, usually right after a prayer, one-handed, on t
 
 - PWA with a native iOS look, hosted on GitHub Pages. No backend; data in IndexedDB on the device, with export/import of a JSON backup file.
 - No notifications and no prayer times (זמנים): iOS web push needs a server, and זמנים need a location.
-- Hebrew UI, full RTL. Terms: שחרית, מנחה, ערבית, מוסף, במניין, ביחידות, למדתי תורה, מה למדתי, היום, לוח, סטטיסטיקה, רצף.
+- Hebrew UI, full RTL. Terms: שחרית, מנחה, ערבית, מוסף, במניין, ביחידות, ק״ש בלבד, למדתי תורה, מה למדתי, היום, לוח, סטטיסטיקה, רצף.
 - Day = calendar date that rolls over at 03:00. Friday-night ערבית counts as Friday.
 - מוסף on שבת, ראש חודש, יום טוב, חול המועד, ראש השנה and יום כיפור, by the Israel schedule.
 - Tracking starts on the first day with any record; earlier days never count as missed.
