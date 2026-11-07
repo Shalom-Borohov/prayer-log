@@ -31,7 +31,7 @@ CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` d
 
 ## Architecture
 
-The code is split into layers, and imports go downward only: `pages` → `data` / `domain` → `copy`. `Tabs` and `pages/settings` also import `appUpdate`, which keeps its own release logic and seen-version storage and imports only `copy`.
+The code is split into layers, and imports go downward only: `pages` → `data` / `domain` → `copy`. `Tabs`, `pages/settings` and `recovery` also import `appUpdate`, which keeps its own release logic and seen-version storage and imports only `copy`.
 
 - **`src/domain/`**: pure functions over `DayRecord[]`, with no React and no Dexie.
   - Types live in `types.ts`.
@@ -54,8 +54,8 @@ The code is split into layers, and imports go downward only: `pages` → `data` 
   - Overlays use the hooks (`useIonActionSheet`, `useIonAlert`, `useIonToast`).
   - Styling is plain CSS with tokens in `theme.css`. On marks, gold means only done (a prayer במניין, a day of learning or a checked round check; `DESIGN.md`, The Gold Means Minyan Rule). The shell and the accents listed under Colors in `DESIGN.md`, such as the backfill banner and holiday dates in לוח, use it too.
   - The page `body` is leather, and `index.html` has a static `.status-bar-strip` (styled in `leather-header.css`). iOS 26 colours the installed app's status bar from these, not from `theme-color` (spec decision 20), so keep both. Don't give the strip `pointer-events: none`: Safari then skips it and hazes the top of the header.
-- **`src/recovery/`**: an error boundary above `IonApp`, and a plain screen with no Ionic and no router that can still export a backup (spec decision 32).
-- **`src/appUpdate/`**: the update bar, the "מה חדש" sheet and `changelog.ts`, rendered by `Tabs.tsx` and הגדרות (spec decisions 24, 25).
+- **`src/recovery/`**: an error boundary above `IonApp`, and a plain screen with no Ionic and no router that can still export and import a backup and apply a waiting update (spec decisions 32, 42, 43).
+- **`src/appUpdate/`**: the update bar, the "מה חדש" sheet and `changelog.ts`, rendered by `Tabs.tsx` and הגדרות (spec decisions 24, 25). `useAppUpdate` is shared with the recovery screen.
   - `registerType: 'prompt'`, so a new service worker waits until the user taps "עדכון" (`UpdateBar`, through `useRegisterSW`).
   - `updateChecks.ts` calls `registration.update()` when the app becomes visible and every hour. iOS doesn't check on its own when a Home Screen app resumes.
   - The last seen version is kept in `localStorage`, outside the backup. `test/setup.ts` marks the running version as seen before each test, so the sheet stays out of unrelated tests.
