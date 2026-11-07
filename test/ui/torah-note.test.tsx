@@ -134,4 +134,14 @@ describe('the מה למדתי note', () => {
 
     await waitFor(() => expect(screen.getByLabelText('מה למדתי')).toHaveValue('אתמול'))
   })
+
+  it('leaves a past day with only a note on the list of days to fill', async () => {
+    await db.days.put(day('2026-10-27', { torahNote: 'אתמול' }))
+    renderAt('/tabs/today')
+
+    fireEvent.click(await screen.findByText('יום שלישי 27.10 לא מולא'))
+
+    await waitFor(() => expect(currentPath()).toBe('/tabs/today/2026-10-27'))
+    await waitFor(() => expect(screen.getByLabelText('מה למדתי')).toHaveValue('אתמול'))
+  })
 })
