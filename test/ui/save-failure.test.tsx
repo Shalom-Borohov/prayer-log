@@ -5,7 +5,8 @@ import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
 import { row } from '../helpers/dayRows'
-import { actionSheetPresented, clickSheetButton, toasts } from '../helpers/overlays'
+import { chooseBackupFile } from '../helpers/backupFile'
+import { actionSheetPresented, alertShown, clickAlertButton, clickSheetButton, toasts } from '../helpers/overlays'
 import { renderAt } from '../helpers/renderAt'
 
 const SAVE_FAILED = 'לא נשמר. אפשר לנסות שוב.'
@@ -87,6 +88,19 @@ describe('a save that fails', () => {
     await saveFailureShown()
 
     expect(within(await row('מנחה')).getByRole('button', { name: 'בית כנסת במנחה: הגדול' })).toBeVisible()
+  })
+
+  it('says so in Hebrew when restoring a backup fails', async () => {
+    renderAt('/tabs/stats/settings')
+    await screen.findByText('ייבוא גיבוי')
+    const shown = alertShown()
+
+    chooseBackupFile(JSON.stringify({ version: 1, exportedAt: 1000, days: [] }))
+    await shown
+    vi.spyOn(db.days, 'clear').mockRejectedValue(LOST_CONNECTION)
+    clickAlertButton('ייבוא')
+
+    await waitFor(() => expect(toasts()).toEqual([SAVE_FAILED]))
   })
 
   it('stores the mark and shows no message when the write works', async () => {
