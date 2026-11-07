@@ -1,23 +1,23 @@
 # תפילות — Prayer & Torah Log PWA Design
 
-Personal iPhone PWA for logging each day's prayers (במניין / ביחידות) and Torah learning, with totals, streaks and per-prayer stats. Sibling of אימונים (`~/Projects/workout-log`).
+Personal iPhone PWA for logging each day's prayers (במניין / ביחידות / ק״ש בלבד) and Torah learning, with totals, streaks and per-prayer stats. Sibling of אימונים (`~/Personal/workout-log`).
 
 ## Decisions (from grilling, 2026-10-28)
 
-1. **Prayers:** שחרית, מנחה, ערבית every day. A מוסף row appears only on days it applies (שבת, ראש חודש, יום טוב, חול המועד, ראש השנה, יום כיפור), by the Israel holiday schedule. No סליחות or נעילה.
-2. **Per prayer:** במניין / ביחידות / not marked. Tapping the selected state again clears it.
+1. **Prayers:** שחרית, מנחה, ערבית every day. A מוסף row appears only on days it applies (שבת, ראש חודש, יום טוב, חול המועד, ראש השנה, יום כיפור), by the Israel holiday schedule (see 38). No סליחות or נעילה.
+2. **Per prayer:** במניין / ביחידות / not marked (see 16 for ק״ש בלבד). Tapping the selected state again clears it.
 3. **Counters:** weekly and monthly totals, streaks, and per-prayer stats.
 4. **Torah:** a "למדתי תורה" checkbox plus an optional one-line "מה למדתי" note.
 5. **Streaks:** a separate streak for each daily prayer (consecutive days במניין), shown next to that prayer on היום, plus a Torah streak (consecutive days with למדתי) on the Torah row. ביחידות or a blank breaks a prayer streak. Today never breaks a streak before the day ends. מוסף has no streak; its counts appear in stats. Stats also show each streak's best ever.
-6. **Day boundary:** calendar day, rolling over at 03:00. Logging ערבית at 00:30 lands on the previous day. Friday-night ערבית counts as Friday.
+6. **Day boundary:** calendar day, rolling over at 03:00 (see 38). Logging ערבית at 00:30 lands on the previous day. Friday-night ערבית counts as Friday.
 7. **Layout:** three tabs, היום · לוח · סטטיסטיקה. היום has ‹ › to step through past days (never into the future), and any day opens from לוח.
 8. **Calendar:** Gregorian month grid with small Hebrew dates and holiday / ראש חודש names. "This month" stats use the Gregorian month.
-9. **Backfill banner:** on היום, a row such as "שבת לא מולאה" for each day in the last 7 that has nothing marked at all; tapping it opens that day. Partly filled days count as missed and don't show the banner.
+9. **Backfill banner:** on היום, a row such as "שבת לא מולאה" for each day in the last 7 that has nothing marked at all; tapping it opens that day. Partly filled days count as missed and don't show the banner (except the eve row, see 13). See also 31 and 37.
 10. **Name:** תפילות. Repo and folder: `prayer-log`.
 11. **Voice (impeccable init):** quiet and factual. Numbers and plain labels, no praise and no guilt.
 12. **Logging moment (impeccable init):** usually right after each prayer, one-handed; sometimes catching up at night.
-13. **Eve ערבית reminder (added 2026-10-28, extends 9):** the banner also lists "ערבית של <day> לא סומנה" for a partly filled day in the last 7 whose next day is שבת or an Israeli יום טוב and whose ערבית is blank, since that ערבית can only be logged after שבת / the חג. Rows are ordered oldest first. Decision 6 is unchanged: that ערבית still belongs to the eve.
-14. **Visual world (impeccable, 2026-10-28):** The Beit Midrash Shelf. Each prayer owns a flat leather hue on every tab; gold leaf is the במניין state; a 7-day "shelf" of spines per row (gold-stamped = במניין, bare leather = ביחידות, empty slot = unmarked). Dark leather header band with gold title. Contract: `.impeccable/surfaces/src-app-tsx.md`.
+13. **Eve ערבית reminder (added 2026-10-28, extends 9):** the banner also lists "ערבית של <day> לא סומנה" for a partly filled day (see 37) in the last 7 whose next day is שבת or an Israeli יום טוב and whose ערבית is blank, since that ערבית can only be logged after שבת / the חג. Rows are ordered oldest first. Decision 6 is unchanged: that ערבית still belongs to the eve.
+14. **Visual world (impeccable, 2026-10-28):** The Beit Midrash Shelf. Each prayer owns a flat leather hue on every tab; gold leaf is the במניין state, and a ticked Torah spine is gold too (`DESIGN.md`, The Gold Means Minyan Rule); a 7-day "shelf" of spines per row (gold-stamped = במניין, bare leather = ביחידות, empty slot = unmarked; see 17 for ק״ש בלבד). Dark leather header band with gold title. Contract: `.impeccable/surfaces/src-app-tsx.md`.
 15. **Calendar holiday names (added 2026-10-28, clarifies 8):** religious holidays, ראש חודש, fasts and minor holidays, plus the national days יום השואה, יום הזכרון, יום העצמאות, יום ירושלים and the חרבות ברזל memorial day. Civil observances (יום רבין, יום בן־גוריון, school days, etc.) are left out.
 16. **ק״ש בלבד (added 2026-10-29, extends 2):** שחרית and ערבית get a third state, ק״ש בלבד, for a day when only קריאת שמע was said instead of the prayer. It is a third segment (במניין | ביחידות | ק״ש בלבד); tapping it again clears it. מנחה and מוסף have no קריאת שמע and keep two states. Like ביחידות, it breaks the במניין streak and never counts as במניין.
 17. **Short spine (added 2026-10-29, extends 14):** a ק״ש בלבד mark is a half-height bare leather spine on every shelf (היום, לוח cells, סטטיסטיקה).
@@ -77,6 +77,8 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
 34. **A failed save (added 2026-11-07):** when a write fails, the mark isn't shown as done and "לא נשמר. אפשר לנסות שוב." appears as a toast, so nothing ever looks saved when it isn't. Marks already show what's stored. A במניין mark that didn't save doesn't go on to ask for a place.
 35. **מה למדתי saves as you type (added 2026-11-07, clarifies 4):** every change to the note is written at once, with no return or blur needed, because the app is used for a few seconds at a time and swiping to another day or closing the app must not lose what was typed. The stored note is trimmed, but the field keeps the typed text until it loses focus, so a space between words isn't taken away mid-sentence. While writes keep failing, decision 34's message shows at most once per toast length, not once per letter, and the field goes back to what's stored when it loses focus. Until then it keeps the unsaved text, because losing typed text mid-sentence is worse.
 36. **היום on a new day (added 2026-11-07, clarifies 7):** when the app comes back from the background on a later logical day (decision 6), a היום tab left on a past day returns to today, because marking a prayer is one tap and that tap must not land on an old day. It stays on the past day if the logical day hasn't changed, and it doesn't move while the app stays open across 03:00. If the app comes back on another tab, it stays there and the היום tab opens on today. A day opened from לוח stays where it is.
+37. **A note isn't a mark (added 2026-11-07, clarifies 9 and 13):** the banner goes by marks: a prayer, למדתי, תפילין or טלית. A day with only a מה למדתי note has nothing marked, so it gets decision 9's row, matching לוח, streaks and totals, which already treat it as unmarked. A note-only eve gets that one row, not 13's as well. The note is still stored and backed up, and it still counts as a record for assumption 3, so a note-only first day starts tracking and gets a row.
+38. **Abroad (added 2026-11-07, clarifies 1 and 6):** the app has no location and no setting, so the Israel schedule applies everywhere: a day that is יום טוב only abroad shows no מוסף. The 03:00 rollover follows the phone's clock, so it moves with the phone's time zone. Flying west can put a logged day in the future for a few hours: it can't be opened until the logical day catches up (decision 7), and its record stays as it was.
 
 ## Assumptions (accepted by the user)
 

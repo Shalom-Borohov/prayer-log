@@ -2,6 +2,11 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.5.2',
+    features: [],
+    fixes: ['יום שנכתב בו רק מה למדתי מופיע עכשיו בתזכורת על ימים שלא מולאו'],
+  },
+  {
     version: '1.5.1',
     features: [],
     fixes: [

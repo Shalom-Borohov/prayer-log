@@ -28,11 +28,10 @@ export interface DayRecord {
   tallit?: boolean
 }
 
-export const isEmptyDay = (day: DayRecord) =>
-  !day.torah &&
-  !day.torahNote &&
-  WORN_ITEMS.every((item) => !day[item]) &&
-  Object.values(day.prayers).every((mark) => mark === undefined)
+export const hasNoMarks = (day: DayRecord) =>
+  !day.torah && WORN_ITEMS.every((item) => !day[item]) && Object.values(day.prayers).every((mark) => mark === undefined)
+
+export const isEmptyDay = (day: DayRecord) => hasNoMarks(day) && !day.torahNote
 
 export interface Streak {
   current: number
