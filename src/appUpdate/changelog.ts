@@ -2,6 +2,11 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.5.2',
+    features: [],
+    fixes: ['לוח עובר לחודש החדש כשהחודש מתחלף', 'השם של תשעה באב נדחה מופיע נכון'],
+  },
+  {
     version: '1.5.1',
     features: [],
     fixes: [

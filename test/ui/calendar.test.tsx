@@ -4,10 +4,8 @@ import { db } from '../../src/data/db'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
-import { buttonByLabel } from '../helpers/ionic'
+import { buttonByLabel, cell } from '../helpers/ionic'
 import { currentPath, renderAt } from '../helpers/renderAt'
-
-const cell = (date: string) => screen.findByRole('button', { name: (name) => name.includes(` ${date},`) })
 
 describe('calendar', () => {
   beforeEach(resetDb)

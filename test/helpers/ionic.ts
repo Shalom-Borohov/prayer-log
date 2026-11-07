@@ -40,6 +40,8 @@ export function ionElement(selector: string) {
 
 export const buttonByLabel = (label: string) => ionElement(`ion-button[aria-label="${label}"]`)
 
+export const cell = (date: string) => screen.findByRole('button', { name: (name) => name.includes(` ${date},`) })
+
 export async function expectInOrder(texts: string[]) {
   const elements = await Promise.all(texts.map((text) => screen.findByText(text)))
 

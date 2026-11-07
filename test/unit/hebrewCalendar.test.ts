@@ -91,6 +91,15 @@ describe('holidayNames', () => {
     expect(holidayNames('2026-09-20')).toEqual(['ערב יום כיפור'])
   })
 
+  it('names a postponed תשעה באב with its parenthesis closed', () => {
+    expect(holidayNames('2029-07-22')).toEqual(['תשעה באב (נדחה)'])
+  })
+
+  it('keeps the plain names of other observed days', () => {
+    expect(holidayNames('2029-07-21')).toEqual(['ערב תשעה באב'])
+    expect(holidayNames('2029-07-01')).toEqual(['צום י״ז בתמוז'])
+  })
+
   it('leaves out special Shabbatot, יום כיפור קטן and בה״ב fasts', () => {
     expect(holidayNames('2027-03-06')).toEqual([])
     expect(holidayNames('2027-01-23')).toEqual(['ט״ו בשבט'])
