@@ -6,6 +6,7 @@ import { streakLabel } from '../../domain/format'
 import { attendancesFor } from '../../domain/prayersForDay'
 import { type SlotState, shelfLabel } from '../../domain/shelf'
 import type { Attendance, Prayer } from '../../domain/types'
+import { useSave } from '../../hooks/useSave'
 import { PlaceButton } from './PlaceButton'
 import { usePlacePicker } from './usePlacePicker'
 
@@ -34,17 +35,18 @@ export function PrayerRow({
 }: PrayerRowProps) {
   const label = COMMON_COPY.prayers[prayer]
   const pickPlace = usePlacePicker(date, prayer, knownPlaces)
+  const save = useSave()
 
-  function mark(option: Attendance) {
+  async function mark(option: Attendance) {
     if (attendance === option) {
-      void setPrayer(date, prayer, null)
+      await save(setPrayer(date, prayer, null))
 
       return
     }
 
-    void setPrayer(date, prayer, option, rememberedPlace)
+    const saved = await save(setPrayer(date, prayer, option, rememberedPlace))
 
-    if (option === 'minyan' && !rememberedPlace) {
+    if (saved && option === 'minyan' && !rememberedPlace) {
       pickPlace()
     }
   }

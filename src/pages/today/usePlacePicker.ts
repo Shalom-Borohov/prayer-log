@@ -2,6 +2,7 @@ import { useIonActionSheet, useIonAlert } from '@ionic/react'
 import { COMMON_COPY } from '../../copy/common'
 import { setPlace } from '../../data/repo'
 import type { Prayer } from '../../domain/types'
+import { useSave } from '../../hooks/useSave'
 import { TODAY_COPY } from './copy'
 
 const PLACE_INPUT = 'place'
@@ -13,7 +14,9 @@ export function usePlacePicker(date: string, prayer: Prayer, knownPlaces: string
   const [presentSheet] = useIonActionSheet()
   const [presentAlert] = useIonAlert()
 
-  const choose = (place: string | null) => void setPlace(date, prayer, place)
+  const save = useSave()
+
+  const choose = (place: string | null) => void save(setPlace(date, prayer, place))
 
   const askNewPlace = () =>
     void presentAlert({

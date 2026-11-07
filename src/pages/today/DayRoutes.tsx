@@ -3,6 +3,7 @@ import { isIsoDate } from '../../domain/logicalDay'
 import { useToday } from '../../hooks/useToday'
 import { type DayTab, tabPath } from '../../navigation/paths'
 import { DayView } from './DayView'
+import { useBackToTodayOnNewDay } from './useBackToTodayOnNewDay'
 
 export function TodayRoute() {
   const today = useToday()
@@ -19,4 +20,10 @@ export function DateRoute({ tab }: { tab: DayTab }) {
   }
 
   return <DayView date={date} today={today} tab={tab} />
+}
+
+export function TodayDateRoute() {
+  useBackToTodayOnNewDay()
+
+  return <DateRoute tab="today" />
 }

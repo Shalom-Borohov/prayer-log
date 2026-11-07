@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { saveLastBackup } from '../../src/backup/lastBackup'
 import { db } from '../../src/data/db'
-import { chooseBackupFile } from '../helpers/backupFile'
+import { chooseBackupFile, stubShare } from '../helpers/backupFile'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { allMinyan, day, days } from '../helpers/days'
@@ -13,14 +13,6 @@ import { renderAt } from '../helpers/renderAt'
 const NEVER_LABEL = 'עדיין לא נעשה גיבוי'
 
 const logged = days('2026-10-28', '2026-11-05', { prayers: allMinyan })
-
-const stubShare = (share: (data: ShareData) => Promise<void>) => {
-  const stub = vi.fn(share)
-
-  Object.assign(navigator, { share: stub, canShare: () => true })
-
-  return stub
-}
 
 const dayContentLoaded = () => ionElement('.inset-group')
 

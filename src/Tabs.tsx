@@ -9,7 +9,7 @@ import { CALENDAR_PATH, STATS_PATH, TODAY_PATH } from './navigation/paths'
 import { CalendarPage } from './pages/calendar/CalendarPage'
 import { SettingsPage } from './pages/settings/SettingsPage'
 import { StatsPage } from './pages/stats/StatsPage'
-import { DateRoute, TodayRoute } from './pages/today/DayRoutes'
+import { DateRoute, TodayDateRoute, TodayRoute } from './pages/today/DayRoutes'
 
 export function Tabs() {
   const whatsNew = useWhatsNew()
@@ -19,7 +19,7 @@ export function Tabs() {
       <IonRouterOutlet>
         <Route path="today" element={<TodayRoute />} />
         <Route path="today/settings" element={<SettingsPage tab="today" />} />
-        <Route path="today/:date" element={<DateRoute tab="today" />} />
+        <Route path="today/:date" element={<TodayDateRoute />} />
         <Route path="calendar" element={<CalendarPage />} />
         <Route path="calendar/settings" element={<SettingsPage tab="calendar" />} />
         <Route path="calendar/:date" element={<DateRoute tab="calendar" />} />

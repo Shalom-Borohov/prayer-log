@@ -16,7 +16,12 @@ export const COMMON_COPY = {
   settings: 'הגדרות',
   cancel: 'ביטול',
   close: 'סגירה',
+  ok: 'אישור',
+  exportBackup: 'ייצוא גיבוי',
   actionFailed: 'הפעולה נכשלה',
+  saveFailed: 'לא נשמר. אפשר לנסות שוב.',
+  badRecordsInBackup: (count: number) =>
+    count === 1 ? 'בגיבוי יש רשומה פגומה אחת, וייבוא הקובץ ייכשל' : `בגיבוי יש ${count} רשומות פגומות, וייבוא הקובץ ייכשל`,
   noBackupYet: 'עדיין לא נעשה גיבוי',
   previous: 'הקודם',
   next: 'הבא',

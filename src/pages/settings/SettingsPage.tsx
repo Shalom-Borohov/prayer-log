@@ -22,6 +22,7 @@ import { useExportBackup } from '../../backup/useExportBackup'
 import { COMMON_COPY } from '../../copy/common'
 import { type Backup, restoreBackup } from '../../data/backup'
 import { dateTimeLabel } from '../../domain/format'
+import { useSave } from '../../hooks/useSave'
 import { useToast } from '../../hooks/useToast'
 import { type Tab, tabPath } from '../../navigation/paths'
 import { SETTINGS_COPY } from './copy'
@@ -32,16 +33,14 @@ export function SettingsPage({ tab }: { tab: Tab }) {
   const fileInput = useRef<HTMLInputElement>(null)
   const [presentAlert] = useIonAlert()
   const { toast, toastError } = useToast()
+  const save = useSave()
   const exportData = useExportBackup()
   const lastBackup = useLastBackup()
 
   async function restore(backup: Backup) {
-    try {
-      await restoreBackup(backup)
+    if (await save(restoreBackup(backup))) {
       saveLastBackup(backup.exportedAt)
       void toast(SETTINGS_COPY.backupRestored)
-    } catch (error) {
-      void toastError(error)
     }
   }
 
@@ -88,7 +87,7 @@ export function SettingsPage({ tab }: { tab: Tab }) {
         <IonList inset>
           <IonItem button detail={false} onClick={exportData}>
             <IonIcon slot="start" color="primary" icon={shareOutline} />
-            <IonLabel>{SETTINGS_COPY.exportBackup}</IonLabel>
+            <IonLabel>{COMMON_COPY.exportBackup}</IonLabel>
           </IonItem>
           <IonItem button detail={false} onClick={() => fileInput.current?.click()}>
             <IonIcon slot="start" color="primary" icon={downloadOutline} />
