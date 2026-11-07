@@ -15,12 +15,12 @@ import {
   useIonAlert,
 } from '@ionic/react'
 import { downloadOutline, shareOutline } from 'ionicons/icons'
-import { type ChangeEvent, useRef } from 'react'
-import { BACKUP_FILE_ACCEPT, readBackup } from '../../backup/backupFile'
-import { saveLastBackup, useLastBackup } from '../../backup/lastBackup'
+import { restoreFromBackup } from '../../backup/backupFile'
+import { useLastBackup } from '../../backup/lastBackup'
+import { useBackupFile } from '../../backup/useBackupFile'
 import { useExportBackup } from '../../backup/useExportBackup'
 import { COMMON_COPY } from '../../copy/common'
-import { type Backup, restoreBackup } from '../../data/backup'
+import type { Backup } from '../../data/backup'
 import { dateTimeLabel } from '../../domain/format'
 import { useSave } from '../../hooks/useSave'
 import { useToast } from '../../hooks/useToast'
@@ -30,45 +30,31 @@ import { FeedbackSettings } from './FeedbackSettings'
 import { VersionSettings } from './VersionSettings'
 
 export function SettingsPage({ tab }: { tab: Tab }) {
-  const fileInput = useRef<HTMLInputElement>(null)
   const [presentAlert] = useIonAlert()
-  const { toast, toastError } = useToast()
+  const { toast } = useToast()
   const save = useSave()
   const exportData = useExportBackup()
   const lastBackup = useLastBackup()
 
   async function restore(backup: Backup) {
-    if (await save(restoreBackup(backup))) {
-      saveLastBackup(backup.exportedAt)
+    if (await save(restoreFromBackup(backup))) {
       void toast(SETTINGS_COPY.backupRestored)
     }
   }
 
-  async function importFile(event: ChangeEvent<HTMLInputElement>) {
-    const input = event.currentTarget
-    const file = input.files?.[0]
-
-    input.value = ''
-
-    if (!file) {
-      return
-    }
-
-    try {
-      const backup = await readBackup(file)
-
+  const { pickFile, fileInputProps } = useBackupFile({
+    onBackup(backup) {
       presentAlert({
-        header: SETTINGS_COPY.importBackup,
-        message: SETTINGS_COPY.importWarning,
+        header: COMMON_COPY.importBackup,
+        message: COMMON_COPY.importWarning,
         buttons: [
           { text: COMMON_COPY.cancel, role: 'cancel' },
-          { text: SETTINGS_COPY.confirmImport, role: 'destructive', handler: () => void restore(backup) },
+          { text: COMMON_COPY.confirmImport, role: 'destructive', handler: () => void restore(backup) },
         ],
       })
-    } catch (error) {
-      void toastError(error)
-    }
-  }
+    },
+    onFailure: (message) => void toast(message),
+  })
 
   return (
     <IonPage>
@@ -89,9 +75,9 @@ export function SettingsPage({ tab }: { tab: Tab }) {
             <IonIcon slot="start" color="primary" icon={shareOutline} />
             <IonLabel>{COMMON_COPY.exportBackup}</IonLabel>
           </IonItem>
-          <IonItem button detail={false} onClick={() => fileInput.current?.click()}>
+          <IonItem button detail={false} onClick={pickFile}>
             <IonIcon slot="start" color="primary" icon={downloadOutline} />
-            <IonLabel>{SETTINGS_COPY.importBackup}</IonLabel>
+            <IonLabel>{COMMON_COPY.importBackup}</IonLabel>
           </IonItem>
         </IonList>
         <IonNote className="list-footer">
@@ -100,14 +86,7 @@ export function SettingsPage({ tab }: { tab: Tab }) {
         <IonNote className="list-footer">{SETTINGS_COPY.storageNote}</IonNote>
         <FeedbackSettings />
         <VersionSettings />
-        <input
-          ref={fileInput}
-          type="file"
-          accept={BACKUP_FILE_ACCEPT}
-          hidden
-          aria-label={SETTINGS_COPY.backupFile}
-          onChange={importFile}
-        />
+        <input {...fileInputProps} />
       </IonContent>
     </IonPage>
   )

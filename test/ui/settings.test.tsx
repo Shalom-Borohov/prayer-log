@@ -1,7 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/data/db'
-import { chooseBackupFile } from '../helpers/backupFile'
+import { chooseBackupFile, chooseUnreadableBackupFile } from '../helpers/backupFile'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
@@ -105,6 +105,17 @@ describe('settings', () => {
     chooseBackupFile('{"version":1}')
 
     await waitFor(() => expect(toasts()).toContain('קובץ הגיבוי לא תקין'))
+    expect(await db.days.toArray()).toEqual([shabbat])
+  })
+
+  it('never shows the browser message when a backup file cannot be read', async () => {
+    await db.days.put(shabbat)
+    renderAt('/tabs/stats/settings')
+    await screen.findByText('ייבוא גיבוי')
+
+    chooseUnreadableBackupFile('The requested file could not be read')
+
+    await waitFor(() => expect(toasts()).toEqual(['הפעולה נכשלה']))
     expect(await db.days.toArray()).toEqual([shabbat])
   })
 })

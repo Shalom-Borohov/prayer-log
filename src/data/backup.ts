@@ -7,6 +7,12 @@ import { withMinyanPlacesOnly } from './repo'
 
 export type Backup = { version: 1; exportedAt: number; days: DayRecord[] }
 
+export class InvalidBackupError extends Error {
+  constructor() {
+    super(APP_COPY.invalidBackup)
+  }
+}
+
 const dayRecordSchema = object({
   date: pipe(string(), check(isIsoDate)),
   prayers: record(picklist(PRAYERS), picklist(ATTENDANCES)),
@@ -35,7 +41,7 @@ export function parseBackup(text: string): Backup {
   const result = safeParse(backupSchema, parseJson(text))
 
   if (!result.success) {
-    throw new Error(APP_COPY.invalidBackup)
+    throw new InvalidBackupError()
   }
 
   return result.output

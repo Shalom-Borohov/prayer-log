@@ -1,6 +1,18 @@
+import { renderHook } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { UPDATE_CHECK_MS, checkForUpdates } from '../../src/appUpdate/updateChecks'
+import { useAppUpdate } from '../../src/appUpdate/useAppUpdate'
 import { setVisibility } from '../helpers/visibility'
+
+const pwa = vi.hoisted(() => ({ registration: {} }))
+
+vi.mock('virtual:pwa-register/react', () => ({
+  useRegisterSW({ onRegisteredSW }: { onRegisteredSW: (swUrl: string, registration: object) => void }) {
+    onRegisteredSW('/prayer-log/sw.js', pwa.registration)
+
+    return { needRefresh: [false, vi.fn()], updateServiceWorker: vi.fn() }
+  },
+}))
 
 const SW_URL = '/prayer-log/sw.js'
 
@@ -129,5 +141,18 @@ describe('checking for a new version', () => {
     await vi.advanceTimersByTimeAsync(UPDATE_CHECK_MS)
 
     expect(fetchSpy).not.toHaveBeenCalled()
+  })
+
+  it('keeps one schedule when the recovery screen takes over from the update bar', async () => {
+    const fetchSpy = respondWith(OK)
+    pwa.registration = fakeRegistration()
+    renderHook(() => useAppUpdate())
+    renderHook(() => useAppUpdate())
+    await vi.advanceTimersByTimeAsync(0)
+    fetchSpy.mockClear()
+
+    await vi.advanceTimersByTimeAsync(UPDATE_CHECK_MS)
+
+    expect(fetchSpy).toHaveBeenCalledOnce()
   })
 })

@@ -2,12 +2,8 @@ export const SETTINGS_COPY = {
   backupRestored: 'הגיבוי שוחזר',
   backup: 'גיבוי',
   lastBackup: (date: string) => `גיבוי אחרון: ${date}`,
-  importBackup: 'ייבוא גיבוי',
-  importWarning: 'הייבוא יחליף את כל הנתונים',
-  confirmImport: 'ייבוא',
   storageNote:
     'הנתונים נשמרים רק במכשיר הזה. הייצוא יוצר קובץ עם כל הימים שסומנו, שאפשר לשמור בקבצים ולשחזר ממנו בייבוא.',
-  backupFile: 'קובץ גיבוי',
   reportBugOrIdea: 'דיווח על באג / הצעה',
   report: 'דיווח',
   bug: 'באג',
