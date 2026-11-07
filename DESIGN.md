@@ -222,7 +222,7 @@ Spines use the display hue, so they lift in dark mode to stay visible on black. 
 ### Named Rules
 **The Fixed Hue Rule.** A prayer's leather is the same on every tab, every table and every shelf. A new surface showing a prayer uses that prayer's hue class, never a new colour.
 
-**The Gold Means Minyan Rule.** Gold appears on data only as the done state: a spine stamped for a prayer במניין or a day of learning, and the gold text of the selected במניין segment. Never use gold to decorate a neutral or partial state.
+**The Gold Means Minyan Rule.** On marks, gold appears only as the done state: a spine stamped for a prayer במניין or a day of learning, the gold text of the selected במניין segment, the tick of a checked round check, and the במניין share of a trend column. Never use gold to decorate a neutral or partial state. The shell, the stats tables' hue key and the accents listed under Colors are outside this rule.
 
 **The Deep Fill Rule.** Anything filled behind gold-leaf text takes `--hue-deep`, which does not lighten in dark mode. Only spines take the lightened `--hue`.
 

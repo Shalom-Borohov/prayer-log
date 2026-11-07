@@ -1,7 +1,7 @@
 import { isRestDay } from './hebrewCalendar'
 import { addDays, daysInRange } from './logicalDay'
 import { trackingStart } from './totals'
-import { type DayRecord, isEmptyDay } from './types'
+import { type DayRecord, hasNoMarks } from './types'
 
 const BACKFILL_DAYS = 7
 
@@ -21,7 +21,7 @@ function recentDays(records: DayRecord[], today: string): string[] {
   return daysInRange(start > windowStart ? start : windowStart, addDays(today, -1))
 }
 
-const markedDays = (records: DayRecord[]) => new Map(records.filter((day) => !isEmptyDay(day)).map((day) => [day.date, day]))
+const markedDays = (records: DayRecord[]) => new Map(records.filter((day) => !hasNoMarks(day)).map((day) => [day.date, day]))
 
 export function emptyRecentDays(records: DayRecord[], today: string): string[] {
   const marked = markedDays(records)
