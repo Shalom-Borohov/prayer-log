@@ -1,11 +1,12 @@
 import { useIonRouter, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { logicalToday } from '../../domain/logicalDay'
 import { TODAY_PATH } from '../../navigation/paths'
 
-export function useBackToTodayOnNewDay(enabled: boolean) {
+export function useBackToTodayOnNewDay() {
   const router = useIonRouter()
-  const lastSeenDay = useRef(logicalToday(Date.now()))
+  const [dayOnMount] = useState(() => logicalToday(Date.now()))
+  const lastSeenDay = useRef(dayOnMount)
   const onScreen = useRef(true)
 
   function goBackIfNewDay() {
@@ -14,7 +15,7 @@ export function useBackToTodayOnNewDay(enabled: boolean) {
 
     lastSeenDay.current = today
 
-    if (enabled && isNewDay) {
+    if (isNewDay) {
       router.push(TODAY_PATH, 'none', 'replace')
     }
   }

@@ -4,7 +4,7 @@ import { TOAST_DURATION_MS, useToast } from './useToast'
 
 export function useSave() {
   const { toast } = useToast()
-  const messageShownAt = useRef(Number.NEGATIVE_INFINITY)
+  const messageShownAt = useRef(0)
 
   return async function save(write: Promise<void>): Promise<boolean> {
     try {

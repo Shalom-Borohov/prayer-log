@@ -15,11 +15,15 @@ export function DateRoute({ tab }: { tab: DayTab }) {
   const { date } = useParams()
   const today = useToday()
 
-  useBackToTodayOnNewDay(tab === 'today')
-
   if (!date || !isIsoDate(date) || date > today) {
     return <Navigate to={tabPath(tab)} replace />
   }
 
   return <DayView date={date} today={today} tab={tab} />
+}
+
+export function TodayDateRoute() {
+  useBackToTodayOnNewDay()
+
+  return <DateRoute tab="today" />
 }

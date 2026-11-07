@@ -63,20 +63,9 @@ describe('a save that fails', () => {
     expect(document.querySelector('ion-action-sheet')).toBeNull()
   })
 
-  it('says so for the Torah check', async () => {
+  it.each(['למדתי תורה', 'תפילין'])('says so for the %s check', async (name) => {
     renderAt('/tabs/today')
-    const check = await screen.findByRole('checkbox', { name: 'למדתי תורה' })
-
-    failNextWrites()
-    fireEvent.click(check)
-    await saveFailureShown()
-
-    expect(check).toHaveAttribute('aria-checked', 'false')
-  })
-
-  it('says so for the תפילין check', async () => {
-    renderAt('/tabs/today')
-    const check = await screen.findByRole('checkbox', { name: 'תפילין' })
+    const check = await screen.findByRole('checkbox', { name })
 
     failNextWrites()
     fireEvent.click(check)

@@ -1,13 +1,13 @@
 import { useIonAlert } from '@ionic/react'
 import { COMMON_COPY } from '../copy/common'
 import { useToast } from '../hooks/useToast'
-import { useBackupExport } from './useBackupExport'
+import { useBackupShare } from './useBackupShare'
 
 export function useExportBackup() {
   const { toast } = useToast()
   const [presentAlert] = useIonAlert()
 
-  return useBackupExport(({ failed, badRecords }) => {
+  return useBackupShare(({ failed, badRecords }) => {
     if (failed) {
       void toast(COMMON_COPY.actionFailed)
     }

@@ -4,7 +4,7 @@ const LAST_BACKUP_KEY = 'last-backup-at'
 
 const listeners = new Set<() => void>()
 
-function readLastBackup(): number | null {
+export function readLastBackup(): number | null {
   const stored = localStorage.getItem(LAST_BACKUP_KEY)
 
   return stored === null ? null : Number(stored)

@@ -1,23 +1,23 @@
 import { useState } from 'react'
-import { type ExportResult, useBackupExport } from '../backup/useBackupExport'
+import { type ExportResult, useBackupShare } from '../backup/useBackupShare'
 import { COMMON_COPY } from '../copy/common'
 import { RECOVERY_COPY } from './copy'
 import './recovery.css'
 
 export function RecoveryScreen() {
-  const [result, setResult] = useState<ExportResult | null>(null)
-  const exportData = useBackupExport(setResult)
+  const [result, setResult] = useState<ExportResult>({ failed: false, badRecords: 0 })
+  const exportData = useBackupShare(setResult)
 
   return (
     <main className="recovery">
       <h1>{RECOVERY_COPY.title}</h1>
       <p>{RECOVERY_COPY.explanation}</p>
       <button type="button" className="recovery-primary" onClick={exportData}>
-        {RECOVERY_COPY.exportBackup}
+        {COMMON_COPY.exportBackup}
       </button>
       <div role="status">
-        {result?.failed && <p>{COMMON_COPY.actionFailed}</p>}
-        {result && result.badRecords > 0 && <p>{COMMON_COPY.badRecordsInBackup(result.badRecords)}</p>}
+        {result.failed && <p>{COMMON_COPY.actionFailed}</p>}
+        {result.badRecords > 0 && <p>{COMMON_COPY.badRecordsInBackup(result.badRecords)}</p>}
       </div>
       <button type="button" onClick={() => window.location.reload()}>
         {RECOVERY_COPY.reload}

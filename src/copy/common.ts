@@ -17,6 +17,7 @@ export const COMMON_COPY = {
   cancel: 'ביטול',
   close: 'סגירה',
   ok: 'אישור',
+  exportBackup: 'ייצוא גיבוי',
   actionFailed: 'הפעולה נכשלה',
   saveFailed: 'לא נשמר. אפשר לנסות שוב.',
   badRecordsInBackup: (count: number) =>

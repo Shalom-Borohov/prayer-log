@@ -12,10 +12,10 @@ async function shareStoredData(now: number): Promise<ExportResult> {
   let badRecords = 0
 
   try {
-    const backup = await exportBackup(now)
+    const fileText = JSON.stringify(await exportBackup(now))
 
-    badRecords = countBadRecords(backup)
-    await shareBackup(backup)
+    badRecords = countBadRecords(fileText)
+    await shareBackup(fileText, now)
     saveLastBackup(now)
 
     return { failed: false, badRecords }
@@ -24,7 +24,7 @@ async function shareStoredData(now: number): Promise<ExportResult> {
   }
 }
 
-export function useBackupExport(report: (result: ExportResult) => void) {
+export function useBackupShare(report: (result: ExportResult) => void) {
   const exporting = useRef(false)
 
   return async function exportData() {

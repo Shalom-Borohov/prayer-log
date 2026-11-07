@@ -9,9 +9,9 @@ const BACKUP_MIME_TYPE = 'application/json'
 
 export const BACKUP_FILE_ACCEPT = [BACKUP_MIME_TYPE, BACKUP_EXTENSION].join(',')
 
-export async function shareBackup(backup: Backup): Promise<void> {
-  const fileName = `${BACKUP_FILE_PREFIX}${toIsoDate(new Date(backup.exportedAt))}${BACKUP_EXTENSION}`
-  const file = new File([JSON.stringify(backup)], fileName, { type: BACKUP_MIME_TYPE })
+export async function shareBackup(fileText: string, exportedAt: number): Promise<void> {
+  const fileName = `${BACKUP_FILE_PREFIX}${toIsoDate(new Date(exportedAt))}${BACKUP_EXTENSION}`
+  const file = new File([fileText], fileName, { type: BACKUP_MIME_TYPE })
 
   if (navigator.canShare?.({ files: [file] })) {
     await navigator.share({ files: [file] })

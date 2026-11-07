@@ -2,7 +2,9 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { App } from '../../src/App'
 import { db } from '../../src/data/db'
+import { stubShare } from '../helpers/backupFile'
 import { resetDb } from '../helpers/db'
+import { day } from '../helpers/days'
 
 const RECOVERY_HEADING = 'משהו השתבש'
 
@@ -10,15 +12,7 @@ const EXPORT_BUTTON = 'ייצוא גיבוי'
 
 const missingPrayers = JSON.parse('{"date":"2026-11-02","torah":false}')
 
-const goodDay = { date: '2026-11-01', prayers: { shacharit: 'minyan' as const }, torah: false }
-
-function stubShare(share: (data: ShareData) => Promise<void>) {
-  const stub = vi.fn(share)
-
-  Object.assign(navigator, { share: stub, canShare: () => true })
-
-  return stub
-}
+const goodDay = day('2026-11-01', { prayers: { shacharit: 'minyan' } })
 
 async function sharedFileText(share: ReturnType<typeof stubShare>) {
   const [data] = share.mock.calls[0]
@@ -36,7 +30,10 @@ async function openOnStoredRecords() {
 }
 
 describe('a malformed stored record', () => {
-  beforeEach(resetDb)
+  beforeEach(async () => {
+    await resetDb()
+    vi.spyOn(console, 'error').mockImplementation(() => {})
+  })
 
   afterEach(() => {
     vi.restoreAllMocks()
@@ -44,13 +41,10 @@ describe('a malformed stored record', () => {
   })
 
   it('shows the recovery screen instead of a blank page', async () => {
-    vi.spyOn(console, 'error').mockImplementation(() => {})
-
     expect(await openOnStoredRecords()).toBeVisible()
   })
 
   it('exports every stored record from the recovery screen, the bad one included', async () => {
-    vi.spyOn(console, 'error').mockImplementation(() => {})
     const share = stubShare(() => Promise.resolve())
 
     await openOnStoredRecords()
@@ -59,11 +53,10 @@ describe('a malformed stored record', () => {
 
     const exported = JSON.parse(await sharedFileText(share))
 
-    expect(exported.days.map((day: { date: string }) => day.date)).toEqual(['2026-11-01', '2026-11-02'])
+    expect(exported.days.map((stored: { date: string }) => stored.date)).toEqual(['2026-11-01', '2026-11-02'])
   })
 
   it('says at export time that the file holds a record that cannot be restored', async () => {
-    vi.spyOn(console, 'error').mockImplementation(() => {})
     stubShare(() => Promise.resolve())
 
     await openOnStoredRecords()
@@ -73,7 +66,6 @@ describe('a malformed stored record', () => {
   })
 
   it('reports a failed export on the recovery screen', async () => {
-    vi.spyOn(console, 'error').mockImplementation(() => {})
     stubShare(() => Promise.reject(new Error('share failed')))
 
     await openOnStoredRecords()
@@ -83,16 +75,12 @@ describe('a malformed stored record', () => {
   })
 
   it('never changes what is stored', async () => {
-    vi.spyOn(console, 'error').mockImplementation(() => {})
-
     await openOnStoredRecords()
 
     expect(await db.days.toArray()).toEqual([goodDay, missingPrayers])
   })
 
   it('offers a reload', async () => {
-    vi.spyOn(console, 'error').mockImplementation(() => {})
-
     await openOnStoredRecords()
 
     expect(screen.getByRole('button', { name: 'טעינה מחדש' })).toBeVisible()
