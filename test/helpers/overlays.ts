@@ -1,5 +1,7 @@
 import { fireEvent } from '@testing-library/react'
 
+export const overlaysSettled = () => new Promise((resolve) => setTimeout(resolve, 50))
+
 function last(selector: string) {
   const elements = document.querySelectorAll(selector)
   const element = elements.item(elements.length - 1)

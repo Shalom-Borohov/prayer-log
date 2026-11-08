@@ -1,4 +1,5 @@
 import { SETTINGS_COPY } from './copy'
+import { type PhoneState, phoneStateLines } from './phoneState'
 
 export type FeedbackKind = 'bug' | 'idea'
 
@@ -22,20 +23,25 @@ function title(text: string): string {
   return chars.length > MAX_TITLE ? `${chars.slice(0, MAX_TITLE - 1).join('')}…` : first
 }
 
-function issueUrl(kind: FeedbackKind, issueTitle: string, text: string): string {
+function deviceLines(phone: PhoneState): string[] {
+  return [navigator.userAgent, SETTINGS_COPY.versionLine(__APP_VERSION__, __APP_BUILT_AT__), ...phoneStateLines(phone)]
+}
+
+function issueUrl(kind: FeedbackKind, issueTitle: string, text: string, device: string[]): string {
   const params = new URLSearchParams({
     title: issueTitle,
-    body: SETTINGS_COPY.issueBody(text, navigator.userAgent, __APP_VERSION__, __APP_BUILT_AT__),
+    body: SETTINGS_COPY.issueBody(text, device),
     labels: ISSUE_LABELS[kind],
   })
 
   return `${ISSUES_URL}?${params}`
 }
 
-export function feedbackLink(kind: FeedbackKind, text: string): FeedbackLink {
+export function feedbackLink(kind: FeedbackKind, text: string, phone: PhoneState): FeedbackLink {
   const report = text.trim()
   const issueTitle = title(report)
-  const whole = issueUrl(kind, issueTitle, report)
+  const device = deviceLines(phone)
+  const whole = issueUrl(kind, issueTitle, report, device)
 
   if (whole.length <= MAX_LINK_LENGTH) {
     return { url: whole, isCut: false }
@@ -45,7 +51,7 @@ export function feedbackLink(kind: FeedbackKind, text: string): FeedbackLink {
   const characters = Array.from(new Intl.Segmenter().segment(mostThatCouldFit), ({ segment }) => segment)
 
   const cutAfter = (count: number) =>
-    issueUrl(kind, issueTitle, `${characters.slice(0, count).join('')}${SETTINGS_COPY.issueCutMarker}`)
+    issueUrl(kind, issueTitle, `${characters.slice(0, count).join('')}${SETTINGS_COPY.issueCutMarker}`, device)
 
   let fits = 0
   let tooLong = characters.length

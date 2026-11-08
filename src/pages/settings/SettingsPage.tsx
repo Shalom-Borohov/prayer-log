@@ -27,6 +27,7 @@ import { useToast } from '../../hooks/useToast'
 import { type Tab, tabPath } from '../../navigation/paths'
 import { SETTINGS_COPY } from './copy'
 import { FeedbackSettings } from './FeedbackSettings'
+import { HistorySettings } from './HistorySettings'
 import { VersionSettings } from './VersionSettings'
 
 export function SettingsPage({ tab }: { tab: Tab }) {
@@ -84,6 +85,7 @@ export function SettingsPage({ tab }: { tab: Tab }) {
           {lastBackup === null ? COMMON_COPY.noBackupYet : SETTINGS_COPY.lastBackup(dateTimeLabel(lastBackup))}
         </IonNote>
         <IonNote className="list-footer">{SETTINGS_COPY.storageNote}</IonNote>
+        <HistorySettings />
         <FeedbackSettings />
         <VersionSettings />
         <input {...fileInputProps} />
