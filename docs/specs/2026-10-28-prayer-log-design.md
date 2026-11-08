@@ -133,6 +133,13 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
     - Nothing about the log goes out, because issues are public: no counts and no dates. The space used includes the app's own files, so it says nothing about how much is logged.
     - There is no online line: a report only reaches GitHub over a connection, so it would always say yes. The version line on הגדרות doesn't show these details (decision 22).
     - The lines are part of the prefilled issue body, where they can be read or deleted before sending, and are always kept when a long report is cut (decision 39). The sheet's footnote says "הדיווח נפתח ב-GitHub, עם פרטי המכשיר והגרסה. נתוני התפילות לא נשלחים."
+54. **פרשה (added 2026-11-08, extends 8, 15 and assumption 5, clarifies 44):** the date line names the week's פרשה after the Hebrew date, as in "יום רביעי · י״ז בחשון · וירא · 28.10", and each שבת cell in לוח shows it under its marks, because a day is easier to place in time by its week.
+    - The week's פרשה is the coming שבת's reading on the Israel schedule (decision 38): Sunday to Friday show that שבת's, and שבת shows its own. The header shows it every day, not only on שבת.
+    - A week whose שבת has a holiday reading instead (חול המועד, or a יום טוב or יום כיפור on שבת) shows none, because no פרשה is read. The holiday line and the gilded Hebrew date already name those days.
+    - Names are written without vowels, like holiday names, and a double פרשה is joined with a maqaf: ויקהל־פקודי.
+    - In a לוח cell the name sits on its own line under the marks, so spines stay level across the row. Every cell keeps that line, empty on any day but a שבת with a פרשה, so every row is one line taller, including a last row that ends before שבת and a row whose שבת has no פרשה. A long name wraps only at a space or a maqaf and adds a line to its row.
+    - A future שבת shows its פרשה too, because it's a calendar fact like the Hebrew date above it.
+    - A שבת cell's spoken name adds it after the weekday: "31 כ׳ בחשון, שבת פרשת וירא: לא סומן". It still starts the way decision 44 says, and the words on the cell keep their order.
 
 ## Assumptions (accepted by the user)
 
