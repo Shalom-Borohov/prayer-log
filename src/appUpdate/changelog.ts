@@ -2,6 +2,14 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.8.0',
+    features: [
+      'לפני ייבוא גיבוי רואים כמה ימים יש בקובץ ובטלפון, ועד איזה תאריך',
+      'אפשר לבטל ייבוא גיבוי מההגדרות במשך שבוע, ולהחזיר אותו שוב',
+    ],
+    fixes: [],
+  },
+  {
     version: '1.7.0',
     features: ['שורה בלי רצף נשארת ריקה, בלי ״אין רצף״'],
     fixes: [],

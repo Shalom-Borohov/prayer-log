@@ -20,6 +20,7 @@ import { useLastBackup } from '../../backup/lastBackup'
 import { useBackupFile } from '../../backup/useBackupFile'
 import { useExportBackup } from '../../backup/useExportBackup'
 import { COMMON_COPY } from '../../copy/common'
+import { RESTORE_COPY } from '../../copy/restore'
 import type { Backup } from '../../data/backup'
 import { dateTimeLabel } from '../../domain/format'
 import { useSave } from '../../hooks/useSave'
@@ -27,7 +28,10 @@ import { useToast } from '../../hooks/useToast'
 import { type Tab, tabPath } from '../../navigation/paths'
 import { SETTINGS_COPY } from './copy'
 import { FeedbackSettings } from './FeedbackSettings'
+import { RESTORE_ALERT_CLASS } from './restoreAlert'
+import { useUndoImport } from './useUndoImport'
 import { VersionSettings } from './VersionSettings'
+import './settings.css'
 
 export function SettingsPage({ tab }: { tab: Tab }) {
   const [presentAlert] = useIonAlert()
@@ -35,6 +39,7 @@ export function SettingsPage({ tab }: { tab: Tab }) {
   const save = useSave()
   const exportData = useExportBackup()
   const lastBackup = useLastBackup()
+  const undoImport = useUndoImport()
 
   async function restore(backup: Backup) {
     if (await save(restoreFromBackup(backup))) {
@@ -43,10 +48,11 @@ export function SettingsPage({ tab }: { tab: Tab }) {
   }
 
   const { pickFile, fileInputProps } = useBackupFile({
-    onBackup(backup) {
+    onBackup(backup, comparison) {
       presentAlert({
         header: COMMON_COPY.importBackup,
-        message: COMMON_COPY.importWarning,
+        message: [RESTORE_COPY.importWarning, ...comparison].join('\n'),
+        cssClass: RESTORE_ALERT_CLASS,
         buttons: [
           { text: COMMON_COPY.cancel, role: 'cancel' },
           { text: COMMON_COPY.confirmImport, role: 'destructive', handler: () => void restore(backup) },
@@ -79,10 +85,17 @@ export function SettingsPage({ tab }: { tab: Tab }) {
             <IonIcon slot="start" color="primary" icon={downloadOutline} aria-hidden="true" />
             <IonLabel>{COMMON_COPY.importBackup}</IonLabel>
           </IonItem>
+          {undoImport && (
+            <IonItem button detail={false} onClick={undoImport.confirm}>
+              <IonIcon slot="start" color="primary" icon={undoImport.icon} flipRtl aria-hidden="true" />
+              <IonLabel>{undoImport.label}</IonLabel>
+            </IonItem>
+          )}
         </IonList>
         <IonNote className="list-footer">
           {lastBackup === null ? COMMON_COPY.noBackupYet : SETTINGS_COPY.lastBackup(dateTimeLabel(lastBackup))}
         </IonNote>
+        {undoImport && <IonNote className="list-footer">{undoImport.footnote}</IonNote>}
         <IonNote className="list-footer">{SETTINGS_COPY.storageNote}</IonNote>
         <FeedbackSettings />
         <VersionSettings />
