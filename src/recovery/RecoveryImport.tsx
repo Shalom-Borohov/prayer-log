@@ -6,15 +6,17 @@ import type { Backup } from '../data/backup'
 import { RECOVERY_COPY } from './copy'
 import { reloadAtStart } from './reloadAtStart'
 
+type PendingImport = { backup: Backup; comparison: string[] }
+
 export function RecoveryImport() {
-  const [pending, setPending] = useState<Backup | null>(null)
+  const [pending, setPending] = useState<PendingImport | null>(null)
   const [failure, setFailure] = useState<string | null>(null)
   const [restoring, setRestoring] = useState(false)
 
   const { pickFile, fileInputProps } = useBackupFile({
-    onBackup(backup) {
+    onBackup(backup, comparison) {
       setFailure(null)
-      setPending(backup)
+      setPending({ backup, comparison })
     },
     onFailure: setFailure,
   })
@@ -40,7 +42,14 @@ export function RecoveryImport() {
   return (
     <>
       <div role="status">
-        {pending && <p>{RECOVERY_COPY.importWarning}</p>}
+        {pending && (
+          <>
+            <p>{RECOVERY_COPY.importWarning}</p>
+            {pending.comparison.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+          </>
+        )}
         {failure && <p>{failure}</p>}
       </div>
       {pending ? (
@@ -49,7 +58,7 @@ export function RecoveryImport() {
             type="button"
             className="recovery-destructive"
             disabled={restoring}
-            onClick={() => void confirmImport(pending)}
+            onClick={() => void confirmImport(pending.backup)}
           >
             {COMMON_COPY.confirmImport}
           </button>

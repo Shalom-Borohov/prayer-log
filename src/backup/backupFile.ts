@@ -1,6 +1,7 @@
 import { type Backup, parseBackup, restoreBackup } from '../data/backup'
+import { swapWithRestoreCopy } from '../data/restoreUndo'
 import { toIsoDate } from '../domain/logicalDay'
-import { saveLastBackup } from './lastBackup'
+import { readLastBackup, saveLastBackup } from './lastBackup'
 
 const BACKUP_FILE_PREFIX = 'prayers-backup-'
 
@@ -33,17 +34,29 @@ export async function readBackup(file: File): Promise<Backup> {
   return parseBackup(await file.text())
 }
 
-function recordBackupTimeIfStorageAllows(exportedAt: number) {
+function recordBackupTimeIfStorageAllows(backupAt: number | null) {
   try {
-    saveLastBackup(exportedAt)
+    saveLastBackup(backupAt)
   } catch {
     return
   }
 }
 
+function readBackupTimeIfStorageAllows(): number | null {
+  try {
+    return readLastBackup()
+  } catch {
+    return null
+  }
+}
+
 export async function restoreFromBackup(backup: Backup): Promise<void> {
-  await restoreBackup(backup)
+  await restoreBackup(backup, readBackupTimeIfStorageAllows())
   recordBackupTimeIfStorageAllows(backup.exportedAt)
+}
+
+export async function swapLastRestore(): Promise<void> {
+  recordBackupTimeIfStorageAllows(await swapWithRestoreCopy(readBackupTimeIfStorageAllows()))
 }
 
 export const isShareCancel = (error: unknown) => error instanceof DOMException && error.name === 'AbortError'
