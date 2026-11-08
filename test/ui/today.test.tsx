@@ -139,7 +139,14 @@ describe('today', () => {
     renderAt('/tabs/today')
 
     expect(within(await row('שחרית')).getByText('4 ימים ברצף')).toBeInTheDocument()
-    expect(within(await row('מנחה')).getByText('אין רצף')).toBeInTheDocument()
+    expect(within(await row('מנחה')).getByRole('paragraph')).toBeEmptyDOMElement()
+  })
+
+  it('shows no streak text on the Torah row once its streak is broken', async () => {
+    await db.days.bulkPut([day('2026-10-25', { torah: true }), day('2026-10-26', { prayers: { shacharit: 'minyan' } })])
+    renderAt('/tabs/today')
+
+    expect(within(await row('תורה')).getByRole('paragraph')).toBeEmptyDOMElement()
   })
 
   it('shows מוסף on שבת', async () => {
