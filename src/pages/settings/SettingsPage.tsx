@@ -28,6 +28,7 @@ import { useToast } from '../../hooks/useToast'
 import { type Tab, tabPath } from '../../navigation/paths'
 import { SETTINGS_COPY } from './copy'
 import { FeedbackSettings } from './FeedbackSettings'
+import { HistorySettings } from './HistorySettings'
 import { RESTORE_ALERT_CLASS } from './restoreAlert'
 import { useUndoImport } from './useUndoImport'
 import { VersionSettings } from './VersionSettings'
@@ -97,6 +98,7 @@ export function SettingsPage({ tab }: { tab: Tab }) {
         </IonNote>
         {undoImport && <IonNote className="list-footer">{undoImport.footnote}</IonNote>}
         <IonNote className="list-footer">{SETTINGS_COPY.storageNote}</IonNote>
+        <HistorySettings />
         <FeedbackSettings />
         <VersionSettings />
         <input {...fileInputProps} />

@@ -7,7 +7,7 @@ import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { allMinyan, day, days } from '../helpers/days'
 import { buttonByLabel, expectInOrder, ionElement } from '../helpers/ionic'
-import { alertShown, clickAlertButton, toasts } from '../helpers/overlays'
+import { alertShown, clickAlertButton, overlaysSettled, toasts } from '../helpers/overlays'
 import { renderAt } from '../helpers/renderAt'
 
 const NEVER_LABEL = 'עדיין לא נעשה גיבוי'
@@ -15,8 +15,6 @@ const NEVER_LABEL = 'עדיין לא נעשה גיבוי'
 const logged = days('2026-10-28', '2026-11-05', { prayers: allMinyan })
 
 const dayContentLoaded = () => ionElement('.inset-group')
-
-const overlaysSettled = () => new Promise((resolve) => setTimeout(resolve, 50))
 
 async function importFileExportedAt(exportedAt: number) {
   renderAt('/tabs/stats/settings')
