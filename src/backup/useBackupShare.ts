@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { countBadRecords, exportBackup } from '../data/backup'
-import { isShareCancel, shareBackup } from './backupFile'
+import { isShareCancel } from '../share/shareFile'
+import { shareBackup } from './backupFile'
 import { saveLastBackup } from './lastBackup'
 
 export interface ExportResult {

@@ -1,5 +1,7 @@
 import { fireEvent } from '@testing-library/react'
 
+export const overlaysSettled = () => new Promise((resolve) => setTimeout(resolve, 50))
+
 function last(selector: string) {
   const elements = document.querySelectorAll(selector)
   const element = elements.item(elements.length - 1)
@@ -50,6 +52,8 @@ export const alertShown = () => overlayEvent('ionAlertDidPresent')
 export const alertDismissed = () => overlayEvent('ionAlertDidDismiss')
 
 export const alertHeader = () => last('ion-alert .alert-title').textContent
+
+export const alertMessage = () => last('ion-alert .alert-message').textContent
 
 export const typeInAlert = (value: string) => fireEvent.input(last('ion-alert input'), { target: { value } })
 

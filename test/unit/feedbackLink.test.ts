@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import { feedbackLink } from '../../src/pages/settings/feedbackUrl'
+import type { PhoneState } from '../../src/pages/settings/phoneState'
 
 const LINK_LIMIT = 4300
 const HEBREW_LETTER_IN_LINK = 6
 const CUT_MARKER = '… (הדיווח נחתך כאן)'
+const PHONE: PhoneState = { persisted: true, usedBytes: 2_500_000, installed: true }
 
-const deviceDetails = () => `\n\n### מכשיר\n${navigator.userAgent}\nגרסה: ${__APP_VERSION__} (${__APP_BUILT_AT__})`
+const deviceDetails = () =>
+  `\n\n### מכשיר\n${navigator.userAgent}\nגרסה: ${__APP_VERSION__} (${__APP_BUILT_AT__})` +
+  '\nאחסון קבוע: כן\nנפח בשימוש: 2.5 MB\nאפליקציה מותקנת: כן'
 
 const params = (url: string) => new URL(url).searchParams
 
@@ -22,7 +26,7 @@ function bodyOf(url: string) {
 function longestReportThatFits() {
   let report = 'א'
 
-  while (!feedbackLink('bug', `${report}א`).isCut) {
+  while (!feedbackLink('bug', `${report}א`, PHONE).isCut) {
     report += 'א'
   }
 
@@ -31,7 +35,7 @@ function longestReportThatFits() {
 
 describe('feedbackLink', () => {
   it('sends a short report whole', () => {
-    const { url, isCut } = feedbackLink('bug', '  הרצף לא התעדכן\nסימנתי מנחה  ')
+    const { url, isCut } = feedbackLink('bug', '  הרצף לא התעדכן\nסימנתי מנחה  ', PHONE)
 
     expect(isCut).toBe(false)
     expect(bodyOf(url)).toBe(`הרצף לא התעדכן\nסימנתי מנחה${deviceDetails()}`)
@@ -41,7 +45,7 @@ describe('feedbackLink', () => {
 
   it('cuts a long report to fit the limit, marks the cut and keeps the device details', () => {
     const report = 'שלום עולם\n' + 'כתבתי דיווח ארוך מאוד '.repeat(150)
-    const { url, isCut } = feedbackLink('idea', report)
+    const { url, isCut } = feedbackLink('idea', report, PHONE)
     const body = bodyOf(url)
     const [kept, afterMarker] = body.split(CUT_MARKER)
 
@@ -55,7 +59,7 @@ describe('feedbackLink', () => {
   })
 
   it('keeps the 80-character title rule when the whole report is one long line', () => {
-    const { url, isCut } = feedbackLink('bug', 'א'.repeat(2000))
+    const { url, isCut } = feedbackLink('bug', 'א'.repeat(2000), PHONE)
 
     expect(isCut).toBe(true)
     expect(params(url).get('title')).toBe(`${'א'.repeat(79)}…`)
@@ -63,8 +67,8 @@ describe('feedbackLink', () => {
 
   it('cuts only once a report no longer fits, and then uses all the room', () => {
     const report = longestReportThatFits()
-    const whole = feedbackLink('bug', report)
-    const cut = feedbackLink('bug', `${report}א`)
+    const whole = feedbackLink('bug', report, PHONE)
+    const cut = feedbackLink('bug', `${report}א`, PHONE)
 
     expect(whole.url.length).toBeLessThanOrEqual(LINK_LIMIT)
     expect(bodyOf(whole.url)).toBe(`${report}${deviceDetails()}`)
@@ -79,7 +83,7 @@ describe('feedbackLink', () => {
     { name: 'a family emoji', character: '👨‍👩‍👧' },
     { name: 'a letter with its vowel points', character: 'בְּ' },
   ])('does not break $name at the cut', ({ character }) => {
-    const { url, isCut } = feedbackLink('bug', character.repeat(1000))
+    const { url, isCut } = feedbackLink('bug', character.repeat(1000), PHONE)
     const [kept] = bodyOf(url).split(CUT_MARKER)
 
     expect(isCut).toBe(true)
@@ -87,7 +91,7 @@ describe('feedbackLink', () => {
   })
 
   it('uses all the room when a pasted report is far over the limit', () => {
-    const { url, isCut } = feedbackLink('bug', 'a'.repeat(50_000))
+    const { url, isCut } = feedbackLink('bug', 'a'.repeat(50_000), PHONE)
 
     expect(isCut).toBe(true)
     expect(url.length).toBe(LINK_LIMIT)

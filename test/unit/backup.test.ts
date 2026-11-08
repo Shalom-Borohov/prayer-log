@@ -44,7 +44,7 @@ describe('backup', () => {
 
     await resetDb()
     await setTorah('2026-10-27', true)
-    await restoreBackup(backup)
+    await restoreBackup(backup, null)
 
     expect(backup.version).toBe(1)
     expect(backup.exportedAt).toBe(exportedAt)
@@ -54,13 +54,13 @@ describe('backup', () => {
   it('restore skips days with nothing marked', async () => {
     const empty = { date: '2026-10-20', prayers: {}, torah: false }
 
-    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: [empty, ...twoDays] })))
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: [empty, ...twoDays] })), null)
 
     expect(await allDays()).toStrictEqual(twoDays)
   })
 
   it('restores a backup made before תפילין, טלית and ק״ש בלבד existed', async () => {
-    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: daysBeforeTefillin })))
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: daysBeforeTefillin })), null)
 
     expect(await allDays()).toStrictEqual(daysBeforeTefillin)
   })
@@ -73,7 +73,7 @@ describe('backup', () => {
     const backup = parseBackup(JSON.stringify(await exportBackup(exportedAt)))
 
     await resetDb()
-    await restoreBackup(backup)
+    await restoreBackup(backup, null)
 
     expect(await allDays()).toStrictEqual([
       {
@@ -93,13 +93,13 @@ describe('backup', () => {
       torah: false,
     }
 
-    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: [withStrayPlaces] })))
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: [withStrayPlaces] })), null)
 
     expect((await allDays())[0].places).toStrictEqual({ shacharit: 'בית יוסף' })
   })
 
   it('restores a backup made before places existed', async () => {
-    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: twoDays })))
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: twoDays })), null)
 
     expect(await allDays()).toStrictEqual(twoDays)
   })
@@ -107,7 +107,7 @@ describe('backup', () => {
   it('restores a day with only תפילין or טלית marked', async () => {
     const wornOnly = [{ date: '2026-10-20', prayers: {}, torah: false, tefillin: true }]
 
-    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: wornOnly })))
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: wornOnly })), null)
 
     expect(await allDays()).toStrictEqual(wornOnly)
   })
@@ -115,7 +115,7 @@ describe('backup', () => {
   it('restores a day with only a note', async () => {
     const noteOnly = [{ date: '2026-10-20', prayers: {}, torah: false, torahNote: 'דף יומי' }]
 
-    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: noteOnly })))
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: noteOnly })), null)
 
     expect(await allDays()).toStrictEqual(noteOnly)
   })

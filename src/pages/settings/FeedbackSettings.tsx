@@ -21,6 +21,7 @@ import { useState } from 'react'
 import { COMMON_COPY } from '../../copy/common'
 import { SETTINGS_COPY } from './copy'
 import { type FeedbackKind, feedbackLink } from './feedbackUrl'
+import { usePhoneState } from './phoneState'
 
 const isKind = (kind: SegmentValue | undefined): kind is FeedbackKind => kind === 'bug' || kind === 'idea'
 
@@ -33,7 +34,8 @@ function FeedbackForm({ onClose }: { onClose: () => void }) {
   const [kind, setKind] = useState<FeedbackKind>('bug')
   const [text, setText] = useState('')
   const [opened, setOpened] = useState(false)
-  const { url, isCut } = feedbackLink(kind, text)
+  const phone = usePhoneState()
+  const { url, isCut } = feedbackLink(kind, text, phone)
 
   function send() {
     window.open(url, '_blank', 'noopener')

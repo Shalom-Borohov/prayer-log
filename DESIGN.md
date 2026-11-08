@@ -323,6 +323,12 @@ A horizontal swipe on the content does the same: drag left for הקודם, right
 
 The leather reaches the top of the screen. The page background is leather, and in the installed app a flat 12px leather strip is pinned to the top edge, so iOS 26 draws the status bar in leather rather than fading it. The strip takes pointer events: with `pointer-events: none`, Safari skips it and hazes the top of the header.
 
+### Backup group
+The first inset group on הגדרות, under the label "גיבוי": ייצוא גיבוי and ייבוא גיבוי, and for 7 days after an import a third row, ביטול הייבוא האחרון (after an undo, החזרת הייבוא). Each row is disclosure-free with an outline icon in the primary ink at the start; the undo and redo arrows mirror in RTL. Under the group, list footers give the last backup time and, while the undo row shows, "אפשר לבטל עד …" or "אפשר להחזיר עד …". The import and undo alerts keep Ionic's iOS look, with their comparison lines (בקובץ / בטלפון, יחזרו / עכשיו) as separate lines of the message. No gold.
+
+### History export row
+A "היסטוריה" group on הגדרות, right after גיבוי: one disclosure-free "ייצוא היסטוריה" row with a document icon, and a footnote saying it is a text file for reading and not a backup.
+
 ### Feedback sheet
 A "דיווח על באג / הצעה" disclosure-free row in its own inset group on הגדרות, above the version line. It opens a full-screen modal with a leather header: ביטול, the title דיווח, and a באג / הצעה segment. Below it are an inset "תיאור" text area, a footnote saying what is sent, and a full-width "פתיחה ב-GitHub" button that stays disabled until there is text. Tapping the button leaves the sheet open and changes ביטול to סגירה. Under the footnote, in the same style, a note appears when the report is too long for the link, and another after the first tap.
 
@@ -333,7 +339,7 @@ The version line "גרסה X · עודכנה …" is the last row on הגדרו�
 When a new version is waiting, a flat bar sits directly above the tab bar on every tab: an item-background ground with a hairline top rule, a grey × (לא עכשיו) at the start, the label "גרסה חדשה זמינה", and a small round filled "עדכון" button in the primary ink at the end. Both buttons have a 44px tap area; the pill stays small. No gold.
 
 ### Recovery screen
-When a page can't draw, a plain full-screen page replaces the whole app, with no Ionic, no leather header and no tab bar: the page background, the title "משהו השתבש" (28px, 700), a line of body text, a full-width filled "ייצוא גיבוי" button in the primary ink, any export message, a full-width "ייבוא גיבוי" button on the quiet fill, and a full-width "טעינה מחדש" button on the quiet fill. A chosen file replaces "ייבוא גיבוי" with its warning line, "ייבוא" in the destructive red on the quiet fill, and "ביטול". An import failure is a line of body text above the import buttons. While a new version is waiting, the line "גרסה חדשה זמינה" sits above the last button, which reads "עדכון". All buttons are at least 44px tall with a 10px radius. No gold.
+When a page can't draw, a plain full-screen page replaces the whole app, with no Ionic, no leather header and no tab bar: the page background, the title "משהו השתבש" (28px, 700), a line of body text, a full-width filled "ייצוא גיבוי" button in the primary ink, any export message, a full-width "ייבוא גיבוי" button on the quiet fill, and a full-width "טעינה מחדש" button on the quiet fill. A chosen file replaces "ייבוא גיבוי" with its warning line, a line each for what the file and the phone hold, "ייבוא" in the destructive red on the quiet fill, and "ביטול". An import failure is a line of body text above the import buttons. While a new version is waiting, the line "גרסה חדשה זמינה" sits above the last button, which reads "עדכון". All buttons are at least 44px tall with a 10px radius. No gold.
 
 ## Do's and Don'ts
 
