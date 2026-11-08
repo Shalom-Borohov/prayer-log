@@ -7,6 +7,7 @@ import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
 import { ionChange, ionField, ionInput } from '../helpers/ionic'
 import { toasts } from '../helpers/overlays'
+import { stubInstalledApp, stubStorage } from '../helpers/phoneState'
 import { renderAt } from '../helpers/renderAt'
 
 const shabbat = day('2026-10-24', { prayers: { shacharit: 'minyan', musaf: 'minyan' }, torah: true, torahNote: 'פרשת השבוע' })
@@ -57,9 +58,13 @@ describe('settings', () => {
 
   it('opens a GitHub bug report with the text and device details', async () => {
     const openWindow = vi.spyOn(window, 'open').mockReturnValue(null)
+    const estimate = vi.fn(async () => ({ usage: 1_200_000 }))
 
+    stubInstalledApp()
+    stubStorage({ persisted: async () => true, estimate })
     renderAt('/tabs/stats/settings')
     fireEvent.click(await screen.findByText('דיווח על באג / הצעה'))
+    await waitFor(() => expect(estimate).toHaveBeenCalledOnce())
     ionInput(await ionField('תיאור'), 'הרצף לא התעדכן\nסימנתי מנחה במניין')
     fireEvent.click(await screen.findByText('פתיחה ב-GitHub'))
 
@@ -74,7 +79,8 @@ describe('settings', () => {
     expect(searchParams.get('title')).toBe('הרצף לא התעדכן')
     expect(searchParams.get('labels')).toBe('bug')
     expect(searchParams.get('body')).toBe(
-      `הרצף לא התעדכן\nסימנתי מנחה במניין\n\n### מכשיר\n${navigator.userAgent}\nגרסה: ${__APP_VERSION__} (${__APP_BUILT_AT__})`,
+      `הרצף לא התעדכן\nסימנתי מנחה במניין\n\n### מכשיר\n${navigator.userAgent}\nגרסה: ${__APP_VERSION__} (${__APP_BUILT_AT__})` +
+        '\nאחסון קבוע: כן\nנפח בשימוש: 1.2 MB\nאפליקציה מותקנת: כן',
     )
   })
 

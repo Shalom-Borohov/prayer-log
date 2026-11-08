@@ -326,6 +326,9 @@ The leather reaches the top of the screen. The page background is leather, and i
 ### Backup group
 The first inset group on הגדרות, under the label "גיבוי": ייצוא גיבוי and ייבוא גיבוי, and for 7 days after an import a third row, ביטול הייבוא האחרון (after an undo, החזרת הייבוא). Each row is disclosure-free with an outline icon in the primary ink at the start; the undo and redo arrows mirror in RTL. Under the group, list footers give the last backup time and, while the undo row shows, "אפשר לבטל עד …" or "אפשר להחזיר עד …". The import and undo alerts keep Ionic's iOS look, with their comparison lines (בקובץ / בטלפון, יחזרו / עכשיו) as separate lines of the message. No gold.
 
+### History export row
+A "היסטוריה" group on הגדרות, right after גיבוי: one disclosure-free "ייצוא היסטוריה" row with a document icon, and a footnote saying it is a text file for reading and not a backup.
+
 ### Feedback sheet
 A "דיווח על באג / הצעה" disclosure-free row in its own inset group on הגדרות, above the version line. It opens a full-screen modal with a leather header: ביטול, the title דיווח, and a באג / הצעה segment. Below it are an inset "תיאור" text area, a footnote saying what is sent, and a full-width "פתיחה ב-GitHub" button that stays disabled until there is text. Tapping the button leaves the sheet open and changes ביטול to סגירה. Under the footnote, in the same style, a note appears when the report is too long for the link, and another after the first tap.
 

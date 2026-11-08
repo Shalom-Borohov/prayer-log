@@ -1,14 +1,13 @@
 import { COMMON_COPY } from '../../copy/common'
+import { MARKS_SEPARATOR, dayMarks } from '../../domain/dayMarks'
 import { shortWeekday, weekdayName } from '../../domain/format'
 import { MAQAF, hebrewDateLabel, hebrewDayNumber, weeklyParsha } from '../../domain/hebrewCalendar'
 import { daysInRange, isSaturday, monthEnd, parseIsoDate } from '../../domain/logicalDay'
 import { prayersForDay, wornItemsForDay } from '../../domain/prayersForDay'
 import { slotFor } from '../../domain/shelf'
 import { trackingStart, weekRange } from '../../domain/totals'
-import { type DayRecord, type Prayer, WORN_AT_PRAYER, WORN_ITEMS, type WornItem } from '../../domain/types'
+import { type DayRecord, WORN_AT_PRAYER, WORN_ITEMS } from '../../domain/types'
 import { CALENDAR_COPY } from './copy'
-
-const MARKS_SEPARATOR = ', '
 
 const withBreaksAfterMaqaf = (name: string) =>
   name.split(MAQAF).flatMap((part, index) => (index === 0 ? [part] : [MAQAF, <wbr key={index} />, part]))
@@ -21,18 +20,8 @@ interface MonthGridProps {
   onOpen: (date: string) => void
 }
 
-function marksLabel(record: DayRecord | undefined, prayers: Prayer[], markedWorn: WornItem[]): string {
-  const marks = prayers.flatMap((prayer) => {
-    const mark = record?.prayers[prayer]
-
-    return mark ? [CALENDAR_COPY.prayerMark(COMMON_COPY.prayers[prayer], COMMON_COPY.attendance[mark])] : []
-  })
-
-  marks.push(...markedWorn.map((item) => COMMON_COPY.worn[item]))
-
-  if (record?.torah) {
-    marks.push(COMMON_COPY.learnedTorah)
-  }
+function marksLabel(record: DayRecord | undefined): string {
+  const marks = record ? dayMarks(record) : []
 
   return marks.length > 0 ? marks.join(MARKS_SEPARATOR) : COMMON_COPY.unmarked
 }
@@ -74,7 +63,7 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
               dayNumber,
               hebrewDateLabel(date),
               parsha ? CALENDAR_COPY.weekdayWithParsha(weekday, parsha) : weekday,
-              marksLabel(record, prayers, markedWorn),
+              marksLabel(record),
             )}
             onClick={() => onOpen(date)}
           >

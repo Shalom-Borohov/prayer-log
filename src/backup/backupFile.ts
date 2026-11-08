@@ -1,6 +1,7 @@
 import { type Backup, parseBackup, restoreBackup } from '../data/backup'
 import { swapWithRestoreCopy } from '../data/restoreUndo'
 import { toIsoDate } from '../domain/logicalDay'
+import { shareFile } from '../share/shareFile'
 import { readLastBackup, saveLastBackup } from './lastBackup'
 
 const BACKUP_FILE_PREFIX = 'prayers-backup-'
@@ -13,21 +14,8 @@ export const BACKUP_FILE_ACCEPT = [BACKUP_MIME_TYPE, BACKUP_EXTENSION].join(',')
 
 export async function shareBackup(fileText: string, exportedAt: number): Promise<void> {
   const fileName = `${BACKUP_FILE_PREFIX}${toIsoDate(new Date(exportedAt))}${BACKUP_EXTENSION}`
-  const file = new File([fileText], fileName, { type: BACKUP_MIME_TYPE })
 
-  if (navigator.canShare?.({ files: [file] })) {
-    await navigator.share({ files: [file] })
-
-    return
-  }
-
-  const url = URL.createObjectURL(file)
-  const link = document.createElement('a')
-
-  link.href = url
-  link.download = file.name
-  link.click()
-  setTimeout(() => URL.revokeObjectURL(url))
+  await shareFile(fileName, BACKUP_MIME_TYPE, fileText)
 }
 
 export async function readBackup(file: File): Promise<Backup> {
@@ -58,5 +46,3 @@ export async function restoreFromBackup(backup: Backup): Promise<void> {
 export async function swapLastRestore(): Promise<void> {
   recordBackupTimeIfStorageAllows(await swapWithRestoreCopy(readBackupTimeIfStorageAllows()))
 }
-
-export const isShareCancel = (error: unknown) => error instanceof DOMException && error.name === 'AbortError'

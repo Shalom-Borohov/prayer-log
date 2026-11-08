@@ -2,8 +2,16 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
-    version: '1.9.0',
+    version: '1.10.0',
     features: ['הפרשה של השבוע מופיעה ליד התאריך, ובשבתות בלוח'],
+    fixes: [],
+  },
+  {
+    version: '1.9.0',
+    features: [
+      'ייצוא היסטוריה בהגדרות: קובץ טקסט עם כל הימים, לקריאה או לשמירה בפתקים',
+      'דיווח על באג מצרף גם את מצב האחסון במכשיר',
+    ],
     fixes: [],
   },
   {
