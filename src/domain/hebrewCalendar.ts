@@ -1,10 +1,21 @@
-import { type FlagName, HDate, type HolidayEvent, Locale, RoshHashanaEvent, gematriya, getHolidaysOnDate } from '@hebcal/core'
+import {
+  type FlagName,
+  HDate,
+  type HolidayEvent,
+  Locale,
+  RoshHashanaEvent,
+  gematriya,
+  getHolidaysOnDate,
+  getSedra,
+} from '@hebcal/core'
 import { FORMAT_COPY } from '../copy/format'
 import { isSaturday, parseIsoDate } from './logicalDay'
 
 const LOCALE = 'he-x-NoNikud'
 
 const IN_ISRAEL = true
+
+export const MAQAF = '־'
 
 const ROSH_HASHANA_DAY_ONE = 'Rosh Hashana I'
 
@@ -67,4 +78,15 @@ export function hebrewDateLabel(date: string): string {
   const hebrewDate = toHDate(date)
 
   return FORMAT_COPY.hebrewDate(gematriya(hebrewDate.getDate()), Locale.gettext(hebrewDate.getMonthName(), LOCALE))
+}
+
+export function weeklyParsha(date: string): string | null {
+  const hebrewDate = toHDate(date)
+  const reading = getSedra(hebrewDate.getFullYear(), IN_ISRAEL).lookup(hebrewDate)
+
+  if (reading.chag) {
+    return null
+  }
+
+  return reading.parsha.map((name) => Locale.gettext(name, LOCALE)).join(MAQAF)
 }

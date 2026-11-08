@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { hasMusaf, hasTefillin, hebrewDateLabel, hebrewDayNumber, holidayNames, isRestDay } from '../../src/domain/hebrewCalendar'
+import {
+  hasMusaf,
+  hasTefillin,
+  hebrewDateLabel,
+  hebrewDayNumber,
+  holidayNames,
+  isRestDay,
+  weeklyParsha,
+} from '../../src/domain/hebrewCalendar'
+import { DAYS_PER_WEEK, addDays } from '../../src/domain/logicalDay'
 
 describe('hebrewDateLabel', () => {
   it('is the gematriya day and the month with ב, without year or niqqud', () => {
@@ -154,5 +163,41 @@ describe('hasTefillin', () => {
     expect(hasTefillin('2026-09-28')).toBe(false)
     expect(hasTefillin('2026-10-02')).toBe(false)
     expect(hasTefillin('2027-04-25')).toBe(false)
+  })
+})
+
+describe('weeklyParsha', () => {
+  it('is that שבת’s own פרשה on שבת, without niqqud', () => {
+    expect(weeklyParsha('2026-11-07')).toBe('חיי שרה')
+  })
+
+  it('is the coming שבת’s פרשה on a weekday, even when that שבת is in the next Hebrew year', () => {
+    expect(weeklyParsha('2026-11-08')).toBe('תולדות')
+    expect(weeklyParsha('2026-11-13')).toBe('תולדות')
+    expect(weeklyParsha('2024-09-30')).toBe('האזינו')
+  })
+
+  it('joins a double פרשה with a maqaf, and splits it in a leap year', () => {
+    expect(weeklyParsha('2026-03-14')).toBe('ויקהל־פקודי')
+    expect(weeklyParsha('2026-04-25')).toBe('אחרי מות־קדשים')
+    expect(weeklyParsha('2027-03-13')).toBe('פקודי')
+  })
+
+  it('is null all week when שבת has a holiday reading instead of a פרשה', () => {
+    expect(weeklyParsha('2026-04-04')).toBeNull()
+    expect(weeklyParsha('2026-04-01')).toBeNull()
+    expect(weeklyParsha('2026-09-09')).toBeNull()
+    expect(weeklyParsha('2026-10-03')).toBeNull()
+  })
+
+  it('names every פרשה with letters, spaces and a maqaf only', () => {
+    const shabbatot = Array.from({ length: 20 * 52 }, (_, week) => addDays('2026-01-03', week * DAYS_PER_WEEK))
+
+    const names = new Set(shabbatot.map(weeklyParsha).filter((name) => name !== null))
+
+    expect(names.size).toBeGreaterThan(53)
+    for (const name of names) {
+      expect(name).toMatch(/^[א-ת]+([ ־][א-ת]+)*$/)
+    }
   })
 })

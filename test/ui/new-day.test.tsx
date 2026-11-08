@@ -63,7 +63,7 @@ describe('היום when the app comes back', () => {
     await leaveAndComeBackAt(thursdayMorning)
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/today'))
-    expect(await screen.findByText('יום חמישי · י״ח בחשון · 29.10')).toBeInTheDocument()
+    expect(await screen.findByText('יום חמישי · י״ח בחשון · וירא · 29.10')).toBeInTheDocument()
   })
 
   it('can still step back after returning to today', async () => {

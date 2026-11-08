@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Every PR that ships raises `version` in `package.json`: the minor number for features, the patch number for fixes (spec decision 22). The same PR adds a release to `src/appUpdate/changelog.ts`: short Hebrew lines for what the user will notice, under `features` and `fixes`. The phone shows them once after updating (spec decision 25). PRs that change only CI or docs keep the version and add no release.
 
-CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` deploys to GitHub Pages on every push to `main`, with base path `/prayer-log/`. `ios-screenshot.yml`, run by hand from the Actions tab or by PRs that edit it, screenshots the picked branch in Safari on the iOS simulator (spec decision 54).
+CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` deploys to GitHub Pages on every push to `main`, with base path `/prayer-log/`. `ios-screenshot.yml`, run by hand from the Actions tab or by PRs that edit it, screenshots the picked branch in Safari on the iOS simulator (spec decision 55).
 
 ## Sources of truth
 

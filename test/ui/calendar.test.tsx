@@ -4,7 +4,7 @@ import { db } from '../../src/data/db'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
-import { buttonByLabel, cell, visibleAll } from '../helpers/ionic'
+import { buttonByLabel, cell, shownText, visibleAll } from '../helpers/ionic'
 import { currentPath, renderAt } from '../helpers/renderAt'
 
 describe('calendar', () => {
@@ -30,10 +30,9 @@ describe('calendar', () => {
 
     expect(dayButtons).toHaveLength(31)
     for (const dayButton of dayButtons) {
-      const visibleText = dayButton.textContent.replace(/\s+/g, ' ').trim()
+      const [dayNumber, hebrewDay] = shownText(dayButton).split(' ')
 
-      expect(visibleText).toMatch(/^\d+ \S+$/)
-      expect(dayButton).toHaveAccessibleName(expect.stringMatching(new RegExp(`^${visibleText} `)))
+      expect(dayButton).toHaveAccessibleName(expect.stringMatching(new RegExp(`^${dayNumber} ${hebrewDay} `)))
     }
   })
 
@@ -128,7 +127,7 @@ describe('calendar', () => {
     fireEvent.click(await cell(15))
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/calendar/2026-10-15'))
-    expect(await screen.findByText('יום חמישי · ד׳ בחשון · 15.10')).toBeInTheDocument()
+    expect(await screen.findByText('יום חמישי · ד׳ בחשון · נח · 15.10')).toBeInTheDocument()
     expect((await buttonByLabel('היום הקודם')).closest('ion-footer')).not.toBeNull()
     expect((await buttonByLabel('היום הבא')).closest('ion-footer')).not.toBeNull()
   })
