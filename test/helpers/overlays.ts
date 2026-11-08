@@ -53,6 +53,8 @@ export const alertDismissed = () => overlayEvent('ionAlertDidDismiss')
 
 export const alertHeader = () => last('ion-alert .alert-title').textContent
 
+export const alertMessage = () => last('ion-alert .alert-message').textContent
+
 export const typeInAlert = (value: string) => fireEvent.input(last('ion-alert input'), { target: { value } })
 
 export const clickAlertButton = (text: string) => fireEvent.click(buttonIn('ion-alert', '.alert-button', text))

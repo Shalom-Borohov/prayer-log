@@ -5,7 +5,7 @@ import { db } from '../../src/data/db'
 import { stubShare } from '../helpers/backupFile'
 import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
-import { alertShown, toasts } from '../helpers/overlays'
+import { alertMessage, alertShown, toasts } from '../helpers/overlays'
 import { renderAt } from '../helpers/renderAt'
 
 const nonsenseMark = JSON.parse('{"date":"2026-11-02","prayers":{"shacharit":"nonsense"},"torah":false}')
@@ -27,8 +27,6 @@ async function exportUntilAlert() {
   fireEvent.click(button)
   await shown
 }
-
-const alertMessage = () => document.querySelector('ion-alert .alert-message')?.textContent
 
 describe('exporting a backup', () => {
   beforeEach(resetDb)

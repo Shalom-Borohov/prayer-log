@@ -1,5 +1,18 @@
 export const SETTINGS_COPY = {
   backupRestored: 'הגיבוי שוחזר',
+  confirmSwap: 'החזרה',
+  undo: {
+    label: 'ביטול הייבוא האחרון',
+    message: 'הנתונים שלפני הייבוא יחזרו.',
+    until: (date: string) => `אפשר לבטל עד ${date}`,
+    done: 'הייבוא בוטל',
+  },
+  redo: {
+    label: 'החזרת הייבוא',
+    message: 'הנתונים מהייבוא יחזרו.',
+    until: (date: string) => `אפשר להחזיר עד ${date}`,
+    done: 'הייבוא הוחזר',
+  },
   backup: 'גיבוי',
   lastBackup: (date: string) => `גיבוי אחרון: ${date}`,
   storageNote:
