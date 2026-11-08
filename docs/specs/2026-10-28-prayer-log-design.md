@@ -37,6 +37,7 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
     - The list of places is derived from the logged days: no separate list, no renaming, no per-place stats.
 22. **Version line (added 2026-10-29, changed 2026-10-30):** the bottom of הגדרות shows "גרסה <version> · עודכנה <build date and time>", so it's easy to tell whether the phone has the latest deploy.
     - The version is the semver in `package.json`, starting at 1.0.0. Every PR that ships raises it: the minor number for features, the patch number for fixes.
+    - PRs that change only CI or docs keep the version, since nothing on the phone changes (clarified 2026-11-08).
     - The build time is stamped in at build time.
 23. **Report a bug or idea (added 2026-10-30):** הגדרות has a "דיווח על באג / הצעה" row.
     - It opens a sheet with a באג / הצעה switch and a description field.
@@ -140,6 +141,12 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
     - In a לוח cell the name sits on its own line under the marks, so spines stay level across the row. Every cell keeps that line, empty on any day but a שבת with a פרשה, so every row is one line taller, including a last row that ends before שבת and a row whose שבת has no פרשה. A long name wraps only at a space or a maqaf and adds a line to its row.
     - A future שבת shows its פרשה too, because it's a calendar fact like the Hebrew date above it.
     - A שבת cell's spoken name adds it after the weekday: "31 כ׳ בחשון, שבת פרשת וירא: לא סומן". It still starts the way decision 44 says, and the words on the cell keep their order.
+55. **iOS Safari screenshots (added 2026-11-08, extends assumption 8):** a workflow shows how a branch looks in iOS Safari without the phone. It's also the trial for giving workout-log the same workflow.
+    - It runs by hand from the Actions tab on the branch picked under "Use workflow from", so a branch cut before the workflow merged needs main merged in first. It also runs on PRs that edit it, so a change to it is proven before merge.
+    - It builds the branch on the `xcode-27` runner, the only one with iOS 27 simulators, and opens `/prayer-log/` in Safari on an iPhone SE (2nd generation), the phone the app is used on. The simulator uses the newest installed iOS runtime that supports that model, in Hebrew with the Israel region and on Israel time, like the phone.
+    - The run carries a light and a dark screenshot, because the app follows the phone's appearance (assumption 7).
+    - Before opening the app, the run marks the branch's version as seen, so היום shows as it does every day and not under מה חדש (decision 25), which a fresh simulator would otherwise open. Only the CI build gets the page that does this.
+    - The screenshots show a Safari tab, because the simulator can't add the app to the Home Screen. Compare them with the same page in Safari on the phone, not with the installed app.
 
 ## Assumptions (accepted by the user)
 
