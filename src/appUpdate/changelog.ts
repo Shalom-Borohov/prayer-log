@@ -2,11 +2,16 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
-    version: '1.7.0',
+    version: '1.8.0',
     features: [
       'ייצוא היסטוריה בהגדרות: קובץ טקסט עם כל הימים, לקריאה או לשמירה בפתקים',
       'דיווח על באג מצרף גם את מצב האחסון במכשיר',
     ],
+    fixes: [],
+  },
+  {
+    version: '1.7.0',
+    features: ['שורה בלי רצף נשארת ריקה, בלי ״אין רצף״'],
     fixes: [],
   },
   {
