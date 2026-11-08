@@ -58,8 +58,8 @@ describe('dateTimeLabel', () => {
 })
 
 describe('streakLabel', () => {
-  it('reads as plain Hebrew counts', () => {
-    expect([0, 1, 2, 12].map(streakLabel)).toEqual(['אין רצף', 'יום אחד ברצף', '2 ימים ברצף', '12 ימים ברצף'])
+  it('reads as plain Hebrew counts, with nothing at zero', () => {
+    expect([0, 1, 2, 12].map(streakLabel)).toEqual([null, 'יום אחד ברצף', '2 ימים ברצף', '12 ימים ברצף'])
   })
 })
 
