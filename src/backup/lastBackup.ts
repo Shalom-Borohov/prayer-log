@@ -10,8 +10,13 @@ export function readLastBackup(): number | null {
   return stored === null ? null : Number(stored)
 }
 
-export function saveLastBackup(timestamp: number) {
-  localStorage.setItem(LAST_BACKUP_KEY, String(Math.min(timestamp, Date.now())))
+export function saveLastBackup(timestamp: number | null) {
+  if (timestamp === null) {
+    localStorage.removeItem(LAST_BACKUP_KEY)
+  } else {
+    localStorage.setItem(LAST_BACKUP_KEY, String(Math.min(timestamp, Date.now())))
+  }
+
   listeners.forEach((listener) => listener())
 }
 

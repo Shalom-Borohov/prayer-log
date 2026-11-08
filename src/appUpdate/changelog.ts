@@ -2,8 +2,16 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
-    version: '1.8.0',
+    version: '1.9.0',
     features: ['הפרשה של השבוע מופיעה ליד התאריך, ובשבתות בלוח'],
+    fixes: [],
+  },
+  {
+    version: '1.8.0',
+    features: [
+      'לפני ייבוא גיבוי רואים כמה ימים יש בקובץ ובטלפון, ועד איזה תאריך',
+      'אפשר לבטל ייבוא גיבוי מההגדרות במשך שבוע, ולהחזיר אותו שוב',
+    ],
     fixes: [],
   },
   {
