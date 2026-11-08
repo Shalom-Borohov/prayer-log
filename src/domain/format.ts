@@ -35,9 +35,9 @@ export function shortWeekday(date: string): string {
   return FORMAT_COPY.weekdayLetters[parseIsoDate(date).getDay()]
 }
 
-export function streakLabel(days: number): string {
+export function streakLabel(days: number): string | null {
   if (days === 0) {
-    return FORMAT_COPY.noStreak
+    return null
   }
 
   return days === 1 ? FORMAT_COPY.oneDayStreak : FORMAT_COPY.daysStreak(days)
