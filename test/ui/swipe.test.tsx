@@ -16,12 +16,12 @@ describe('swiping', () => {
 
   it('moves to the previous day with a swipe left and back with a swipe right', async () => {
     renderAt('/tabs/today')
-    await screen.findByText('יום רביעי · י״ז בחשון · 28.10')
+    await screen.findByText('יום רביעי · י״ז בחשון · וירא · 28.10')
 
     await swipeLeft()
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/today/2026-10-27'))
-    expect(await screen.findByText('יום שלישי · ט״ז בחשון · 27.10')).toBeInTheDocument()
+    expect(await screen.findByText('יום שלישי · ט״ז בחשון · וירא · 27.10')).toBeInTheDocument()
 
     await swipeRight()
 
@@ -30,7 +30,7 @@ describe('swiping', () => {
 
   it('never swipes into the future', async () => {
     renderAt('/tabs/today')
-    await screen.findByText('יום רביעי · י״ז בחשון · 28.10')
+    await screen.findByText('יום רביעי · י״ז בחשון · וירא · 28.10')
 
     await swipeRight()
     await settle()
@@ -40,7 +40,7 @@ describe('swiping', () => {
 
   it('ignores a short drag', async () => {
     renderAt('/tabs/today')
-    await screen.findByText('יום רביעי · י״ז בחשון · 28.10')
+    await screen.findByText('יום רביעי · י״ז בחשון · וירא · 28.10')
 
     await swipe(-0.1)
     await settle()
@@ -59,7 +59,7 @@ describe('swiping', () => {
 
   it('steps a day opened from לוח', async () => {
     renderAt('/tabs/calendar/2026-10-15')
-    await screen.findByText('יום חמישי · ד׳ בחשון · 15.10')
+    await screen.findByText('יום חמישי · ד׳ בחשון · נח · 15.10')
 
     await swipeLeft()
 

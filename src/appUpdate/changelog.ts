@@ -2,6 +2,11 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.7.0',
+    features: ['הפרשה של השבוע מופיעה ליד התאריך, ובשבתות בלוח'],
+    fixes: [],
+  },
+  {
     version: '1.6.3',
     features: [],
     fixes: ['לוח עובר לחודש החדש כשהחודש מתחלף', 'השם של תשעה באב נדחה מופיע נכון'],

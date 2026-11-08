@@ -17,7 +17,7 @@ describe('today', () => {
   it('shows the date header and the three daily prayers', async () => {
     renderAt('/tabs/today')
 
-    expect(await screen.findByText('יום רביעי · י״ז בחשון · 28.10')).toBeInTheDocument()
+    expect(await screen.findByText('יום רביעי · י״ז בחשון · וירא · 28.10')).toBeInTheDocument()
     expect(await row('שחרית')).toBeInTheDocument()
     expect(await row('מנחה')).toBeInTheDocument()
     expect(await row('ערבית')).toBeInTheDocument()
@@ -28,7 +28,7 @@ describe('today', () => {
     vi.setSystemTime(new Date(2026, 9, 29, 2, 30))
     renderAt('/tabs/today')
 
-    expect(await screen.findByText('יום רביעי · י״ז בחשון · 28.10')).toBeInTheDocument()
+    expect(await screen.findByText('יום רביעי · י״ז בחשון · וירא · 28.10')).toBeInTheDocument()
   })
 
   it('marks a prayer and clears it with a second tap', async () => {
@@ -145,7 +145,7 @@ describe('today', () => {
   it('shows מוסף on שבת', async () => {
     renderAt('/tabs/today/2026-10-24')
 
-    expect(await screen.findByText('שבת · י״ג בחשון · 24.10')).toBeInTheDocument()
+    expect(await screen.findByText('שבת · י״ג בחשון · לך־לך · 24.10')).toBeInTheDocument()
     expect(await row('מוסף')).toBeInTheDocument()
   })
 
@@ -228,7 +228,7 @@ describe('today', () => {
     fireEvent.click(previous)
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/today/2026-10-27'))
-    expect(await screen.findByText('יום שלישי · ט״ז בחשון · 27.10')).toBeInTheDocument()
+    expect(await screen.findByText('יום שלישי · ט״ז בחשון · וירא · 27.10')).toBeInTheDocument()
 
     await markIn('ערבית', 'במניין')
     await waitFor(async () => expect((await db.days.get('2026-10-27'))?.prayers).toEqual({ maariv: 'minyan' }))
