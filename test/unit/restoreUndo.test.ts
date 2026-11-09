@@ -6,6 +6,7 @@ import { db } from '../../src/data/db'
 import { allDays } from '../../src/data/repo'
 import { resetDb } from '../helpers/db'
 import { day, days } from '../helpers/days'
+import { gemara, mishna } from '../helpers/learning'
 
 const phoneDays = days('2026-11-01', '2026-11-08', { torah: true })
 
@@ -66,6 +67,15 @@ describe('undoing an import', () => {
         tallit: true,
       }),
     )
+  })
+
+  it('keeps a day’s learning entries from both sides, the replaced data’s first', async () => {
+    await db.days.put(day('2026-11-08', { torah: true, learning: [gemara('shabbat', 12)] }))
+    await restoreFromBackup(olderFile)
+    await db.days.put(day('2026-11-08', { torah: true, learning: [mishna('berakhot', 2)] }))
+    await swapLastRestore()
+
+    expect((await db.days.get('2026-11-08'))?.learning).toEqual([gemara('shabbat', 12), mishna('berakhot', 2)])
   })
 
   it('brings back days up to the newest day the import brought exactly as they were', async () => {

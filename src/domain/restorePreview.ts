@@ -17,6 +17,7 @@ function mergeMarks(older: DayRecord, newer: DayRecord): DayRecord {
     ...newer,
     prayers: { ...older.prayers, ...newer.prayers },
     places: { ...older.places, ...newer.places },
+    learning: [...(older.learning ?? []), ...(newer.learning ?? [])],
     torah: older.torah || newer.torah,
   }
 }
