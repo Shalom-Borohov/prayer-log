@@ -40,6 +40,8 @@ export function ionElement(selector: string) {
 
 export const buttonByLabel = (label: string) => ionElement(`ion-button[aria-label="${label}"]`)
 
+export const shownText = (element: Element) => element.textContent.replace(/\s+/g, ' ').trim()
+
 export const cell = (dayNumber: number) =>
   screen.findByRole('button', { name: (name) => name.startsWith(`${dayNumber} `) })
 

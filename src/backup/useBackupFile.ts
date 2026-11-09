@@ -1,10 +1,11 @@
 import { type ChangeEvent, useRef } from 'react'
 import { COMMON_COPY } from '../copy/common'
-import { type Backup, InvalidBackupError } from '../data/backup'
+import { type Backup, importPreview, InvalidBackupError } from '../data/backup'
+import { importComparison } from '../domain/restorePreview'
 import { BACKUP_FILE_ACCEPT, readBackup } from './backupFile'
 
 interface BackupFileReport {
-  onBackup: (backup: Backup) => void
+  onBackup: (backup: Backup, comparison: string[]) => void
   onFailure: (message: string) => void
 }
 
@@ -25,7 +26,9 @@ export function useBackupFile({ onBackup, onFailure }: BackupFileReport) {
     }
 
     try {
-      onBackup(await readBackup(file))
+      const backup = await readBackup(file)
+
+      onBackup(backup, importComparison(await importPreview(backup)))
     } catch (error) {
       onFailure(failureMessage(error))
     }

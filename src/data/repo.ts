@@ -1,3 +1,4 @@
+import { type DaySummary, summarizeDates } from '../domain/restorePreview'
 import {
   type Attendance,
   type DayRecord,
@@ -92,3 +93,6 @@ export async function setWorn(date: string, item: WornItem, worn: boolean) {
 export function allDays(): Promise<DayRecord[]> {
   return db.days.orderBy('date').toArray()
 }
+
+export const storedDaysSummary = async (): Promise<DaySummary> =>
+  summarizeDates(await db.days.toCollection().primaryKeys())

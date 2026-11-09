@@ -13,7 +13,7 @@ import { SettingsButton } from '../../components/SettingsButton'
 import { COMMON_COPY } from '../../copy/common'
 import { useAllDays } from '../../data/hooks'
 import { LIST_SEPARATOR, gregorianLabel, weekdayName } from '../../domain/format'
-import { hebrewDateLabel, holidayNames } from '../../domain/hebrewCalendar'
+import { hebrewDateLabel, holidayNames, weeklyParsha } from '../../domain/hebrewCalendar'
 import { addDays } from '../../domain/logicalDay'
 import { defaultPlace, knownPlaces } from '../../domain/places'
 import { prayersForDay } from '../../domain/prayersForDay'
@@ -42,6 +42,10 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
   const router = useIonRouter()
   const title = date === today ? COMMON_COPY.today : weekdayName(date)
   const holidays = holidayNames(date)
+
+  const dateLine = [weekdayName(date), hebrewDateLabel(date), weeklyParsha(date), gregorianLabel(date)]
+    .filter((part) => part !== null)
+    .join(LIST_SEPARATOR)
 
   const openDay = (target: string) => router.push(dayPath(tab, target, today), 'none', 'replace')
 
@@ -72,7 +76,7 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
             <IonTitle size="large">{title}</IonTitle>
           </IonToolbar>
           <div className="day-heading">
-            <p>{[weekdayName(date), hebrewDateLabel(date), gregorianLabel(date)].join(LIST_SEPARATOR)}</p>
+            <p>{dateLine}</p>
             {holidays.length > 0 && <p className="holidays">{holidays.join(LIST_SEPARATOR)}</p>}
           </div>
         </IonHeader>

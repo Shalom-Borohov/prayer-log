@@ -40,6 +40,8 @@ export const COMMON_COPY = {
   tracks: { ...PRAYER_NAMES, torah: TORAH },
   attendance: { minyan: 'במניין', alone: 'ביחידות', shema: 'ק״ש בלבד' } satisfies Record<Attendance, string>,
   worn: { tefillin: 'תפילין', tallit: 'טלית' } satisfies Record<WornItem, string>,
+  prayerMark: (prayer: string, attendance: string) => `${prayer} ${attendance}`,
+  atPlace: (mark: string, place: string) => `${mark} (${place})`,
   outOf: (done: number, total: number) => `${done} מתוך ${total}`,
   daysOutOf: ({ days, total }: DayTally) => `${days} מתוך ${total}`,
 } as const

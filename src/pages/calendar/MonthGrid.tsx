@@ -1,14 +1,16 @@
 import { COMMON_COPY } from '../../copy/common'
+import { MARKS_SEPARATOR, dayMarks } from '../../domain/dayMarks'
 import { shortWeekday, weekdayName } from '../../domain/format'
-import { hebrewDateLabel, hebrewDayNumber } from '../../domain/hebrewCalendar'
-import { daysInRange, monthEnd, parseIsoDate } from '../../domain/logicalDay'
+import { MAQAF, hebrewDateLabel, hebrewDayNumber, weeklyParsha } from '../../domain/hebrewCalendar'
+import { daysInRange, isSaturday, monthEnd, parseIsoDate } from '../../domain/logicalDay'
 import { prayersForDay, wornItemsForDay } from '../../domain/prayersForDay'
 import { slotFor } from '../../domain/shelf'
 import { trackingStart, weekRange } from '../../domain/totals'
-import { type DayRecord, type Prayer, WORN_AT_PRAYER, WORN_ITEMS, type WornItem } from '../../domain/types'
+import { type DayRecord, WORN_AT_PRAYER, WORN_ITEMS } from '../../domain/types'
 import { CALENDAR_COPY } from './copy'
 
-const MARKS_SEPARATOR = ', '
+const withBreaksAfterMaqaf = (name: string) =>
+  name.split(MAQAF).flatMap((part, index) => (index === 0 ? [part] : [MAQAF, <wbr key={index} />, part]))
 
 interface MonthGridProps {
   month: string
@@ -18,18 +20,8 @@ interface MonthGridProps {
   onOpen: (date: string) => void
 }
 
-function marksLabel(record: DayRecord | undefined, prayers: Prayer[], markedWorn: WornItem[]): string {
-  const marks = prayers.flatMap((prayer) => {
-    const mark = record?.prayers[prayer]
-
-    return mark ? [CALENDAR_COPY.prayerMark(COMMON_COPY.prayers[prayer], COMMON_COPY.attendance[mark])] : []
-  })
-
-  marks.push(...markedWorn.map((item) => COMMON_COPY.worn[item]))
-
-  if (record?.torah) {
-    marks.push(COMMON_COPY.learnedTorah)
-  }
+function marksLabel(record: DayRecord | undefined): string {
+  const marks = record ? dayMarks(record) : []
 
   return marks.length > 0 ? marks.join(MARKS_SEPARATOR) : COMMON_COPY.unmarked
 }
@@ -58,6 +50,8 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
         const prayers = prayersForDay(date)
         const tracked = trackedFrom !== null && date >= trackedFrom
         const markedWorn = wornItemsForDay(date).filter((item) => record?.[item])
+        const parsha = isSaturday(date) ? weeklyParsha(date) : null
+        const weekday = weekdayName(date)
 
         return (
           <button
@@ -68,8 +62,8 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
             aria-label={CALENDAR_COPY.dayCell(
               dayNumber,
               hebrewDateLabel(date),
-              weekdayName(date),
-              marksLabel(record, prayers, markedWorn),
+              parsha ? CALENDAR_COPY.weekdayWithParsha(weekday, parsha) : weekday,
+              marksLabel(record),
             )}
             onClick={() => onOpen(date)}
           >
@@ -84,7 +78,8 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
               {WORN_ITEMS.map((item) => (
                 <i key={item} className={`worn-mark worn-mark-${item}${markedWorn.includes(item) ? ' is-marked' : ''}`} />
               ))}
-            </span>
+            </span>{' '}
+            <span className="month-day-parsha">{parsha && withBreaksAfterMaqaf(parsha)}</span>
           </button>
         )
       })}

@@ -5,6 +5,7 @@ import { db } from '../../src/data/db'
 import { chooseBackupFile, chooseUnreadableBackupFile } from '../helpers/backupFile'
 import { day } from '../helpers/days'
 import { missingPrayers, openRecoveryScreen, prepareRecoveryScreen } from '../helpers/recovery'
+import { asRead } from '../helpers/text'
 
 const WARNING = 'הייבוא יחליף את כל הנתונים. כדאי לייצא גיבוי קודם.'
 
@@ -25,6 +26,21 @@ describe('importing a backup from the recovery screen', () => {
     expect((await screen.findByText(WARNING)).closest('[role="status"]')).not.toBeNull()
     expect(screen.queryByRole('button', { name: 'ייבוא גיבוי' })).not.toBeInTheDocument()
     expect(await db.days.toArray()).toEqual([missingPrayers])
+  })
+
+  it('compares the file with the phone, damaged record included', async () => {
+    await openRecoveryScreen()
+
+    chooseBackupFile(earlierBackup)
+
+    const status = (await screen.findByText(WARNING)).closest('[role="status"]')
+
+    expect(Array.from(status?.querySelectorAll('p') ?? [], (line) => asRead(line.textContent))).toEqual([
+      WARNING,
+      'בקובץ: יום אחד, 29.10.2026',
+      'בטלפון: יום אחד, 2.11.2026',
+      'בטלפון יש ימים אחרי 29.10.2026.',
+    ])
   })
 
   it('goes back to the button with the data unchanged when cancelled', async () => {
