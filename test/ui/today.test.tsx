@@ -163,7 +163,7 @@ describe('today', () => {
     fireEvent.click(await screen.findByRole('checkbox', { name: 'למדתי תורה' }))
     await waitFor(async () => expect((await db.days.get('2026-10-28'))?.torah).toBe(true))
 
-    ionInput(await ionField('מה למדתי'), ' דף יומי ברכות ה׳ ')
+    ionInput(await ionField('הערה'), ' דף יומי ברכות ה׳ ')
     await waitFor(async () => expect((await db.days.get('2026-10-28'))?.torahNote).toBe('דף יומי ברכות ה׳'))
   })
 

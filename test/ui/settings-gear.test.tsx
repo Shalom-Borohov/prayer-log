@@ -15,6 +15,8 @@ describe('the settings gear', () => {
     ['/tabs/calendar', '/tabs/calendar/settings'],
     ['/tabs/calendar/2026-10-15', '/tabs/calendar/settings'],
     ['/tabs/stats', '/tabs/stats/settings'],
+    ['/tabs/stats/learning', '/tabs/stats/settings'],
+    ['/tabs/stats/2026-10-15', '/tabs/stats/settings'],
   ])('on %s opens הגדרות in the same tab', async (path, settingsPath) => {
     renderAt(path)
 

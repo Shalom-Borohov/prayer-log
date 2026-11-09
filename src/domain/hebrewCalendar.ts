@@ -63,8 +63,15 @@ export function hebrewDayNumber(date: string): string {
   return gematriya(toHDate(date).getDate())
 }
 
+const dayAndMonth = (hebrewDate: HDate) =>
+  FORMAT_COPY.hebrewDate(gematriya(hebrewDate.getDate()), Locale.gettext(hebrewDate.getMonthName(), LOCALE))
+
 export function hebrewDateLabel(date: string): string {
+  return dayAndMonth(toHDate(date))
+}
+
+export function hebrewDateWithYear(date: string): string {
   const hebrewDate = toHDate(date)
 
-  return FORMAT_COPY.hebrewDate(gematriya(hebrewDate.getDate()), Locale.gettext(hebrewDate.getMonthName(), LOCALE))
+  return FORMAT_COPY.hebrewDateWithYear(dayAndMonth(hebrewDate), gematriya(hebrewDate.getFullYear()))
 }

@@ -1,5 +1,20 @@
 import { describe, expect, it } from 'vitest'
-import { hasMusaf, hasTefillin, hebrewDateLabel, hebrewDayNumber, holidayNames, isRestDay } from '../../src/domain/hebrewCalendar'
+import {
+  hasMusaf,
+  hasTefillin,
+  hebrewDateLabel,
+  hebrewDateWithYear,
+  hebrewDayNumber,
+  holidayNames,
+  isRestDay,
+} from '../../src/domain/hebrewCalendar'
+
+describe('hebrewDateWithYear', () => {
+  it('adds the year without its thousands to the Hebrew date', () => {
+    expect(hebrewDateWithYear('2026-11-08')).toBe('כ״ח בחשון תשפ״ז')
+    expect(hebrewDateWithYear('2027-03-23')).toBe('י״ד באדר ב׳ תשפ״ז')
+  })
+})
 
 describe('hebrewDateLabel', () => {
   it('is the gematriya day and the month with ב, without year or niqqud', () => {

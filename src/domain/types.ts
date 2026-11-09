@@ -1,3 +1,5 @@
+import type { GemaraTractate, MishnaTractate } from './tractates'
+
 export const PRAYERS = ['shacharit', 'musaf', 'mincha', 'maariv'] as const
 
 export const DAILY_PRAYERS = ['shacharit', 'mincha', 'maariv'] as const
@@ -14,6 +16,14 @@ export const ATTENDANCES = ['minyan', 'alone', 'shema'] as const
 
 export type Attendance = (typeof ATTENDANCES)[number]
 
+export const LEARNING_KINDS = ['gemara', 'mishna'] as const
+
+export type LearningKind = (typeof LEARNING_KINDS)[number]
+
+export type LearningEntry =
+  | { kind: 'gemara'; tractate: GemaraTractate; daf: number }
+  | { kind: 'mishna'; tractate: MishnaTractate; chapter: number }
+
 export const WORN_ITEMS = ['tefillin', 'tallit'] as const
 
 export type WornItem = (typeof WORN_ITEMS)[number]
@@ -24,6 +34,7 @@ export interface DayRecord {
   places?: Partial<Record<Prayer, string>>
   torah: boolean
   torahNote?: string
+  learning?: LearningEntry[]
   tefillin?: boolean
   tallit?: boolean
 }
@@ -31,7 +42,7 @@ export interface DayRecord {
 export const hasNoMarks = (day: DayRecord) =>
   !day.torah && WORN_ITEMS.every((item) => !day[item]) && Object.values(day.prayers).every((mark) => mark === undefined)
 
-export const isEmptyDay = (day: DayRecord) => hasNoMarks(day) && !day.torahNote
+export const isEmptyDay = (day: DayRecord) => hasNoMarks(day) && !day.torahNote && !day.learning?.length
 
 export interface Streak {
   current: number

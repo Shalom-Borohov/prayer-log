@@ -5,7 +5,7 @@ export function ionEvent(el: Element, name: 'ionChange' | 'ionInput' | 'ionReord
   fireEvent(el, new CustomEvent(name, { detail, bubbles: true }))
 }
 
-export const ionChange = (el: Element, value: string) => ionEvent(el, 'ionChange', { value })
+export const ionChange = (el: Element, value: string | number) => ionEvent(el, 'ionChange', { value })
 
 export const ionInput = (el: Element, value: string) => ionEvent(el, 'ionInput', { value })
 

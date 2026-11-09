@@ -35,6 +35,7 @@ export const COMMON_COPY = {
   thisWeek: 'השבוע',
   torah: TORAH,
   learnedTorah: 'למדתי תורה',
+  learningLog: 'מה למדתי',
   prayers: PRAYER_NAMES,
   tracks: { ...PRAYER_NAMES, torah: TORAH },
   attendance: { minyan: 'במניין', alone: 'ביחידות', shema: 'ק״ש בלבד' } satisfies Record<Attendance, string>,

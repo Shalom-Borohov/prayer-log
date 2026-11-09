@@ -1,6 +1,17 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { allDays, setPlace, setPrayer, setTorah, setTorahNote, setWorn } from '../../src/data/repo'
+import {
+  addLearning,
+  allDays,
+  removeLearning,
+  replaceLearning,
+  setPlace,
+  setPrayer,
+  setTorah,
+  setTorahNote,
+  setWorn,
+} from '../../src/data/repo'
 import { resetDb } from '../helpers/db'
+import { gemara, mishna } from '../helpers/learning'
 
 describe('repo', () => {
   beforeEach(resetDb)
@@ -176,5 +187,55 @@ describe('repo', () => {
     await setPrayer('2026-10-28', 'musaf', null)
 
     expect(await allDays()).toEqual([])
+  })
+
+  it('adding a learning entry stores it and ticks למדתי', async () => {
+    await addLearning('2026-10-28', gemara('shabbat', 12))
+
+    expect(await allDays()).toStrictEqual([
+      { date: '2026-10-28', prayers: {}, torah: true, learning: [gemara('shabbat', 12)] },
+    ])
+  })
+
+  it('keeps learning entries in the order they were added', async () => {
+    await addLearning('2026-10-28', gemara('shabbat', 12))
+    await addLearning('2026-10-28', mishna('berakhot', 2))
+
+    expect((await allDays())[0].learning).toStrictEqual([gemara('shabbat', 12), mishna('berakhot', 2)])
+  })
+
+  it('editing a learning entry replaces only it and leaves למדתי alone', async () => {
+    await addLearning('2026-10-28', gemara('shabbat', 12))
+    await addLearning('2026-10-28', mishna('berakhot', 2))
+    await setTorah('2026-10-28', false)
+    await replaceLearning('2026-10-28', 0, gemara('shabbat', 13))
+
+    expect(await allDays()).toStrictEqual([
+      { date: '2026-10-28', prayers: {}, torah: false, learning: [gemara('shabbat', 13), mishna('berakhot', 2)] },
+    ])
+  })
+
+  it('deleting the last learning entry drops the field and leaves למדתי ticked', async () => {
+    await addLearning('2026-10-28', gemara('shabbat', 12))
+    await removeLearning('2026-10-28', 0)
+
+    expect(await allDays()).toStrictEqual([{ date: '2026-10-28', prayers: {}, torah: true }])
+  })
+
+  it('unticking למדתי keeps the learning entries and the day', async () => {
+    await addLearning('2026-10-28', gemara('shabbat', 12))
+    await setTorah('2026-10-28', false)
+
+    expect(await allDays()).toStrictEqual([
+      { date: '2026-10-28', prayers: {}, torah: false, learning: [gemara('shabbat', 12)] },
+    ])
+  })
+
+  it('editing or deleting an entry that is no longer there changes nothing', async () => {
+    await addLearning('2026-10-28', gemara('shabbat', 12))
+    await replaceLearning('2026-10-28', 3, gemara('eruvin', 2))
+    await removeLearning('2026-10-28', 3)
+
+    expect((await allDays())[0].learning).toStrictEqual([gemara('shabbat', 12)])
   })
 })

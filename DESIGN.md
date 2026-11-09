@@ -300,13 +300,22 @@ While a prayer is במניין with a place, the place name follows the prayer n
 The same sheet opens by itself whenever a prayer is marked במניין with no remembered place, until one is chosen.
 
 ### Round checks (Torah, תפילין, טלית)
-One shared form: a 26px circle inside a 44px target. Off: a 1.5px tertiary ring. On: the row's deep hue with a gold-leaf checkmark. The Torah check leads the Torah row, followed by title, streak line and mini shelf, with a borderless "מה למדתי…" note field beneath; תפילין and טלית sit side by side under the שחרית control, each circle followed by its label, the whole pair tappable. תפילין is absent on שבת, יום טוב and חול המועד.
+One shared form: a 26px circle inside a 44px target. Off: a 1.5px tertiary ring. On: the row's deep hue with a gold-leaf checkmark. The Torah check leads the Torah row, followed by title, streak line and mini shelf, with the learning entries and hints beneath it and then the borderless "הערה…" note line; תפילין and טלית sit side by side under the שחרית control, each circle followed by its label, the whole pair tappable. תפילין is absent on שבת, יום טוב and חול המועד.
+
+### Learning entries and hints
+Under the Torah row's top line, each saved entry is a 44px row in label colour, such as "גמרא · שבת דף י״ב", starting in the title's column and ending in a tertiary ›; it opens the learning sheet on that entry. On a day missing them, the latest earlier day's entries follow as hint rows: the place in secondary label colour after an empty 1.5px tertiary ring, the unticked Torah circle in the check's column. Hints are never gold and never dashed, and they read "בפעם הקודמת: …" to VoiceOver, so nothing unsaved looks saved. The "הערה…" note line ends in a 44px "+" in the primary ink of הקודם and הבא that adds an entry, so adding costs no extra row.
+
+### Learning sheet
+A half-height sheet (draggable to full) with a leather header: ביטול, the title לימוד, and שמירה. Below it, a native segmented control גמרא | משנה, then an inline iOS wheel picker with the מסכת column at the start (right) and the דף or פרק column after it, in Hebrew numerals. Ionic lays picker columns out left to right, so the picker reverses them for RTL. When editing, a destructive "מחיקת הלימוד" row sits in an inset group under the wheels.
+
+### מה למדתי list
+A page under סטטיסטיקה, entered from a disclosure row "מה למדתי" at the bottom of the תורה table. A native search field sits at the top, then one inset list of days, newest first. Each row starts with a footnote date line in secondary colour (weekday · Hebrew date with year · Gregorian date), then each entry in body text, then the note in secondary subhead. Text wraps rather than truncates. No counts appear on the page. With no match, one centred secondary line says so.
 
 ### Ruled tables
 Hairline-ruled data tables in place of cards: cell background, 10px corners, 16px side margins, 11px×16px cell padding, 0.5px separators, no line under the last row. Row headers are start-aligned at 400; values are end-aligned at 600. Stats tables add footnote column heads in secondary colour, centre their numeric columns under those heads, and put a small gold-banded spine as the hue key before each prayer name. A cell that cannot apply (ק״ש for מנחה or מוסף) shows an en dash.
 
 ### Inset groups
-iOS inset grouped lists: 16px margin, 10px corners, cell background, rows separated by 0.5px hairlines. Used for day rows, the Torah row, period shelves and Ionic inset lists (backfill banner, holiday list, settings).
+iOS inset grouped lists: 16px margin, 10px corners, cell background, rows separated by 0.5px hairlines. Used for day rows, the Torah row, period shelves and Ionic inset lists (backfill banner, holiday list, settings, the מה למדתי list).
 
 ### Month grid cells
 Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px box), Hebrew day letter (caption, secondary), then the day's spines, one per applicable prayer plus Torah, then a 5px line for תפילין and טלית. That line holds a 5px square for תפילין and a 9×3px bar for טלית, in the שחרית hue and in the same order as their checks. They are not shelf slots: an item that isn't marked leaves its place blank, with no dashed outline and no gold. Today's number sits in a 30px leather circle with gold-leaf bold text. Holidays turn the Hebrew letter gilded and bold. Future days are disabled and tertiary with spines and marks hidden. Pressed shows the fill colour; focus is an inset 2px gilded ring. A cell's accessible name starts with what it shows, as in "1 כ״א בחשון, יום ראשון: לא סומן".
@@ -315,9 +324,9 @@ Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px bo
 An inset list at the top of היום (today only) with one disclosure row per day that needs filling, such as an unmarked day or a blank Friday-night ערבית. Label text is gilded; rows navigate to that day. When a backup is due, a last row without a disclosure chevron opens the share sheet. Absent when nothing needs filling and no backup is due.
 
 ### Navigation
-Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with a back button to לוח on days opened from לוח, and a settings gear at the end of the toolbar on every page but הגדרות. הגדרות opens inside the current tab, with a back button named for the tab. Large titles collapse into the toolbar on scroll. Toolbar buttons keep Ionic's size, and an invisible centred layer carries each tap area to at least 44×44px. Icons beside a label are hidden from screen readers.
+Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with a back button to לוח on days opened from לוח, to מה למדתי on days opened from that list, and to סטטיסטיקה on the list itself, and a settings gear at the end of the toolbar on every page but הגדרות. הגדרות opens inside the current tab, with a back button named for the tab. Large titles collapse into the toolbar on scroll. Toolbar buttons keep Ionic's size, and an invisible centred layer carries each tap area to at least 44×44px. Icons beside a label are hidden from screen readers.
 
-Previous and next day (היום and days opened from לוח) or month (לוח) sit in a footer bar just above the tab bar, in thumb reach: item-background ground with the iOS hairline top rule, "› הקודם" at the start and "הבא ‹" at the end in the primary ink. Next is disabled on today and on the current month.
+Previous and next day (היום and days opened from לוח or מה למדתי) or month (לוח) sit in a footer bar just above the tab bar, in thumb reach: item-background ground with the iOS hairline top rule, "› הקודם" at the start and "הבא ‹" at the end in the primary ink. Next is disabled on today and on the current month.
 
 A horizontal swipe on the content does the same: drag left for הקודם, right for הבא. Only the content under the date line follows the finger; the leather band, the footer bar and the tab bar stay put. A committed swipe slides the content off (180ms ease-out) and the new day or month in from the other side; a short drag springs back, and a drag toward the future moves at a fifth of the finger's distance before springing back. Reduce motion drops the slides.
 
