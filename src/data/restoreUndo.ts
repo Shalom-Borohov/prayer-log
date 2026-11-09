@@ -1,7 +1,7 @@
 import { keptOnSwap, summarizeDates } from '../domain/restorePreview'
 import type { DayRecord } from '../domain/types'
 import { db } from './db'
-import { withMinyanPlacesOnly } from './repo'
+import { normalizeDay } from './repo'
 
 const RESTORE_UNDO_ID = 'last'
 
@@ -64,7 +64,7 @@ export async function swapWithRestoreCopy(currentBackupAt: number | null): Promi
     }
 
     await replaceDaysKeepingCopy(
-      (current) => ({ brought: copy.days, kept: keptOnSwap(current, copy).map(withMinyanPlacesOnly) }),
+      (current) => ({ brought: copy.days, kept: keptOnSwap(current, copy).map(normalizeDay) }),
       copy.offers === 'undo' ? 'redo' : 'undo',
       currentBackupAt,
     )

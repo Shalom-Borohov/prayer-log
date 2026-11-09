@@ -1,3 +1,3 @@
 export const LOG_TEXT_COPY = {
-  torahNote: (note: string) => `מה למדתי: ${note}`,
+  torahNote: (note: string) => `הערה: ${note}`,
 } as const

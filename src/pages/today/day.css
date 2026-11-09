@@ -175,6 +175,17 @@
   font-size: 0.9375rem;
 }
 
+.torah-note-line {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.torah-note-line .torah-note {
+  flex: 1;
+  min-width: 0;
+}
+
 .backfill ion-label {
   color: var(--ion-color-primary);
 }

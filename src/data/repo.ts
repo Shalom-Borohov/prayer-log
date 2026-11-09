@@ -1,10 +1,18 @@
 import { type DaySummary, summarizeDates } from '../domain/restorePreview'
-import { type Attendance, type DayRecord, isEmptyDay, type Prayer, PRAYERS, type WornItem } from '../domain/types'
+import {
+  type Attendance,
+  type DayRecord,
+  isEmptyDay,
+  type LearningEntry,
+  type Prayer,
+  PRAYERS,
+  type WornItem,
+} from '../domain/types'
 import { db } from './db'
 
 async function updateDay(date: string, change: (day: DayRecord) => DayRecord) {
   await db.transaction('rw', db.days, async () => {
-    const day = withMinyanPlacesOnly(change((await db.days.get(date)) ?? { date, prayers: {}, torah: false }))
+    const day = normalizeDay(change((await db.days.get(date)) ?? { date, prayers: {}, torah: false }))
 
     if (isEmptyDay(day)) {
       await db.days.delete(date)
@@ -14,7 +22,13 @@ async function updateDay(date: string, change: (day: DayRecord) => DayRecord) {
   })
 }
 
-export function withMinyanPlacesOnly({ places, ...day }: DayRecord): DayRecord {
+export function normalizeDay(day: DayRecord): DayRecord {
+  const { learning, ...withoutLearning } = withMinyanPlacesOnly(day)
+
+  return learning?.length ? { ...withoutLearning, learning } : withoutLearning
+}
+
+function withMinyanPlacesOnly({ places, ...day }: DayRecord): DayRecord {
   const kept: Partial<Record<Prayer, string>> = {}
 
   for (const prayer of PRAYERS) {
@@ -55,6 +69,21 @@ export async function setTorahNote(date: string, note: string) {
   const torahNote = note.trim()
 
   await updateDay(date, ({ torahNote: _previous, ...day }) => (torahNote ? { ...day, torahNote } : day))
+}
+
+export async function addLearning(date: string, entry: LearningEntry) {
+  await updateDay(date, (day) => ({ ...day, torah: true, learning: [...(day.learning ?? []), entry] }))
+}
+
+export async function replaceLearning(date: string, index: number, entry: LearningEntry) {
+  await updateDay(date, (day) => ({
+    ...day,
+    learning: day.learning?.map((current, at) => (at === index ? entry : current)),
+  }))
+}
+
+export async function removeLearning(date: string, index: number) {
+  await updateDay(date, (day) => ({ ...day, learning: day.learning?.filter((_entry, at) => at !== index) }))
 }
 
 export async function setWorn(date: string, item: WornItem, worn: boolean) {

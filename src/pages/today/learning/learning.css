@@ -1,0 +1,67 @@
+.learning-row,
+.add-learning {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  touch-action: manipulation;
+}
+
+.learning-row:focus-visible,
+.add-learning:focus-visible {
+  outline: 2px solid var(--ion-color-primary);
+  outline-offset: -2px;
+}
+
+.learning-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  font: inherit;
+  font-size: 0.9375rem;
+  text-align: start;
+}
+
+.learning-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.learning-entry {
+  padding-inline-start: 40px;
+  color: var(--app-label);
+}
+
+ion-picker.learning-picker {
+  flex-direction: row-reverse;
+  margin-top: 8px;
+}
+
+.learning-chevron {
+  flex: none;
+  color: var(--app-label-tertiary);
+  font-size: 16px;
+}
+
+.learning-hint {
+  color: var(--app-label-secondary);
+}
+
+.learning-hint .round-check {
+  margin-inline: 1px;
+}
+
+.add-learning {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin-inline-end: -10px;
+  color: var(--ion-color-primary);
+  font-size: 24px;
+}

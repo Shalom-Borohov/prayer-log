@@ -21,7 +21,7 @@ import { shelfSlots } from '../../domain/shelf'
 import { streaks } from '../../domain/streaks'
 import { WORN_AT_PRAYER } from '../../domain/types'
 import { usePeriodSwipe } from '../../hooks/usePeriodSwipe'
-import { CALENDAR_PATH, type DayTab, dayPath } from '../../navigation/paths'
+import { type Tab, dayParentPath, dayPath } from '../../navigation/paths'
 import { BackfillBanner } from './BackfillBanner'
 import { TODAY_COPY } from './copy'
 import { PrayerRow } from './PrayerRow'
@@ -32,7 +32,9 @@ import './day.css'
 
 const SHELF_DAYS = 7
 
-export function DayView({ date, today, tab }: { date: string; today: string; tab: DayTab }) {
+const BACK_LABELS = { calendar: COMMON_COPY.calendar, stats: COMMON_COPY.learningLog }
+
+export function DayView({ date, today, tab }: { date: string; today: string; tab: Tab }) {
   const records = useAllDays()
   const record = records?.find((day) => day.date === date)
   const dayStreaks = records && streaks(records, date, today)
@@ -59,9 +61,9 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
     <IonPage>
       <IonHeader className="leather-header">
         <IonToolbar>
-          {tab === 'calendar' && (
+          {tab !== 'today' && (
             <IonButtons slot="start">
-              <IonBackButton defaultHref={CALENDAR_PATH} text={COMMON_COPY.calendar} />
+              <IonBackButton defaultHref={dayParentPath(tab)} text={BACK_LABELS[tab]} />
             </IonButtons>
           )}
           <IonTitle>{title}</IonTitle>
@@ -105,6 +107,8 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
                   date={date}
                   learned={record?.torah === true}
                   note={record?.torahNote}
+                  entries={record?.learning}
+                  records={records}
                   streak={dayStreaks.torah.current}
                   slots={shelfSlots(records, 'torah', date, SHELF_DAYS)}
                 />

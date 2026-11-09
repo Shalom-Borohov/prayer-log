@@ -6,6 +6,7 @@ export const FORMAT_COPY = {
   oneDayStreak: 'יום אחד ברצף',
   daysStreak: (days: number) => `${days} ימים ברצף`,
   hebrewDate: (day: string, month: string) => `${day} ב${month}`,
+  hebrewDateWithYear: (dayAndMonth: string, year: string) => `${dayAndMonth} ${year}`,
   observedTishaBav: 'תשעה באב (נדחה)',
   withLearning: 'עם לימוד',
   recentDays: (done: number, total: number, doneLabel: string) =>

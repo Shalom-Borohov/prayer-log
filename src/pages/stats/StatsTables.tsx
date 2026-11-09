@@ -1,6 +1,8 @@
+import { IonItem } from '@ionic/react'
 import { useId } from 'react'
 import { Shelf } from '../../components/Shelf'
 import { COMMON_COPY } from '../../copy/common'
+import { hasLearningLog } from '../../domain/learningLog'
 import { daysInRange } from '../../domain/logicalDay'
 import { isShemaPrayer } from '../../domain/prayersForDay'
 import { shelfLabel, shelfSlots } from '../../domain/shelf'
@@ -8,6 +10,7 @@ import { streaks } from '../../domain/streaks'
 import type { DateRange } from '../../domain/totals'
 import { periodTotals } from '../../domain/totals'
 import { DAILY_PRAYERS, type DayRecord, PRAYERS, type Prayer, type StreakKey, WORN_ITEMS } from '../../domain/types'
+import { LEARNING_LOG_PATH } from '../../navigation/paths'
 import { STATS_COPY } from './copy'
 
 const STREAK_KEYS: StreakKey[] = [...DAILY_PRAYERS, 'torah']
@@ -69,6 +72,15 @@ export function PeriodTable({ records, range, today }: PeriodProps) {
             <th scope="row">{STATS_COPY.learningDays}</th>
             <td>{COMMON_COPY.daysOutOf(totals.torah)}</td>
           </tr>
+          {hasLearningLog(records, today) && (
+            <tr>
+              <td className="learning-log-entrance" colSpan={2}>
+                <IonItem button detail lines="none" routerLink={LEARNING_LOG_PATH}>
+                  {COMMON_COPY.learningLog}
+                </IonItem>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       <h3 className="group-label" id={wornHeadingId}>

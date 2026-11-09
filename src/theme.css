@@ -176,7 +176,8 @@ ion-buttons ion-back-button,
 
 ion-buttons ion-button::after,
 ion-buttons ion-back-button::after,
-.update-bar ion-button::after {
+.update-bar ion-button::after,
+ion-searchbar .searchbar-clear-button::after {
   content: '';
   position: absolute;
   top: 50%;

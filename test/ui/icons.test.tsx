@@ -20,6 +20,7 @@ describe('icons', () => {
     ['/tabs/calendar', '.period-nav ion-icon'],
     ['/tabs/stats', 'ion-header ion-icon'],
     ['/tabs/stats/settings', 'ion-item ion-icon'],
+    ['/tabs/stats/learning', 'ion-searchbar ion-icon'],
   ])('hides decorative icons from screen readers on %s', async (path, pageOwnIcon) => {
     await db.days.put(day('2026-10-28', { tefillin: true, torah: true }))
     renderAt(path)

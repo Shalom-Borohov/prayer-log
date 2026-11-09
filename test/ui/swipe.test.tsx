@@ -51,7 +51,7 @@ describe('swiping', () => {
   it('leaves a drag in the note field to the field', async () => {
     renderAt('/tabs/today')
 
-    await swipe(-0.6, await ionField('מה למדתי'))
+    await swipe(-0.6, await ionField('הערה'))
     await settle()
 
     expect(currentPath()).toBe('/tabs/today')

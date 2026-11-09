@@ -2,6 +2,7 @@ import { LOG_TEXT_COPY } from '../copy/logText'
 import { MARKS_SEPARATOR, dayMarks } from './dayMarks'
 import { LIST_SEPARATOR, fullDateLabel, weekdayName } from './format'
 import { hebrewDateLabel } from './hebrewCalendar'
+import { learningLabel } from './learning'
 import type { DayRecord } from './types'
 
 const LINE_SEPARATOR = '\n'
@@ -16,6 +17,7 @@ function dayParagraph(record: DayRecord): string {
   return [
     dateLine(record.date),
     ...(marks.length > 0 ? [marks.join(MARKS_SEPARATOR)] : []),
+    ...(record.learning ?? []).map(learningLabel),
     ...(record.torahNote ? [LOG_TEXT_COPY.torahNote(record.torahNote)] : []),
   ].join(LINE_SEPARATOR)
 }

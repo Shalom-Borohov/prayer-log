@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { logText } from '../../src/domain/logText'
 import { day, days } from '../helpers/days'
+import { gemara, mishna } from '../helpers/learning'
 
 const fullFriday = day('2026-11-06', {
   prayers: { shacharit: 'minyan', mincha: 'alone', maariv: 'shema' },
@@ -21,14 +22,32 @@ describe('logText', () => {
       [
         'יום שישי · כ״ו בחשון · 6.11.2026',
         'שחרית במניין (היכל שלמה), מנחה ביחידות, ערבית ק״ש בלבד, תפילין, טלית, למדתי תורה',
-        'מה למדתי: ברכות ה׳ ע״א',
+        'הערה: ברכות ה׳ ע״א',
       ].join('\n'),
     )
   })
 
   it('leaves out the marks line on a day with only a note', () => {
     expect(logText([day('2026-11-05', { torahNote: 'דף יומי' })])).toBe(
-      'יום חמישי · כ״ה בחשון · 5.11.2026\nמה למדתי: דף יומי',
+      'יום חמישי · כ״ה בחשון · 5.11.2026\nהערה: דף יומי',
+    )
+  })
+
+  it('writes each learning entry on its own line, before the note', () => {
+    const learned = day('2026-11-05', {
+      torah: true,
+      learning: [gemara('shabbat', 12), mishna('berakhot', 2)],
+      torahNote: 'עם חברותא',
+    })
+
+    expect(logText([learned])).toBe(
+      [
+        'יום חמישי · כ״ה בחשון · 5.11.2026',
+        'למדתי תורה',
+        'גמרא · שבת דף י״ב',
+        'משנה · ברכות פרק ב׳',
+        'הערה: עם חברותא',
+      ].join('\n'),
     )
   })
 

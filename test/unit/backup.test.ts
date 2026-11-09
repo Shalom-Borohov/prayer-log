@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { exportBackup, parseBackup, restoreBackup } from '../../src/data/backup'
-import { allDays, setPrayer, setTorah, setTorahNote, setWorn } from '../../src/data/repo'
+import { countBadRecords, exportBackup, parseBackup, restoreBackup } from '../../src/data/backup'
+import { addLearning, allDays, setPrayer, setTorah, setTorahNote, setWorn } from '../../src/data/repo'
 import { resetDb } from '../helpers/db'
+import { gemara, mishna } from '../helpers/learning'
 
 const exportedAt = Date.UTC(2026, 9, 28, 20)
 
@@ -27,6 +28,19 @@ const twoDays = [
     tallit: true,
   },
   { date: '2026-10-25', prayers: { maariv: 'alone', shacharit: 'shema' }, torah: false, tefillin: true, tallit: true },
+]
+
+const badLearning = [
+  { kind: 'halacha', tractate: 'shabbat', daf: 12 },
+  { kind: 'gemara', tractate: 'peah', daf: 12 },
+  { kind: 'gemara', tractate: 'brachot', daf: 12 },
+  { kind: 'gemara', tractate: 'shabbat', daf: 0 },
+  { kind: 'gemara', tractate: 'shabbat', daf: -3 },
+  { kind: 'gemara', tractate: 'shabbat', daf: 12.5 },
+  { kind: 'gemara', tractate: 'shabbat', daf: '12' },
+  { kind: 'gemara', tractate: 'shabbat' },
+  { kind: 'mishna', tractate: 'berakhot', daf: 2 },
+  { kind: 'mishna', tractate: 'berakhot', chapter: 0 },
 ]
 
 const daysBeforeTefillin = [
@@ -154,6 +168,9 @@ describe('backup', () => {
       withDay({ places: null }),
       withDay({ places: { neilah: 'הגר"א' } }),
       withDay({ places: { shacharit: 5 } }),
+      ...badLearning.map((entry) => withDay({ learning: [entry] })),
+      withDay({ learning: null }),
+      withDay({ learning: gemara('shabbat', 12) }),
     ]
 
     const invalidTexts = ['', 'not json', '{"version":1', ...invalid.map((json) => JSON.stringify(json))]
@@ -163,5 +180,47 @@ describe('backup', () => {
     }
 
     expect(await allDays()).toStrictEqual(twoDays)
+  })
+
+  it('round-trips learning entries', async () => {
+    await addLearning('2026-10-26', gemara('shabbat', 12))
+    await addLearning('2026-10-26', mishna('berakhot', 2))
+
+    const backup = parseBackup(JSON.stringify(await exportBackup(exportedAt)))
+
+    await resetDb()
+    await restoreBackup(backup, null)
+
+    expect(await allDays()).toStrictEqual([
+      { date: '2026-10-26', prayers: {}, torah: true, learning: [gemara('shabbat', 12), mishna('berakhot', 2)] },
+    ])
+  })
+
+  it('restores an entry past the end of its מסכת, so a later fix to the list never locks out a backup', async () => {
+    const pastTheEnd = [{ date: '2026-10-20', prayers: {}, torah: true, learning: [gemara('berakhot', 90)] }]
+
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days: pastTheEnd })), null)
+
+    expect(await allDays()).toStrictEqual(pastTheEnd)
+  })
+
+  it('restores an empty learning list as no entries', async () => {
+    const days = [
+      { date: '2026-10-20', prayers: {}, torah: false, torahNote: 'דף יומי', learning: [] },
+      { date: '2026-10-21', prayers: {}, torah: false, learning: [] },
+    ]
+
+    await restoreBackup(parseBackup(JSON.stringify({ version: 1, exportedAt, days })), null)
+
+    expect(await allDays()).toStrictEqual([{ date: '2026-10-20', prayers: {}, torah: false, torahNote: 'דף יומי' }])
+  })
+
+  it('counts a day with a bad learning entry as a bad record', () => {
+    const days = [
+      { date: '2026-10-20', prayers: {}, torah: true, learning: [gemara('shabbat', 12)] },
+      ...badLearning.map((entry) => ({ date: '2026-10-21', prayers: {}, torah: true, learning: [entry] })),
+    ]
+
+    expect(countBadRecords(JSON.stringify({ version: 1, exportedAt, days }))).toBe(badLearning.length)
   })
 })

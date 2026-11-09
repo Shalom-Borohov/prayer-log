@@ -13,7 +13,7 @@ const TODAY = '2026-10-28'
 const storedNote = async (date = TODAY) => (await db.days.get(date))?.torahNote
 
 const noteField = async () => {
-  const field = await ionField('מה למדתי')
+  const field = await ionField('הערה')
 
   if (!(field instanceof HTMLElement) || !('value' in field)) {
     throw new Error('the note field has no value')
@@ -22,7 +22,7 @@ const noteField = async () => {
   return field
 }
 
-describe('the מה למדתי note', () => {
+describe('the הערה note', () => {
   beforeEach(resetDb)
   freezeDate(new Date(2026, 9, 28, 10).getTime())
 
@@ -132,7 +132,7 @@ describe('the מה למדתי note', () => {
     fireEvent.click(await buttonByLabel('היום הקודם'))
     await waitFor(() => expect(currentPath()).toContain('2026-10-27'))
 
-    await waitFor(() => expect(screen.getByLabelText('מה למדתי')).toHaveValue('אתמול'))
+    await waitFor(() => expect(screen.getByLabelText('הערה')).toHaveValue('אתמול'))
   })
 
   it('leaves a past day with only a note on the list of days to fill', async () => {
@@ -142,6 +142,6 @@ describe('the מה למדתי note', () => {
     fireEvent.click(await screen.findByText('יום שלישי 27.10 לא מולא'))
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/today/2026-10-27'))
-    await waitFor(() => expect(screen.getByLabelText('מה למדתי')).toHaveValue('אתמול'))
+    await waitFor(() => expect(screen.getByLabelText('הערה')).toHaveValue('אתמול'))
   })
 })

@@ -1,0 +1,33 @@
+ion-searchbar.learning-log-search {
+  padding-inline: 16px;
+  padding-bottom: 0;
+}
+ion-label.learning-log-row p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.learning-log-row .learning-log-date {
+  margin-bottom: 2px;
+  font-size: 0.8125rem;
+  color: var(--app-label-secondary);
+}
+
+.learning-log-row .learning-log-entry {
+  font-size: 1.0625rem;
+  color: var(--app-label);
+}
+
+.learning-log-row .learning-log-note {
+  margin-top: 2px;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--app-label-secondary);
+}
+
+.learning-log-no-match {
+  margin: 24px 32px;
+  text-align: center;
+  font-size: 0.9375rem;
+  color: var(--app-label-secondary);
+}

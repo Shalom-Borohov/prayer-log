@@ -1,6 +1,6 @@
 import { type DayRecord, type Prayer, PRAYERS } from './types'
 
-const latestFirst = (records: DayRecord[]) => records.toSorted((a, b) => b.date.localeCompare(a.date))
+export const latestFirst = (records: DayRecord[]) => records.toSorted((a, b) => b.date.localeCompare(a.date))
 
 const isPlace = (place: string | undefined) => place !== undefined
 
