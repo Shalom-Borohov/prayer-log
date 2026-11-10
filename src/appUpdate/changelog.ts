@@ -2,6 +2,11 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.12.0',
+    features: ['סימון שחרית מסמן גם תפילין וטלית, וביטול הסימון מבטל גם אותם'],
+    fixes: [],
+  },
+  {
     version: '1.11.0',
     features: [
       'רישום הלימוד לפי גמרא או משנה, מסכת ודף או פרק',

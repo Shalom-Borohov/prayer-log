@@ -7,6 +7,7 @@ import {
   hebrewDayNumber,
   holidayNames,
   isRestDay,
+  isTishaBav,
   weeklyParsha,
 } from '../../src/domain/hebrewCalendar'
 import { DAYS_PER_WEEK, addDays } from '../../src/domain/logicalDay'
@@ -171,6 +172,19 @@ describe('hasTefillin', () => {
     expect(hasTefillin('2026-09-28')).toBe(false)
     expect(hasTefillin('2026-10-02')).toBe(false)
     expect(hasTefillin('2027-04-25')).toBe(false)
+  })
+})
+
+describe('isTishaBav', () => {
+  it('is true on ט׳ באב and on a ט׳ באב postponed from שבת', () => {
+    expect(isTishaBav('2027-08-12')).toBe(true)
+    expect(isTishaBav('2029-07-22')).toBe(true)
+  })
+
+  it('is false on ערב ט׳ באב and on other days', () => {
+    expect(isTishaBav('2027-08-11')).toBe(false)
+    expect(isTishaBav('2029-07-21')).toBe(false)
+    expect(isTishaBav('2026-10-28')).toBe(false)
   })
 })
 

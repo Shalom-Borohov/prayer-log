@@ -21,6 +21,8 @@ const ROSH_HASHANA_DAY_ONE = 'Rosh Hashana I'
 
 const OBSERVED_TISHA_BAV = "Tish'a B'Av (observed)"
 
+const TISHA_BAV_DAYS = ["Tish'a B'Av", OBSERVED_TISHA_BAV]
+
 const hiddenFlags: FlagName[] = ['SPECIAL_SHABBAT', 'YOM_KIPPUR_KATAN', 'BEHAB']
 
 const toHDate = (date: string) => new HDate(parseIsoDate(date))
@@ -68,6 +70,10 @@ export function hasMusaf(date: string): boolean {
 
 export function hasTefillin(date: string): boolean {
   return !isRestDay(date) && !hasHolidayFlag(date, 'CHOL_HAMOED')
+}
+
+export function isTishaBav(date: string): boolean {
+  return israeliHolidays(date).some((holiday) => TISHA_BAV_DAYS.includes(holiday.getDesc()))
 }
 
 export function hebrewDayNumber(date: string): string {
