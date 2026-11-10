@@ -8,6 +8,7 @@ import {
   PRAYERS,
   type WornItem,
 } from '../domain/types'
+import { withWornFollowingShacharit } from '../domain/wornWithShacharit'
 import { db } from './db'
 
 async function updateDay(date: string, change: (day: DayRecord) => DayRecord) {
@@ -51,7 +52,11 @@ function withPlace(day: DayRecord, prayer: Prayer, place: string | null): DayRec
 export async function setPrayer(date: string, prayer: Prayer, attendance: Attendance | null, place?: string) {
   await updateDay(date, (day) => {
     const { [prayer]: _previous, ...prayers } = day.prayers
-    const marked = { ...day, prayers: attendance ? { ...prayers, [prayer]: attendance } : prayers }
+
+    const marked = withWornFollowingShacharit(day, {
+      ...day,
+      prayers: attendance ? { ...prayers, [prayer]: attendance } : prayers,
+    })
 
     return place ? withPlace(marked, prayer, place) : marked
   })

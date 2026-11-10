@@ -95,6 +95,8 @@ describe('backup', () => {
         prayers: { shacharit: 'minyan', maariv: 'minyan', mincha: 'alone' },
         places: { shacharit: 'בית יוסף', maariv: 'הגר"א' },
         torah: false,
+        tefillin: true,
+        tallit: true,
       },
     ])
   })

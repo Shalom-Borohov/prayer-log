@@ -17,9 +17,9 @@ describe('repo', () => {
   beforeEach(resetDb)
 
   it('marking a prayer creates the day', async () => {
-    await setPrayer('2026-10-28', 'shacharit', 'minyan')
+    await setPrayer('2026-10-28', 'mincha', 'minyan')
 
-    expect(await allDays()).toEqual([{ date: '2026-10-28', prayers: { shacharit: 'minyan' }, torah: false }])
+    expect(await allDays()).toEqual([{ date: '2026-10-28', prayers: { mincha: 'minyan' }, torah: false }])
   })
 
   it('clearing a prayer keeps the other marks', async () => {
@@ -44,15 +44,15 @@ describe('repo', () => {
   })
 
   it('Torah and prayers are kept together on the same day', async () => {
-    await setPrayer('2026-10-28', 'shacharit', 'minyan')
+    await setPrayer('2026-10-28', 'maariv', 'alone')
     await setTorah('2026-10-28', true)
     await setPrayer('2026-10-28', 'mincha', 'alone')
 
     expect(await allDays()).toEqual([
-      { date: '2026-10-28', prayers: { shacharit: 'minyan', mincha: 'alone' }, torah: true },
+      { date: '2026-10-28', prayers: { maariv: 'alone', mincha: 'alone' }, torah: true },
     ])
 
-    await setPrayer('2026-10-28', 'shacharit', null)
+    await setPrayer('2026-10-28', 'maariv', null)
     await setPrayer('2026-10-28', 'mincha', null)
 
     expect(await allDays()).toEqual([{ date: '2026-10-28', prayers: {}, torah: true }])
@@ -155,10 +155,10 @@ describe('repo', () => {
   })
 
   it('removes the places field with the last place', async () => {
-    await setPrayer('2026-10-28', 'shacharit', 'minyan', 'בית יוסף')
-    await setPrayer('2026-10-28', 'shacharit', 'alone')
+    await setPrayer('2026-10-28', 'mincha', 'minyan', 'אוהל משה')
+    await setPrayer('2026-10-28', 'mincha', 'alone')
 
-    expect(await allDays()).toStrictEqual([{ date: '2026-10-28', prayers: { shacharit: 'alone' }, torah: false }])
+    expect(await allDays()).toStrictEqual([{ date: '2026-10-28', prayers: { mincha: 'alone' }, torah: false }])
   })
 
   it('sets a place and removes it with null', async () => {

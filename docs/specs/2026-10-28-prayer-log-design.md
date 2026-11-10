@@ -170,6 +170,12 @@ Personal iPhone PWA for logging each day's prayers (במניין / ביחידו�
     - Search filters as you type. Every word typed must start a word in the entries or the note, ignoring niqqud, ׳, ״ and quote marks, straight or curly as iOS types them, so "שבת יב" and "שבת י”ב" both find "שבת דף י״ב". A maqaf counts as a space, so "קמא" finds "בבא־קמא". The date isn't searched. With no match, the list says so in one line.
     - The search field and its clear button have Hebrew spoken names, because Ionic's own are in English (decision 41).
     - A row opens its day inside סטטיסטיקה. It behaves like a day opened from לוח: הקודם, הבא and swipe step in place, it stays put on a new day (decision 36), and its back button, "מה למדתי", returns to the list with the search kept.
+59. **שחרית checks תפילין and טלית (added 2026-11-10, extends 18):** marking שחרית is one tap, so the items worn at it come with it instead of two more taps each morning.
+    - When שחרית goes from unmarked to any state (במניין, ביחידות or ק״ש בלבד), every item that applies that day is checked: both on a weekday, טלית only on שבת, יום טוב and חול המועד.
+    - Switching between states leaves the checks as they are, so an item unticked on purpose doesn't come back.
+    - Clearing שחרית unchecks both, because clearing is usually fixing a mis-tap, and a day that wasn't prayed shouldn't keep its checks. A check ticked by hand before שחרית is cleared with it.
+    - On ט׳ באב, a postponed one included, marking or clearing שחרית touches neither check, because they are worn at מנחה that day. ט׳ באב means the fast day: a שבת that falls on the 9th is an ordinary שבת, and the fast on Sunday the 10th is the one skipped.
+    - The prayer and the checks are one write, so a failed save (decision 34) leaves neither. It works the same on any day, היום or a day opened from לוח, and days logged before it stay as they are.
 
 ## Assumptions (accepted by the user)
 
