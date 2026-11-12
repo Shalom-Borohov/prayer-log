@@ -31,7 +31,7 @@
 }
 
 .stats-headline-caption span {
-  font-size: 0.9375rem;
+  font-size: 1rem;
   line-height: 20px;
   color: var(--app-label-secondary);
 }
@@ -58,7 +58,7 @@
 }
 
 .stats-figure dt {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 18px;
   color: var(--app-label-secondary);
 }
@@ -84,24 +84,24 @@
 }
 
 .prayer-lines .prayer-line-count {
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 400;
 }
 
 .prayer-lines .prayer-line-streak {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--amber);
 }
 
 .prayer-lines .prayer-line-best {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 400;
   color: var(--app-label-secondary);
 }
 
 .detail-table thead th {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--app-label-secondary);
 }
 
@@ -130,7 +130,7 @@ ion-list.learning-log-entrance {
 
 .empty-state p {
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   line-height: 1.4;
   color: var(--app-label-secondary);
   text-wrap: balance;

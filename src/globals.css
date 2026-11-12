@@ -28,7 +28,7 @@ ion-content::part(scroll) {
 
 ion-list-header {
   --color: var(--app-label-secondary);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 400;
   letter-spacing: 0;
   min-height: 2rem;
@@ -62,7 +62,7 @@ ion-list.list-inset ion-item {
 
 .group-label {
   margin: 22px 32px 6px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 400;
   color: var(--app-label-secondary);
 }
@@ -71,7 +71,7 @@ ion-list.list-inset ion-item {
   display: block;
   margin-block: -8px 16px;
   padding-inline: 32px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.35;
   color: var(--app-label-secondary);
 }
@@ -107,7 +107,7 @@ ion-searchbar .searchbar-clear-button::after {
 .inset-segment ion-segment-button {
   min-height: 44px;
   margin-block: 0;
-  font-size: 0.9375rem;
+  font-size: 1rem;
 }
 
 .inset-segment ion-segment-button::part(indicator) {

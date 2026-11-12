@@ -25,7 +25,7 @@
   --padding-bottom: 0;
   --placeholder-color: var(--app-label-secondary);
   --placeholder-opacity: 1;
-  font-size: 0.9375rem;
+  font-size: 1rem;
 }
 
 .torah-note-line {

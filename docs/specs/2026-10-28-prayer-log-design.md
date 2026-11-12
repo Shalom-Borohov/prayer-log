@@ -216,6 +216,13 @@ Decisions 60–68 are the redesign chosen on impeccable's decision page on 2026-
     - A chart line's spoken count still counts an unmarked today (decision 44), because the chart shows it as a +; decision 71 is about totals.
     - Each chart line has a faint rule through it, so a line reads as a line even where nothing is drawn. When today's star turns במניין, it grows in and its streak line draws in from yesterday's star; nothing moves under reduce motion.
     - On החודש, the 1st, every 5th day and today are numbered, leaving out a numbered day within two days of today so the labels don't collide.
+73. **Text one iOS text style larger (added 2026-11-12, clarifies 60 and 68):** the owner found the text too small, so every line read while marking is one iOS text style larger. On iPhone 1rem is iOS Body (17pt at the default Text Size), and the app's text was a step under Apple's styles, with its smallest step under Apple's 11pt minimum.
+    - Prayer names go to 1.0625rem, body text (learning, notes, segments, counts) to 1rem, labels (the date line, list headers and footers, the תפילין and טלית checks, week card lines, the stats table's streak and שיא) to 0.875rem, captions (streaks on היום, the state and place line, chart labels, the holiday chip) to 0.8125rem, and the smallest step (the Hebrew day in a week card, the star-line labels) to 0.6875rem. Sizes stay in rem, so the phone's Text Size setting still scales them.
+    - Column heads stay one step above the chart's line labels, as before: היום's weekday letters and a week card's day at 0.875rem, a week card's weekday letter at 0.8125rem, because the day is what is looked up first. A week card's dates line is body text at 1rem (600), and the labels under the three figures and the פירוט header row are labels at 0.875rem.
+    - Large titles, the poster number, the three figures' numbers, the tab labels and the recovery screen keep their sizes, because they already match native iOS.
+    - The במניין | ביחידות | ק״ש בלבד text stays at 0.8125rem, close to iOS's 13pt segmented control: one step up, "ק״ש בלבד" no longer fits its third, and widening the control would push "שחרית 3 ברצף" out of its row. The owner kept it over shortening the label to "ק״ש" and over letting the name side cut off.
+    - A week card's column head grows from 44px to 48px so the larger weekday, day and Hebrew day still stack.
+    - Decision 68 still holds: on a four-prayer day on the SE, the Torah card's למדתי check moves down under 2pt and stays on the first screen.
 
 ## Assumptions (accepted by the user)
 

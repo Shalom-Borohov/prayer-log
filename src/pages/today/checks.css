@@ -42,7 +42,7 @@
   height: 18px;
   color: var(--app-label-dimmed);
   font: inherit;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
 }
 
 .worn-check::after {
