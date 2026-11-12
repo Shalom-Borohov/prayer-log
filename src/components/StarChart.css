@@ -15,7 +15,7 @@
 .star-chart-labels span {
   display: block;
   height: var(--chart-row);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   line-height: var(--chart-row);
   color: var(--app-label-secondary);
   white-space: nowrap;
@@ -78,7 +78,7 @@ button.star-column:not(:disabled):active {
   align-items: center;
   justify-content: center;
   height: var(--chart-head);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   line-height: 1.2;
   color: var(--app-label-secondary);
 }

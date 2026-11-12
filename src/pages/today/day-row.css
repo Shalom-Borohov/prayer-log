@@ -17,14 +17,14 @@
 .day-row-name h2 {
   flex: none;
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.0625rem;
   font-weight: 600;
-  line-height: 20px;
+  line-height: 22px;
   color: var(--app-label);
 }
 
 .streak-badge {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: var(--amber);
 }

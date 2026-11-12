@@ -2,6 +2,11 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.14.0',
+    features: ['הטקסט גדול יותר וקל יותר לקריאה'],
+    fixes: [],
+  },
+  {
     version: '1.13.0',
     features: [
       'מראה חדש: מפת כוכבים של לילה. כל תפילה היא כוכב, וגודלו אומר איך התפללת',

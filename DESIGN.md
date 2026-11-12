@@ -35,25 +35,25 @@ typography:
     lineHeight: "36px"
   title:
     fontFamily: "Heebo, -apple-system, BlinkMacSystemFont, Arial Hebrew, sans-serif"
-    fontSize: "1rem"
+    fontSize: "1.0625rem"
     fontWeight: 600
-    lineHeight: "20px"
+    lineHeight: "22px"
   body:
     fontFamily: "Heebo, -apple-system, BlinkMacSystemFont, Arial Hebrew, sans-serif"
-    fontSize: "0.9375rem"
+    fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.4
     fontFeature: "tnum"
   label:
     fontFamily: "Heebo, -apple-system, BlinkMacSystemFont, Arial Hebrew, sans-serif"
-    fontSize: "0.8125rem"
+    fontSize: "0.875rem"
     fontWeight: 400
     lineHeight: 1.35
   caption:
     fontFamily: "Heebo, -apple-system, BlinkMacSystemFont, Arial Hebrew, sans-serif"
-    fontSize: "0.75rem"
+    fontSize: "0.8125rem"
     fontWeight: 500
-    lineHeight: "16px"
+    lineHeight: "18px"
 rounded:
   card: "20px"
   chart-ring: "14px"
@@ -184,10 +184,10 @@ Three voices on navy: chalk for data and text, amber for notes about the data, a
 - **Display** (Frank Ruhl Libre 300, 96px, 80px line): the one poster number in סטטיסטיקה, the count במניין for the period.
 - **Headline** (Frank Ruhl Libre 400, 2rem): iOS large titles (היום, לוח, סטטיסטיקה). The recovery screen title uses the same face at 30px.
 - **Figure** (Frank Ruhl Libre 300, 1.875rem, 36px line): the three secondary figures under the stats star line.
-- **Title** (Heebo 600, 1rem, 20px line): prayer names in the היום card. Stats table prayer names step up to 1.0625rem, and the stats caption "במניין" to 1.375rem.
-- **Body** (Heebo 400, 0.9375rem, 1.4): learning entries, notes, segment labels, empty-state text. Plain table cells run at 1rem.
-- **Label** (Heebo 400, 0.8125rem): the amber date line, group labels, list footers, attendance segment text (at 500), week card holiday lines.
-- **Caption** (Heebo 500, 0.75rem, 16px line): streak numbers, the holiday chip, state and place lines (at 400), chart labels. The smallest step, 0.625rem, is kept for the Hebrew day under a week card column and the stats star-line labels.
+- **Title** (Heebo 600, 1.0625rem, 22px line): prayer names in the היום card, and stats table prayer names. The stats caption "במניין" steps up to 1.375rem.
+- **Body** (Heebo 400, 1rem, 1.4): learning entries, notes, segment labels, empty-state text, plain table cells. On iPhone 1rem is iOS Body, 17pt at the default Text Size.
+- **Label** (Heebo 400, 0.875rem): the amber date line, group labels, list footers, week card holiday lines, the תפילין and טלית checks, the stats table's streak and best cells (streak at 500). The attendance segment text stays at 0.8125rem (500), close to iOS's 13pt segmented control, so "ק״ש בלבד" fits its third of the control.
+- **Caption** (Heebo 500, 0.8125rem, 18px line): streak numbers in the היום card, the holiday chip, state and place lines (at 400), chart labels. The smallest step, 0.6875rem, is kept for the Hebrew day under a week card column and the stats star-line labels, and stays above iOS's 11pt minimum.
 
 ### Named Rules
 **The Serif Is For Numbers And Titles Rule.** Frank Ruhl Libre appears only in large titles and poster-size numerals. Every row, control and label is Heebo.
@@ -198,7 +198,7 @@ Screens are laid out for the iPhone SE at 375×667 and simply fill wider phones.
 
 Cards sit 16px in from the screen edge. Text in grouped lists and their headers and footers starts 32px in, matching iOS inset lists. Week cards in לוח stack with a 10px gap. Every tap target is at least 44pt; small visuals (the 32px period buttons, the 18px round checks, the 34px attendance control) get invisible hit areas that reach 44pt.
 
-The star chart is a grid: a 52px label column on the reading start side, then seven equal day columns. Lines are 22px apart on היום (20px in a week card), with a 26px column head (24px on היום, 44px in a week card to hold the weekday letter, Gregorian day and Hebrew day). Each line carries a 1px faint rule so an empty line still reads as a line.
+The star chart is a grid: a 52px label column on the reading start side, then seven equal day columns. Lines are 22px apart on היום (20px in a week card), with a 26px column head (24px on היום, 48px in a week card to hold the weekday letter, Gregorian day and Hebrew day). Each line carries a 1px faint rule so an empty line still reads as a line.
 
 On היום the order is fixed: toolbar with the gear and the round הקודם / הבא chevrons, the serif title with the holiday chip at its far end, the amber date line, the week chart card, the prayer card, then the Torah card. Reminder rows sit above the chart when present.
 
@@ -228,7 +228,7 @@ The heart of the app, shared by היום's week chart and every week card in ל�
 - **Motion:** when today's star turns במניין it grows in from 40% scale and its streak line draws in from yesterday's star, both in 220ms on cubic-bezier(0.16, 1, 0.3, 1). Nothing moves under reduce motion.
 
 ### Stats Star Line
-One line of stars for the period in סטטיסטיקה, on a faint rule. Each disc is sized by its day's share במניין (large, medium, small), with a + for a tracked day with nothing marked and an empty ring for today until something is marked. Discs shrink to fit a month. Labels are 0.625rem dusk grey; today's is chalk 600.
+One line of stars for the period in סטטיסטיקה, on a faint rule. Each disc is sized by its day's share במניין (large, medium, small), with a + for a tracked day with nothing marked and an empty ring for today until something is marked. Discs shrink to fit a month. Labels are 0.6875rem dusk grey; today's is chalk 600.
 
 ### Attendance Control
 The במניין | ביחידות | ק״ש בלבד control at the end of each prayer row. A 140px (192px with ק״ש בלבד) chalk-tint trough, 34px tall, with 1px dividers between segments.
@@ -250,7 +250,7 @@ The full-width השבוע | החודש | כל הזמנים switch: Ionic's iOS s
 Used for תפילין, טלית and למדתי. An 18px circle with a 1.5px chalk ring at 55%; checked, it fills chalk with a navy check mark. The Torah card's check is 26px. Fill changes over 160ms.
 
 ### Chips
-- **Holiday chip:** a 1px amber outline pill, 22px tall, amber 0.75rem 500 text, no fill. It sits at the far end of the title row.
+- **Holiday chip:** a 1px amber outline pill, 22px tall, amber 0.8125rem 500 text, no fill. It sits at the far end of the title row.
 
 ### Buttons
 - **Period buttons:** הקודם / הבא in the toolbar are 32px chalk-tint circles with a 16px chalk chevron and a 44pt hit area. Disabled, they drop to 35%.

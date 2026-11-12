@@ -10,7 +10,7 @@
 }
 
 .week-card .star-chart {
-  --chart-head: 44px;
+  --chart-head: 48px;
   --chart-row: 20px;
   padding: 4px 12px 8px;
 }
@@ -25,7 +25,7 @@
 
 .week-card-dates {
   color: var(--chalk);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 20px;
 }
@@ -33,7 +33,7 @@
 .week-card-parsha {
   overflow: hidden;
   color: var(--amber);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 20px;
   text-overflow: ellipsis;
 }
@@ -43,15 +43,15 @@
 }
 
 .week-day-letter {
-  font-size: 0.75rem;
-  line-height: 14px;
+  font-size: 0.8125rem;
+  line-height: 15px;
 }
 
 .week-day-number {
   color: var(--chalk);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  line-height: 15px;
+  line-height: 16px;
 }
 
 .week-day-number.is-holiday {
@@ -63,8 +63,8 @@
 }
 
 .week-day-hebrew {
-  font-size: 0.625rem;
-  line-height: 12px;
+  font-size: 0.6875rem;
+  line-height: 13px;
   color: var(--app-label-secondary);
 }
 
@@ -72,6 +72,6 @@
   margin: 0;
   padding: 0 16px 10px;
   color: var(--amber);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.35;
 }
