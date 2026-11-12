@@ -65,7 +65,7 @@ export function SettingsPage({ tab }: { tab: Tab }) {
 
   return (
     <IonPage>
-      <IonHeader className="leather-header">
+      <IonHeader className="app-header">
         <IonToolbar>
           <IonButtons slot="start">
             <IonBackButton defaultHref={tabPath(tab)} text={COMMON_COPY[tab]} />

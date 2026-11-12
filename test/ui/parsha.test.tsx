@@ -1,8 +1,8 @@
-import { screen, within } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
-import { cell, shownText } from '../helpers/ionic'
+import { cell, shownText, visibleAll } from '../helpers/ionic'
 import { renderAt } from '../helpers/renderAt'
 
 describe('the week’s פרשה', () => {
@@ -30,15 +30,18 @@ describe('the week’s פרשה', () => {
   })
 
   describe('in לוח', () => {
-    it('shows each שבת’s פרשה, past or future, and none on a weekday or a holiday שבת', async () => {
+    it('names each week’s פרשה in its card’s header, and none in a week with a holiday שבת', async () => {
       renderAt('/tabs/calendar')
 
-      expect(shownText(await cell(10))).toBe('10 כ״ט בראשית')
-      expect(shownText(await cell(17))).toBe('17 ו׳ נח')
-      expect(shownText(await cell(24))).toBe('24 י״ג לך־לך')
-      expect(shownText(await cell(31))).toBe('31 כ׳ וירא')
-      expect(shownText(await cell(3))).toBe('3 כ״ב')
-      expect(shownText(await cell(28))).toBe('28 י״ז')
+      await cell(1)
+
+      expect(visibleAll('.week-card-header').map(shownText)).toEqual([
+        '25–31.10 פרשת וירא',
+        '18–24.10 פרשת לך־לך',
+        '11–17.10 פרשת נח',
+        '4–10.10 פרשת בראשית',
+        '27.9–3.10',
+      ])
     })
 
     it('says the פרשה after שבת in the day’s spoken name', async () => {
@@ -49,11 +52,11 @@ describe('the week’s פרשה', () => {
       expect(await cell(3)).toHaveAccessibleName('3 כ״ב בתשרי, שבת: לא סומן')
     })
 
-    it('lets a double פרשה break after its maqaf', async () => {
+    it('names a double פרשה whole', async () => {
       vi.setSystemTime(new Date(2026, 2, 20, 10))
       renderAt('/tabs/calendar')
 
-      expect(within(await cell(14)).getByText('ויקהל־פקודי').innerHTML).toBe('ויקהל־<wbr>פקודי')
+      expect(await screen.findByText('פרשת ויקהל־פקודי')).toBeInTheDocument()
     })
   })
 })

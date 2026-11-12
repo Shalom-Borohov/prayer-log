@@ -1,23 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#2b2320"/>
-  <g>
-    <rect x="96" y="150" width="56" height="236" rx="6" fill="#1f4d3a"/>
-    <rect x="160" y="118" width="60" height="268" rx="6" fill="#5b3a6b"/>
-    <rect x="228" y="134" width="56" height="252" rx="6" fill="#7a2430"/>
-    <rect x="292" y="106" width="60" height="280" rx="6" fill="#1e3355"/>
-    <rect x="360" y="142" width="56" height="244" rx="6" fill="#6b4423"/>
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2f5e"/><stop offset="1" stop-color="#0b1530"/></linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16306e"/><stop offset="1" stop-color="#0a1330"/></linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#f1eee6"/><stop offset="1" stop-color="#d9d4c3"/></linearGradient>
+    <linearGradient id="sill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9d4c3"/></linearGradient>
+    <radialGradient id="star" cx=".36" cy=".34" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#f6f4ee"/><stop offset="1" stop-color="#e2ded0"/></radialGradient>
+    <filter id="lift" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#050b1f" flood-opacity=".45"/></filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#050b1f" flood-opacity=".4"/></filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter>
+    <clipPath id="opening"><path d="M148 374V214A108 108 0 0 1 364 214V374Z"/></clipPath>
+  </defs>
+  <rect width="512" height="512" fill="url(#ground)"/>
+  <path d="M148 374V214A108 108 0 0 1 364 214V374Z" fill="url(#sky)"/>
+  <g clip-path="url(#opening)">
+    <path fill="#02060f" fill-opacity=".85" fill-rule="evenodd" filter="url(#soft)" d="M80 40H440V470H80Z M166 392V232A108 108 0 0 1 382 232V392Z"/>
   </g>
-  <g fill="#e2c27a">
-    <rect x="96" y="176" width="56" height="12"/>
-    <rect x="96" y="346" width="56" height="12"/>
-    <rect x="160" y="144" width="60" height="12"/>
-    <rect x="160" y="346" width="60" height="12"/>
-    <rect x="228" y="160" width="56" height="12"/>
-    <rect x="228" y="346" width="56" height="12"/>
-    <rect x="292" y="132" width="60" height="12"/>
-    <rect x="292" y="346" width="60" height="12"/>
-    <rect x="360" y="168" width="56" height="12"/>
-    <rect x="360" y="346" width="56" height="12"/>
-    <rect x="80" y="386" width="352" height="10" rx="2"/>
+  <g filter="url(#glow)">
+    <circle cx="292" cy="192" r="36" fill="url(#star)"/>
+    <circle cx="204" cy="264" r="24" fill="url(#star)"/>
+    <circle cx="300" cy="326" r="16" fill="url(#star)"/>
+  </g>
+  <g filter="url(#lift)">
+    <path fill="url(#stone)" fill-rule="evenodd" d="M106 410V214A150 150 0 0 1 406 214V410Z M148 374V214A108 108 0 0 1 364 214V374Z"/>
+    <rect x="86" y="398" width="340" height="40" rx="12" fill="url(#sill)"/>
   </g>
 </svg>

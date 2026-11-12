@@ -9,13 +9,13 @@ import {
   getSedra,
 } from '@hebcal/core'
 import { FORMAT_COPY } from '../copy/format'
-import { isSaturday, parseIsoDate } from './logicalDay'
+import { daysInRange, isSaturday, parseIsoDate } from './logicalDay'
 
 const LOCALE = 'he-x-NoNikud'
 
 const IN_ISRAEL = true
 
-export const MAQAF = '־'
+const MAQAF = '־'
 
 const ROSH_HASHANA_DAY_ONE = 'Rosh Hashana I'
 
@@ -91,6 +91,23 @@ export function hebrewDateWithYear(date: string): string {
   const hebrewDate = toHDate(date)
 
   return FORMAT_COPY.hebrewDateWithYear(dayAndMonth(hebrewDate), gematriya(hebrewDate.getFullYear()))
+}
+
+export interface HebrewMonth {
+  name: string
+  year: string
+}
+
+const hebrewMonthOf = (date: string): HebrewMonth => {
+  const hebrewDate = toHDate(date)
+
+  return { name: Locale.gettext(hebrewDate.getMonthName(), LOCALE), year: gematriya(hebrewDate.getFullYear()) }
+}
+
+export function hebrewMonthsBetween(from: string, to: string): HebrewMonth[] {
+  return daysInRange(from, to)
+    .map(hebrewMonthOf)
+    .filter((month, index, months) => index === 0 || month.name !== months[index - 1].name)
 }
 
 export function weeklyParsha(date: string): string | null {

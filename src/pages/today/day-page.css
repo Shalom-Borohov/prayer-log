@@ -1,0 +1,23 @@
+.holiday-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-inline-end: 16px;
+}
+
+.holiday-chip {
+  height: 22px;
+  padding: 0 10px;
+  border: 1px solid var(--amber);
+  border-radius: 11px;
+  color: var(--amber);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.backfill ion-label {
+  color: var(--amber);
+}

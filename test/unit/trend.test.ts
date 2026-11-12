@@ -12,30 +12,25 @@ const sum = (tallies: PrayerTally[]) =>
   )
 
 describe('trendUnit', () => {
-  it('shows a week by day and a month by week', () => {
-    expect(trendUnit('week', { from: '2026-10-25', to: '2026-10-31' })).toBe('day')
-    expect(trendUnit('month', { from: '2026-10-01', to: '2026-10-31' })).toBe('week')
-  })
-
   it('shows all time by week up to twelve weeks, then by month', () => {
-    expect(trendUnit('all', { from: '2026-10-28', to: '2026-10-28' })).toBe('week')
-    expect(trendUnit('all', { from: '2026-08-06', to: '2026-10-28' })).toBe('week')
-    expect(trendUnit('all', { from: '2026-08-05', to: '2026-10-28' })).toBe('month')
+    expect(trendUnit({ from: '2026-10-28', to: '2026-10-28' })).toBe('week')
+    expect(trendUnit({ from: '2026-08-06', to: '2026-10-28' })).toBe('week')
+    expect(trendUnit({ from: '2026-08-05', to: '2026-10-28' })).toBe('month')
   })
 
   it('moves all time to quarters once months take more than 36 columns', () => {
-    expect(trendUnit('all', { from: '2026-08-20', to: '2029-07-31' })).toBe('month')
-    expect(trendUnit('all', { from: '2026-08-20', to: '2029-08-01' })).toBe('quarter')
+    expect(trendUnit({ from: '2026-08-20', to: '2029-07-31' })).toBe('month')
+    expect(trendUnit({ from: '2026-08-20', to: '2029-08-01' })).toBe('quarter')
   })
 
   it('moves all time to years once quarters take more than 36 columns', () => {
-    expect(trendUnit('all', { from: '2026-01-01', to: '2034-12-31' })).toBe('quarter')
-    expect(trendUnit('all', { from: '2026-01-01', to: '2035-01-01' })).toBe('year')
+    expect(trendUnit({ from: '2026-01-01', to: '2034-12-31' })).toBe('quarter')
+    expect(trendUnit({ from: '2026-01-01', to: '2035-01-01' })).toBe('year')
   })
 
   it('counts a partial first quarter as a column', () => {
-    expect(trendUnit('all', { from: '2026-03-31', to: '2034-12-31' })).toBe('quarter')
-    expect(trendUnit('all', { from: '2026-03-31', to: '2035-01-01' })).toBe('year')
+    expect(trendUnit({ from: '2026-03-31', to: '2034-12-31' })).toBe('quarter')
+    expect(trendUnit({ from: '2026-03-31', to: '2035-01-01' })).toBe('year')
   })
 })
 
@@ -103,7 +98,7 @@ describe('trendBuckets', () => {
   it('keeps five years of history to 21 quarterly columns', () => {
     const range = { from: '2021-11-08', to: '2026-11-07' }
 
-    expect(trendUnit('all', range)).toBe('quarter')
+    expect(trendUnit(range)).toBe('quarter')
     expect(trendBuckets([], range, 'quarter', '2026-11-07')).toHaveLength(21)
   })
 

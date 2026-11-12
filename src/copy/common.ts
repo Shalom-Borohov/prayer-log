@@ -27,8 +27,6 @@ export const COMMON_COPY = {
   badRecordsInBackup: (count: number) =>
     count === 1 ? 'בגיבוי יש רשומה פגומה אחת, וייבוא הקובץ ייכשל' : `בגיבוי יש ${count} רשומות פגומות, וייבוא הקובץ ייכשל`,
   noBackupYet: 'עדיין לא נעשה גיבוי',
-  previous: 'הקודם',
-  next: 'הבא',
   unmarked: 'לא סומן',
   noData: 'עוד אין נתונים',
   dateRange: (from: string, to: string) => `${from}–${to}`,

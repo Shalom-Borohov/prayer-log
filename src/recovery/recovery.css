@@ -10,8 +10,9 @@
 
 .recovery h1 {
   margin: 0 0 8px;
-  font-size: 28px;
-  font-weight: 700;
+  font-family: var(--title-font-family);
+  font-size: 30px;
+  font-weight: 400;
 }
 
 .recovery p {
@@ -26,7 +27,7 @@
   min-height: 44px;
   margin-bottom: 12px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--app-fill);
   color: var(--ion-color-primary);
   font: inherit;

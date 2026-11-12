@@ -1,369 +1,287 @@
 ---
 name: תפילות
-description: A private Hebrew prayer log where every day is a spine on the beit midrash shelf.
+description: A private prayer log drawn as a night star chart, where every prayer is a star and its size is its state.
 colors:
-  gold-primary: "#8a5a12"
-  gold-primary-dark: "#d9ae4e"
-  gold-leaf: "#e2c27a"
-  gold-stamp: "#a87a1f"
-  gold-stamp-dark: "#d9ae4e"
-  leather-band: "#2b2320"
-  leather-band-dark: "#1f1916"
-  leather-plain-dark: "#806a5b"
-  leather-band-text: "#e8d7ad"
-  leather-shacharit: "#1f4d3a"
-  leather-shacharit-dark: "#3e7a5e"
-  leather-musaf: "#5b3a6b"
-  leather-musaf-dark: "#8a63a0"
-  leather-mincha: "#7a2430"
-  leather-mincha-dark: "#b04a57"
-  leather-maariv: "#1e3355"
-  leather-maariv-dark: "#4a6a9e"
-  leather-torah: "#6b4423"
-  leather-torah-dark: "#a0703f"
-  grouped-ground: "#f2f2f7"
-  grouped-ground-dark: "#000000"
-  cell: "#ffffff"
-  cell-dark: "#1c1c1e"
-  label: "#000000"
-  label-dark: "#ffffff"
-  label-secondary: "rgba(60, 60, 67, 0.75)"
-  label-secondary-dark: "rgba(235, 235, 245, 0.6)"
-  label-tertiary: "rgba(60, 60, 67, 0.3)"
-  label-tertiary-dark: "rgba(235, 235, 245, 0.3)"
-  separator: "rgba(60, 60, 67, 0.29)"
-  separator-dark: "rgba(84, 84, 88, 0.6)"
-  fill: "rgba(118, 118, 128, 0.12)"
-  fill-dark: "rgba(118, 118, 128, 0.24)"
-  raised: "#ffffff"
-  raised-dark: "#636366"
+  night-ground: "#0e1a33"
+  night-card: "#17264a"
+  night-bar: "#12203d"
+  chalk: "#f1efe6"
+  amber: "#e8a13a"
+  today-ring: "#d2513a"
+  label-secondary: "#8f9bbb"
+  label-tertiary: "rgba(241, 239, 230, 0.35)"
+  separator: "rgba(241, 239, 230, 0.08)"
+  fill: "rgba(241, 239, 230, 0.09)"
+  divider: "rgba(241, 239, 230, 0.16)"
+  quiet-thumb: "rgba(241, 239, 230, 0.2)"
+  control-ring: "rgba(241, 239, 230, 0.55)"
+  streak-line: "rgba(241, 239, 230, 0.45)"
 typography:
-  large-title:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif"
-    fontSize: "34px"
-    fontWeight: 700
+  display:
+    fontFamily: "Frank Ruhl Libre, Heebo, serif"
+    fontSize: "96px"
+    fontWeight: 300
+    lineHeight: "80px"
+    letterSpacing: "-2px"
   headline:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif"
-    fontSize: "1.0625rem"
-    fontWeight: 600
-  body:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif"
-    fontSize: "1.0625rem"
+    fontFamily: "Frank Ruhl Libre, Heebo, serif"
+    fontSize: "2rem"
     fontWeight: 400
-    fontFeature: "tnum"
-  subhead:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif"
+    letterSpacing: "-0.3px"
+  figure:
+    fontFamily: "Frank Ruhl Libre, Heebo, serif"
+    fontSize: "1.875rem"
+    fontWeight: 300
+    lineHeight: "36px"
+  title:
+    fontFamily: "Heebo, -apple-system, BlinkMacSystemFont, Arial Hebrew, sans-serif"
+    fontSize: "1rem"
+    fontWeight: 600
+    lineHeight: "20px"
+  body:
+    fontFamily: "Heebo, -apple-system, BlinkMacSystemFont, Arial Hebrew, sans-serif"
     fontSize: "0.9375rem"
     fontWeight: 400
     lineHeight: 1.4
-  footnote:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif"
+    fontFeature: "tnum"
+  label:
+    fontFamily: "Heebo, -apple-system, BlinkMacSystemFont, Arial Hebrew, sans-serif"
     fontSize: "0.8125rem"
     fontWeight: 400
     lineHeight: 1.35
   caption:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif"
-    fontSize: "0.6875rem"
-    fontWeight: 400
-    lineHeight: 1.2
+    fontFamily: "Heebo, -apple-system, BlinkMacSystemFont, Arial Hebrew, sans-serif"
+    fontSize: "0.75rem"
+    fontWeight: 500
+    lineHeight: "16px"
 rounded:
-  spine: "1.5px"
-  spine-small: "1px"
-  segment-thumb: "7px"
-  cell: "8px"
-  segment-track: "9px"
-  group: "10px"
-  circle: "50%"
+  card: "20px"
+  chart-ring: "14px"
+  button: "12px"
+  field: "10px"
+  control: "9px"
+  thumb: "7px"
+  chip: "11px"
+  full: "50%"
 spacing:
-  hairline-gap: "2px"
-  spine-gap: "3px"
-  xs: "4px"
-  sm: "8px"
-  row: "12px"
-  md: "16px"
-  heading: "20px"
-  label-inset: "32px"
+  chart-row: "22px"
+  card-gap: "10px"
+  gutter: "16px"
+  list-text: "32px"
+  tap: "44px"
 components:
-  leather-shell:
-    backgroundColor: "{colors.leather-band}"
-    textColor: "{colors.gold-leaf}"
-    typography: "{typography.large-title}"
-  date-line:
-    backgroundColor: "{colors.leather-band}"
-    textColor: "{colors.leather-band-text}"
-    typography: "{typography.subhead}"
-    padding: "0 20px 14px"
-  inset-group:
-    backgroundColor: "{colors.cell}"
-    rounded: "{rounded.group}"
-  prayer-row:
-    backgroundColor: "{colors.cell}"
-    typography: "{typography.headline}"
-    padding: "12px 16px 14px"
-  attendance-track:
+  card:
+    backgroundColor: "{colors.night-card}"
+    rounded: "{rounded.card}"
+  attendance-control:
     backgroundColor: "{colors.fill}"
-    rounded: "{rounded.segment-track}"
+    textColor: "{colors.chalk}"
+    typography: "{typography.label}"
+    rounded: "{rounded.control}"
     padding: "2px"
-  attendance-segment:
-    textColor: "{colors.label}"
-    typography: "{typography.subhead}"
-    rounded: "{rounded.segment-thumb}"
-    height: "40px"
-  attendance-segment-minyan-selected:
-    backgroundColor: "{colors.leather-shacharit}"
-    textColor: "{colors.gold-leaf}"
-    rounded: "{rounded.segment-thumb}"
-  attendance-segment-alone-selected:
-    backgroundColor: "{colors.raised}"
-    textColor: "{colors.label}"
-    rounded: "{rounded.segment-thumb}"
-  torah-check:
-    size: "44px"
-    rounded: "{rounded.circle}"
-  torah-check-on:
-    backgroundColor: "{colors.leather-torah}"
-    textColor: "{colors.gold-leaf}"
-    rounded: "{rounded.circle}"
-  spine:
-    backgroundColor: "{colors.leather-shacharit}"
-    rounded: "{rounded.spine}"
-    width: "6px"
+    height: "34px"
+    width: "140px"
+  attendance-minyan-selected:
+    backgroundColor: "{colors.chalk}"
+    textColor: "{colors.night-ground}"
+    rounded: "{rounded.thumb}"
+  attendance-other-selected:
+    backgroundColor: "{colors.quiet-thumb}"
+    textColor: "{colors.chalk}"
+    rounded: "{rounded.thumb}"
+  holiday-chip:
+    textColor: "{colors.amber}"
+    typography: "{typography.caption}"
+    rounded: "{rounded.chip}"
+    padding: "0 10px"
     height: "22px"
-  spine-month-cell:
-    rounded: "{rounded.spine-small}"
-    width: "4px"
-    height: "14px"
-  spine-table-key:
-    rounded: "{rounded.spine-small}"
-    width: "5px"
-    height: "18px"
-  ruled-table:
-    backgroundColor: "{colors.cell}"
-    typography: "{typography.body}"
-    rounded: "{rounded.group}"
-    padding: "11px 16px"
-  month-grid:
-    backgroundColor: "{colors.cell}"
-    rounded: "{rounded.group}"
-    padding: "10px 8px 12px"
-  month-day:
-    textColor: "{colors.label}"
-    rounded: "{rounded.cell}"
-    height: "62px"
-    padding: "2px 0 4px"
-  worn-mark-tefillin:
-    backgroundColor: "{colors.leather-shacharit}"
-    rounded: "{rounded.spine-small}"
-    width: "5px"
-    height: "5px"
-  worn-mark-tallit:
-    backgroundColor: "{colors.leather-shacharit}"
-    rounded: "{rounded.spine-small}"
-    width: "9px"
-    height: "3px"
-  month-day-today:
-    backgroundColor: "{colors.leather-band}"
-    textColor: "{colors.gold-leaf}"
-    rounded: "{rounded.circle}"
-    size: "30px"
-  backfill-row:
-    backgroundColor: "{colors.cell}"
-    textColor: "{colors.gold-primary}"
-    typography: "{typography.body}"
+  period-button:
+    backgroundColor: "{colors.fill}"
+    textColor: "{colors.chalk}"
+    rounded: "{rounded.full}"
+    size: "32px"
+  round-check:
+    textColor: "{colors.night-ground}"
+    rounded: "{rounded.full}"
+    size: "18px"
+  round-check-checked:
+    backgroundColor: "{colors.chalk}"
+    textColor: "{colors.night-ground}"
+    rounded: "{rounded.full}"
+  segment-switch:
+    backgroundColor: "{colors.fill}"
+    textColor: "{colors.chalk}"
+    height: "44px"
+  tab-bar:
+    backgroundColor: "{colors.night-bar}"
+    textColor: "{colors.label-secondary}"
+  tab-bar-selected:
+    textColor: "{colors.amber}"
+  recovery-button-primary:
+    backgroundColor: "{colors.amber}"
+    textColor: "{colors.night-ground}"
+    rounded: "{rounded.button}"
+    height: "44px"
 ---
 
 # Design System: תפילות
 
 ## Overview
 
-**Creative North Star: "The Beit Midrash Shelf"**
+**Creative North Star: "Three stars"**
 
-Every day is a spine on a shelf of sefarim, and a prayer במניין earns its gold stamp. The system is a native iOS app first: Ionic in forced iOS mode, SF for every word, the system grouped ground, inset groups, a bottom tab bar, large titles that collapse on scroll, full RTL. On top of that native frame sit exactly two borrowed materials: a dark leather band that holds the large title and the date line, and a set of flat leather hues, one per prayer, with gold leaf as the only "done" mark.
+The app is a night star chart. Every prayer is a star and its size is its state. A streak is the thin line that joins bright stars on consecutive days. The ground is deep navy, the stars and text are chalk, and nothing on the chart is ornament: every dot is data.
 
-The shelf is the one signature and it repeats at every scale: a 7-day mini shelf at the trailing edge of each row on היום, a row of tiny spines under each day number in לוח, and full-period shelves per prayer in סטטיסטיקה. A slot is always one of five states (gold, bare leather, short bare leather for ק״ש בלבד, empty dashed, nothing), stamped in place; rows never move and nothing reflows.
+The chart is the one signature. Around it the app stays a plain iOS app in Ionic's iOS mode: large titles, inset grouped lists, native segmented controls, a native tab bar. The world lends the palette, the two typefaces and the size-as-state stars. Navigation and controls stay standard.
 
-Density is Operate-mode: one tap per prayer, one-handed, seconds at a time. Numbers live in hairline-ruled tables with tabular figures, not in card stacks. The one chart is the trend columns on סטטיסטיקה, built from the same materials: gold, bare leather and the dashed empty outline. Everything is flat colour; the only shadows are the native segmented-control thumb and the inset bands that paint gold onto a spine.
+The density is set by the iPhone SE (375×667). On היום the chart, every prayer's control, the תפילין and טלית checks and the Torah card's check all fit on the first screen. The app has one appearance. It stays navy whatever the phone is set to.
+
+It refuses the habit-tracker defaults (green checks, flames, heat grids) and the Judaica defaults (leather, parchment, gold).
 
 **Key Characteristics:**
-- Native iOS skeleton (grouped ground, inset groups, large title, tab bar) with a dark leather shell band.
-- One fixed leather hue per prayer, identical on every tab.
-- Gold leaf is the only completion mark; bare leather means prayed ביחידות; a dashed empty slot means unmarked.
-- The shelf repeats at three sizes as the system's single signature.
-- Flat colour only: no grain, texture or gradient.
+- Always night: one navy appearance, no light theme.
+- Size is state: four marks on a fixed ramp, told apart by shape and size, never by colour alone.
+- Chalk carries data, amber carries annotations, red rings only today.
+- Frank Ruhl Libre for large titles and poster numerals, Heebo for everything else, both self-hosted for offline use.
+- Flat colour with no shadows, glows, gradients or texture inside the app.
 
 ## Colors
 
-A grouped-iOS neutral ground carrying five flat leather hues and one gold, with a dark leather band as the shell.
+Three voices on navy: chalk for data and text, amber for notes about the data, and one red that marks today.
 
 ### Primary
-- **Gold Leaf** (gold-leaf): the shell's voice. Large and small titles, toolbar buttons and the holiday line on the leather band, the text of a selected במניין segment, the checkmark in the Torah check, and today's number in the month grid. Same value in both modes because it always sits on dark leather.
-- **Gilded Ink** (gold-primary, gold-primary-dark): Ionic's primary. Tab bar selection, focus rings, the backfill banner text, holiday Hebrew dates in the month grid, text selection tint. Darker in light mode for contrast on white; brighter gold in dark mode.
-- **Stamp Gold** (gold-stamp, gold-stamp-dark): the bands painted onto a gold spine. Darker in light mode, brighter in dark mode.
+- **Chalk** (chalk): stars, streak lines (at 45%), body text, the selected segment thumb and the checked round check. Anything that is the log itself is chalk.
 
-### Secondary: the leathers
-Each prayer owns one hue, applied through a hue class that sets both a display hue (`--hue`, lightened in dark mode) and a deep hue (`--hue-deep`, the light-mode value in both modes).
-- **Bottle Green**: שחרית (leather-shacharit / leather-shacharit-dark).
-- **Plum**: מוסף (leather-musaf / leather-musaf-dark).
-- **Oxblood**: מנחה (leather-mincha / leather-mincha-dark).
-- **Navy**: ערבית (leather-maariv / leather-maariv-dark).
-- **Brown**: תורה (leather-torah / leather-torah-dark).
+### Secondary
+- **Lamp Amber** (amber): annotations only. The date line under the title, streak numbers ("3 ברצף"), the holiday chip, a holiday's day number and holiday line in לוח, the פרשה in a week card header, the reminder rows above the chart, the add-learning +, the focus outline and the selected tab. It is also Ionic's primary colour, so a primary button is amber with navy text.
 
-Spines use the display hue, so they lift in dark mode to stay visible on black. Filled controls (the selected במניין segment, the checked Torah circle) use the deep hue in both modes so gold-leaf text keeps its contrast.
+### Tertiary
+- **Today Red** (today-ring): the 1.5px rounded ring around today's column on a chart and around today's star on the stats line. Nothing else is red.
 
 ### Neutral
-- **Shell Leather** (leather-band, leather-band-dark): one solid block holding the toolbar, the condensed large-title header and the date (or month) line inside it. It stays leather during iOS page transitions and above the page when it is pulled down. Also the today circle in the month grid.
-- **Plain Leather** (leather-band, leather-plain-dark): the ביחידות and ק״ש בלבד fill in the trend columns. It is the shell leather in light mode and a lighter warm leather in dark mode, where the shell leather would vanish into the card (3.35:1 on the dark card). It is not a prayer hue.
-- **Parchment Text** (leather-band-text): the date line (weekday · Hebrew date · the week's פרשה · Gregorian) on the band.
-- **Grouped Ground** (grouped-ground / grouped-ground-dark) and **Cell** (cell / cell-dark): the iOS system grouped background and its inset cells. Modals in dark mode step to #1c1c1e ground and #2c2c2e cells.
-- **Labels** (label, label-secondary, label-tertiary and dark pairs): primary text, secondary text for streak lines, group labels, footers and table column heads; tertiary for disabled future days and the unchecked Torah ring. Secondary is raised to 0.75 alpha in light mode for legibility.
-- **Separator** (separator / separator-dark): 0.5px hairlines between rows and table lines.
-- **Fill** (fill / fill-dark) and **Raised** (raised / raised-dark): the segmented-control track and the selected ביחידות thumb; fill is also the pressed state of a month cell.
+- **Night Ground** (night-ground): page background, toolbar, the fixed status-bar strip and modals. Also the text on a chalk thumb or amber button.
+- **Raised Night** (night-card): every card, inset list and table; also the fill inside a hollow ק״ש בלבד ring.
+- **Tab Night** (night-bar): the tab bar only, a step between ground and card.
+- **Dusk Grey** (label-secondary): secondary text, chart line labels, column heads, captions, the + of an unmarked prayer, unselected tabs.
+- **Faint Chalk** (label-tertiary): the ring around a past shown day, disclosure chevrons.
+- **Chalk tints** (separator 8%, fill 9%, divider 16%, quiet-thumb 20%, control-ring 55%): hairlines and chart rules, control troughs and round buttons, the dividers inside the attendance control, a selected ביחידות or ק״ש בלבד thumb, the ring of an unchecked round check.
 
 ### Named Rules
-**The Fixed Hue Rule.** A prayer's leather is the same on every tab, every table and every shelf. A new surface showing a prayer uses that prayer's hue class, never a new colour.
+**The Red Is Today Rule.** Red rings today and nothing else. A past day the user is looking at gets a faint chalk ring instead.
 
-**The Gold Means Minyan Rule.** On marks, gold appears only as the done state: a spine stamped for a prayer במניין or a day of learning, the gold text of the selected במניין segment, the tick of a checked round check, and the במניין share of a trend column. Never use gold to decorate a neutral or partial state. The shell, the stats tables' hue key and the accents listed under Colors are outside this rule.
+**The Amber Annotates Rule.** Amber never fills a star or a large surface. It writes notes beside the data: dates, streak counts, holidays, reminders, the selected tab.
 
-**The Deep Fill Rule.** Anything filled behind gold-leaf text takes `--hue-deep`, which does not lighten in dark mode. Only spines take the lightened `--hue`.
+**The Every Dot Is Data Rule.** No decorative stars, sparkles or dot patterns. If a dot is on screen it is a prayer or a day.
 
 ## Typography
 
-**Display Font:** SF (system: -apple-system, SF Pro Text, with Helvetica Neue and Arial Hebrew fallbacks)
-**Body Font:** the same system stack
-**Label/Mono Font:** none distinct; figures use tabular numerals app-wide.
+**Display Font:** Frank Ruhl Libre (with Heebo, serif), weights 300 and 400, self-hosted through Fontsource.
+**Body Font:** Heebo (with -apple-system, BlinkMacSystemFont, Arial Hebrew, sans-serif), weights 400, 500 and 600, self-hosted through Fontsource.
 
-**Character:** One family, the iPhone's own. The world is carried by colour and the shelf, not by type; type stays native so the app reads as part of the phone.
+**Character:** A light Hebrew serif for the few big moments and a clean Hebrew sans for every working line. Figures are tabular across the app, so counts line up in tables and charts.
 
 ### Hierarchy
-- **Large Title** (700, Ionic iOS large title, gold leaf on leather): screen titles היום, לוח, סטטיסטיקה, or the weekday for a past day.
-- **Headline** (600, 1.0625rem): prayer names in day rows.
-- **Body** (400 for row headers, 600 for values, 1.0625rem): ruled table cells, list items, month day numbers (500; 700 for today).
-- **Subhead** (400–600, 0.9375rem, line-height 1.4): the date line, attendance segment labels (500, 600 when selected), the Torah note field, shelf-row labels, empty-state body.
-- **Footnote** (400, 0.8125rem): streak lines, group labels above inset groups and tables, table column heads, list footers.
-- **Caption** (0.6875rem): weekday initials (600) and Hebrew day letters in the month grid, tab bar labels.
+- **Display** (Frank Ruhl Libre 300, 96px, 80px line): the one poster number in סטטיסטיקה, the count במניין for the period.
+- **Headline** (Frank Ruhl Libre 400, 2rem): iOS large titles (היום, לוח, סטטיסטיקה). The recovery screen title uses the same face at 30px.
+- **Figure** (Frank Ruhl Libre 300, 1.875rem, 36px line): the three secondary figures under the stats star line.
+- **Title** (Heebo 600, 1rem, 20px line): prayer names in the היום card. Stats table prayer names step up to 1.0625rem, and the stats caption "במניין" to 1.375rem.
+- **Body** (Heebo 400, 0.9375rem, 1.4): learning entries, notes, segment labels, empty-state text. Plain table cells run at 1rem.
+- **Label** (Heebo 400, 0.8125rem): the amber date line, group labels, list footers, attendance segment text (at 500), week card holiday lines.
+- **Caption** (Heebo 500, 0.75rem, 16px line): streak numbers, the holiday chip, state and place lines (at 400), chart labels. The smallest step, 0.625rem, is kept for the Hebrew day under a week card column and the stats star-line labels.
 
 ### Named Rules
-**The Native Type Rule.** SF only, at iOS text-style sizes. Labels above groups are sentence-case footnote in secondary label colour; no uppercase, no tracking, no display face.
-
-**The Tabular Rule.** Every number renders with tabular figures (set on body) so counts line up in tables and never jitter when they change.
+**The Serif Is For Numbers And Titles Rule.** Frank Ruhl Libre appears only in large titles and poster-size numerals. Every row, control and label is Heebo.
 
 ## Layout
 
-Single column, phone-first, RTL. Content sits on the grouped ground in inset groups and tables with 16px side margins and 10px corners; group labels hang 32px in from the edge, 22px above and 6px below. The leather band spans full width at the top and carries the date line with 20px side padding.
+Screens are laid out for the iPhone SE at 375×667 and simply fill wider phones. There are no breakpoints. Right to left throughout, so a chart's newest day is on the left end.
 
-Day rows are 12px/16px/14px padded with a 44px minimum top line: title and streak line on the leading side (at a streak of 0 the line is empty but keeps its height, so the title never moves), the mini shelf on the trailing side, then a full-width attendance control 10px below. Every interactive target is at least 44px, except that month cells can be about 43px wide on the narrowest phones, because seven must fit across. Where a control looks smaller, an invisible layer carries the tap area to 44px: the attendance segments are 40px inside a 2px-padded track, and a tap anywhere across the 44px track counts.
+Cards sit 16px in from the screen edge. Text in grouped lists and their headers and footers starts 32px in, matching iOS inset lists. Week cards in לוח stack with a 10px gap. Every tap target is at least 44pt; small visuals (the 32px period buttons, the 18px round checks, the 34px attendance control) get invisible hit areas that reach 44pt.
 
-The month grid is seven equal columns with 4px gaps inside one 10px-cornered cell, 8–12px inner padding, each day at least 62px tall. Statistics stack: period switch (השבוע, החודש, כל הזמנים; a 44px track with a 40px thumb and subhead labels, matching the attendance control, as is the באג / הצעה switch), trend columns, per-prayer table, Torah table, תפילין וטלית table, period shelves (not on כל הזמנים), streaks table, top to bottom with 24px between tables.
+The star chart is a grid: a 52px label column on the reading start side, then seven equal day columns. Lines are 22px apart on היום (20px in a week card), with a 26px column head (24px on היום, 44px in a week card to hold the weekday letter, Gregorian day and Hebrew day). Each line carries a 1px faint rule so an empty line still reads as a line.
 
-Spacing steps observed: 2, 3, 4, 8, 12, 16, 20, 32px.
+On היום the order is fixed: toolbar with the gear and the round הקודם / הבא chevrons, the serif title with the holiday chip at its far end, the amber date line, the week chart card, the prayer card, then the Torah card. Reminder rows sit above the chart when present.
 
 ## Elevation & Depth
 
-Flat. Depth comes from the iOS grouped model (light cells on a grey or black ground) and from the dark leather band above the content, not from shadows.
+The app is flat. Depth is tonal: navy ground, a slightly lighter navy card, and chalk-tint troughs for controls. There are no box shadows, glows or gradients on any surface. The only inset shadow in the code draws the 1.5px ring of an unchecked round check; it is a stroke, not elevation.
 
-### Shadow Vocabulary
-- **Segment thumb** (`box-shadow: 0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04)`): the selected segment of the attendance control, matching the native iOS segmented-control thumb.
-- **Gold bands** (`box-shadow: inset 0 4px 0 var(--gold), inset 0 -4px 0 var(--gold)`; 3px bands on the small spines): not elevation. This is how the gold stamp is painted onto a spine's head and foot.
-- **Ring** (`box-shadow: inset 0 0 0 1.5px var(--app-label-tertiary)`): the unchecked Torah circle.
+The app icon is the one exception. Following the owner's taste for solid icons with depth, the arched shul window is drawn with soft gradients and drop shadows. That shading stays in the icon and never moves into the UI.
 
 ### Named Rules
-**The Flat Leather Rule.** Leather and gold are flat fills. No grain, texture, noise, gradient or sheen on the band, the spines or anything else.
+**The Flat Night Rule.** Surfaces separate by tone, never by shadow. A new surface is either ground or card.
 
 ## Shapes
 
-Small, square-shouldered forms. Spines are narrow upright rectangles with barely softened corners (1.5px, or 1px at the small sizes). Containers follow iOS: 10px for inset groups, tables and the month grid, 9px/7px for the segmented track and thumb, 8px for month cells. Two round forms exist: the 26px Torah check circle and the 30px today circle. The smallest forms are the 5px תפילין square and the 9×3px טלית bar in the month grid. Hairlines are 0.5px. The only dashed line in the system is the empty spine slot.
+Round and soft. Cards and inset lists have 20px corners. Controls get smaller radii that stay concentric: the attendance trough is 9px with a 7px thumb, search fields 10px, recovery buttons 12px. The holiday chip is a full pill (11px on a 22px height). Period buttons, round checks and stars are circles.
+
+Stars are discs or rings, never star glyphs. The today ring around a chart column is a rounded rectangle (14px radius, 32px wide); on the stats star line it is a circle. The only straight-edged mark is the + of an unmarked prayer, two 1px hairlines 8px long.
 
 ## Components
 
-### Shelf (signature)
-A row of spines standing on a common baseline, one per day, oldest to newest in reading order.
-- **Sizes:** day row 6×22px with 3px gaps and 4px gold bands; month cell 4×14px with 2px gaps and 3px bands; stats table key 5×18px with 3px bands. Period shelves on סטטיסטיקה use the day-row size and wrap with 4px row gaps.
-- **States:** *gold*: leather spine with gold bands at head and foot (במניין, or a day of learning); *plain*: bare leather (ביחידות); *short*: bare leather at half height on the same baseline (ק״ש בלבד, said instead of the prayer); *empty*: transparent with a 1px dashed secondary-label outline (tracked but unmarked); *none*: an invisible slot (before tracking began). Future days in the month grid hide their spines.
-- **Stamp motion:** when the newest slot turns gold on היום, its bands grow in from zero (220ms, cubic-bezier(0.16, 1, 0.3, 1)). Nothing else moves. Disabled under reduced motion.
-- **Accessibility:** the shelf is one image with a label like "5 מתוך 7 הימים האחרונים במניין". The count leaves out *none* slots, and a shelf with only *none* slots reads "עוד אין נתונים", as does a trend chart with no column to speak.
+### Star Chart (signature)
+The heart of the app, shared by היום's week chart and every week card in לוח.
+- **Size ramp:** a 14px chalk disc for במניין or a day of learning; a 6px chalk disc for ביחידות; an 11px hollow ring with a 1.5px chalk stroke and card fill for ק״ש בלבד; a dusk-grey 8px + for a prayer that was due and is unmarked; nothing when the prayer did not apply.
+- **Streak lines:** 1.25px chalk at 45%, drawn behind the stars, joining large discs on consecutive days. In a week card a line runs on to the card's edge when the streak continues into the next week. מוסף never gets a joining line.
+- **Today and shown day:** today's column sits inside a 1.5px red rounded ring; a past day being shown gets the same ring in faint chalk. The ringed column's head turns chalk and 600.
+- **Columns:** each column is a button that opens its day. Pressed, it gets a 12px fill. Days ahead are dimmed to 35% and cannot be opened; days outside the shown month have their number dimmed to 45% with stars still drawn.
+- **Motion:** when today's star turns במניין it grows in from 40% scale and its streak line draws in from yesterday's star, both in 220ms on cubic-bezier(0.16, 1, 0.3, 1). Nothing moves under reduce motion.
 
-### Attendance control (segmented)
-A native-styled segmented control, full row width: במניין | ביחידות | ק״ש בלבד on שחרית and ערבית, במניין | ביחידות on מנחה and מוסף (they have no קריאת שמע).
-- **Track:** fill colour, 9px corners, 2px padding, 2px gap.
-- **Segments:** 40px tall, 7px corners, subhead 500, transparent at rest.
-- **Selected במניין:** the prayer's deep leather with gold-leaf text, weight 600, thumb shadow.
-- **Selected ביחידות or ק״ש בלבד:** the raised neutral (white / #636366) with label text, thumb shadow. Only במניין takes leather and gold.
-- **States:** tapping the selected segment clears it. Pressed scales to 0.97; colour transitions run 160ms ease-out; 2px gilded focus ring offset 2px. Reduced motion removes both.
+### Stats Star Line
+One line of stars for the period in סטטיסטיקה, on a faint rule. Each disc is sized by its day's share במניין (large, medium, small), with a + for a tracked day with nothing marked and an empty ring for today until something is marked. Discs shrink to fit a month. Labels are 0.625rem dusk grey; today's is chalk 600.
 
-### Place (בית כנסת)
-While a prayer is במניין with a place, the place name follows the prayer name on the title line. It uses subhead size in secondary label colour, never gold, and truncates with an ellipsis. It is a 44px target with negative margins, so the row never grows. Tapping it opens a native action sheet:
-- places used before, with the current one selected;
-- מקום חדש… (opens an alert with a text field);
-- ללא מקום (destructive);
-- ביטול.
+### Attendance Control
+The במניין | ביחידות | ק״ש בלבד control at the end of each prayer row. A 140px (192px with ק״ש בלבד) chalk-tint trough, 34px tall, with 1px dividers between segments.
+- **במניין selected:** chalk thumb with navy text, the brightest thing in the row, matching the bright star it makes.
+- **ביחידות or ק״ש בלבד selected:** a quiet 20% chalk thumb with chalk 600 text.
+- **States:** background and colour ease over 160ms; press scales to 0.97. No transition or scale under reduce motion.
 
-The same sheet opens by itself whenever a prayer is marked במניין with no remembered place, until one is chosen.
+### Segmented Switch
+The full-width השבוע | החודש | כל הזמנים switch: Ionic's iOS segment, 44px tall, 16px in from the edges, a chalk-tint trough with a chalk thumb and navy text.
 
-### Round checks (Torah, תפילין, טלית)
-One shared form: a 26px circle inside a 44px target. Off: a 1.5px tertiary ring. On: the row's deep hue with a gold-leaf checkmark. The Torah check leads the Torah row, followed by title, streak line and mini shelf, with the learning entries and hints beneath it and then the borderless "הערה…" note line; תפילין and טלית sit side by side under the שחרית control, each circle followed by its label, the whole pair tappable. תפילין is absent on שבת, יום טוב and חול המועד.
+### Cards / Containers
+- **Corner Style:** 20px.
+- **Background:** Raised Night on Night Ground.
+- **Shadow Strategy:** none (see Elevation & Depth).
+- **Border:** none outside; 1px separator hairlines between rows and table lines.
+- **Internal Padding:** rows sit 14 to 16px in from the card edge.
 
-### Learning entries and hints
-Under the Torah row's top line, each saved entry is a 44px row in label colour, such as "גמרא · שבת דף י״ב", starting in the title's column and ending in a tertiary ›; it opens the learning sheet on that entry. On a day missing them, the latest earlier day's entries follow as hint rows: the place in secondary label colour after an empty 1.5px tertiary ring, the unticked Torah circle in the check's column. Hints are never gold and never dashed, and they read "בפעם הקודמת: …" to VoiceOver, so nothing unsaved looks saved. The "הערה…" note line ends in a 44px "+" in the primary ink of הקודם and הבא that adds an entry, so adding costs no extra row.
+### Round Check
+Used for תפילין, טלית and למדתי. An 18px circle with a 1.5px chalk ring at 55%; checked, it fills chalk with a navy check mark. The Torah card's check is 26px. Fill changes over 160ms.
 
-### Learning sheet
-A half-height sheet (draggable to full) with a leather header: ביטול, the title לימוד, and שמירה. Below it, a native segmented control גמרא | משנה, then an inline iOS wheel picker with the מסכת column at the start (right) and the דף or פרק column after it, in Hebrew numerals. Ionic lays picker columns out left to right, so the picker reverses them for RTL. When editing, a destructive "מחיקת הלימוד" row sits in an inset group under the wheels.
+### Chips
+- **Holiday chip:** a 1px amber outline pill, 22px tall, amber 0.75rem 500 text, no fill. It sits at the far end of the title row.
 
-### מה למדתי list
-A page under סטטיסטיקה, entered from a disclosure row "מה למדתי" at the bottom of the תורה table. A native search field sits at the top, then one inset list of days, newest first. Each row starts with a footnote date line in secondary colour (weekday · Hebrew date with year · Gregorian date), then each entry in body text, then the note in secondary subhead. Text wraps rather than truncates. No counts appear on the page. With no match, one centred secondary line says so.
+### Buttons
+- **Period buttons:** הקודם / הבא in the toolbar are 32px chalk-tint circles with a 16px chalk chevron and a 44pt hit area. Disabled, they drop to 35%.
+- **Primary:** Ionic primary is amber with navy text (the recovery screen's main action, 12px corners, 44px tall). Secondary recovery buttons are chalk-tint with amber text.
+- **Focus:** a 2px amber outline on every button and checkbox.
 
-### Ruled tables
-Hairline-ruled data tables in place of cards: cell background, 10px corners, 16px side margins, 11px×16px cell padding, 0.5px separators, no line under the last row. Row headers are start-aligned at 400; values are end-aligned at 600. Stats tables add footnote column heads in secondary colour, centre their numeric columns under those heads, and put a small gold-banded spine as the hue key before each prayer name. A cell that cannot apply (ק״ש for מנחה or מוסף) shows an en dash.
-
-### Inset groups
-iOS inset grouped lists: 16px margin, 10px corners, cell background, rows separated by 0.5px hairlines. Used for day rows, the Torah row, period shelves and Ionic inset lists (backfill banner, holiday list, settings, the מה למדתי list).
-
-### Month grid cells
-Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px box), Hebrew day letter (caption, secondary), then the day's spines, one per applicable prayer plus Torah, then a 5px line for תפילין and טלית. That line holds a 5px square for תפילין and a 9×3px bar for טלית, in the שחרית hue and in the same order as their checks. They are not shelf slots: an item that isn't marked leaves its place blank, with no dashed outline and no gold. Last comes a caption line (secondary, centred) that holds the week's פרשה on שבת. It wraps only at a space or a maqaf, and every other cell keeps it empty, so all rows stay level and only a row with a wrapped name grows. Today's number sits in a 30px leather circle with gold-leaf bold text. Holidays turn the Hebrew letter gilded and bold. Future days are disabled and tertiary with spines and marks hidden. Pressed shows the fill colour; focus is an inset 2px gilded ring. A cell's accessible name starts with what it shows, as in "1 כ״א בחשון, יום ראשון: לא סומן", and on שבת it adds the פרשה: "31 כ׳ בחשון, שבת פרשת וירא: לא סומן".
-
-### Backfill banner
-An inset list at the top of היום (today only) with one disclosure row per day that needs filling, such as an unmarked day or a blank Friday-night ערבית. Label text is gilded; rows navigate to that day. When a backup is due, a last row without a disclosure chevron opens the share sheet. Absent when nothing needs filling and no backup is due.
+### Inputs / Fields
+- **Search:** a 10px chalk-tint field with chalk text and dusk-grey placeholder and icons.
+- **Note line:** the Torah card's הערה field is a bare line with a dusk-grey placeholder.
 
 ### Navigation
-Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with a back button to לוח on days opened from לוח, to מה למדתי on days opened from that list, and to סטטיסטיקה on the list itself, and a settings gear at the end of the toolbar on every page but הגדרות. הגדרות opens inside the current tab, with a back button named for the tab. Large titles collapse into the toolbar on scroll. Toolbar buttons keep Ionic's size, and an invisible centred layer carries each tap area to at least 44×44px. Icons beside a label are hidden from screen readers.
-
-Previous and next day (היום and days opened from לוח or מה למדתי) or month (לוח) sit in a footer bar just above the tab bar, in thumb reach: item-background ground with the iOS hairline top rule, "› הקודם" at the start and "הבא ‹" at the end in the primary ink. Next is disabled on today and on the current month.
-
-A horizontal swipe on the content does the same: drag left for הקודם, right for הבא. Only the content under the date line follows the finger; the leather band, the footer bar and the tab bar stay put. A committed swipe slides the content off (180ms ease-out) and the new day or month in from the other side; a short drag springs back, and a drag toward the future moves at a fifth of the finger's distance before springing back. Reduce motion drops the slides.
-
-The leather reaches the top of the screen. The page background is leather, and in the installed app a flat 12px leather strip is pinned to the top edge, so iOS 26 draws the status bar in leather rather than fading it. The strip takes pointer events: with `pointer-events: none`, Safari skips it and hazes the top of the header.
-
-### Backup group
-The first inset group on הגדרות, under the label "גיבוי": ייצוא גיבוי and ייבוא גיבוי, and for 7 days after an import a third row, ביטול הייבוא האחרון (after an undo, החזרת הייבוא). Each row is disclosure-free with an outline icon in the primary ink at the start; the undo and redo arrows mirror in RTL. Under the group, list footers give the last backup time and, while the undo row shows, "אפשר לבטל עד …" or "אפשר להחזיר עד …". The import and undo alerts keep Ionic's iOS look, with their comparison lines (בקובץ / בטלפון, יחזרו / עכשיו) as separate lines of the message. No gold.
-
-### History export row
-A "היסטוריה" group on הגדרות, right after גיבוי: one disclosure-free "ייצוא היסטוריה" row with a document icon, and a footnote saying it is a text file for reading and not a backup.
-
-### Feedback sheet
-A "דיווח על באג / הצעה" disclosure-free row in its own inset group on הגדרות, above the version line. It opens a full-screen modal with a leather header: ביטול, the title דיווח, and a באג / הצעה segment. Below it are an inset "תיאור" text area, a footnote saying what is sent, and a full-width "פתיחה ב-GitHub" button that stays disabled until there is text. Tapping the button leaves the sheet open and changes ביטול to סגירה. Under the footnote, in the same style, a note appears when the report is too long for the link, and another after the first tap.
-
-### Version row and what's new sheet
-The version line "גרסה X · עודכנה …" is the last row on הגדרות, a disclosure row in its own inset group. It opens "מה חדש", a half-height sheet (it can be dragged to full height) with a leather header, the title מה חדש and סגירה at the end. Each release is an inset group headed "גרסה X", with "חדש" and "תיקונים" items holding bulleted lines. The same sheet opens by itself once after an update, with only the releases not seen yet.
-
-### Update bar
-When a new version is waiting, a flat bar sits directly above the tab bar on every tab: an item-background ground with a hairline top rule, a grey × (לא עכשיו) at the start, the label "גרסה חדשה זמינה", and a small round filled "עדכון" button in the primary ink at the end. Both buttons have a 44px tap area; the pill stays small. No gold.
-
-### Recovery screen
-When a page can't draw, a plain full-screen page replaces the whole app, with no Ionic, no leather header and no tab bar: the page background, the title "משהו השתבש" (28px, 700), a line of body text, a full-width filled "ייצוא גיבוי" button in the primary ink, any export message, a full-width "ייבוא גיבוי" button on the quiet fill, and a full-width "טעינה מחדש" button on the quiet fill. A chosen file replaces "ייבוא גיבוי" with its warning line, a line each for what the file and the phone hold, "ייבוא" in the destructive red on the quiet fill, and "ביטול". An import failure is a line of body text above the import buttons. While a new version is waiting, the line "גרסה חדשה זמינה" sits above the last button, which reads "עדכון". All buttons are at least 44px tall with a 10px radius. No gold.
+Native iOS throughout. A transparent navy toolbar with the gear at its end, iOS large serif titles that collapse on scroll, and a native tab bar on Tab Night with a hairline top border. Tab labels are 0.6875rem; unselected tabs are dusk grey and the selected tab is amber.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** show a prayer's state as a mark in a fixed slot: gold spine, bare leather, or empty dashed slot.
-- **Do** reuse the shelf when a new surface shows a prayer over time, at one of the three established sizes.
-- **Do** put anything filled behind gold-leaf text on `--hue-deep` so it holds contrast in dark mode.
-- **Do** present numbers in hairline-ruled tables with tabular figures, row header leading and value trailing at 600.
-- **Do** stamp in place: a change animates only the slot that changed, and rows never move or reflow.
-- **Do** keep every touch target at least 44px and honour reduced motion.
+- **Do** keep the star size ramp exact: 14px disc, 6px disc, 11px ring with a 1.5px stroke, an 8px +, or nothing.
+- **Do** tell marks apart by shape and size so the chart reads without colour.
+- **Do** draw streak lines at 1.25px in chalk at 45%, behind the stars, and never on the מוסף line.
+- **Do** ring today in red and a past shown day in faint chalk.
+- **Do** put annotations in amber: dates, streak numbers, holidays, reminders, the selected tab.
+- **Do** set large titles and poster numerals in Frank Ruhl Libre and everything else in Heebo, with tabular figures.
+- **Do** check every screen at 375×667 first.
+- **Do** keep every tap target at least 44pt, with an invisible hit area when the visual is smaller.
+- **Do** turn off the star grow, the streak draw and control transitions under reduce motion.
 
 ### Don't:
-- **Don't** add grain, texture, noise or gradients to the leather or gold; both are flat fills.
-- **Don't** mark a row's prayer with a coloured border along the row edge; hue lives in spines, the selected segment and the table key.
-- **Don't** use the habit-tracker idiom of green checkmarks, flames or heat grids for completion; completion is the gold spine. (The native checkbox in the Torah check is an input, not a completion badge.)
-- **Don't** give a prayer a colour other than its leather, or let one leather stand in for another.
-- **Don't** stack statistics into cards, or add charts beyond the trend columns; use the ruled tables and shelves.
-- **Don't** introduce a display face or a custom type scale; SF at iOS text-style sizes only.
+- **Don't** add a light appearance; the app is always night.
+- **Don't** use red for anything but today's ring.
+- **Don't** add shadows, glows, gradients or textures to app surfaces.
+- **Don't** draw decorative stars, sparkles or dot patterns; every dot is data.
+- **Don't** give prayers their own colours or bring back leather, gold, parchment or spines.
+- **Don't** use green checks, flames or heat grids for progress.
+- **Don't** set rows, labels or controls in the serif.

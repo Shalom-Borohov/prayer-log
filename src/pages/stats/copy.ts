@@ -7,6 +7,7 @@ export const STATS_COPY = {
   emptyBody: 'מסמנים תפילה במסך היום, והסיכומים והרצפים יופיעו כאן.',
   thisMonth: 'החודש',
   allTime: 'כל הזמנים',
+  ofPrayers: (total: number) => (total === 1 ? 'מתוך תפילה אחת' : `מתוך ${total} תפילות`),
   trendHeading: {
     day: 'לפי יום',
     week: 'לפי שבוע',
@@ -14,17 +15,13 @@ export const STATS_COPY = {
     quarter: 'לפי רבעון',
     year: 'לפי שנה',
   } satisfies Record<TrendUnit, string>,
-  trendOther: ALONE_OR_SHEMA,
   trendBucket: (label: string, minyan: number, other: number, total: number) =>
     `${label}: ${minyan} ${COMMON_COPY.attendance.minyan}, ${other} ${ALONE_OR_SHEMA}, מתוך ${total}`,
+  learningDays: 'ימי לימוד',
   byPrayer: 'לפי תפילה',
+  best: (days: number) => `שיא ${days}`,
+  detail: 'פירוט',
   shemaColumn: 'ק״ש',
   notApplicable: '–',
-  totalColumn: 'מתוך',
-  learningDays: 'ימים עם לימוד',
   wornItems: 'תפילין וטלית',
-  streaks: 'רצפים',
-  currentStreak: 'נוכחי',
-  bestStreak: 'שיא',
-  shelf: 'מדף',
 } as const

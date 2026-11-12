@@ -19,50 +19,86 @@ function cells(table: HTMLElement, rowName: string) {
     .map((cell) => cell.textContent)
 }
 
-function trendTicks() {
-  return visibleAll('.trend-ticks span')
-    .map((tick) => tick.textContent)
-    .filter(Boolean)
+const WEEK_AND_MONTH = [
+  ...days('2026-10-19', '2026-10-23', { prayers: allMinyan }),
+  day('2026-10-24', { prayers: { shacharit: 'minyan', musaf: 'alone' } }),
+  day('2026-10-25', { prayers: { shacharit: 'minyan' }, torah: true }),
+  day('2026-10-26', { prayers: { shacharit: 'minyan', mincha: 'alone' }, torah: true }),
+  day('2026-10-27', { prayers: { shacharit: 'minyan', maariv: 'shema' }, torah: true }),
+]
+
+function figures() {
+  return Object.fromEntries(visibleAll('dt').map((term) => [term.textContent, term.nextElementSibling?.textContent]))
 }
+
+const starNames =(line: HTMLElement) =>
+  within(line)
+    .getAllByRole('img')
+    .map((star) => star.getAttribute('aria-label'))
+
+const starLabels = (line: HTMLElement) =>
+  Array.from(line.querySelectorAll('.star-line-label'))
+    .map((label) => label.textContent)
+    .filter(Boolean)
+
+const trendTicks = (unit: string) => starLabels(screen.getByRole('group', { name: unit }))
 
 describe('stats', () => {
   beforeEach(resetDb)
   freezeDate(new Date(2026, 9, 28, 10).getTime())
 
-  it('shows this week per prayer, then this month', async () => {
+  it('leads with the prayers במניין out of the period’s prayers, counting today once marked', async () => {
     await db.days.bulkPut([
-      ...days('2026-10-19', '2026-10-23', { prayers: allMinyan, torah: true }),
+      ...days('2026-10-19', '2026-10-23', { prayers: allMinyan }),
       day('2026-10-24', { prayers: { shacharit: 'minyan', musaf: 'alone' } }),
-      day('2026-10-26', { prayers: { shacharit: 'minyan', mincha: 'alone' }, torah: true }),
+      day('2026-10-26', { prayers: { shacharit: 'minyan', mincha: 'alone' } }),
+      day('2026-10-28', { prayers: { shacharit: 'minyan' } }),
     ])
     renderAt('/tabs/stats')
 
-    const totals = await screen.findByRole('table', { name: 'לפי תפילה' })
-
-    await waitFor(() => expect(cells(totals, 'שחרית')).toEqual(['1', '0', '0', '4']))
-    expect(cells(totals, 'מנחה')).toEqual(['0', '1', '–', '4'])
-    expect(within(totals).queryByRole('rowheader', { name: 'תורה' })).not.toBeInTheDocument()
-    expect(cells(await screen.findByRole('table', { name: 'תורה' }), 'ימים עם לימוד')).toEqual(['1 מתוך 4'])
+    expect(await screen.findByRole('heading', { name: '2 במניין מתוך 10 תפילות' })).toBeInTheDocument()
 
     ionChange(await ionElement('ion-segment'), 'month')
 
-    await waitFor(() => expect(cells(totals, 'שחרית')).toEqual(['7', '0', '0', '10']))
-    expect(cells(totals, 'מוסף')).toEqual(['0', '1', '–', '1'])
+    expect(await screen.findByRole('heading', { name: '18 במניין מתוך 29 תפילות' })).toBeInTheDocument()
   })
 
-  it('counts ק״ש בלבד per prayer, with a dash where it does not apply', async () => {
-    await db.days.bulkPut([
-      day('2026-10-25', { prayers: { shacharit: 'shema', mincha: 'alone', maariv: 'shema' } }),
-      day('2026-10-26', { prayers: { shacharit: 'minyan', maariv: 'shema' } }),
-    ])
+  it('shows three figures and a line per prayer with its count, streak and best, then this month', async () => {
+    await db.days.bulkPut(WEEK_AND_MONTH)
     renderAt('/tabs/stats')
 
-    const totals = await screen.findByRole('table', { name: 'לפי תפילה' })
+    const lines = await screen.findByRole('table', { name: 'לפי תפילה' })
 
-    expect(within(totals).getByRole('columnheader', { name: 'ק״ש' })).toBeInTheDocument()
-    await waitFor(() => expect(cells(totals, 'שחרית')).toEqual(['1', '0', '1', '4']))
-    expect(cells(totals, 'מנחה')).toEqual(['0', '1', '–', '4'])
-    expect(cells(totals, 'ערבית')).toEqual(['0', '0', '2', '4'])
+    await waitFor(() => expect(cells(lines, 'שחרית')).toEqual(['3 מתוך 3', '9 ברצף', 'שיא 9']))
+    expect(cells(lines, 'מנחה')).toEqual(['0 מתוך 3', '0 ברצף', 'שיא 5'])
+    expect(cells(lines, 'ערבית')).toEqual(['0 מתוך 3', '0 ברצף', 'שיא 5'])
+    expect(cells(lines, 'תורה')).toEqual(['3 מתוך 3', '3 ברצף', 'שיא 3'])
+    expect(within(lines).queryByRole('rowheader', { name: 'מוסף' })).not.toBeInTheDocument()
+    expect(figures()).toEqual({ ביחידות: '1', 'ק״ש בלבד': '1', 'ימי לימוד': '3' })
+
+    ionChange(await ionElement('ion-segment'), 'month')
+
+    await waitFor(() => expect(cells(lines, 'שחרית')).toEqual(['9 מתוך 9', '9 ברצף', 'שיא 9']))
+    expect(cells(lines, 'מוסף')).toEqual(['0 מתוך 1', '', ''])
+    expect(figures()).toEqual({ ביחידות: '2', 'ק״ש בלבד': '1', 'ימי לימוד': '3' })
+  })
+
+  it('details ביחידות and ק״ש per prayer, with a dash where ק״ש does not apply', async () => {
+    await db.days.bulkPut(WEEK_AND_MONTH)
+    renderAt('/tabs/stats')
+
+    const detail = await screen.findByRole('table', { name: 'פירוט' })
+
+    expect(within(detail).getByRole('columnheader', { name: 'ביחידות' })).toBeInTheDocument()
+    expect(within(detail).getByRole('columnheader', { name: 'ק״ש' })).toBeInTheDocument()
+    await waitFor(() => expect(cells(detail, 'שחרית')).toEqual(['0', '0']))
+    expect(cells(detail, 'מנחה')).toEqual(['1', '–'])
+    expect(cells(detail, 'ערבית')).toEqual(['0', '1'])
+    expect(within(detail).queryByRole('rowheader', { name: 'מוסף' })).not.toBeInTheDocument()
+
+    ionChange(await ionElement('ion-segment'), 'month')
+
+    await waitFor(() => expect(cells(detail, 'מוסף')).toEqual(['1', '–']))
   })
 
   it('shows how many days תפילין and טלית were worn, leaving שבת out of תפילין', async () => {
@@ -76,53 +112,64 @@ describe('stats', () => {
 
     const worn = await screen.findByRole('table', { name: 'תפילין וטלית' })
 
-    await waitFor(() => expect(cells(worn, 'תפילין')).toEqual(['2 מתוך 4']))
-    expect(cells(worn, 'טלית')).toEqual(['1 מתוך 4'])
+    await waitFor(() => expect(cells(worn, 'תפילין')).toEqual(['2 מתוך 3']))
+    expect(cells(worn, 'טלית')).toEqual(['1 מתוך 3'])
 
     ionChange(await ionElement('ion-segment'), 'month')
 
-    await waitFor(() => expect(cells(worn, 'תפילין')).toEqual(['3 מתוך 6']))
-    expect(cells(worn, 'טלית')).toEqual(['3 מתוך 7'])
+    await waitFor(() => expect(cells(worn, 'תפילין')).toEqual(['3 מתוך 5']))
+    expect(cells(worn, 'טלית')).toEqual(['3 מתוך 6'])
   })
 
-  it('shows current and best streaks', async () => {
-    await db.days.bulkPut([
-      ...days('2026-10-10', '2026-10-15', { prayers: { shacharit: 'minyan' } }),
-      ...days('2026-10-25', '2026-10-27', { prayers: { shacharit: 'minyan' }, torah: true }),
-    ])
-    renderAt('/tabs/stats')
-
-    const table = await screen.findByRole('table', { name: 'רצפים' })
-
-    await waitFor(() => expect(cells(table, 'שחרית')).toEqual(['3', '6']))
-    expect(cells(table, 'תורה')).toEqual(['3', '3'])
-    expect(cells(table, 'ערבית')).toEqual(['0', '0'])
-  })
-
-  it('charts this week by day, with the shelves under the tables', async () => {
+  it('draws this week as a line of day stars, speaking each tracked day so far', async () => {
     await db.days.bulkPut([day('2026-10-26', { prayers: { shacharit: 'minyan', mincha: 'alone', maariv: 'shema' } })])
     renderAt('/tabs/stats')
 
-    expect(await screen.findByRole('group', { name: 'לפי יום' })).toBeInTheDocument()
-    expect(await screen.findByRole('img', { name: /יום שני 26\.10: 1 במניין, 2 ביחידות או ק״ש, מתוך 3/ })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'מדף' })).toBeInTheDocument()
+    const line = await screen.findByRole('group', { name: 'לפי יום' })
+
+    await waitFor(() =>
+      expect(starNames(line)).toEqual([
+        'יום שני 26.10: 1 במניין, 2 ביחידות או ק״ש, מתוך 3',
+        'יום שלישי 27.10: 0 במניין, 0 ביחידות או ק״ש, מתוך 3',
+      ]),
+    )
+    expect(starLabels(line)).toEqual(['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'])
+    expect(screen.queryByRole('heading', { name: 'מדף' })).not.toBeInTheDocument()
   })
 
-  it('shows all time since the first record, without the shelves', async () => {
+  it('shows all time since the first record, one star per week', async () => {
     await db.days.bulkPut([
       ...days('2026-09-14', '2026-09-18', { prayers: { shacharit: 'minyan' } }),
       day('2026-10-26', { prayers: { shacharit: 'minyan', mincha: 'alone' } }),
     ])
     renderAt('/tabs/stats')
 
-    const totals = await screen.findByRole('table', { name: 'לפי תפילה' })
+    const lines = await screen.findByRole('table', { name: 'לפי תפילה' })
 
     ionChange(await ionElement('ion-segment'), 'all')
 
-    await waitFor(() => expect(cells(totals, 'שחרית')).toEqual(['6', '0', '0', '45']))
-    expect(screen.getByRole('group', { name: 'לפי שבוע' })).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: /25\.10–28\.10: 1 במניין, 1 ביחידות או ק״ש, מתוך 9/ })).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'מדף' })).not.toBeInTheDocument()
+    await waitFor(() => expect(cells(lines, 'שחרית')).toEqual(['6 מתוך 44', '0 ברצף', 'שיא 5']))
+
+    const line = screen.getByRole('group', { name: 'לפי שבוע' })
+
+    expect(starNames(line)).toContain('25.10–28.10: 1 במניין, 1 ביחידות או ק״ש, מתוך 9')
+    expect(starNames(line)[0]).toMatch(/^14\.9–19\.9: 5 במניין, 0 ביחידות או ק״ש, מתוך \d+$/)
+  })
+
+  it('draws a + for a week with nothing marked, as for a day', async () => {
+    await db.days.bulkPut([
+      ...days('2026-09-14', '2026-09-18', { prayers: { shacharit: 'alone' } }),
+      day('2026-10-26', { prayers: { shacharit: 'minyan' } }),
+    ])
+    renderAt('/tabs/stats')
+
+    ionChange(await ionElement('ion-segment'), 'all')
+
+    const emptyWeek = await screen.findByRole('img', { name: /^20\.9–26\.9: 0 במניין, 0 ביחידות או ק״ש/ })
+    const aloneWeek = screen.getByRole('img', { name: /^14\.9–19\.9: 0 במניין, 5 ביחידות או ק״ש/ })
+
+    expect(emptyWeek.querySelector('.star-unmarked')).not.toBeNull()
+    expect(aloneWeek.querySelector('.star-unmarked')).toBeNull()
   })
 
   it('charts a long history by quarter, marking the axis with the year on each first quarter', async () => {
@@ -135,8 +182,8 @@ describe('stats', () => {
     ionChange(await ionElement('ion-segment'), 'all')
 
     expect(await screen.findByRole('group', { name: 'לפי רבעון' })).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: /ינואר–מרץ 2026: 1 במניין, 1 ביחידות או ק״ש, מתוך \d+/ })).toBeInTheDocument()
-    expect(trendTicks()).toEqual(['2023', '2024', '2025', '2026'])
+    expect(screen.getByRole('img', { name: /^ינואר–מרץ 2026: 1 במניין, 1 ביחידות או ק״ש, מתוך \d+$/ })).toBeInTheDocument()
+    expect(trendTicks('לפי רבעון')).toEqual(['2023', '2024', '2025', '2026'])
   })
 
   it('labels a first quarter that starts at the first record', async () => {
@@ -146,7 +193,7 @@ describe('stats', () => {
     ionChange(await ionElement('ion-segment'), 'all')
 
     await screen.findByRole('group', { name: 'לפי רבעון' })
-    expect(trendTicks()).toEqual(['2023', '2024', '2025', '2026'])
+    expect(trendTicks('לפי רבעון')).toEqual(['2023', '2024', '2025', '2026'])
   })
 
   it('charts a very long history by year', async () => {
@@ -159,16 +206,28 @@ describe('stats', () => {
     ionChange(await ionElement('ion-segment'), 'all')
 
     expect(await screen.findByRole('group', { name: 'לפי שנה' })).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: /(^| · )2026: 1 במניין, 0 ביחידות או ק״ש, מתוך \d+/ })).toBeInTheDocument()
-    expect(trendTicks()).toEqual(['2015', '2017', '2019', '2021', '2023', '2025'])
+    expect(screen.getByRole('img', { name: /^2026: 1 במניין, 0 ביחידות או ק״ש, מתוך \d+$/ })).toBeInTheDocument()
+    expect(trendTicks('לפי שנה')).toEqual(['2015', '2017', '2019', '2021', '2023', '2025'])
   })
 
-  it('leaves days before tracking out of a shelf’s count', async () => {
-    await db.days.put(day('2026-10-27', { prayers: { shacharit: 'minyan' } }))
+  it('draws this month as a line of day stars, numbering the 1st, every 5th day and today, leaving room around today', async () => {
+    await db.days.bulkPut([
+      day('2026-10-27', { prayers: { shacharit: 'minyan' } }),
+      day('2026-10-28', { prayers: { maariv: 'alone' } }),
+    ])
     renderAt('/tabs/stats')
 
-    expect(await screen.findByRole('img', { name: '1 מתוך 2 הימים האחרונים במניין' })).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: '0 מתוך 2 הימים האחרונים עם לימוד' })).toBeInTheDocument()
+    ionChange(await ionElement('ion-segment'), 'month')
+
+    const line = await screen.findByRole('group', { name: 'לפי יום' })
+
+    await waitFor(() =>
+      expect(starNames(line)).toEqual([
+        'יום שלישי 27.10: 1 במניין, 0 ביחידות או ק״ש, מתוך 3',
+        'יום רביעי 28.10: 0 במניין, 1 ביחידות או ק״ש, מתוך 1',
+      ]),
+    )
+    expect(starLabels(line)).toEqual(['1', '5', '10', '15', '20', '25', '28'])
   })
 
   it('explains the empty state', async () => {

@@ -1,7 +1,14 @@
 ion-searchbar.learning-log-search {
+  --background: var(--app-fill);
+  --color: var(--chalk);
+  --placeholder-color: var(--app-label-secondary);
+  --icon-color: var(--app-label-secondary);
+  --clear-button-color: var(--app-label-secondary);
+  --border-radius: 10px;
   padding-inline: 16px;
   padding-bottom: 0;
 }
+
 ion-label.learning-log-row p {
   margin: 0;
   overflow-wrap: anywhere;

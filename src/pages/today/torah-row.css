@@ -1,0 +1,41 @@
+.torah-row-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+}
+
+.torah-check {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin: 0 -9px;
+}
+
+.torah-check .round-check {
+  width: 26px;
+  height: 26px;
+  font-size: 17px;
+}
+
+.torah-note {
+  --padding-top: 8px;
+  --padding-bottom: 0;
+  --placeholder-color: var(--app-label-secondary);
+  --placeholder-opacity: 1;
+  font-size: 0.9375rem;
+}
+
+.torah-note-line {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  padding-bottom: 6px;
+}
+
+.torah-note-line .torah-note {
+  flex: 1;
+  min-width: 0;
+}

@@ -67,7 +67,7 @@ function LearningForm({ date, records, target, onClose }: LearningFormProps) {
 
   return (
     <>
-      <IonHeader className="leather-header">
+      <IonHeader className="app-header">
         <IonToolbar>
           <IonButtons slot="start">
             <IonButton onClick={onClose}>{COMMON_COPY.cancel}</IonButton>

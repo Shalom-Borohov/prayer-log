@@ -9,11 +9,12 @@ import {
   weekStart,
   yearStart,
 } from './logicalDay'
-import { prayersForDay } from './prayersForDay'
-import { type DateRange, periodTotals, type StatsPeriod } from './totals'
+import { type DateRange, periodTotals } from './totals'
 import type { DayRecord, PrayerTally } from './types'
 
 export type TrendUnit = 'day' | 'week' | 'month' | 'quarter' | 'year'
+
+export type BucketUnit = Exclude<TrendUnit, 'day'>
 
 export interface TrendBucket {
   start: string
@@ -44,14 +45,7 @@ function monthIndex(date: string): number {
 const columnCount = ({ from, to }: DateRange, monthsPerColumn: number) =>
   Math.floor(monthIndex(to) / monthsPerColumn) - Math.floor(monthIndex(from) / monthsPerColumn) + 1
 
-export function trendUnit(period: StatsPeriod, range: DateRange): TrendUnit {
-  if (period === 'week') {
-    return 'day'
-  }
-  if (period === 'month') {
-    return 'week'
-  }
-
+export function trendUnit(range: DateRange): BucketUnit {
   if (range.from >= addDays(range.to, 1 - WEEKLY_SPAN_WEEKS * DAYS_PER_WEEK)) {
     return 'week'
   }
@@ -75,22 +69,7 @@ export function trendBuckets(records: DayRecord[], range: DateRange, unit: Trend
 
   return starts.map((start, index) => {
     const end = index + 1 < starts.length ? addDays(starts[index + 1], -1) : range.to
-    const tally = periodTotals(records, start, end < today ? end : addDays(today, -1), today).prayers
 
-    return { start, end, tally: start <= today && today <= end ? addMarkedToday(tally, records, today) : tally }
+    return { start, end, tally: periodTotals(records, start, end, today).prayers }
   })
-}
-
-function addMarkedToday(tally: PrayerTally, records: DayRecord[], today: string): PrayerTally {
-  const record = records.find((day) => day.date === today)
-
-  for (const prayer of prayersForDay(today)) {
-    const mark = record?.prayers[prayer]
-    if (mark) {
-      tally[mark] += 1
-      tally.total += 1
-    }
-  }
-
-  return tally
 }

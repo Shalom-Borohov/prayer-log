@@ -40,8 +40,10 @@ export function streakLabel(days: number): string | null {
     return null
   }
 
-  return days === 1 ? FORMAT_COPY.oneDayStreak : FORMAT_COPY.daysStreak(days)
+  return FORMAT_COPY.streak(days)
 }
+
+export const dayOfMonth = (date: string) => parseIsoDate(date).getDate()
 
 export function gregorianLabel(date: string): string {
   const parsed = parseIsoDate(date)
