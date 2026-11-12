@@ -1,0 +1,12 @@
+.week-chart {
+  margin-top: 8px;
+}
+
+.week-chart .star-chart {
+  --chart-head: 24px;
+  padding: 6px 14px 4px;
+}
+
+.week-chart .star-column-head {
+  font-size: 0.8125rem;
+}

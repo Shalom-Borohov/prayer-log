@@ -57,7 +57,7 @@ describe('לוח when the app comes back in a new month', () => {
 
     await leaveAndComeBackAt(firstMorningOfNovember)
 
-    expect(await cell(1)).toBeInTheDocument()
+    expect(await cell(15)).toBeInTheDocument()
     expect(screen.getByText('ספטמבר 2026')).toBeInTheDocument()
 
     const next = await buttonByLabel('החודש הבא')
@@ -84,11 +84,11 @@ describe('לוח when the app comes back in a new month', () => {
 
   it('shows the new month on the way back from a day opened before the month changed', async () => {
     await openOctober()
-    fireEvent.click(await cell(30))
-    await waitFor(() => expect(currentPath()).toBe('/tabs/calendar/2026-10-30'))
+    fireEvent.click(await cell(26))
+    await waitFor(() => expect(currentPath()).toBe('/tabs/calendar/2026-10-26'))
 
     await leaveAndComeBackAt(firstMorningOfNovember)
-    expect(currentPath()).toBe('/tabs/calendar/2026-10-30')
+    expect(currentPath()).toBe('/tabs/calendar/2026-10-26')
     fireEvent.click(await ionElement('ion-back-button'))
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/calendar'))

@@ -1,0 +1,82 @@
+.attendance {
+  flex: none;
+  display: flex;
+  width: 140px;
+  height: 34px;
+  padding: 2px;
+  border-radius: 9px;
+  background: var(--app-fill);
+}
+
+.attendance:has(.attendance-shema) {
+  width: 192px;
+}
+
+.attendance button {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--app-segment-text);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  touch-action: manipulation;
+  transition:
+    background-color 160ms ease-out,
+    color 160ms ease-out;
+}
+
+.attendance button::after {
+  content: '';
+  position: absolute;
+  inset: -7px -1px;
+}
+
+.attendance button + button::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 8px;
+  width: 1px;
+  height: 14px;
+  background: var(--app-divider);
+}
+
+.attendance button[aria-pressed='true']::before,
+.attendance button[aria-pressed='true'] + button::before {
+  display: none;
+}
+
+.attendance button[aria-pressed='true'] {
+  background: var(--app-quiet-thumb);
+  color: var(--chalk);
+  font-weight: 600;
+}
+
+.attendance .attendance-minyan[aria-pressed='true'] {
+  background: var(--app-raised);
+  color: var(--app-on-raised);
+}
+
+.attendance button:active {
+  transform: scale(0.97);
+}
+
+.attendance button:focus-visible {
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .attendance button {
+    transition: none;
+  }
+
+  .attendance button:active {
+    transform: none;
+  }
+}

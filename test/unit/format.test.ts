@@ -29,10 +29,10 @@ describe('weekdayName', () => {
 })
 
 describe('shortWeekday', () => {
-  it('uses a letter with geresh', () => {
-    expect(shortWeekday('2026-10-25')).toBe('א׳')
-    expect(shortWeekday('2026-10-30')).toBe('ו׳')
-    expect(shortWeekday('2026-10-31')).toBe('ש׳')
+  it('uses the plain letter, as the star charts head their columns', () => {
+    expect(shortWeekday('2026-10-25')).toBe('א')
+    expect(shortWeekday('2026-10-30')).toBe('ו')
+    expect(shortWeekday('2026-10-31')).toBe('ש')
   })
 })
 
@@ -58,8 +58,8 @@ describe('dateTimeLabel', () => {
 })
 
 describe('streakLabel', () => {
-  it('reads as plain Hebrew counts, with nothing at zero', () => {
-    expect([0, 1, 2, 12].map(streakLabel)).toEqual([null, 'יום אחד ברצף', '2 ימים ברצף', '12 ימים ברצף'])
+  it('reads as a number before ברצף, with nothing at zero', () => {
+    expect([0, 1, 2, 12].map(streakLabel)).toEqual([null, '1 ברצף', '2 ברצף', '12 ברצף'])
   })
 })
 

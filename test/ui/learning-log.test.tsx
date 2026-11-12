@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/data/db'
 import { freezeDate } from '../helpers/clock'
@@ -15,7 +15,7 @@ const LOG = [
   day('2026-10-27', { torahNote: 'פרשת השבוע' }),
 ]
 
-const torahTable = () => screen.findByRole('table', { name: 'תורה' })
+const wornCard = () => screen.findByRole('table', { name: 'תפילין וטלית' })
 
 const visibleRows = () => visibleAll('.learning-log-row')
 
@@ -23,17 +23,17 @@ describe('the מה למדתי entrance on סטטיסטיקה', () => {
   beforeEach(resetDb)
   freezeDate(new Date(2026, 9, 28, 10).getTime())
 
-  it('ends the תורה table on every period and opens the list', async () => {
+  it('sits below the תפילין וטלית card on every period and opens the list', async () => {
     await db.days.bulkPut(LOG)
     renderAt('/tabs/stats')
 
-    expect(await within(await torahTable()).findByText('מה למדתי')).toBeInTheDocument()
+    await expectInOrder(['תפילין וטלית', 'מה למדתי'])
 
     ionChange(await ionElement('ion-segment'), 'month')
-    expect(within(await torahTable()).getByText('מה למדתי')).toBeInTheDocument()
+    expect(await screen.findByText('מה למדתי')).toBeInTheDocument()
 
     ionChange(await ionElement('ion-segment'), 'all')
-    fireEvent.click(within(await torahTable()).getByText('מה למדתי'))
+    fireEvent.click(await screen.findByText('מה למדתי'))
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/stats/learning'))
   })
@@ -42,7 +42,8 @@ describe('the מה למדתי entrance on סטטיסטיקה', () => {
     await db.days.bulkPut([day('2026-10-26', { prayers: allMinyan, torah: true })])
     renderAt('/tabs/stats')
 
-    expect(within(await torahTable()).queryByText('מה למדתי')).not.toBeInTheDocument()
+    await wornCard()
+    expect(screen.queryByText('מה למדתי')).not.toBeInTheDocument()
   })
 })
 

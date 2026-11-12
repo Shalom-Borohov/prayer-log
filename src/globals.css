@@ -1,0 +1,169 @@
+body {
+  background: var(--night-ground);
+  color: var(--chalk);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+
+input,
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+button:focus-visible,
+[role='checkbox']:focus-visible {
+  outline: 2px solid var(--amber);
+}
+
+::selection {
+  background: rgba(var(--ion-color-primary-rgb), 0.3);
+}
+
+ion-content::part(scroll) {
+  scrollbar-width: none;
+}
+
+ion-list-header {
+  --color: var(--app-label-secondary);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  min-height: 2rem;
+  padding-block-start: 1rem;
+  padding-inline-start: 32px;
+}
+
+ion-tab-button {
+  --padding-top: 2px;
+}
+
+ion-tab-button ion-label {
+  font-size: 0.6875rem;
+}
+
+ion-note {
+  --color: var(--app-label-secondary);
+}
+
+ion-list.list-inset {
+  border-radius: var(--card-radius);
+  background: var(--night-card);
+}
+
+ion-list.list-inset ion-item {
+  --background: var(--night-card);
+  --background-activated: var(--chalk);
+  --border-color: var(--app-separator);
+  --detail-icon-color: var(--app-label-secondary);
+}
+
+.group-label {
+  margin: 22px 32px 6px;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--app-label-secondary);
+}
+
+.list-footer {
+  display: block;
+  margin-block: -8px 16px;
+  padding-inline: 32px;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  color: var(--app-label-secondary);
+}
+
+.list-footer + .list-footer {
+  margin-top: 0;
+}
+
+ion-buttons ion-button,
+ion-buttons ion-back-button,
+.update-bar ion-button {
+  position: relative;
+}
+
+ion-buttons ion-button::after,
+ion-buttons ion-back-button::after,
+.update-bar ion-button::after,
+ion-searchbar .searchbar-clear-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  translate: -50% -50%;
+}
+
+.inset-segment {
+  width: calc(100% - 32px);
+  margin: 16px 16px 0;
+}
+
+.inset-segment ion-segment-button {
+  min-height: 44px;
+  margin-block: 0;
+  font-size: 0.9375rem;
+}
+
+.inset-segment ion-segment-button::part(indicator) {
+  top: 2px;
+  bottom: 2px;
+}
+
+ion-segment {
+  --background: var(--app-fill);
+}
+
+ion-segment-button {
+  --color: var(--app-segment-text);
+  --color-checked: var(--app-on-raised);
+  --indicator-color: var(--app-raised);
+}
+
+.inset-group {
+  margin: 12px 16px;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: var(--night-card);
+}
+
+.ruled-table {
+  width: calc(100% - 32px);
+  margin: 0 16px 24px;
+  border-collapse: collapse;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: var(--night-card);
+  font-size: 1rem;
+}
+
+.ruled-table th,
+.ruled-table td {
+  padding: 11px 6px;
+  border-bottom: 1px solid var(--app-separator);
+  text-align: start;
+  font-weight: 400;
+}
+
+.ruled-table :is(th, td):first-child {
+  padding-inline-start: 16px;
+}
+
+.ruled-table :is(th, td):last-child {
+  padding-inline-end: 16px;
+}
+
+.ruled-table td {
+  text-align: end;
+  font-weight: 600;
+}
+
+.ruled-table tr:last-child th,
+.ruled-table tr:last-child td {
+  border-bottom: 0;
+}

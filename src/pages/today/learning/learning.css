@@ -8,7 +8,6 @@
 
 .learning-row:focus-visible,
 .add-learning:focus-visible {
-  outline: 2px solid var(--ion-color-primary);
   outline-offset: -2px;
 }
 
@@ -32,7 +31,7 @@
 }
 
 .learning-entry {
-  padding-inline-start: 40px;
+  padding-inline-start: 38px;
   color: var(--app-label);
 }
 
@@ -52,7 +51,8 @@ ion-picker.learning-picker {
 }
 
 .learning-hint .round-check {
-  margin-inline: 1px;
+  width: 26px;
+  height: 26px;
 }
 
 .add-learning {

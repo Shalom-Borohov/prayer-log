@@ -33,18 +33,31 @@ function emptyTotals(): PeriodTotals {
   }
 }
 
-function count(tally: PrayerTally, mark: Attendance | undefined) {
-  tally.total += 1
+function count(tally: PrayerTally, mark: Attendance | undefined, onlyIfMarked: boolean) {
   if (mark) {
     tally[mark] += 1
   }
+  if (mark || !onlyIfMarked) {
+    tally.total += 1
+  }
 }
 
-function countDay(tally: DayTally, done: boolean | undefined) {
-  tally.total += 1
+function countDay(tally: DayTally, done: boolean | undefined, onlyIfMarked: boolean) {
   if (done) {
     tally.days += 1
   }
+  if (done || !onlyIfMarked) {
+    tally.total += 1
+  }
+}
+
+export function dayTally(record: DayRecord | undefined, date: string, today: string): PrayerTally {
+  const tally = emptyTally()
+  for (const prayer of prayersForDay(date)) {
+    count(tally, record?.prayers[prayer], date === today)
+  }
+
+  return tally
 }
 
 export function trackingStart(records: DayRecord[]): string | null {
@@ -73,15 +86,25 @@ export function periodTotals(records: DayRecord[], from: string, to: string, tod
   const byDate = new Map(records.map((day) => [day.date, day]))
   for (const date of daysInRange(start > from ? start : from, to < today ? to : today)) {
     const record = byDate.get(date)
-    countDay(totals.torah, record?.torah)
+    const inProgress = date === today
+    countDay(totals.torah, record?.torah, inProgress)
     for (const item of wornItemsForDay(date)) {
-      countDay(totals[item], record?.[item])
+      countDay(totals[item], record?.[item], inProgress)
     }
     for (const prayer of prayersForDay(date)) {
-      count(totals.prayers, record?.prayers[prayer])
-      count(totals.perPrayer[prayer], record?.prayers[prayer])
+      count(totals.prayers, record?.prayers[prayer], inProgress)
+      count(totals.perPrayer[prayer], record?.prayers[prayer], inProgress)
     }
   }
 
   return totals
+}
+
+export function dayTallies(records: DayRecord[], dates: string[], today: string): (PrayerTally | null)[] {
+  const start = trackingStart(records)
+  const byDate = new Map(records.map((day) => [day.date, day]))
+
+  return dates.map((date) =>
+    start === null || date < start || date > today ? null : dayTally(byDate.get(date), date, today),
+  )
 }

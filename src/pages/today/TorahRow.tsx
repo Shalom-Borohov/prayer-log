@@ -1,17 +1,18 @@
 import { IonIcon, IonInput } from '@ionic/react'
 import { add, checkmark } from 'ionicons/icons'
 import { useState } from 'react'
-import { Shelf } from '../../components/Shelf'
 import { COMMON_COPY } from '../../copy/common'
 import { setTorah, setTorahNote } from '../../data/repo'
 import { streakLabel } from '../../domain/format'
 import { learningHints, startingEntry } from '../../domain/learningPlaces'
-import { type SlotState, shelfLabel } from '../../domain/shelf'
 import type { DayRecord, LearningEntry } from '../../domain/types'
 import { useSave } from '../../hooks/useSave'
 import { TODAY_COPY } from './copy'
 import { LearningRows } from './learning/LearningRows'
 import { type LearningTarget, LearningSheet } from './learning/LearningSheet'
+import './checks.css'
+import './day-row.css'
+import './torah-row.css'
 
 interface TorahRowProps {
   date: string
@@ -20,7 +21,6 @@ interface TorahRowProps {
   entries: LearningEntry[] | undefined
   records: DayRecord[]
   streak: number
-  slots: SlotState[]
 }
 
 interface SheetState {
@@ -28,7 +28,7 @@ interface SheetState {
   open: boolean
 }
 
-export function TorahRow({ date, learned, note, entries, records, streak, slots }: TorahRowProps) {
+export function TorahRow({ date, learned, note, entries, records, streak }: TorahRowProps) {
   const save = useSave()
   const [typed, setTyped] = useState<string | null>(null)
   const [sheet, setSheet] = useState<SheetState>({ target: null, open: false })
@@ -41,8 +41,8 @@ export function TorahRow({ date, learned, note, entries, records, streak, slots 
   const openSheet = (entry: LearningEntry, index: number | null) => setSheet({ target: { entry, index }, open: true })
 
   return (
-    <section className="day-row hue-torah" role="group" aria-label={COMMON_COPY.torah}>
-      <div className="day-row-top">
+    <section className="day-row torah-row" role="group" aria-label={COMMON_COPY.torah}>
+      <div className="torah-row-main">
         <button
           type="button"
           role="checkbox"
@@ -53,11 +53,10 @@ export function TorahRow({ date, learned, note, entries, records, streak, slots 
         >
           <span className="round-check">{learned && <IonIcon icon={checkmark} aria-hidden="true" />}</span>
         </button>
-        <div className="day-row-title">
+        <div className="day-row-name">
           <h2>{COMMON_COPY.learnedTorah}</h2>
-          <p>{streakLabel(streak)}</p>
+          <span className="streak-badge">{streakLabel(streak)}</span>
         </div>
-        <Shelf slots={slots} label={shelfLabel(slots, 'torah')} stamp />
       </div>
       <LearningRows
         entries={entries}

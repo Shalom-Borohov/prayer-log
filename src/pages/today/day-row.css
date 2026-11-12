@@ -1,0 +1,30 @@
+.day-row {
+  margin: 0 14px;
+}
+
+.day-row + .day-row {
+  border-top: 1px solid var(--app-separator);
+}
+
+.day-row-name {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.day-row-name h2 {
+  flex: none;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--app-label);
+}
+
+.streak-badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--amber);
+}

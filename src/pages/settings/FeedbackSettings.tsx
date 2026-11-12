@@ -44,7 +44,7 @@ function FeedbackForm({ onClose }: { onClose: () => void }) {
 
   return (
     <>
-      <IonHeader className="leather-header">
+      <IonHeader className="app-header">
         <IonToolbar>
           <IonButtons slot="start">
             <IonButton onClick={onClose}>{opened ? COMMON_COPY.close : COMMON_COPY.cancel}</IonButton>

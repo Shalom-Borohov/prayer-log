@@ -19,35 +19,34 @@
     inset-inline: 0;
     height: var(--status-bar-strip);
     z-index: 2147483647;
-    background: var(--leather-band);
+    background: var(--night-ground);
   }
 }
 
-ion-header.leather-header {
-  --ion-background-color: var(--leather-band);
-  background: var(--leather-band);
+ion-header.app-header {
+  background: var(--night-ground);
 }
 
-.leather-header ion-toolbar {
-  --background: var(--leather-band);
-  --color: var(--gold-leaf);
-  --border-color: transparent;
-  --ion-color-primary: var(--gold-leaf);
+.app-header ion-toolbar {
+  --ion-color-primary: var(--chalk);
 }
 
-.leather-header ion-title {
-  color: var(--gold-leaf);
+.app-header ion-title.title-large {
+  font-family: var(--title-font-family);
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: -0.3px;
 }
 
 ion-title.ion-cloned-element,
 ion-back-button.ion-cloned-element {
-  --color: var(--gold-leaf);
+  --color: var(--chalk);
 }
 
 .day-heading {
-  padding: 0 20px 14px;
-  color: var(--leather-band-text);
-  font-size: 0.9375rem;
+  padding: 0 16px 4px;
+  color: var(--amber);
+  font-size: 0.8125rem;
   line-height: 1.4;
 }
 
@@ -55,16 +54,11 @@ ion-back-button.ion-cloned-element {
   margin: 0;
 }
 
-.day-heading .holidays {
-  color: var(--gold-leaf);
-  font-weight: 600;
-}
-
-ion-header[collapse='condense'].leather-header::before {
+ion-header[collapse='condense'].app-header::before {
   content: '';
   position: absolute;
   inset-inline: 0;
   bottom: 100%;
   height: 100vh;
-  background: var(--leather-band);
+  background: var(--night-ground);
 }

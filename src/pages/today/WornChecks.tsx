@@ -5,6 +5,7 @@ import { setWorn } from '../../data/repo'
 import { wornItemsForDay } from '../../domain/prayersForDay'
 import type { DayRecord } from '../../domain/types'
 import { useSave } from '../../hooks/useSave'
+import './checks.css'
 
 export function WornChecks({ date, record }: { date: string; record: DayRecord | undefined }) {
   const save = useSave()
