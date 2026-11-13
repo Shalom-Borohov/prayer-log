@@ -6,6 +6,7 @@ import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
 import { buttonByLabel, cell, ionElement, shownText, visibleAll } from '../helpers/ionic'
 import { currentPath, renderAt } from '../helpers/renderAt'
+import { spineStatesOf } from '../helpers/shelves'
 
 const OCTOBER_LINE = 'אוקטובר 2026 · תשרי–חשון תשפ״ז'
 
@@ -13,7 +14,13 @@ const columnNamed = (start: string) => screen.findByRole('button', { name: (name
 
 const weekDates = () => visibleAll('.week-card-dates').map(shownText)
 
-const starsIn = (column: Element, state: string) => column.querySelectorAll(`.star-${state}`).length
+const spinesIn = (column: Element, state: string) => spineStatesOf(column).filter((spine) => spine === `spine-${state}`).length
+
+const dayColumns = () => visibleAll('.week-shelves-day')
+
+const weekCardOf = (column: Element) => visibleAll('.week-card').filter((card) => card.contains(column))[0]
+
+const rowLabelsOf = (week: Element) => Array.from(week.querySelectorAll('.week-shelves-label'), shownText)
 
 describe('calendar', () => {
   beforeEach(resetDb)
@@ -55,72 +62,80 @@ describe('calendar', () => {
 
     expect(shownText(await cell(15))).toBe('ה 15 ד׳')
 
-    const columns = visibleAll('.star-column')
+    const columns = dayColumns()
 
     expect(columns).toHaveLength(35)
     for (const column of columns) {
       const [, dayNumber, hebrewDay] = shownText(column).split(' ')
 
+      expect(hebrewDay).toMatch(/^[א-ת]+[׳״]?[א-ת]*$/)
       expect(column).toHaveAccessibleName(expect.stringMatching(new RegExp(`^${dayNumber} ${hebrewDay} `)))
     }
   })
 
-  it('rings today and dims the days ahead, with no stars and no way in', async () => {
+  it('marks today and dims the days ahead, with no spines and no way in', async () => {
     renderAt('/tabs/calendar')
 
     await cell(1)
 
-    const [todayColumn] = visibleAll('.star-column.is-today')
+    const [todayColumn] = visibleAll('.week-shelves-day.is-today')
     const ahead = await cell(31)
 
     expect(todayColumn).toHaveAccessibleName(expect.stringMatching(/^28 י״ז בחשון/))
-    expect(visibleAll('.star-column.is-today')).toHaveLength(1)
+    expect(visibleAll('.week-shelves-day.is-today')).toHaveLength(1)
     expect(ahead).toBeDisabled()
     expect(ahead).toHaveClass('is-dimmed')
-    expect(ahead.querySelectorAll('.star:not(.star-blank)')).toHaveLength(0)
+    expect(spineStatesOf(ahead).filter((spine) => spine !== 'spine-blank')).toHaveLength(0)
   })
 
-  it('draws a line for each prayer of the week, then תורה, with a star for each day', async () => {
+  it('puts the today mark under today’s day number, and on no other day', async () => {
+    renderAt('/tabs/calendar')
+
+    await cell(1)
+
+    const marks = visibleAll('.week-today-mark')
+
+    expect(marks).toHaveLength(1)
+    expect(marks[0].closest('.week-shelves-day')).toHaveAccessibleName(expect.stringMatching(/^28 י״ז בחשון/))
+  })
+
+  it('shelves a row for each prayer of the week, then תורה, with a spine for each day', async () => {
     await db.days.put(day('2026-10-15', { prayers: { shacharit: 'minyan' } }))
     await db.days.put(day('2026-10-20', { prayers: { shacharit: 'shema', maariv: 'minyan' }, tefillin: true }))
     renderAt('/tabs/calendar')
 
     const marked = await cell(20)
-    const [week] = visibleAll('.week-card').filter((card) => card.contains(marked))
 
-    expect(Array.from(week.querySelectorAll('.star-chart-labels span'), shownText)).toEqual([
-      'שחרית',
-      'מוסף',
-      'מנחה',
-      'ערבית',
-      'תורה',
-    ])
-    expect(starsIn(marked, 'shema')).toBe(1)
-    expect(starsIn(marked, 'done')).toBe(1)
-    expect(starsIn(marked, 'unmarked')).toBe(2)
-    expect(starsIn(marked, 'blank')).toBe(1)
+    expect(rowLabelsOf(weekCardOf(marked))).toEqual(['שחרית', 'מוסף', 'מנחה', 'ערבית', 'תורה'])
+    expect(spinesIn(marked, 'shema')).toBe(1)
+    expect(spinesIn(marked, 'done')).toBe(1)
+    expect(spinesIn(marked, 'unmarked')).toBe(2)
+    expect(spinesIn(marked, 'blank')).toBe(1)
+  })
+
+  it('gives the מוסף row a spine only on שבת and ראש חודש', async () => {
+    await db.days.put(day('2026-10-04', { prayers: { shacharit: 'minyan' } }))
+    renderAt('/tabs/calendar')
+
+    const musafRowIndex = rowLabelsOf(weekCardOf(await cell(18))).indexOf('מוסף')
+    const musafStates = dayColumns().map((column) => spineStatesOf(column)[musafRowIndex])
+
+    const musafDays = dayColumns()
+      .filter((_, index) => musafStates[index] !== 'spine-blank')
+      .map((column) => shownText(column).split(' ')[1])
+
+    expect(musafDays).toEqual(['24', '11', '12', '17', '10'])
   })
 
   it('leaves days before tracking started blank', async () => {
     await db.days.put(day('2026-10-15', { prayers: { shacharit: 'minyan' } }))
     renderAt('/tabs/calendar')
 
-    expect(starsIn(await cell(14), 'blank')).toBe(5)
-    expect(starsIn(await cell(16), 'unmarked')).toBe(4)
+    expect(spinesIn(await cell(14), 'blank')).toBe(5)
+    expect(spinesIn(await cell(16), 'unmarked')).toBe(4)
   })
 
-  it('runs a streak on to the card’s edge when it continues in the week before', async () => {
-    await db.days.put(day('2026-10-17', { prayers: { shacharit: 'minyan' } }))
-    await db.days.put(day('2026-10-18', { prayers: { shacharit: 'minyan' } }))
-    renderAt('/tabs/calendar')
-
-    const sunday = await cell(18)
-    const [week] = visibleAll('.week-card').filter((card) => card.contains(sunday))
-
-    expect(week.querySelectorAll('.streak-link')).toHaveLength(1)
-  })
-
-  it('marks a holiday’s day in amber and names the week’s holidays under its chart', async () => {
+  it('marks a holiday’s day in gold and names the week’s holidays under its chart', async () => {
     renderAt('/tabs/calendar')
 
     expect((await cell(11)).querySelector('.week-day-number')).toHaveClass('is-holiday')
@@ -141,7 +156,7 @@ describe('calendar', () => {
     expect(line.querySelector('[dir="ltr"]')).toHaveTextContent(/^11–12$/)
   })
 
-  it('dims the day number of the neighbouring month and keeps its stars', async () => {
+  it('dims the day number of the neighbouring month and keeps its spines', async () => {
     await db.days.put(day('2026-09-30', { prayers: { shacharit: 'minyan' } }))
     renderAt('/tabs/calendar')
 
@@ -150,7 +165,7 @@ describe('calendar', () => {
     expect(neighbour.querySelector('.week-day-number')).toHaveClass('is-outside')
     expect((await cell(1)).querySelector('.week-day-number')).not.toHaveClass('is-outside')
     expect(neighbour).toBeEnabled()
-    expect(starsIn(neighbour, 'done')).toBe(1)
+    expect(spinesIn(neighbour, 'done')).toBe(1)
   })
 
   it('opens a past day to edit it', async () => {

@@ -1,8 +1,10 @@
 import { addDays } from './logicalDay'
-import { starFor } from './stars'
+import { type ShelfKey, slotFor } from './shelf'
 import type { DayRecord, Streak, StreakKey } from './types'
 
-const qualifies = (record: DayRecord, key: StreakKey) => starFor(record, key) === 'done'
+export const hasStreak = (key: ShelfKey): key is StreakKey => key !== 'musaf'
+
+const qualifies = (record: DayRecord, key: StreakKey) => slotFor(record, key) === 'done'
 
 function streakOf(dates: string[], date: string, today: string): Streak {
   let run = 0

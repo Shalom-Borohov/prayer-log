@@ -26,6 +26,7 @@ import { dateTimeLabel } from '../../domain/format'
 import { useSave } from '../../hooks/useSave'
 import { useToast } from '../../hooks/useToast'
 import { type Tab, tabPath } from '../../navigation/paths'
+import { AppearanceSettings } from './AppearanceSettings'
 import { SETTINGS_COPY } from './copy'
 import { FeedbackSettings } from './FeedbackSettings'
 import { HistorySettings } from './HistorySettings'
@@ -74,6 +75,7 @@ export function SettingsPage({ tab }: { tab: Tab }) {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <AppearanceSettings />
         <IonListHeader>
           <IonLabel>{SETTINGS_COPY.backup}</IonLabel>
         </IonListHeader>

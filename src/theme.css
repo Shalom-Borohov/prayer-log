@@ -1,33 +1,99 @@
 :root {
-  --ion-font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Arial Hebrew', sans-serif;
-  --title-font-family: 'Frank Ruhl Libre', 'Heebo', serif;
+  color-scheme: light;
 
-  --night-ground: #0e1a33;
-  --night-card: #17264a;
-  --night-bar: #12203d;
-  --chalk: #f1efe6;
-  --amber: #e8a13a;
-  --today-ring: #d2513a;
+  --ion-font-family: -apple-system, BlinkMacSystemFont, 'SF Hebrew', 'Arial Hebrew', sans-serif;
+  --title-font-family: 'Frank Ruhl Libre', 'Times New Roman', serif;
 
-  --app-label: var(--chalk);
-  --app-label-secondary: #8f9bbb;
-  --app-label-tertiary: rgba(241, 239, 230, 0.35);
-  --app-separator: rgba(241, 239, 230, 0.08);
-  --app-fill: rgba(241, 239, 230, 0.09);
-  --app-raised: var(--chalk);
-  --app-on-raised: var(--night-ground);
-  --app-divider: rgba(241, 239, 230, 0.16);
-  --app-segment-text: rgba(241, 239, 230, 0.8);
-  --app-quiet-thumb: rgba(241, 239, 230, 0.2);
-  --app-label-dimmed: rgba(241, 239, 230, 0.85);
-  --app-control-ring: rgba(241, 239, 230, 0.55);
-  --chart-rule: rgba(241, 239, 230, 0.08);
+  --ground: #f2f2f7;
+  --surface: #ffffff;
+  --bar: #f9f9f9;
+  --tab-idle: #6c6c70;
+  --shell: #2b2320;
+  --on-shell: #e8d7ad;
+  --stamp: #e2c27a;
+  --accent: #8a5a12;
+  --today: #a87a1f;
+  --shelf-board: #b08d57;
+  --switch: var(--shell);
 
-  --star-done: 14px;
-  --star-alone: 6px;
-  --star-shema: 11px;
-  --star-ring-stroke: 1.5px;
-  --streak-line: rgba(241, 239, 230, 0.45);
-  --streak-line-width: 1.25px;
-  --card-radius: 20px;
+  --app-label: #1c1c1e;
+  --app-label-secondary: #6c6c70;
+  --app-label-tertiary: rgba(60, 60, 67, 0.3);
+  --app-separator: rgba(60, 60, 67, 0.29);
+  --app-fill: rgba(118, 118, 128, 0.12);
+  --app-raised: #ffffff;
+  --app-on-raised: #1c1c1e;
+
+  --hue-shacharit-deep: #1f4d3a;
+  --hue-shacharit: var(--hue-shacharit-deep);
+  --hue-musaf-deep: #5b3a6b;
+  --hue-musaf: var(--hue-musaf-deep);
+  --hue-mincha-deep: #7a2430;
+  --hue-mincha: var(--hue-mincha-deep);
+  --hue-maariv-deep: #1e3355;
+  --hue-maariv: var(--hue-maariv-deep);
+  --hue-torah-deep: #6b4423;
+  --hue-torah: var(--hue-torah-deep);
+
+  --spine-width: 16px;
+  --spine-height: 42px;
+  --spine-small-height: 28px;
+
+  --type-name: calc(24rem / 17);
+  --type-control: calc(15rem / 17);
+  --type-small: calc(13rem / 17);
+  --card-radius: 10px;
+}
+
+:root.ion-palette-dark {
+  color-scheme: dark;
+
+  --ground: #000000;
+  --surface: #1c1c1e;
+  --bar: #161616;
+  --tab-idle: #8e8e93;
+  --shell: #1f1916;
+  --accent: #d9ae4e;
+  --today: #d9ae4e;
+  --shelf-board: #806a5b;
+  --switch: #3a2f2a;
+
+  --app-label: #ffffff;
+  --app-label-secondary: #a1a1a8;
+  --app-label-tertiary: rgba(235, 235, 245, 0.3);
+  --app-separator: rgba(84, 84, 88, 0.65);
+  --app-fill: rgba(118, 118, 128, 0.24);
+  --app-raised: #636366;
+  --app-on-raised: #ffffff;
+
+  --hue-shacharit: #3d785c;
+  --hue-musaf: #835e98;
+  --hue-mincha: #b04a57;
+  --hue-maariv: #4a6a9e;
+  --hue-torah: #8e6438;
+}
+
+.hue-shacharit {
+  --hue: var(--hue-shacharit);
+  --hue-deep: var(--hue-shacharit-deep);
+}
+
+.hue-musaf {
+  --hue: var(--hue-musaf);
+  --hue-deep: var(--hue-musaf-deep);
+}
+
+.hue-mincha {
+  --hue: var(--hue-mincha);
+  --hue-deep: var(--hue-mincha-deep);
+}
+
+.hue-maariv {
+  --hue: var(--hue-maariv);
+  --hue-deep: var(--hue-maariv-deep);
+}
+
+.hue-torah {
+  --hue: var(--hue-torah);
+  --hue-deep: var(--hue-torah-deep);
 }

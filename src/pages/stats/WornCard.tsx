@@ -1,7 +1,6 @@
 import { useId } from 'react'
 import { COMMON_COPY } from '../../copy/common'
 import { type PeriodTotals, WORN_ITEMS } from '../../domain/types'
-import { STATS_COPY } from './copy'
 
 export function WornCard({ totals }: { totals: PeriodTotals }) {
   const headingId = useId()
@@ -9,7 +8,7 @@ export function WornCard({ totals }: { totals: PeriodTotals }) {
   return (
     <>
       <h3 className="group-label" id={headingId}>
-        {STATS_COPY.wornItems}
+        {COMMON_COPY.wornItems}
       </h3>
       <table className="ruled-table" aria-labelledby={headingId}>
         <tbody>

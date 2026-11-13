@@ -1,22 +1,42 @@
+ion-segment.stats-period {
+  margin-top: 12px;
+}
+
+ion-segment.stats-period ion-segment-button {
+  --color: var(--app-label);
+  --color-checked: var(--stamp);
+  --indicator-color: var(--switch);
+  --indicator-box-shadow: inset 0 0 0 3px var(--switch), inset 0 0 0 4px var(--stamp);
+  font-size: var(--type-control);
+  font-weight: 500;
+}
+
+ion-segment.stats-period ion-segment-button.segment-button-checked {
+  font-weight: 600;
+}
+
 .stats-headline {
   display: flex;
   align-items: flex-end;
-  gap: 14px;
-  margin: 16px 20px 0;
+  gap: 12px;
+  height: 92px;
+  margin: 8px 16px 0;
   font-size: inherit;
   font-weight: 400;
 }
 
 .stats-headline-number {
+  margin-bottom: 4px;
   font-family: var(--title-font-family);
-  font-size: 96px;
-  font-weight: 300;
+  font-size: calc(88rem / 17);
+  font-weight: 700;
   line-height: 80px;
-  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+  color: var(--app-label);
 }
 
 .stats-headline-caption {
-  padding-bottom: 2px;
+  margin-bottom: 11px;
 }
 
 .stats-headline-caption b,
@@ -25,83 +45,49 @@
 }
 
 .stats-headline-caption b {
-  font-size: 1.375rem;
+  font-size: calc(22rem / 17);
   font-weight: 600;
   line-height: 28px;
+  color: var(--app-label);
 }
 
 .stats-headline-caption span {
-  font-size: 1rem;
-  line-height: 20px;
+  font-size: calc(17rem / 17);
+  line-height: 22px;
   color: var(--app-label-secondary);
 }
 
 .stats-figures {
   display: flex;
-  justify-content: space-between;
-  margin: 16px 20px 0;
+  height: 56px;
+  margin: 12px 16px 0;
 }
 
 .stats-figure {
   display: flex;
+  flex: 1 1 0;
   flex-direction: column-reverse;
-  width: 104px;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .stats-figure dd {
   margin: 0;
   font-family: var(--title-font-family);
-  font-size: 1.875rem;
-  font-weight: 300;
-  line-height: 36px;
+  font-size: calc(28rem / 17);
+  font-weight: 700;
+  line-height: 32px;
+  color: var(--app-label);
 }
 
 .stats-figure dt {
-  font-size: 0.875rem;
-  line-height: 18px;
-  color: var(--app-label-secondary);
-}
-
-.ruled-table.prayer-lines {
-  margin-top: 16px;
-}
-
-.prayer-lines th,
-.prayer-lines td {
-  padding-block: 10px;
-  line-height: 22px;
-}
-
-.prayer-lines th {
-  width: 100%;
-  font-size: 1.0625rem;
-  font-weight: 600;
-}
-
-.prayer-lines td {
-  white-space: nowrap;
-}
-
-.prayer-lines .prayer-line-count {
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-.prayer-lines .prayer-line-streak {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--amber);
-}
-
-.prayer-lines .prayer-line-best {
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-size: var(--type-control);
+  line-height: 20px;
   color: var(--app-label-secondary);
 }
 
 .detail-table thead th {
-  font-size: 0.875rem;
+  font-size: calc(14rem / 17);
   color: var(--app-label-secondary);
 }
 

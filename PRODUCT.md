@@ -54,4 +54,4 @@ Used for a few seconds at a time, usually right after a prayer, one-handed, on t
 
 ## Accessibility & Inclusion
 
-Touch targets of at least 44pt for one-handed use; one dark appearance whatever the system setting (spec decision 66), and follows text size where Ionic allows. A mark's state shows by shape and size, never by colour alone.
+Touch targets of at least 44pt for one-handed use; light or dark follows the phone unless הגדרות fixes it (spec decision 79), and text follows the phone's text size. Nothing read while marking is under 15pt, and nothing at all under 13pt except tab labels (spec decision 81). A mark's state shows by the shape of its spine, never by colour alone.

@@ -51,15 +51,6 @@ function countDay(tally: DayTally, done: boolean | undefined, onlyIfMarked: bool
   }
 }
 
-export function dayTally(record: DayRecord | undefined, date: string, today: string): PrayerTally {
-  const tally = emptyTally()
-  for (const prayer of prayersForDay(date)) {
-    count(tally, record?.prayers[prayer], date === today)
-  }
-
-  return tally
-}
-
 export function trackingStart(records: DayRecord[]): string | null {
   return records.reduce<string | null>((first, day) => (first === null || day.date < first ? day.date : first), null)
 }
@@ -98,13 +89,4 @@ export function periodTotals(records: DayRecord[], from: string, to: string, tod
   }
 
   return totals
-}
-
-export function dayTallies(records: DayRecord[], dates: string[], today: string): (PrayerTally | null)[] {
-  const start = trackingStart(records)
-  const byDate = new Map(records.map((day) => [day.date, day]))
-
-  return dates.map((date) =>
-    start === null || date < start || date > today ? null : dayTally(byDate.get(date), date, today),
-  )
 }

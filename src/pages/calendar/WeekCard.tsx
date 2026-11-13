@@ -1,12 +1,12 @@
 import { Fragment } from 'react'
-import { type StarChartColumn, type StarChartLine, StarChart } from '../../components/StarChart'
+import { type WeekShelvesColumn, WeekShelves } from '../../components/WeekShelves'
 import { COMMON_COPY } from '../../copy/common'
 import { MARKS_SEPARATOR, dayMarks } from '../../domain/dayMarks'
 import { LIST_SEPARATOR, dayOfMonth, shortWeekday, weekdayName } from '../../domain/format'
 import { hebrewDateLabel, hebrewDayNumber, weeklyParsha } from '../../domain/hebrewCalendar'
 import { isSaturday, monthStart } from '../../domain/logicalDay'
 import { weekHolidays } from '../../domain/monthWeeks'
-import { chartLines } from '../../domain/stars'
+import { shelfRows } from '../../domain/shelf'
 import type { DayRecord } from '../../domain/types'
 import { CALENDAR_COPY } from './copy'
 import { holidayRunDays, weekDatesLabel } from './labels'
@@ -41,14 +41,16 @@ interface ColumnHeadProps {
   date: string
   isOutside: boolean
   isHoliday: boolean
+  isToday: boolean
 }
 
-function ColumnHead({ date, isOutside, isHoliday }: ColumnHeadProps) {
+function ColumnHead({ date, isOutside, isHoliday, isToday }: ColumnHeadProps) {
   return (
     <>
       <span className="week-day-letter">{shortWeekday(date)}</span>{' '}
       <span className={`week-day-number${isHoliday ? ' is-holiday' : ''}${isOutside ? ' is-outside' : ''}`}>
         {dayOfMonth(date)}
+        {isToday && <i className="week-today-mark" />}
       </span>{' '}
       <span className="week-day-hebrew">{hebrewDayNumber(date)}</span>
     </>
@@ -61,19 +63,19 @@ export function WeekCard({ dates, month, today, records, onOpenDay }: WeekCardPr
   const holidays = weekHolidays(dates)
   const isHoliday = (date: string) => holidays.some((run) => run.from <= date && date <= run.to)
 
-  const columns: StarChartColumn[] = dates.map((date) => ({
+  const columns: WeekShelvesColumn[] = dates.map((date) => ({
     date,
-    head: <ColumnHead date={date} isOutside={monthStart(date) !== monthStart(month)} isHoliday={isHoliday(date)} />,
+    head: (
+      <ColumnHead
+        date={date}
+        isOutside={monthStart(date) !== monthStart(month)}
+        isHoliday={isHoliday(date)}
+        isToday={date === today}
+      />
+    ),
     isToday: date === today,
     isDimmed: date > today,
     spokenName: spokenName(date, recordsByDate.get(date)),
-  }))
-
-  const lines: StarChartLine[] = chartLines(records, dates, today, true).map(({ key, stars, links }) => ({
-    id: key,
-    label: COMMON_COPY.tracks[key],
-    stars,
-    links,
   }))
 
   return (
@@ -84,11 +86,7 @@ export function WeekCard({ dates, month, today, records, onOpenDay }: WeekCardPr
         </span>{' '}
         {parsha && <span className="week-card-parsha">{CALENDAR_COPY.weekParsha(parsha)}</span>}
       </header>
-      <StarChart
-        columns={columns}
-        lines={lines}
-        onOpenDay={onOpenDay}
-      />
+      <WeekShelves columns={columns} rows={shelfRows(records, dates, today)} onOpenDay={onOpenDay} />
       {holidays.length > 0 && (
         <p className="week-card-holidays">
           {holidays.map((run, index) => (

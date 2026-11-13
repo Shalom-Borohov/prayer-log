@@ -1,61 +1,55 @@
 .week-cards {
   display: grid;
   gap: 10px;
-  padding: 8px 16px 16px;
+  padding: 12px 16px 16px;
 }
 
 .week-card {
+  padding: 12px;
   border-radius: var(--card-radius);
-  background: var(--night-card);
-}
-
-.week-card .star-chart {
-  --chart-head: 48px;
-  --chart-row: 20px;
-  padding: 4px 12px 8px;
+  background: var(--surface);
+  color: var(--app-label);
 }
 
 .week-card-header {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
-  padding: 10px 16px 0;
+  height: 28px;
   white-space: nowrap;
 }
 
 .week-card-dates {
-  color: var(--chalk);
-  font-size: 1rem;
+  font-size: calc(17rem / 17);
   font-weight: 600;
-  line-height: 20px;
+  line-height: 22px;
 }
 
 .week-card-parsha {
   overflow: hidden;
-  color: var(--amber);
-  font-size: 0.875rem;
+  color: var(--accent);
+  font-size: var(--type-control);
   line-height: 20px;
   text-overflow: ellipsis;
 }
 
-.week-card .star-column-head {
-  gap: 1px;
-}
-
 .week-day-letter {
-  font-size: 0.8125rem;
+  color: var(--app-label-secondary);
+  font-size: var(--type-control);
   line-height: 15px;
 }
 
 .week-day-number {
-  color: var(--chalk);
-  font-size: 0.875rem;
+  position: relative;
+  padding-bottom: 3px;
+  font-size: var(--type-control);
   font-weight: 600;
   line-height: 16px;
 }
 
 .week-day-number.is-holiday {
-  color: var(--amber);
+  color: var(--accent);
 }
 
 .week-day-number.is-outside {
@@ -63,15 +57,36 @@
 }
 
 .week-day-hebrew {
-  font-size: 0.6875rem;
-  line-height: 13px;
   color: var(--app-label-secondary);
+  font-size: var(--type-small);
+  line-height: 14px;
+}
+
+.week-shelves-day.is-today .week-shelves-head {
+  font-weight: 700;
+}
+
+.week-shelves-day.is-today .week-day-letter {
+  color: var(--app-label);
+}
+
+.week-shelves-day.is-today .week-day-number {
+  font-weight: 700;
+}
+
+.week-today-mark {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 16px;
+  height: 3px;
+  background: var(--today);
+  translate: -50% 0;
 }
 
 .week-card-holidays {
   margin: 0;
-  padding: 0 16px 10px;
-  color: var(--amber);
-  font-size: 0.875rem;
-  line-height: 1.35;
+  color: var(--accent);
+  font-size: var(--type-control);
+  line-height: 24px;
 }

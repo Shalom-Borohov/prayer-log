@@ -29,7 +29,7 @@ describe('weekdayName', () => {
 })
 
 describe('shortWeekday', () => {
-  it('uses the plain letter, as the star charts head their columns', () => {
+  it('uses the plain letter, as the week shelves head their columns', () => {
     expect(shortWeekday('2026-10-25')).toBe('א')
     expect(shortWeekday('2026-10-30')).toBe('ו')
     expect(shortWeekday('2026-10-31')).toBe('ש')

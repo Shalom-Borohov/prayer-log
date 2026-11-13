@@ -12,13 +12,8 @@
 }
 
 .learning-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  min-height: 44px;
   font: inherit;
-  font-size: 1rem;
+  font-size: calc(17rem / 17);
   text-align: start;
 }
 
@@ -51,8 +46,7 @@ ion-picker.learning-picker {
 }
 
 .learning-hint .round-check {
-  width: 26px;
-  height: 26px;
+  border-color: var(--app-label-tertiary);
 }
 
 .add-learning {
@@ -62,6 +56,6 @@ ion-picker.learning-picker {
   width: 44px;
   height: 44px;
   margin-inline-end: -10px;
-  color: var(--ion-color-primary);
+  color: var(--accent);
   font-size: 24px;
 }

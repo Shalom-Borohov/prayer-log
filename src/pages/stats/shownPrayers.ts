@@ -1,4 +1,4 @@
-import { hasStreak } from '../../domain/stars'
+import { hasStreak } from '../../domain/streaks'
 import { type PeriodTotals, PRAYERS } from '../../domain/types'
 
 export const shownPrayers = (totals: PeriodTotals) =>

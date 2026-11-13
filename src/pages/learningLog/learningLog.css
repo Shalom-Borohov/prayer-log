@@ -1,6 +1,6 @@
 ion-searchbar.learning-log-search {
   --background: var(--app-fill);
-  --color: var(--chalk);
+  --color: var(--app-label);
   --placeholder-color: var(--app-label-secondary);
   --icon-color: var(--app-label-secondary);
   --clear-button-color: var(--app-label-secondary);

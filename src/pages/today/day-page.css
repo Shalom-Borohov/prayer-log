@@ -7,17 +7,16 @@
 }
 
 .holiday-chip {
-  height: 22px;
-  padding: 0 10px;
-  border: 1px solid var(--amber);
-  border-radius: 11px;
-  color: var(--amber);
-  font-size: 0.8125rem;
+  padding: 4px 12px;
+  border: 1.5px solid var(--stamp);
+  border-radius: 16px;
+  color: var(--stamp);
+  font-size: var(--type-control);
   font-weight: 500;
   line-height: 20px;
   white-space: nowrap;
 }
 
 .backfill ion-label {
-  color: var(--amber);
+  color: var(--accent);
 }
