@@ -14,21 +14,19 @@ import { COMMON_COPY } from '../../copy/common'
 import { useAllDays } from '../../data/hooks'
 import { LIST_SEPARATOR, gregorianLabel, weekdayName } from '../../domain/format'
 import { hebrewDateLabel, holidayNames, weeklyParsha } from '../../domain/hebrewCalendar'
-import { addDays } from '../../domain/logicalDay'
+import { DAYS_PER_WEEK, addDays, daysInRange } from '../../domain/logicalDay'
 import { defaultPlace, knownPlaces } from '../../domain/places'
 import { prayersForDay } from '../../domain/prayersForDay'
-import { hasStreak } from '../../domain/stars'
-import { streaks } from '../../domain/streaks'
-import { WORN_AT_PRAYER } from '../../domain/types'
+import { shelfRows } from '../../domain/shelf'
+import { hasStreak, streaks } from '../../domain/streaks'
 import { usePeriodSwipe } from '../../hooks/usePeriodSwipe'
 import { type Tab, dayParentPath, dayPath } from '../../navigation/paths'
 import { BackfillBanner } from './BackfillBanner'
 import { TODAY_COPY } from './copy'
 import { PrayerRow } from './PrayerRow'
 import { TorahRow } from './TorahRow'
-import { WeekChart } from './WeekChart'
 import { WeekSummary } from './WeekSummary'
-import { WornChecks } from './WornChecks'
+import { WornCard } from './WornCard'
 import './day-page.css'
 
 const BACK_LABELS = { calendar: COMMON_COPY.calendar, stats: COMMON_COPY.learningLog }
@@ -38,6 +36,8 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
   const record = records?.find((day) => day.date === date)
   const dayStreaks = records && streaks(records, date, today)
   const places = records && knownPlaces(records)
+  const shelves = records && shelfRows(records, daysInRange(addDays(date, 1 - DAYS_PER_WEEK), date), today)
+  const dayPrayers = prayersForDay(date)
   const router = useIonRouter()
   const title = date === today ? COMMON_COPY.today : weekdayName(date)
   const holidays = holidayNames(date)
@@ -89,37 +89,46 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
           </div>
         </IonHeader>
         <div ref={paneRef}>
-          {records && dayStreaks && places && (
+          {records && dayStreaks && places && shelves && (
             <>
               {date === today && <BackfillBanner records={records} today={today} onOpen={openDay} />}
-              <WeekChart records={records} date={date} today={today} />
               <div className="inset-group">
-                {prayersForDay(date).map((prayer) => (
-                  <PrayerRow
-                    key={`${date}-${prayer}`}
-                    date={date}
-                    prayer={prayer}
-                    attendance={record?.prayers[prayer]}
-                    place={record?.places?.[prayer]}
-                    rememberedPlace={defaultPlace(records, prayer)}
-                    knownPlaces={places}
-                    streak={hasStreak(prayer) ? dayStreaks[prayer].current : null}
-                  >
-                    {prayer === WORN_AT_PRAYER && <WornChecks date={date} record={record} />}
-                  </PrayerRow>
-                ))}
+                {shelves.map(
+                  ({ key, slots }) =>
+                    key !== 'torah' &&
+                    dayPrayers.includes(key) && (
+                      <PrayerRow
+                        key={`${date}-${key}`}
+                        date={date}
+                        prayer={key}
+                        attendance={record?.prayers[key]}
+                        place={record?.places?.[key]}
+                        rememberedPlace={defaultPlace(records, key)}
+                        knownPlaces={places}
+                        streak={hasStreak(key) ? dayStreaks[key].current : null}
+                        shelf={slots}
+                        endsToday={date === today}
+                      />
+                    ),
+                )}
               </div>
-              <div className="inset-group">
-                <TorahRow
-                  key={date}
-                  date={date}
-                  learned={record?.torah === true}
-                  note={record?.torahNote}
-                  entries={record?.learning}
-                  records={records}
-                  streak={dayStreaks.torah.current}
-                />
-              </div>
+              <WornCard date={date} record={record} />
+              {shelves.map(
+                ({ key, slots }) =>
+                  key === 'torah' && (
+                    <TorahRow
+                      key={date}
+                      date={date}
+                      learned={record?.torah === true}
+                      note={record?.torahNote}
+                      entries={record?.learning}
+                      records={records}
+                      streak={dayStreaks.torah.current}
+                      shelf={slots}
+                      endsToday={date === today}
+                    />
+                  ),
+              )}
               <WeekSummary records={records} date={date} today={today} />
             </>
           )}

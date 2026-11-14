@@ -1,29 +1,25 @@
 .attendance {
-  flex: none;
   display: flex;
-  width: 140px;
-  height: 34px;
-  padding: 2px;
+  box-sizing: border-box;
+  height: 44px;
   border-radius: 9px;
   background: var(--app-fill);
 }
 
-.attendance:has(.attendance-shema) {
-  width: 192px;
-}
-
 .attendance button {
   position: relative;
-  flex: 1;
+  flex: 1 1 0;
   min-width: 0;
   padding: 0;
-  border: 0;
-  border-radius: 7px;
+  border: 2px solid transparent;
+  border-radius: 9px;
   background: transparent;
-  color: var(--app-segment-text);
+  background-clip: padding-box;
+  color: var(--app-label);
   font: inherit;
-  font-size: 0.8125rem;
+  font-size: var(--type-control);
   font-weight: 500;
+  line-height: 20px;
   white-space: nowrap;
   touch-action: manipulation;
   transition:
@@ -31,20 +27,14 @@
     color 160ms ease-out;
 }
 
-.attendance button::after {
-  content: '';
-  position: absolute;
-  inset: -7px -1px;
-}
-
 .attendance button + button::before {
   content: '';
   position: absolute;
-  inset-inline-start: 0;
-  top: 8px;
+  inset-inline-start: -2.5px;
+  top: 10px;
+  bottom: 10px;
   width: 1px;
-  height: 14px;
-  background: var(--app-divider);
+  background: var(--app-separator);
 }
 
 .attendance button[aria-pressed='true']::before,
@@ -53,14 +43,23 @@
 }
 
 .attendance button[aria-pressed='true'] {
-  background: var(--app-quiet-thumb);
-  color: var(--chalk);
+  background: var(--app-raised);
+  color: var(--app-on-raised);
   font-weight: 600;
 }
 
 .attendance .attendance-minyan[aria-pressed='true'] {
-  background: var(--app-raised);
-  color: var(--app-on-raised);
+  background: var(--hue-deep);
+  color: var(--stamp);
+}
+
+.attendance .attendance-minyan[aria-pressed='true']::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--stamp);
+  border-radius: 5px;
+  pointer-events: none;
 }
 
 .attendance button:active {

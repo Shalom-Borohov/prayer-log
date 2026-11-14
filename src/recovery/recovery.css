@@ -3,7 +3,7 @@
   inset: 0;
   overflow-y: auto;
   padding: calc(env(safe-area-inset-top) + 48px) 24px calc(env(safe-area-inset-bottom) + 24px);
-  background: var(--ion-background-color);
+  background: var(--ground);
   color: var(--app-label);
   font-family: var(--ion-font-family);
 }
@@ -12,7 +12,7 @@
   margin: 0 0 8px;
   font-family: var(--title-font-family);
   font-size: 30px;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .recovery p {
@@ -29,14 +29,14 @@
   border: 0;
   border-radius: 12px;
   background: var(--app-fill);
-  color: var(--ion-color-primary);
+  color: var(--accent);
   font: inherit;
   font-size: 17px;
 }
 
 .recovery .recovery-primary {
-  background: var(--ion-color-primary);
-  color: var(--ion-color-primary-contrast);
+  background: var(--accent);
+  color: var(--ground);
   font-weight: 600;
 }
 

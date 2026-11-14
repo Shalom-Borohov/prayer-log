@@ -4,17 +4,17 @@
 }
 
 .period-buttons ion-button {
-  --background: var(--app-fill);
+  --background: color-mix(in srgb, var(--stamp) 14%, transparent);
   --border-radius: 50%;
   --padding-start: 0;
   --padding-end: 0;
-  --color: var(--chalk);
-  width: 32px;
-  height: 32px;
+  --color: var(--stamp);
+  width: 34px;
+  height: 34px;
 }
 
 .period-buttons ion-button ion-icon {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .period-buttons ion-button.button-disabled {

@@ -7,11 +7,11 @@ import type { DayRecord } from '../../domain/types'
 import { useSave } from '../../hooks/useSave'
 import './checks.css'
 
-export function WornChecks({ date, record }: { date: string; record: DayRecord | undefined }) {
+export function WornCard({ date, record }: { date: string; record: DayRecord | undefined }) {
   const save = useSave()
 
   return (
-    <div className="worn-checks">
+    <div className="worn-card hue-shacharit" role="group" aria-label={COMMON_COPY.wornItems}>
       {wornItemsForDay(date).map((item) => {
         const worn = record?.[item] === true
 
@@ -24,8 +24,8 @@ export function WornChecks({ date, record }: { date: string; record: DayRecord |
             aria-checked={worn}
             onClick={() => save(setWorn(date, item, !worn))}
           >
-            <span className="round-check">{worn && <IonIcon icon={checkmark} aria-hidden="true" />}</span>
             {COMMON_COPY.worn[item]}
+            <span className="round-check">{worn && <IonIcon icon={checkmark} aria-hidden="true" />}</span>
           </button>
         )
       })}

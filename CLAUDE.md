@@ -26,16 +26,16 @@ CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` d
 - `docs/specs/2026-10-28-prayer-log-design.md`: numbered product decisions and assumptions.
   - New behaviour is added there as a new numbered decision: "(added YYYY-MM-DD, extends/clarifies N)".
   - Check it before changing any status, streak, count or navigation rule.
-- `DESIGN.md` and `.impeccable/` (`design.json`, `surfaces/`): the visual system, "Three stars" (spec decisions 60–72). When a visual change alters what they describe, update them too.
+- `DESIGN.md` and `.impeccable/` (`design.json`, `surfaces/`): the visual system, "The shelf, dressed" (spec decisions 74–81). When a visual change alters what they describe, update them too.
 - `PRODUCT.md`: product principles. Logging a prayer is one tap, and the app follows native iOS conventions.
 
 ## Architecture
 
-The code is split into layers, and imports go downward only: `pages` → `data` / `domain` → `copy`. `Tabs`, `pages/settings` and `recovery` also import `appUpdate`, which keeps its own release logic and seen-version storage and imports only `copy`.
+The code is split into layers, and imports go downward only: `pages` → `data` / `domain` → `copy`. `Tabs`, `pages/settings` and `recovery` also import `appUpdate`, which keeps its own release logic and seen-version storage and imports only `copy`. `main.tsx` and `pages/settings` import `appearance`, the light/dark choice, which imports nothing.
 
 - **`src/domain/`**: pure functions over `DayRecord[]`, with no React and no Dexie.
   - Types live in `types.ts`.
-  - Streaks, totals, stars, backfill, places and Hebrew-calendar logic each live in their own module.
+  - Streaks, totals, shelves, backfill, places and Hebrew-calendar logic each live in their own module.
   - Holidays come from `@hebcal/core` with the Israel schedule (`hebrewCalendar.ts`).
 - **`src/domain/logicalDay.ts`**: day boundaries.
   - A logical day rolls over at 03:00, so ערבית at 00:30 belongs to the previous date.
@@ -52,9 +52,12 @@ The code is split into layers, and imports go downward only: `pages` → `data` 
 - **`src/copy/`** and each page's `copy.ts`: every user-visible string is an `as const` copy constant. Strings with values are functions. Don't inline Hebrew text in components.
 - **UI**: Ionic React in iOS mode.
   - Overlays use the hooks (`useIonActionSheet`, `useIonAlert`, `useIonToast`).
-  - Styling is plain CSS: tokens in `theme.css`, Ionic's colours in `ionic-palette.css` (always dark, spec decision 66), shared classes in `globals.css`. A prayer's state is the size of its star (`src/domain/stars.ts`, drawn by `src/components/StarChart.tsx`), never colour alone (spec decision 60). Amber is for annotations; red only rings today.
-  - Fonts are bundled from `@fontsource` (Heebo, and Frank Ruhl Libre for large titles) and precached, so they work offline.
-  - The page `body` is navy, and `index.html` has a static `.status-bar-strip` (styled in `app-header.css`). iOS 26 colours the installed app's status bar from these, not from `theme-color` (spec decision 20), so keep both. Don't give the strip `pointer-events: none`: Safari then skips it and hazes the top of the header.
+  - Styling is plain CSS: tokens in `theme.css`, light on `:root` and dark on `:root.ion-palette-dark`, Ionic's colours in `ionic-palette.css`, shared classes in `globals.css`. Never hard-code a colour in a component.
+  - Light or dark follows the phone unless הגדרות fixes it (spec decision 79). `src/appearance/` toggles Ionic's `ion-palette-dark` class on `<html>` and keeps the choice in `localStorage`, outside the backup.
+  - A prayer's state is the shape of its spine (`src/domain/shelf.ts`, drawn by `src/components/Shelf.tsx` and `Spine.tsx`), never colour alone (spec decision 74). A spine takes its leather from the nearest `hue-<prayer>` class. Gold is only for במניין.
+  - Text sizes are written as `calc(Nrem / 17)`: on iPhone 1rem is 17pt, so N is the size on the phone.
+  - Fonts: Frank Ruhl Libre 700 is bundled from `@fontsource` and precached, for large titles, prayer names and big numbers. Everything else uses the phone's own font.
+  - The page `body` is dark leather, and `index.html` has a static `.status-bar-strip` (styled in `app-header.css`). iOS 26 colours the installed app's status bar from these, not from `theme-color` (spec decision 20), so keep both. Don't give the strip `pointer-events: none`: Safari then skips it and hazes the top of the header.
 - **`src/recovery/`**: an error boundary above `IonApp`, and a plain screen with no Ionic and no router that can still export and import a backup and apply a waiting update (spec decisions 32, 42, 43).
 - **`src/appUpdate/`**: the update bar, the "מה חדש" sheet and `changelog.ts`, rendered by `Tabs.tsx` and הגדרות (spec decisions 24, 25). `useAppUpdate` is shared with the recovery screen.
   - `registerType: 'prompt'`, so a new service worker waits until the user taps "עדכון" (`UpdateBar`, through `useRegisterSW`).

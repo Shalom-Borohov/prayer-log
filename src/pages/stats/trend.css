@@ -1,0 +1,139 @@
+.trend {
+  --trend-minyan: var(--accent);
+  --trend-other: var(--shell);
+  margin: 0 16px;
+  padding: 12px;
+  border-radius: var(--card-radius);
+  background: var(--surface);
+}
+
+.ion-palette-dark .trend {
+  --trend-minyan: var(--stamp);
+  --trend-other: var(--shelf-board);
+}
+
+.trend-plot,
+.trend-ticks {
+  display: flex;
+  gap: 2px;
+}
+
+.trend-plot {
+  position: relative;
+  height: 96px;
+  padding-bottom: 3px;
+}
+
+.trend-plot::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--shelf-board);
+}
+
+.trend-slot,
+.trend-tick {
+  display: flex;
+  flex: 1 1 0;
+  justify-content: center;
+  min-width: 0;
+}
+
+.trend-slot {
+  align-items: flex-end;
+}
+
+.trend-column {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+  max-width: 40px;
+  height: 100%;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.trend-column::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 1.5px dashed var(--app-label-secondary);
+  border-radius: 3px;
+}
+
+.trend-column > span {
+  position: relative;
+  flex: none;
+}
+
+.trend-minyan {
+  background: var(--trend-minyan);
+}
+
+.trend-other {
+  background: var(--trend-other);
+}
+
+.trend-ticks {
+  height: 18px;
+  margin-top: 6px;
+}
+
+.trend-tick {
+  position: relative;
+  font-size: var(--type-small);
+  line-height: 18px;
+  white-space: nowrap;
+  color: var(--app-label-secondary);
+}
+
+.trend-tick.is-today {
+  font-weight: 700;
+  color: var(--app-label);
+}
+
+.trend-tick.is-today::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: calc(50% - 8px);
+  width: 16px;
+  height: 3px;
+  background: var(--today);
+}
+
+.trend-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--type-small);
+  line-height: 18px;
+  color: var(--app-label-secondary);
+}
+
+.trend-key li {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.trend-swatch {
+  flex: none;
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.trend-swatch.trend-unmarked {
+  border: 1.5px dashed var(--app-label-secondary);
+}

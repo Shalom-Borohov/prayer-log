@@ -22,10 +22,10 @@ import { STATS_COPY } from './copy'
 import { DetailTable } from './DetailTable'
 import { HeadlineNumber } from './HeadlineNumber'
 import { LearningLogEntrance } from './LearningLogEntrance'
-import { starLine } from './lineStars'
 import { PeriodFigures } from './PeriodFigures'
-import { PrayerLines } from './PrayerLines'
-import { StarLine } from './StarLine'
+import { periodShelves } from './periodShelves'
+import { PrayerShelves } from './PrayerShelves'
+import { TrendColumns } from './TrendColumns'
 import { WornCard } from './WornCard'
 import './stats.css'
 
@@ -45,9 +45,14 @@ function PeriodStats({ records, period, today }: PeriodStatsProps) {
   return (
     <>
       <HeadlineNumber prayers={totals.prayers} />
-      <StarLine line={starLine(records, range, period, today)} />
+      {period === 'all' && <TrendColumns records={records} range={range} today={today} />}
+      <PrayerShelves
+        period={period}
+        totals={totals}
+        streaks={streaks(records, today)}
+        shelves={periodShelves(records, period, today)}
+      />
       <PeriodFigures totals={totals} />
-      <PrayerLines totals={totals} streaks={streaks(records, today)} />
       <DetailTable totals={totals} />
       <WornCard totals={totals} />
       {hasLearningLog(records, today) && <LearningLogEntrance />}
@@ -83,7 +88,7 @@ export function StatsPage() {
         {records && records.length > 0 && (
           <>
             <IonSegment
-              className="inset-segment"
+              className="inset-segment stats-period"
               value={period}
               onIonChange={(event) => isPeriod(event.detail.value) && setPeriod(event.detail.value)}
             >

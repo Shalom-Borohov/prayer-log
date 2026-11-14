@@ -1,0 +1,45 @@
+.shelf {
+  --board-height: 4px;
+  --today-gap: 2px;
+  --today-height: 3px;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--board-gap, 8px);
+}
+
+.shelf-board {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spine-gap, 4px);
+  padding: 0 4px calc(var(--board-height) + var(--today-gap) + var(--today-height));
+}
+
+.shelf-board::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: calc(var(--today-gap) + var(--today-height));
+  height: var(--board-height);
+  border-radius: 2px;
+  background: var(--shelf-board);
+}
+
+.shelf-slot {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: flex-end;
+  width: var(--spine-width);
+  height: var(--spine-height);
+}
+
+.shelf-slot.is-today::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + var(--board-height) + var(--today-gap));
+  height: var(--today-height);
+  background: var(--today);
+}

@@ -12,9 +12,7 @@ import {
 import { type DateRange, periodTotals } from './totals'
 import type { DayRecord, PrayerTally } from './types'
 
-export type TrendUnit = 'day' | 'week' | 'month' | 'quarter' | 'year'
-
-export type BucketUnit = Exclude<TrendUnit, 'day'>
+export type TrendUnit = 'week' | 'month' | 'quarter' | 'year'
 
 export interface TrendBucket {
   start: string
@@ -29,7 +27,6 @@ const MAX_COLUMNS = 36
 const MONTHS_PER_YEAR = 12
 
 const UNIT_START: Record<TrendUnit, (date: string) => string> = {
-  day: (date) => date,
   week: weekStart,
   month: monthStart,
   quarter: quarterStart,
@@ -45,7 +42,7 @@ function monthIndex(date: string): number {
 const columnCount = ({ from, to }: DateRange, monthsPerColumn: number) =>
   Math.floor(monthIndex(to) / monthsPerColumn) - Math.floor(monthIndex(from) / monthsPerColumn) + 1
 
-export function trendUnit(range: DateRange): BucketUnit {
+export function trendUnit(range: DateRange): TrendUnit {
   if (range.from >= addDays(range.to, 1 - WEEKLY_SPAN_WEEKS * DAYS_PER_WEEK)) {
     return 'week'
   }

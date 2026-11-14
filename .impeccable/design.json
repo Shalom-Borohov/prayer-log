@@ -1,155 +1,164 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-12T00:00:00Z",
+  "generatedAt": "2026-11-13T12:00:00Z",
   "title": "Design System: תפילות",
   "extensions": {
     "colorMeta": {
-      "chalk": { "role": "primary", "displayName": "Chalk", "canonical": "#f1efe6", "tonalRamp": ["#2b2a25", "#4a4840", "#6b685d", "#8d8a7d", "#b0ad9f", "#cfccbf", "#e6e4dd", "#f1efe6"] },
-      "amber": { "role": "secondary", "displayName": "Lamp Amber", "canonical": "#e8a13a", "tonalRamp": ["#3a2408", "#5e3b0f", "#8a5818", "#b67624", "#cc8e33", "#e8a13a", "#eaaa4e", "#f6dcae"] },
-      "today-ring": { "role": "tertiary", "displayName": "Today Red", "canonical": "#d2513a", "tonalRamp": ["#3a120b", "#5e1d12", "#87291a", "#ad3825", "#d2513a", "#de7865", "#eaa294", "#f6d3cc"] },
-      "night-ground": { "role": "neutral", "displayName": "Night Ground", "canonical": "#0e1a33", "tonalRamp": ["#0e1a33", "#19253c", "#303a4e", "#474f60", "#5d6572", "#80858d", "#adafb0", "#e6e4dd"] },
-      "night-card": { "role": "neutral", "displayName": "Raised Night", "canonical": "#17264a", "tonalRamp": ["#0a1124", "#0e1a33", "#12203d", "#17264a", "#22335c", "#34477a", "#5a6b9a", "#a9b3cf"] },
-      "night-bar": { "role": "neutral", "displayName": "Tab Night", "canonical": "#12203d", "tonalRamp": ["#08101f", "#0e1a33", "#12203d", "#17264a", "#22335c", "#34477a", "#5a6b9a", "#a9b3cf"] },
-      "label-secondary": { "role": "neutral", "displayName": "Dusk Grey", "canonical": "#8f9bbb", "tonalRamp": ["#262c3b", "#3c4559", "#566179", "#727e9a", "#8f9bbb", "#a9b3cf", "#c6cde0", "#e3e7f0"] },
-      "label-tertiary": { "role": "neutral", "displayName": "Faint Chalk", "canonical": "rgba(241, 239, 230, 0.35)" },
-      "separator": { "role": "neutral", "displayName": "Chalk Hairline", "canonical": "rgba(241, 239, 230, 0.08)" },
-      "fill": { "role": "neutral", "displayName": "Chalk Trough", "canonical": "rgba(241, 239, 230, 0.09)" },
-      "divider": { "role": "neutral", "displayName": "Segment Divider", "canonical": "rgba(241, 239, 230, 0.16)" },
-      "quiet-thumb": { "role": "neutral", "displayName": "Quiet Thumb", "canonical": "rgba(241, 239, 230, 0.2)" },
-      "control-ring": { "role": "neutral", "displayName": "Check Ring", "canonical": "rgba(241, 239, 230, 0.55)" },
-      "streak-line": { "role": "primary", "displayName": "Streak Line", "canonical": "rgba(241, 239, 230, 0.45)" }
+      "stamp-gold": { "role": "primary", "displayName": "Stamp Gold", "canonical": "#e2c27a", "tonalRamp": ["#3a2c0f", "#5a4519", "#7c6025", "#9e7d36", "#c19e52", "#e2c27a", "#eed9a8", "#f8eed6"] },
+      "accent-gold-light": { "role": "primary", "displayName": "Gilded Accent (light)", "canonical": "#8a5a12", "tonalRamp": ["#2a1a04", "#47300a", "#64430e", "#8a5a12", "#a8792f", "#c49a58", "#dcbf8e", "#f1e2c8"] },
+      "accent-gold-dark": { "role": "primary", "displayName": "Gilded Accent (dark)", "canonical": "#d9ae4e", "tonalRamp": ["#33260a", "#553f12", "#7a5b1b", "#a07826", "#bf9945", "#d9ae4e", "#e8cd8c", "#f6ead0"] },
+      "today-gold-light": { "role": "primary", "displayName": "Today Gold (light)", "canonical": "#a87a1f", "tonalRamp": ["#2d2006", "#4b360c", "#6c4e13", "#8c6519", "#a87a1f", "#c79c4c", "#e0c48c", "#f4e6c9"] },
+      "today-gold-dark": { "role": "primary", "displayName": "Today Gold (dark)", "canonical": "#d9ae4e", "tonalRamp": ["#33260a", "#553f12", "#7a5b1b", "#a07826", "#bf9945", "#d9ae4e", "#e8cd8c", "#f6ead0"] },
+      "shacharit-bottle-green": { "role": "secondary", "displayName": "Bottle Green (שחרית)", "canonical": "#1f4d3a", "tonalRamp": ["#0b1d16", "#1f4d3a", "#2c6450", "#3d785c", "#5b9479", "#82b19a", "#b0cfc0", "#dde9e3"] },
+      "shacharit-bottle-green-dark": { "role": "secondary", "displayName": "Bottle Green, dark appearance", "canonical": "#3d785c" },
+      "musaf-plum": { "role": "secondary", "displayName": "Plum (מוסף)", "canonical": "#5b3a6b", "tonalRamp": ["#1f1325", "#3b2546", "#5b3a6b", "#704c82", "#835e98", "#a183b2", "#c4b0cf", "#e7dfec"] },
+      "musaf-plum-dark": { "role": "secondary", "displayName": "Plum, dark appearance", "canonical": "#835e98" },
+      "mincha-oxblood": { "role": "secondary", "displayName": "Oxblood (מנחה)", "canonical": "#7a2430", "tonalRamp": ["#2a0c10", "#4f1720", "#7a2430", "#963643", "#b04a57", "#c97680", "#e0aab0", "#f3dcdf"] },
+      "mincha-oxblood-dark": { "role": "secondary", "displayName": "Oxblood, dark appearance", "canonical": "#b04a57" },
+      "maariv-navy": { "role": "secondary", "displayName": "Navy (ערבית)", "canonical": "#1e3355", "tonalRamp": ["#0b1220", "#1e3355", "#2f4c78", "#4a6a9e", "#6c88b5", "#94abcd", "#bfcde3", "#e3e9f3"] },
+      "maariv-navy-dark": { "role": "secondary", "displayName": "Navy, dark appearance", "canonical": "#4a6a9e" },
+      "torah-brown": { "role": "secondary", "displayName": "Brown (תורה)", "canonical": "#6b4423", "tonalRamp": ["#24160b", "#462c16", "#6b4423", "#7d532d", "#8e6438", "#ae8a63", "#cdb497", "#ebdfd1"] },
+      "torah-brown-dark": { "role": "secondary", "displayName": "Brown, dark appearance", "canonical": "#8e6438" },
+      "leather-shell-light": { "role": "tertiary", "displayName": "Leather Shell (light)", "canonical": "#2b2320" },
+      "leather-shell-dark": { "role": "tertiary", "displayName": "Leather Shell (dark)", "canonical": "#1f1916" },
+      "switch-dark": { "role": "tertiary", "displayName": "Switch Leather (dark)", "canonical": "#3a2f2a" },
+      "on-shell-parchment": { "role": "tertiary", "displayName": "Parchment", "canonical": "#e8d7ad" },
+      "shelf-board-light": { "role": "tertiary", "displayName": "Shelf Board (light)", "canonical": "#b08d57" },
+      "shelf-board-dark": { "role": "tertiary", "displayName": "Shelf Board (dark)", "canonical": "#806a5b" },
+      "ground-light": { "role": "neutral", "displayName": "Ground (light)", "canonical": "#f2f2f7" },
+      "ground-dark": { "role": "neutral", "displayName": "Ground (dark)", "canonical": "#000000" },
+      "surface-light": { "role": "neutral", "displayName": "Surface (light)", "canonical": "#ffffff" },
+      "surface-dark": { "role": "neutral", "displayName": "Surface (dark)", "canonical": "#1c1c1e" },
+      "bar-light": { "role": "neutral", "displayName": "Tab Bar (light)", "canonical": "#f9f9f9" },
+      "bar-dark": { "role": "neutral", "displayName": "Tab Bar (dark)", "canonical": "#161616" },
+      "label-light": { "role": "neutral", "displayName": "Label (light)", "canonical": "#1c1c1e" },
+      "label-dark": { "role": "neutral", "displayName": "Label (dark)", "canonical": "#ffffff" },
+      "label-secondary-light": { "role": "neutral", "displayName": "Secondary Label (light)", "canonical": "#6c6c70" },
+      "label-secondary-dark": { "role": "neutral", "displayName": "Secondary Label (dark)", "canonical": "#a1a1a8" },
+      "tab-idle-dark": { "role": "neutral", "displayName": "Idle Tab (dark)", "canonical": "#8e8e93" },
+      "label-tertiary-light": { "role": "neutral", "displayName": "Tertiary Label (light)", "canonical": "rgba(60, 60, 67, 0.3)" },
+      "label-tertiary-dark": { "role": "neutral", "displayName": "Tertiary Label (dark)", "canonical": "rgba(235, 235, 245, 0.3)" },
+      "separator-light": { "role": "neutral", "displayName": "Separator (light)", "canonical": "rgba(60, 60, 67, 0.29)" },
+      "separator-dark": { "role": "neutral", "displayName": "Separator (dark)", "canonical": "rgba(84, 84, 88, 0.65)" },
+      "fill-light": { "role": "neutral", "displayName": "Fill (light)", "canonical": "rgba(118, 118, 128, 0.12)" },
+      "fill-dark": { "role": "neutral", "displayName": "Fill (dark)", "canonical": "rgba(118, 118, 128, 0.24)" },
+      "raised-dark": { "role": "neutral", "displayName": "Raised Segment (dark)", "canonical": "#636366" }
     },
     "typographyMeta": {
-      "display": { "displayName": "Poster Numeral", "purpose": "The one count במניין in סטטיסטיקה." },
-      "headline": { "displayName": "Large Title", "purpose": "iOS large titles: היום, לוח, סטטיסטיקה." },
-      "figure": { "displayName": "Figure", "purpose": "The three secondary figures under the stats star line." },
-      "title": { "displayName": "Row Title", "purpose": "Prayer names in the היום card." },
-      "body": { "displayName": "Body", "purpose": "Learning entries, notes, segment labels, empty states." },
-      "label": { "displayName": "Label", "purpose": "Amber date line, group labels, list footers, attendance segments." },
-      "caption": { "displayName": "Caption", "purpose": "Streak numbers, holiday chip, state and place lines, chart labels." }
+      "display": { "displayName": "Display", "purpose": "The count במניין in סטטיסטיקה, 88pt." },
+      "headline": { "displayName": "Large Title", "purpose": "The gold large title in the leather band." },
+      "figure": { "displayName": "Figure", "purpose": "The three figures under the stats shelves." },
+      "name": { "displayName": "Prayer Name", "purpose": "Prayer names on היום, 24pt in the book face." },
+      "caption-strong": { "displayName": "Caption Strong", "purpose": "\"במניין\" beside the big number." },
+      "title": { "displayName": "Title", "purpose": "Row names in סטטיסטיקה, week dates in לוח." },
+      "body": { "displayName": "Body", "purpose": "Checks, learning rows, the Torah note, captions." },
+      "control": { "displayName": "Control", "purpose": "The attendance control, date line, meta lines, column heads, chips; the floor for anything read while marking." },
+      "label": { "displayName": "Label", "purpose": "List headers and footers, table heads, week-period numbers." },
+      "small": { "displayName": "Small", "purpose": "Hebrew day under a column head, trend ticks and key; the floor for everything but tab labels." },
+      "tab": { "displayName": "Tab", "purpose": "Tab bar labels only." }
     },
-    "starRamp": [
-      { "name": "star-done", "value": "14px disc, chalk", "purpose": "במניין, or a day of learning on the תורה line." },
-      { "name": "star-alone", "value": "6px disc, chalk", "purpose": "ביחידות." },
-      { "name": "star-shema", "value": "11px ring, 1.5px chalk stroke, card fill", "purpose": "ק״ש בלבד." },
-      { "name": "star-unmarked", "value": "8px +, 1px dusk-grey hairlines", "purpose": "Due and unmarked." },
-      { "name": "none", "value": "nothing", "purpose": "The prayer did not apply." },
-      { "name": "streak-line", "value": "1.25px, rgba(241, 239, 230, 0.45)", "purpose": "Joins large discs on consecutive days; never on מוסף." },
-      { "name": "today-ring", "value": "1.5px #d2513a, 14px radius, 32px wide", "purpose": "Today's column. A past shown day uses rgba(241, 239, 230, 0.35)." }
-    ],
     "shadows": [],
     "motion": [
-      { "name": "star-stamp", "value": "220ms cubic-bezier(0.16, 1, 0.3, 1), scale 0.4 to 1", "purpose": "Today's star grows in when it turns במניין. Off under reduce motion." },
-      { "name": "streak-draw", "value": "220ms cubic-bezier(0.16, 1, 0.3, 1), scaleX 0 to 1 from yesterday's side", "purpose": "The new streak line draws in. Off under reduce motion." },
-      { "name": "control-ease", "value": "160ms ease-out", "purpose": "Attendance thumb and round check fill. Off under reduce motion." },
-      { "name": "press", "value": "scale(0.97)", "purpose": "Attendance segment press. Off under reduce motion." }
+      { "name": "stamp", "value": "220ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Marking today במניין (or ticking למדתי) presses the spine in from scale 0.9 and fades its gold in. Off under reduce motion." },
+      { "name": "control-state", "value": "160ms ease-out", "purpose": "Background and colour changes of attendance segments and round checks; press scales a segment to 0.97. Off under reduce motion." }
     ],
     "breakpoints": [
-      { "name": "design-viewport", "value": "375px × 667px", "purpose": "iPhone SE. Every screen is checked here first; wider phones just fill." }
+      { "name": "phone", "value": "375px", "purpose": "Designed and checked at 375×667 (iPhone SE); a single column with no breakpoints." }
     ]
   },
   "components": [
     {
-      "name": "Star Chart",
+      "name": "Spine, stamped (במניין)",
       "kind": "custom",
-      "refersTo": "card",
-      "description": "The week chart on היום and in each לוח week card: size-as-state stars, streak lines behind them, today ringed in red.",
-      "html": "<div class=\"ds-chart\" dir=\"rtl\"><div class=\"ds-labels\"><span>שחרית</span><span>מנחה</span><span>תורה</span></div><div class=\"ds-plot\"><div class=\"ds-col ds-today\"><b>ה</b><i class=\"ds-cell\"><s class=\"ds-done\"></s></i><i class=\"ds-cell\"><s class=\"ds-plus\"></s></i><i class=\"ds-cell\"><s class=\"ds-plus\"></s></i></div><div class=\"ds-col\"><b>ד</b><i class=\"ds-cell\"><s class=\"ds-done\"></s></i><i class=\"ds-cell\"><s class=\"ds-shema\"></s></i><i class=\"ds-cell\"><s class=\"ds-done\"></s></i></div><div class=\"ds-col\"><b>ג</b><i class=\"ds-cell\"><s class=\"ds-alone\"></s></i><i class=\"ds-cell\"><s class=\"ds-done\"></s></i><i class=\"ds-cell\"><s class=\"ds-done\"></s></i></div></div></div>",
-      "css": ".ds-chart { display: flex; padding: 8px 12px 10px; border-radius: 20px; background: #17264a; color: #f1efe6; font-family: Heebo, sans-serif; width: 240px; } .ds-labels { width: 52px; padding-top: 26px; } .ds-labels span { display: block; height: 22px; line-height: 22px; font-size: 13px; color: #8f9bbb; } .ds-plot { flex: 1; display: flex; } .ds-col { position: relative; flex: 1; display: flex; flex-direction: column; } .ds-col b { height: 26px; display: grid; place-items: center; font-size: 13px; font-weight: 400; color: #8f9bbb; } .ds-today b { color: #f1efe6; font-weight: 600; } .ds-today::after { content: ''; position: absolute; top: 50%; left: 50%; width: 32px; height: calc(100% + 4px); box-sizing: border-box; border: 1.5px solid #d2513a; border-radius: 14px; translate: -50% -50%; } .ds-cell { position: relative; height: 22px; display: grid; place-items: center; } .ds-cell::before { content: ''; position: absolute; inset-inline: 0; top: 50%; height: 1px; background: rgba(241,239,230,0.08); } .ds-cell s { position: relative; display: block; border-radius: 50%; } .ds-done { width: 14px; height: 14px; background: #f1efe6; } .ds-alone { width: 6px; height: 6px; background: #f1efe6; } .ds-shema { width: 11px; height: 11px; box-sizing: border-box; border: 1.5px solid #f1efe6; background: #17264a; } .ds-plus { width: 8px; height: 8px; border-radius: 0 !important; background: linear-gradient(#8f9bbb,#8f9bbb) center/100% 1px no-repeat, linear-gradient(#8f9bbb,#8f9bbb) center/1px 100% no-repeat; }"
+      "refersTo": "spine-minyan",
+      "description": "A leather spine with two gold bands and a gold title block: the mark of a prayer said במניין or a day of learning.",
+      "html": "<i class=\"ds-spine ds-spine-done\" style=\"--hue: var(--hue-shacharit, #1f4d3a)\"></i>",
+      "css": ".ds-spine { position: relative; display: inline-block; box-sizing: border-box; width: 16px; height: 42px; border-radius: 2px; background: var(--hue); } .ds-spine-done::before, .ds-spine-done::after { content: ''; position: absolute; box-sizing: border-box; } .ds-spine-done::before { inset: 6px 0; border-block: 3px solid var(--stamp, #e2c27a); } .ds-spine-done::after { top: 12px; inset-inline: 3px; height: 9px; background: var(--stamp, #e2c27a); }"
     },
     {
-      "name": "Attendance Control",
+      "name": "Shelf of states",
       "kind": "custom",
-      "refersTo": "attendance-control",
-      "description": "The במניין | ביחידות | ק״ש בלבד control at the end of each prayer row; במניין selected is a chalk thumb.",
-      "html": "<div class=\"ds-att\" dir=\"rtl\"><button class=\"ds-att-on\" aria-pressed=\"true\">במניין</button><button>ביחידות</button><button>ק״ש בלבד</button></div>",
-      "css": ".ds-att { display: flex; width: 192px; height: 34px; padding: 2px; border-radius: 9px; background: rgba(241,239,230,0.09); font-family: Heebo, sans-serif; } .ds-att button { flex: 1; border: 0; border-radius: 7px; background: transparent; color: rgba(241,239,230,0.8); font: inherit; font-size: 13px; font-weight: 500; white-space: nowrap; transition: background-color 160ms ease-out, color 160ms ease-out; } .ds-att button:hover { color: #f1efe6; } .ds-att button:active { transform: scale(0.97); } .ds-att button:focus-visible { outline: 2px solid #e8a13a; outline-offset: 2px; } .ds-att .ds-att-on { background: #f1efe6; color: #0e1a33; }"
+      "refersTo": "spine-shema",
+      "description": "The five states by shape on one board, with today's gold bar: stamped, plain (ביחידות), half-height (ק״ש בלבד), dashed (due, not marked), gap (did not apply).",
+      "html": "<div class=\"ds-shelf\" style=\"--hue: #7a2430\"><span class=\"ds-slot\"><i class=\"ds-sp ds-sp-done\"></i></span><span class=\"ds-slot\"><i class=\"ds-sp\"></i></span><span class=\"ds-slot\"><i class=\"ds-sp ds-sp-shema\"></i></span><span class=\"ds-slot\"><i class=\"ds-sp ds-sp-unmarked\"></i></span><span class=\"ds-slot\"></span><span class=\"ds-slot ds-today\"><i class=\"ds-sp ds-sp-done\"></i></span></div>",
+      "css": ".ds-shelf { position: relative; display: inline-flex; align-items: flex-end; gap: 4px; padding: 0 4px 9px; } .ds-shelf::after { content: ''; position: absolute; inset-inline: 0; bottom: 5px; height: 4px; border-radius: 2px; background: var(--shelf-board, #b08d57); } .ds-slot { position: relative; display: flex; align-items: flex-end; width: 16px; height: 42px; } .ds-today::after { content: ''; position: absolute; inset-inline: 0; top: calc(100% + 6px); height: 3px; background: var(--today, #a87a1f); } .ds-sp { position: relative; display: block; box-sizing: border-box; width: 16px; height: 42px; border-radius: 2px; background: var(--hue); } .ds-sp-done::before, .ds-sp-done::after { content: ''; position: absolute; box-sizing: border-box; } .ds-sp-done::before { inset: 6px 0; border-block: 3px solid var(--stamp, #e2c27a); } .ds-sp-done::after { top: 12px; inset-inline: 3px; height: 9px; background: var(--stamp, #e2c27a); } .ds-sp-shema { height: 21px; } .ds-sp-unmarked { border: 1.5px dashed var(--hue); background: none; }"
     },
     {
-      "name": "Segmented Switch",
-      "kind": "nav",
-      "refersTo": "segment-switch",
-      "description": "The השבוע | החודש | כל הזמנים period switch in סטטיסטיקה.",
-      "html": "<div class=\"ds-seg\" dir=\"rtl\"><button class=\"ds-seg-on\">השבוע</button><button>החודש</button><button>כל הזמנים</button></div>",
-      "css": ".ds-seg { display: flex; width: 343px; height: 44px; padding: 2px; border-radius: 9px; background: rgba(241,239,230,0.09); font-family: Heebo, sans-serif; } .ds-seg button { flex: 1; border: 0; border-radius: 7px; background: transparent; color: rgba(241,239,230,0.8); font: inherit; font-size: 16px; } .ds-seg button:hover { color: #f1efe6; } .ds-seg button:focus-visible { outline: 2px solid #e8a13a; } .ds-seg .ds-seg-on { background: #f1efe6; color: #0e1a33; font-weight: 600; }"
-    },
-    {
-      "name": "Holiday Chip",
-      "kind": "chip",
-      "refersTo": "holiday-chip",
-      "description": "Amber outline pill with the holiday name at the far end of the title row.",
-      "html": "<span class=\"ds-chip\" dir=\"rtl\">ראש חודש</span>",
-      "css": ".ds-chip { display: inline-block; height: 22px; padding: 0 10px; box-sizing: border-box; border: 1px solid #e8a13a; border-radius: 11px; color: #e8a13a; font-family: Heebo, sans-serif; font-size: 13px; font-weight: 500; line-height: 20px; white-space: nowrap; }"
-    },
-    {
-      "name": "Period Button",
+      "name": "Attendance control",
       "kind": "button",
-      "refersTo": "period-button",
-      "description": "Round הקודם / הבא chevrons in the toolbar.",
-      "html": "<button class=\"ds-period\" aria-label=\"הבא\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 3l5 5-5 5\"/></svg></button>",
-      "css": ".ds-period { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 50%; background: rgba(241,239,230,0.09); color: #f1efe6; } .ds-period:hover { background: rgba(241,239,230,0.16); } .ds-period:focus-visible { outline: 2px solid #e8a13a; } .ds-period:disabled { opacity: 0.35; }"
+      "refersTo": "attendance-control",
+      "description": "The 44pt במניין | ביחידות | ק״ש בלבד control under each prayer on היום; a selected במניין is the prayer's deep leather with gold lettering in a gold frame.",
+      "html": "<div class=\"ds-attendance\" dir=\"rtl\" style=\"--hue-deep: #7a2430\"><button class=\"ds-att-minyan\" aria-pressed=\"true\">במניין</button><button aria-pressed=\"false\">ביחידות</button><button aria-pressed=\"false\">ק״ש בלבד</button></div>",
+      "css": ".ds-attendance { display: flex; height: 44px; border-radius: 9px; background: var(--app-fill, rgba(118,118,128,0.12)); font-family: -apple-system, BlinkMacSystemFont, 'SF Hebrew', 'Arial Hebrew', sans-serif; } .ds-attendance button { position: relative; flex: 1 1 0; min-width: 0; padding: 0; border: 2px solid transparent; border-radius: 9px; background: transparent; background-clip: padding-box; color: var(--app-label, #1c1c1e); font-size: 15px; font-weight: 500; line-height: 20px; white-space: nowrap; transition: background-color 160ms ease-out, color 160ms ease-out; } .ds-attendance button[aria-pressed='true'] { background: var(--app-raised, #ffffff); color: var(--app-on-raised, #1c1c1e); font-weight: 600; } .ds-attendance .ds-att-minyan[aria-pressed='true'] { background: var(--hue-deep); color: var(--stamp, #e2c27a); } .ds-attendance .ds-att-minyan[aria-pressed='true']::after { content: ''; position: absolute; inset: 3px; border: 1px solid var(--stamp, #e2c27a); border-radius: 5px; pointer-events: none; } .ds-attendance button:active { transform: scale(0.97); } .ds-attendance button:focus-visible { outline: 2px solid var(--accent, #8a5a12); outline-offset: 2px; }"
     },
     {
-      "name": "Round Check",
-      "kind": "input",
-      "refersTo": "round-check",
-      "description": "Checks for תפילין, טלית and למדתי: chalk ring, fills chalk when checked.",
-      "html": "<span class=\"ds-checks\" dir=\"rtl\"><button class=\"ds-check\" role=\"checkbox\" aria-checked=\"true\"><span class=\"ds-dot\">✓</span>תפילין</button><button class=\"ds-check\" role=\"checkbox\" aria-checked=\"false\"><span class=\"ds-dot\"></span>טלית</button></span>",
-      "css": ".ds-checks { display: flex; gap: 18px; font-family: Heebo, sans-serif; } .ds-check { display: flex; align-items: center; gap: 7px; padding: 0; border: 0; background: transparent; color: rgba(241,239,230,0.85); font: inherit; font-size: 14px; } .ds-check:focus-visible { outline: 2px solid #e8a13a; outline-offset: 2px; } .ds-dot { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px rgba(241,239,230,0.55); color: #0e1a33; font-size: 12px; transition: background-color 160ms ease-out; } .ds-check:hover .ds-dot { box-shadow: inset 0 0 0 1.5px #f1efe6; } [aria-checked='true'] > .ds-dot { background: #f1efe6; box-shadow: none; }"
-    },
-    {
-      "name": "Inset Card List",
-      "kind": "card",
-      "refersTo": "card",
-      "description": "A raised navy card with hairline rows, as in the stats prayer lines.",
-      "html": "<table class=\"ds-table\" dir=\"rtl\"><tr><th>שחרית</th><td>4 מתוך 5</td><td class=\"ds-amber\">3 ברצף</td></tr><tr><th>מוסף</th><td>2 מתוך 2</td><td></td></tr></table>",
-      "css": ".ds-table { width: 343px; border-collapse: collapse; border-radius: 20px; overflow: hidden; background: #17264a; color: #f1efe6; font-family: Heebo, sans-serif; font-size: 16px; } .ds-table th, .ds-table td { padding: 10px 6px; border-bottom: 1px solid rgba(241,239,230,0.08); text-align: start; white-space: nowrap; } .ds-table th { width: 100%; padding-inline-start: 16px; font-size: 17px; font-weight: 600; } .ds-table td:last-child { padding-inline-end: 16px; } .ds-table tr:last-child > * { border-bottom: 0; } .ds-amber { color: #e8a13a; font-size: 14px; font-weight: 500; }"
-    },
-    {
-      "name": "Tab Bar",
+      "name": "Leather band",
       "kind": "nav",
-      "refersTo": "tab-bar",
-      "description": "Native iOS tab bar on Tab Night; the selected tab is amber.",
-      "html": "<nav class=\"ds-tabs\" dir=\"rtl\"><a class=\"ds-tab-on\" href=\"#\">היום</a><a href=\"#\">לוח</a><a href=\"#\">סטטיסטיקה</a></nav>",
-      "css": ".ds-tabs { display: flex; width: 375px; height: 50px; background: #12203d; border-top: 1px solid rgba(241,239,230,0.08); font-family: Heebo, sans-serif; } .ds-tabs a { flex: 1; display: grid; place-items: end center; padding-bottom: 6px; color: #8f9bbb; font-size: 11px; text-decoration: none; } .ds-tabs a:hover { color: #f1efe6; } .ds-tabs a:focus-visible { outline: 2px solid #e8a13a; } .ds-tabs .ds-tab-on { color: #e8a13a; }"
+      "refersTo": "leather-band",
+      "description": "The header from the status bar through the date line: round gold chevrons, the gold large title, a holiday chip, the parchment date line, and the fine gold double rule.",
+      "html": "<header class=\"ds-band\" dir=\"rtl\"><div class=\"ds-band-tools\"><button class=\"ds-chev\" aria-label=\"הקודם\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 6l6 6-6 6\"/></svg></button><button class=\"ds-chev\" aria-label=\"הבא\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 6l-6 6 6 6\"/></svg></button></div><div class=\"ds-band-title\"><h1>היום</h1><span class=\"ds-chip\">ראש חודש כסלו</span></div><p class=\"ds-band-date\">יום שלישי · ל׳ בחשון · תולדות</p></header>",
+      "css": ".ds-band { background: var(--shell, #2b2320); padding: 8px 0 12px; position: relative; } .ds-band::after { content: ''; position: absolute; inset-inline: 16px; bottom: 3px; height: 5px; border-block: 1.5px solid var(--stamp, #e2c27a); border-bottom-width: 0.5px; box-sizing: border-box; } .ds-band-tools { display: flex; gap: 12px; padding: 0 12px; } .ds-chev { display: grid; place-items: center; width: 34px; height: 34px; border: 0; border-radius: 50%; background: color-mix(in srgb, var(--stamp, #e2c27a) 14%, transparent); color: var(--stamp, #e2c27a); } .ds-chev:focus-visible { outline: 2px solid var(--stamp, #e2c27a); } .ds-band-title { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; } .ds-band-title h1 { margin: 0; color: var(--stamp, #e2c27a); font-family: 'Frank Ruhl Libre', 'Times New Roman', serif; font-size: 2rem; font-weight: 700; } .ds-chip { padding: 4px 12px; border: 1.5px solid var(--stamp, #e2c27a); border-radius: 16px; color: var(--stamp, #e2c27a); font: 500 15px/20px -apple-system, BlinkMacSystemFont, sans-serif; white-space: nowrap; } .ds-band-date { margin: 4px 0 8px; padding: 0 16px; color: var(--on-shell, #e8d7ad); font: 15px/1.6 -apple-system, BlinkMacSystemFont, sans-serif; }"
+    },
+    {
+      "name": "Inset card with prayer row",
+      "kind": "card",
+      "refersTo": "inset-card",
+      "description": "An iOS inset grouped card holding a 112pt prayer row: the 24pt book-face name, the meta line, and the week's shelf at the row's end.",
+      "html": "<section class=\"ds-card\" dir=\"rtl\"><div class=\"ds-row-top\"><div><h3 class=\"ds-name\">מנחה</h3><p class=\"ds-meta\">אוהל יצחק · 3 ברצף</p></div></div></section>",
+      "css": ".ds-card { margin: 12px 16px; padding: 6px 16px 7px; border-radius: 10px; background: var(--surface, #ffffff); } .ds-row-top { display: flex; align-items: center; justify-content: space-between; height: 44px; } .ds-name { margin: 0; font-family: 'Frank Ruhl Libre', 'Times New Roman', serif; font-size: 24px; font-weight: 700; line-height: 26px; color: var(--app-label, #1c1c1e); } .ds-meta { margin: 0; font: 15px/18px -apple-system, BlinkMacSystemFont, sans-serif; color: var(--app-label-secondary, #6c6c70); }"
+    },
+    {
+      "name": "Round check",
+      "kind": "input",
+      "refersTo": "inset-card",
+      "description": "A full-row check (תפילין, טלית, למדתי): a 26pt ring that fills with the card's deep leather and shows a gold tick.",
+      "html": "<button class=\"ds-check\" role=\"checkbox\" aria-checked=\"true\" dir=\"rtl\" style=\"--hue-deep: #1f4d3a\">תפילין<span class=\"ds-ring\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l5 5 9-10\"/></svg></span></button>",
+      "css": ".ds-check { display: flex; align-items: center; justify-content: space-between; width: 100%; height: 52px; padding: 0 16px; border: 0; border-radius: 10px; background: var(--surface, #ffffff); color: var(--app-label, #1c1c1e); font: 17px -apple-system, BlinkMacSystemFont, sans-serif; } .ds-check:focus-visible { outline: 2px solid var(--accent, #8a5a12); outline-offset: -2px; } .ds-ring { display: grid; place-items: center; width: 26px; height: 26px; box-sizing: border-box; border: 1.5px solid var(--app-label-secondary, #6c6c70); border-radius: 50%; color: var(--stamp, #e2c27a); transition: background-color 160ms ease-out; } .ds-check[aria-checked='true'] .ds-ring { border: 0; background: var(--hue-deep); }"
+    },
+    {
+      "name": "Period segment (dressed)",
+      "kind": "chip",
+      "refersTo": "attendance-plain-selected",
+      "description": "The סטטיסטיקה period switch: an iOS segmented track whose selected segment is shell leather with gold lettering in a gold inset ring.",
+      "html": "<div class=\"ds-seg\" dir=\"rtl\"><button aria-pressed=\"true\">השבוע</button><button aria-pressed=\"false\">החודש</button><button aria-pressed=\"false\">כל הזמנים</button></div>",
+      "css": ".ds-seg { display: flex; height: 44px; margin: 12px 16px 0; padding: 2px; border-radius: 9px; background: var(--app-fill, rgba(118,118,128,0.12)); } .ds-seg button { flex: 1 1 0; border: 0; border-radius: 7px; background: transparent; color: var(--app-label, #1c1c1e); font: 500 15px -apple-system, BlinkMacSystemFont, sans-serif; } .ds-seg button[aria-pressed='true'] { background: var(--switch, #2b2320); color: var(--stamp, #e2c27a); font-weight: 600; box-shadow: inset 0 0 0 3px var(--switch, #2b2320), inset 0 0 0 4px var(--stamp, #e2c27a); } .ds-seg button:focus-visible { outline: 2px solid var(--accent, #8a5a12); }"
     }
   ],
   "narrative": {
-    "northStar": "Three stars",
-    "overview": "The app is a night star chart. Every prayer is a star and its size is its state. A streak is the thin line that joins bright stars on consecutive days. The ground is deep navy, the stars and text are chalk, and nothing on the chart is ornament: every dot is data.\n\nThe chart is the one signature. Around it the app stays a plain iOS app in Ionic's iOS mode: large titles, inset grouped lists, native segmented controls, a native tab bar. The world lends the palette, the two typefaces and the size-as-state stars. Navigation and controls stay standard.\n\nThe density is set by the iPhone SE (375×667). On היום the chart, every prayer's control, the תפילין and טלית checks and the Torah card's check all fit on the first screen. The app has one appearance. It stays navy whatever the phone is set to.\n\nIt refuses the habit-tracker defaults (green checks, flames, heat grids) and the Judaica defaults (leather, parchment, gold).",
+    "northStar": "The shelf, dressed",
+    "overview": "Every prayer is a sefer on a shelf, bound in its own leather, and a prayer במניין earns its gold stamp. The app reads as a beit midrash bookcase seen in daylight (or by lamplight in dark): one dark leather band across the top carrying a gold large title, then plain iOS grouped cards on the system ground, each row ending in a short shelf of spines standing on a flat board. The shelf repeats as the signature on every tab: seven spines per prayer on היום, one shelf per prayer per week in לוח, and the period's shelf per prayer in סטטיסטיקה.\n\nThe system is native first. Ionic React runs in iOS mode, the body face is the phone's own font, cards, lists, segmented controls and the tab bar are iOS grouped-style, and every size is in rem against the phone's Text Size so Dynamic Type still scales it (1rem is 17pt at the default size). The book world lives only in the leathers, the gold, the spines and the board; nothing else is ornamented.\n\nMarks are large enough to read at arm's length on an iPhone SE: spines are 16pt wide and 42pt tall, prayer names 24pt, the marking control 44pt. Colour is flat throughout. The world rejects the habit-tracker vocabulary of green checks, flames and heat grids, and the previous version's small marks.",
     "keyCharacteristics": [
-      "Always night: one navy appearance, no light theme.",
-      "Size is state: four marks on a fixed ramp, told apart by shape and size, never by colour alone.",
-      "Chalk carries data, amber carries annotations, red rings only today.",
-      "Frank Ruhl Libre for large titles and poster numerals, Heebo for everything else, both self-hosted for offline use.",
-      "Flat colour with no shadows, glows, gradients or texture inside the app."
+      "Five fixed leathers, one per prayer and one for תורה, identical on every tab.",
+      "Gold on a mark means במניין (or a day of learning) and nothing else.",
+      "A spine's state is its shape: stamped, plain, half-height, dashed outline, or a gap.",
+      "One dark leather band holds the toolbar, gold title and date line, closed by a fine gold double rule, in both appearances.",
+      "Light and dark follow the phone, with an override in הגדרות.",
+      "Flat colour: no grain, no gradient fills, no shadows."
     ],
     "rules": [
-      { "name": "The Red Is Today Rule", "body": "Red rings today and nothing else. A past day the user is looking at gets a faint chalk ring instead.", "section": "colors" },
-      { "name": "The Amber Annotates Rule", "body": "Amber never fills a star or a large surface. It writes notes beside the data: dates, streak counts, holidays, reminders, the selected tab.", "section": "colors" },
-      { "name": "The Every Dot Is Data Rule", "body": "No decorative stars, sparkles or dot patterns. If a dot is on screen it is a prayer or a day.", "section": "colors" },
-      { "name": "The Serif Is For Numbers And Titles Rule", "body": "Frank Ruhl Libre appears only in large titles and poster-size numerals. Every row, control and label is Heebo.", "section": "typography" },
-      { "name": "The Flat Night Rule", "body": "Surfaces separate by tone, never by shadow. A new surface is either ground or card.", "section": "elevation" }
+      { "name": "The Gold Means במניין Rule", "body": "On a mark, gold means the prayer was said במניין, or on the תורה shelf that a day of learning was logged, and nothing else. ביחידות and ק״ש בלבד never carry gold on a spine or a selected segment. The listed exceptions, which sit around the marks and not on them, are gold-toned by design: the leather band's title and double rule, today's bar, and the gilded accent (the selected tab, holidays and the פרשה, the learning \"+\", the ticks of the checks).", "section": "colors" },
+      { "name": "The One Leather Rule", "body": "A prayer's leather is the same on every tab and every surface: its spine, its selected במניין segment, its key in כל הזמנים. Never recolour a prayer for a context, and never give ביחידות or ק״ש בלבד a prayer's leather in the trend columns; they take the plain shell (light) or board (dark) colour.", "section": "colors" },
+      { "name": "The Leather Band Holds Rule", "body": "The header and the status bar are leather in light and in dark alike, so the installed app's status bar always matches the band.", "section": "colors" },
+      { "name": "The Book Face Rule", "body": "Frank Ruhl Libre 700 is for large titles, prayer names on היום and the big numbers in סטטיסטיקה only. Row names in לוח and סטטיסטיקה, and everything else, are in the phone's font.", "section": "typography" },
+      { "name": "The Readable At Arm's Length Rule", "body": "Every line read while marking is at least 15pt, and nothing but the tab labels is under 13pt. All sizes are rem fractions of 17 (for example `calc(15rem / 17)`), never px, so the phone's Text Size setting scales them. \"ק״ש בלבד\" is never shortened.", "section": "typography" },
+      { "name": "The Flat Leather Rule", "body": "Colour is flat: no grain, no gradient fill, no drop shadow, on spines, boards, cards or the band.", "section": "elevation" }
     ],
     "dos": [
-      "Do keep the star size ramp exact: 14px disc, 6px disc, 11px ring with a 1.5px stroke, an 8px +, or nothing.",
-      "Do tell marks apart by shape and size so the chart reads without colour.",
-      "Do draw streak lines at 1.25px in chalk at 45%, behind the stars, and never on the מוסף line.",
-      "Do ring today in red and a past shown day in faint chalk.",
-      "Do put annotations in amber: dates, streak numbers, holidays, reminders, the selected tab.",
-      "Do set large titles and poster numerals in Frank Ruhl Libre and everything else in Heebo, with tabular figures.",
-      "Do check every screen at 375×667 first.",
-      "Do keep every tap target at least 44pt, with an invisible hit area when the visual is smaller.",
-      "Do turn off the star grow, the streak draw and control transitions under reduce motion."
+      "**Do** show a prayer's state by the spine's shape (stamped, plain, half-height, dashed, gap), never by colour alone.",
+      "**Do** keep gold on marks for במניין and days of learning only; the band's title and rule, today's bar and the gilded accent are the listed exceptions.",
+      "**Do** give every tap target at least 44pt in both directions; when the drawn control is smaller (the 34px header chevrons), extend its hit area to 44pt.",
+      "**Do** set every size in rem as a fraction of 17 so Text Size scales it, with marking text at 15pt or more.",
+      "**Do** read leathers through the row's hue class and the `--hue` / `--hue-deep` variables, so one component serves every prayer.",
+      "**Do** keep the header and status bar strip in Leather Shell in both appearances.",
+      "**Do** honour reduce motion: the stamp, the press scale and colour transitions all stop."
     ],
     "donts": [
-      "Don't add a light appearance; the app is always night.",
-      "Don't use red for anything but today's ring.",
-      "Don't add shadows, glows, gradients or textures to app surfaces.",
-      "Don't draw decorative stars, sparkles or dot patterns; every dot is data.",
-      "Don't give prayers their own colours or bring back leather, gold, parchment or spines.",
-      "Don't use green checks, flames or heat grids for progress.",
-      "Don't set rows, labels or controls in the serif."
+      "**Don't** put gold on a ביחידות or ק״ש בלבד spine or selected segment.",
+      "**Don't** tool ביחידות in a darker leather or any other spine that matches במניין's shape; the owner rejected that because it differed only in colour.",
+      "**Don't** add grain, gradient fills or shadows to spines, boards, cards or the band.",
+      "**Don't** use green checks, flames or heat grids for progress; progress is spines on a shelf.",
+      "**Don't** set row names in לוח or סטטיסטיקה, or any body text, in Frank Ruhl Libre.",
+      "**Don't** shrink spines below the sizes above or abbreviate \"ק״ש בלבד\" to fit."
     ]
   }
 }

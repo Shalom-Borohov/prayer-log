@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { streaks } from '../../src/domain/streaks'
+import type { ShelfKey } from '../../src/domain/shelf'
+import { hasStreak, streaks } from '../../src/domain/streaks'
 import { allMinyan, day, days } from '../helpers/days'
 
 const today = '2026-10-28'
@@ -98,5 +99,13 @@ describe('streaks', () => {
 
     expect(streaks(records, today).torah).toEqual({ current: 2, best: 2 })
     expect(streaks(records, today).shacharit).toEqual({ current: 0, best: 0 })
+  })
+})
+
+describe('hasStreak', () => {
+  it('is false only for מוסף', () => {
+    const keys: ShelfKey[] = ['shacharit', 'musaf', 'mincha', 'maariv', 'torah']
+
+    expect(keys.filter(hasStreak)).toEqual(['shacharit', 'mincha', 'maariv', 'torah'])
   })
 })

@@ -35,24 +35,6 @@ describe('trendUnit', () => {
 })
 
 describe('trendBuckets', () => {
-  it('splits a week into seven days, counting nothing before the first record or after today, and today only as marked', () => {
-    const records = [
-      day('2026-10-26', { prayers: { shacharit: 'minyan', mincha: 'alone', maariv: 'shema' } }),
-      day('2026-10-27', { prayers: { shacharit: 'minyan' } }),
-      day('2026-10-28', { prayers: { shacharit: 'minyan' } }),
-    ]
-
-    expect(trendBuckets(records, { from: '2026-10-25', to: '2026-10-31' }, 'day', '2026-10-28')).toEqual([
-      { start: '2026-10-25', end: '2026-10-25', tally: tally(0, 0, 0) },
-      { start: '2026-10-26', end: '2026-10-26', tally: tally(1, 1, 3, 1) },
-      { start: '2026-10-27', end: '2026-10-27', tally: tally(1, 0, 3) },
-      { start: '2026-10-28', end: '2026-10-28', tally: tally(1, 0, 1) },
-      { start: '2026-10-29', end: '2026-10-29', tally: tally(0, 0, 0) },
-      { start: '2026-10-30', end: '2026-10-30', tally: tally(0, 0, 0) },
-      { start: '2026-10-31', end: '2026-10-31', tally: tally(0, 0, 0) },
-    ])
-  })
-
   it('splits a month into Sunday weeks, the first one starting on the 1st', () => {
     const records = days('2026-10-01', '2026-10-28', { prayers: allMinyan })
 
@@ -110,7 +92,7 @@ describe('trendBuckets', () => {
 
     const range = allTimeRange(records, '2026-10-28')
 
-    for (const unit of ['day', 'week', 'month', 'quarter', 'year'] as const) {
+    for (const unit of ['week', 'month', 'quarter', 'year'] as const) {
       expect(sum(trendBuckets(records, range, unit, '2026-10-28').map(({ tally }) => tally))).toEqual(
         periodTotals(records, range.from, '2026-10-27', '2026-10-28').prayers,
       )

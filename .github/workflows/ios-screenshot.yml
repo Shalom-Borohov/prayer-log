@@ -86,12 +86,15 @@ jobs:
             exit 1
           fi
 
-      - name: Screenshot the app in Safari
+      - name: Screenshot the app in Safari, light and dark
         env:
           PAGE_LOAD_SECONDS: 20
+          APPEARANCE_SWITCH_SECONDS: 3
           OPEN_URL_ATTEMPTS: 3
           OPEN_URL_RETRY_SECONDS: 10
         run: |
+          xcrun simctl ui "$UDID" appearance light
+
           for attempt in $(seq "$OPEN_URL_ATTEMPTS"); do
             if xcrun simctl openurl "$UDID" "${APP_URL}mark-seen.html"; then
               break
@@ -107,7 +110,10 @@ jobs:
           done
 
           sleep "$PAGE_LOAD_SECONDS"
-          xcrun simctl io "$UDID" screenshot ios-safari.png
+          xcrun simctl io "$UDID" screenshot ios-safari-light.png
+          xcrun simctl ui "$UDID" appearance dark
+          sleep "$APPEARANCE_SWITCH_SECONDS"
+          xcrun simctl io "$UDID" screenshot ios-safari-dark.png
 
       - name: Say what the screenshots show
         run: |
@@ -115,6 +121,11 @@ jobs:
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          path: ios-safari.png
+          path: ios-safari-light.png
+          archive: false
+          if-no-files-found: error
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          path: ios-safari-dark.png
           archive: false
           if-no-files-found: error
