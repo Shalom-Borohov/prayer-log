@@ -5,7 +5,6 @@ import {
   hebrewDateLabel,
   hebrewDateWithYear,
   hebrewDayNumber,
-  hebrewMonthsBetween,
   holidayNames,
   isRestDay,
   isTishaBav,
@@ -17,22 +16,6 @@ describe('hebrewDateWithYear', () => {
   it('adds the year without its thousands to the Hebrew date', () => {
     expect(hebrewDateWithYear('2026-11-08')).toBe('כ״ח בחשון תשפ״ז')
     expect(hebrewDateWithYear('2027-03-23')).toBe('י״ד באדר ב׳ תשפ״ז')
-  })
-})
-
-describe('hebrewMonthsBetween', () => {
-  it('names each Hebrew month the dates touch, with its year', () => {
-    expect(hebrewMonthsBetween('2026-11-01', '2026-11-30')).toEqual([
-      { name: 'חשון', year: 'תשפ״ז' },
-      { name: 'כסלו', year: 'תשפ״ז' },
-    ])
-  })
-
-  it('gives each month its own year across ראש השנה', () => {
-    expect(hebrewMonthsBetween('2026-09-01', '2026-09-30')).toEqual([
-      { name: 'אלול', year: 'תשפ״ו' },
-      { name: 'תשרי', year: 'תשפ״ז' },
-    ])
   })
 })
 

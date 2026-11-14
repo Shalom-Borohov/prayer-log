@@ -27,6 +27,8 @@ export const COMMON_COPY = {
   badRecordsInBackup: (count: number) =>
     count === 1 ? 'בגיבוי יש רשומה פגומה אחת, וייבוא הקובץ ייכשל' : `בגיבוי יש ${count} רשומות פגומות, וייבוא הקובץ ייכשל`,
   noBackupYet: 'עדיין לא נעשה גיבוי',
+  previous: 'הקודם',
+  next: 'הבא',
   unmarked: 'לא סומן',
   noData: 'עוד אין נתונים',
   dateRange: (from: string, to: string) => `${from}–${to}`,
@@ -38,7 +40,6 @@ export const COMMON_COPY = {
   tracks: { ...PRAYER_NAMES, torah: TORAH },
   attendance: { minyan: 'במניין', alone: 'ביחידות', shema: 'ק״ש בלבד' } satisfies Record<Attendance, string>,
   worn: { tefillin: 'תפילין', tallit: 'טלית' } satisfies Record<WornItem, string>,
-  wornItems: 'תפילין וטלית',
   prayerMark: (prayer: string, attendance: string) => `${prayer} ${attendance}`,
   atPlace: (mark: string, place: string) => `${mark} (${place})`,
   outOf: (done: number, total: number) => `${done} מתוך ${total}`,

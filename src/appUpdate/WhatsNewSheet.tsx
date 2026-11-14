@@ -47,7 +47,7 @@ function ChangeList({ title, changes }: { title: string; changes: string[] }) {
 export function WhatsNewSheet({ isOpen, releases, onClose }: WhatsNewSheetProps) {
   return (
     <IonModal isOpen={isOpen} onDidDismiss={onClose} {...HALF_SHEET}>
-      <IonHeader className="app-header">
+      <IonHeader className="leather-header">
         <IonToolbar>
           <IonTitle>{APP_UPDATE_COPY.whatsNew}</IonTitle>
           <IonButtons slot="end">

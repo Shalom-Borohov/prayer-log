@@ -17,7 +17,7 @@ describe('icons', () => {
 
   it.each([
     ['/tabs/today', '.round-check ion-icon'],
-    ['/tabs/calendar', '.period-buttons ion-icon'],
+    ['/tabs/calendar', '.period-nav ion-icon'],
     ['/tabs/stats', 'ion-header ion-icon'],
     ['/tabs/stats/settings', 'ion-item ion-icon'],
     ['/tabs/stats/learning', 'ion-searchbar ion-icon'],

@@ -8,17 +8,18 @@ import {
   IonToolbar,
   useIonRouter,
 } from '@ionic/react'
-import { PeriodButtons } from '../../components/PeriodButtons'
+import { PeriodNav } from '../../components/PeriodNav'
 import { SettingsButton } from '../../components/SettingsButton'
 import { COMMON_COPY } from '../../copy/common'
 import { useAllDays } from '../../data/hooks'
 import { LIST_SEPARATOR, gregorianLabel, weekdayName } from '../../domain/format'
 import { hebrewDateLabel, holidayNames, weeklyParsha } from '../../domain/hebrewCalendar'
-import { DAYS_PER_WEEK, addDays, daysInRange } from '../../domain/logicalDay'
+import { addDays } from '../../domain/logicalDay'
 import { defaultPlace, knownPlaces } from '../../domain/places'
 import { prayersForDay } from '../../domain/prayersForDay'
-import { shelfRows } from '../../domain/shelf'
-import { hasStreak, streaks } from '../../domain/streaks'
+import { shelfSlots } from '../../domain/shelf'
+import { streaks } from '../../domain/streaks'
+import { WORN_AT_PRAYER } from '../../domain/types'
 import { usePeriodSwipe } from '../../hooks/usePeriodSwipe'
 import { type Tab, dayParentPath, dayPath } from '../../navigation/paths'
 import { BackfillBanner } from './BackfillBanner'
@@ -26,8 +27,10 @@ import { TODAY_COPY } from './copy'
 import { PrayerRow } from './PrayerRow'
 import { TorahRow } from './TorahRow'
 import { WeekSummary } from './WeekSummary'
-import { WornCard } from './WornCard'
-import './day-page.css'
+import { WornChecks } from './WornChecks'
+import './day.css'
+
+const SHELF_DAYS = 7
 
 const BACK_LABELS = { calendar: COMMON_COPY.calendar, stats: COMMON_COPY.learningLog }
 
@@ -36,8 +39,6 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
   const record = records?.find((day) => day.date === date)
   const dayStreaks = records && streaks(records, date, today)
   const places = records && knownPlaces(records)
-  const shelves = records && shelfRows(records, daysInRange(addDays(date, 1 - DAYS_PER_WEEK), date), today)
-  const dayPrayers = prayersForDay(date)
   const router = useIonRouter()
   const title = date === today ? COMMON_COPY.today : weekdayName(date)
   const holidays = holidayNames(date)
@@ -58,7 +59,7 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
 
   return (
     <IonPage>
-      <IonHeader className="app-header">
+      <IonHeader className="leather-header">
         <IonToolbar>
           {tab !== 'today' && (
             <IonButtons slot="start">
@@ -66,74 +67,58 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
             </IonButtons>
           )}
           <IonTitle>{title}</IonTitle>
-          <PeriodButtons previousLabel={TODAY_COPY.previousDay} nextLabel={TODAY_COPY.nextDay} {...period} />
           <SettingsButton tab={tab} />
         </IonToolbar>
       </IonHeader>
       <IonContent ref={areaRef} fullscreen>
-        <IonHeader collapse="condense" className="app-header">
+        <IonHeader collapse="condense" className="leather-header">
           <IonToolbar>
             <IonTitle size="large">{title}</IonTitle>
-            {holidays.length > 0 && (
-              <div slot="end" className="holiday-chips">
-                {holidays.map((holiday) => (
-                  <span key={holiday} className="holiday-chip">
-                    {holiday}
-                  </span>
-                ))}
-              </div>
-            )}
           </IonToolbar>
           <div className="day-heading">
             <p>{dateLine}</p>
+            {holidays.length > 0 && <p className="holidays">{holidays.join(LIST_SEPARATOR)}</p>}
           </div>
         </IonHeader>
         <div ref={paneRef}>
-          {records && dayStreaks && places && shelves && (
+          {records && dayStreaks && places && (
             <>
               {date === today && <BackfillBanner records={records} today={today} onOpen={openDay} />}
               <div className="inset-group">
-                {shelves.map(
-                  ({ key, slots }) =>
-                    key !== 'torah' &&
-                    dayPrayers.includes(key) && (
-                      <PrayerRow
-                        key={`${date}-${key}`}
-                        date={date}
-                        prayer={key}
-                        attendance={record?.prayers[key]}
-                        place={record?.places?.[key]}
-                        rememberedPlace={defaultPlace(records, key)}
-                        knownPlaces={places}
-                        streak={hasStreak(key) ? dayStreaks[key].current : null}
-                        shelf={slots}
-                        endsToday={date === today}
-                      />
-                    ),
-                )}
+                {prayersForDay(date).map((prayer) => (
+                  <PrayerRow
+                    key={`${date}-${prayer}`}
+                    date={date}
+                    prayer={prayer}
+                    attendance={record?.prayers[prayer]}
+                    place={record?.places?.[prayer]}
+                    rememberedPlace={defaultPlace(records, prayer)}
+                    knownPlaces={places}
+                    streak={prayer === 'musaf' ? null : dayStreaks[prayer].current}
+                    slots={prayer === 'musaf' ? null : shelfSlots(records, prayer, date, SHELF_DAYS)}
+                  >
+                    {prayer === WORN_AT_PRAYER && <WornChecks date={date} record={record} />}
+                  </PrayerRow>
+                ))}
               </div>
-              <WornCard date={date} record={record} />
-              {shelves.map(
-                ({ key, slots }) =>
-                  key === 'torah' && (
-                    <TorahRow
-                      key={date}
-                      date={date}
-                      learned={record?.torah === true}
-                      note={record?.torahNote}
-                      entries={record?.learning}
-                      records={records}
-                      streak={dayStreaks.torah.current}
-                      shelf={slots}
-                      endsToday={date === today}
-                    />
-                  ),
-              )}
+              <div className="inset-group">
+                <TorahRow
+                  key={date}
+                  date={date}
+                  learned={record?.torah === true}
+                  note={record?.torahNote}
+                  entries={record?.learning}
+                  records={records}
+                  streak={dayStreaks.torah.current}
+                  slots={shelfSlots(records, 'torah', date, SHELF_DAYS)}
+                />
+              </div>
               <WeekSummary records={records} date={date} today={today} />
             </>
           )}
         </div>
       </IonContent>
+      <PeriodNav previousLabel={TODAY_COPY.previousDay} nextLabel={TODAY_COPY.nextDay} {...period} />
     </IonPage>
   )
 }

@@ -1,103 +1,60 @@
-ion-segment.stats-period {
-  margin-top: 12px;
-}
-
-ion-segment.stats-period ion-segment-button {
-  --color: var(--app-label);
-  --color-checked: var(--stamp);
-  --indicator-color: var(--switch);
-  --indicator-box-shadow: inset 0 0 0 3px var(--switch), inset 0 0 0 4px var(--stamp);
-  font-size: var(--type-control);
-  font-weight: 500;
-}
-
-ion-segment.stats-period ion-segment-button.segment-button-checked {
-  font-weight: 600;
-}
-
-.stats-headline {
-  display: flex;
-  align-items: flex-end;
-  gap: 12px;
-  height: 92px;
-  margin: 8px 16px 0;
-  font-size: inherit;
+.stats-table thead th {
+  font-size: 0.8125rem;
   font-weight: 400;
-}
-
-.stats-headline-number {
-  margin-bottom: 4px;
-  font-family: var(--title-font-family);
-  font-size: calc(88rem / 17);
-  font-weight: 700;
-  line-height: 80px;
-  font-variant-numeric: tabular-nums;
-  color: var(--app-label);
-}
-
-.stats-headline-caption {
-  margin-bottom: 11px;
-}
-
-.stats-headline-caption b,
-.stats-headline-caption span {
-  display: block;
-}
-
-.stats-headline-caption b {
-  font-size: calc(22rem / 17);
-  font-weight: 600;
-  line-height: 28px;
-  color: var(--app-label);
-}
-
-.stats-headline-caption span {
-  font-size: calc(17rem / 17);
-  line-height: 22px;
   color: var(--app-label-secondary);
 }
 
-.stats-figures {
-  display: flex;
-  height: 56px;
-  margin: 12px 16px 0;
-}
-
-.stats-figure {
-  display: flex;
-  flex: 1 1 0;
-  flex-direction: column-reverse;
-  align-items: center;
-  justify-content: center;
-}
-
-.stats-figure dd {
-  margin: 0;
-  font-family: var(--title-font-family);
-  font-size: calc(28rem / 17);
-  font-weight: 700;
-  line-height: 32px;
-  color: var(--app-label);
-}
-
-.stats-figure dt {
-  font-size: var(--type-control);
-  line-height: 20px;
-  color: var(--app-label-secondary);
-}
-
-.detail-table thead th {
-  font-size: calc(14rem / 17);
-  color: var(--app-label-secondary);
-}
-
-.detail-table thead th,
-.detail-table td {
+.stats-table thead th,
+.stats-table td {
+  padding-inline: 8px;
   text-align: center;
 }
 
-ion-list.learning-log-entrance {
-  margin: 0 16px 24px;
+.stats-table :is(th, td):last-child {
+  padding-inline-end: 16px;
+}
+
+.stats-table .spine {
+  display: inline-block;
+  margin-inline-end: 10px;
+  vertical-align: middle;
+  --gold-band: 3px;
+  width: 5px;
+  --spine-height: 18px;
+  border-radius: 1px;
+}
+
+.ruled-table td.learning-log-entrance {
+  padding: 0;
+  text-align: start;
+  font-weight: 400;
+}
+
+.learning-log-entrance ion-item {
+  --background: transparent;
+  --min-height: 44px;
+  font-size: inherit;
+}
+
+.shelf-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 11px 16px 12px;
+  border-bottom: 0.5px solid var(--app-separator);
+  font-size: 0.9375rem;
+}
+
+.shelf-row:last-child {
+  border-bottom: 0;
+}
+
+.shelf-row .shelf {
+  flex-wrap: wrap;
+  height: auto;
+  row-gap: 4px;
 }
 
 .empty-state {
@@ -116,8 +73,98 @@ ion-list.learning-log-entrance {
 
 .empty-state p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   line-height: 1.4;
   color: var(--app-label-secondary);
   text-wrap: balance;
+}
+
+.trend {
+  margin: 0 16px 24px;
+  padding: 16px 16px 12px;
+}
+
+.trend-plot,
+.trend-ticks {
+  display: flex;
+  gap: 4px;
+}
+
+.trend-plot {
+  align-items: flex-end;
+  height: 120px;
+  border-bottom: 0.5px solid var(--app-separator);
+}
+
+.trend-slot,
+.trend-ticks span {
+  flex: 1;
+  min-width: 0;
+}
+
+.trend-slot {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.trend-column {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  border: 1px dashed var(--app-label-secondary);
+  border-bottom: 0;
+  border-radius: 1.5px 1.5px 0 0;
+  overflow: hidden;
+}
+
+.trend-minyan {
+  background: var(--gold);
+}
+
+.trend-other {
+  background: var(--leather-plain);
+}
+
+.trend-ticks {
+  margin-top: 6px;
+}
+
+.trend-ticks span {
+  display: flex;
+  justify-content: center;
+  font-size: 0.6875rem;
+  white-space: nowrap;
+  color: var(--app-label-secondary);
+}
+
+.trend-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--app-label-secondary);
+}
+
+.trend-key li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trend-swatch {
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  border-radius: 1.5px;
+}
+
+.trend-unmarked {
+  border: 1px dashed var(--app-label-secondary);
 }

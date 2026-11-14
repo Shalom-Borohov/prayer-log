@@ -12,29 +12,52 @@ const sum = (tallies: PrayerTally[]) =>
   )
 
 describe('trendUnit', () => {
+  it('shows a week by day and a month by week', () => {
+    expect(trendUnit('week', { from: '2026-10-25', to: '2026-10-31' })).toBe('day')
+    expect(trendUnit('month', { from: '2026-10-01', to: '2026-10-31' })).toBe('week')
+  })
+
   it('shows all time by week up to twelve weeks, then by month', () => {
-    expect(trendUnit({ from: '2026-10-28', to: '2026-10-28' })).toBe('week')
-    expect(trendUnit({ from: '2026-08-06', to: '2026-10-28' })).toBe('week')
-    expect(trendUnit({ from: '2026-08-05', to: '2026-10-28' })).toBe('month')
+    expect(trendUnit('all', { from: '2026-10-28', to: '2026-10-28' })).toBe('week')
+    expect(trendUnit('all', { from: '2026-08-06', to: '2026-10-28' })).toBe('week')
+    expect(trendUnit('all', { from: '2026-08-05', to: '2026-10-28' })).toBe('month')
   })
 
   it('moves all time to quarters once months take more than 36 columns', () => {
-    expect(trendUnit({ from: '2026-08-20', to: '2029-07-31' })).toBe('month')
-    expect(trendUnit({ from: '2026-08-20', to: '2029-08-01' })).toBe('quarter')
+    expect(trendUnit('all', { from: '2026-08-20', to: '2029-07-31' })).toBe('month')
+    expect(trendUnit('all', { from: '2026-08-20', to: '2029-08-01' })).toBe('quarter')
   })
 
   it('moves all time to years once quarters take more than 36 columns', () => {
-    expect(trendUnit({ from: '2026-01-01', to: '2034-12-31' })).toBe('quarter')
-    expect(trendUnit({ from: '2026-01-01', to: '2035-01-01' })).toBe('year')
+    expect(trendUnit('all', { from: '2026-01-01', to: '2034-12-31' })).toBe('quarter')
+    expect(trendUnit('all', { from: '2026-01-01', to: '2035-01-01' })).toBe('year')
   })
 
   it('counts a partial first quarter as a column', () => {
-    expect(trendUnit({ from: '2026-03-31', to: '2034-12-31' })).toBe('quarter')
-    expect(trendUnit({ from: '2026-03-31', to: '2035-01-01' })).toBe('year')
+    expect(trendUnit('all', { from: '2026-03-31', to: '2034-12-31' })).toBe('quarter')
+    expect(trendUnit('all', { from: '2026-03-31', to: '2035-01-01' })).toBe('year')
   })
 })
 
 describe('trendBuckets', () => {
+  it('splits a week into seven days, counting nothing before the first record or after today, and today only as marked', () => {
+    const records = [
+      day('2026-10-26', { prayers: { shacharit: 'minyan', mincha: 'alone', maariv: 'shema' } }),
+      day('2026-10-27', { prayers: { shacharit: 'minyan' } }),
+      day('2026-10-28', { prayers: { shacharit: 'minyan' } }),
+    ]
+
+    expect(trendBuckets(records, { from: '2026-10-25', to: '2026-10-31' }, 'day', '2026-10-28')).toEqual([
+      { start: '2026-10-25', end: '2026-10-25', tally: tally(0, 0, 0) },
+      { start: '2026-10-26', end: '2026-10-26', tally: tally(1, 1, 3, 1) },
+      { start: '2026-10-27', end: '2026-10-27', tally: tally(1, 0, 3) },
+      { start: '2026-10-28', end: '2026-10-28', tally: tally(1, 0, 1) },
+      { start: '2026-10-29', end: '2026-10-29', tally: tally(0, 0, 0) },
+      { start: '2026-10-30', end: '2026-10-30', tally: tally(0, 0, 0) },
+      { start: '2026-10-31', end: '2026-10-31', tally: tally(0, 0, 0) },
+    ])
+  })
+
   it('splits a month into Sunday weeks, the first one starting on the 1st', () => {
     const records = days('2026-10-01', '2026-10-28', { prayers: allMinyan })
 
@@ -80,7 +103,7 @@ describe('trendBuckets', () => {
   it('keeps five years of history to 21 quarterly columns', () => {
     const range = { from: '2021-11-08', to: '2026-11-07' }
 
-    expect(trendUnit(range)).toBe('quarter')
+    expect(trendUnit('all', range)).toBe('quarter')
     expect(trendBuckets([], range, 'quarter', '2026-11-07')).toHaveLength(21)
   })
 
@@ -92,7 +115,7 @@ describe('trendBuckets', () => {
 
     const range = allTimeRange(records, '2026-10-28')
 
-    for (const unit of ['week', 'month', 'quarter', 'year'] as const) {
+    for (const unit of ['day', 'week', 'month', 'quarter', 'year'] as const) {
       expect(sum(trendBuckets(records, range, unit, '2026-10-28').map(({ tally }) => tally))).toEqual(
         periodTotals(records, range.from, '2026-10-27', '2026-10-28').prayers,
       )

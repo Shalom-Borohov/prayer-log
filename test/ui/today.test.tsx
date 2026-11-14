@@ -10,8 +10,6 @@ import { currentPath, renderAt } from '../helpers/renderAt'
 
 const wednesday = new Date(2026, 9, 28, 10).getTime()
 
-const wornItems = () => screen.findByRole('group', { name: 'תפילין וטלית' })
-
 describe('today', () => {
   beforeEach(resetDb)
   freezeDate(wednesday)
@@ -73,19 +71,28 @@ describe('today', () => {
     await waitFor(async () => expect(await db.days.get('2026-10-28')).toBeUndefined())
   })
 
-  it('records wearing תפילין in its own group and clears it with a second tap', async () => {
+  it('shelves a ק״ש בלבד day as a short spine', async () => {
     renderAt('/tabs/today')
 
-    const worn = await wornItems()
+    await markIn('ערבית', 'ק״ש בלבד')
 
-    expect(within(worn).getByRole('checkbox', { name: 'טלית' })).toHaveAttribute('aria-checked', 'false')
-    expect(within(await row('שחרית')).queryByRole('checkbox')).not.toBeInTheDocument()
+    await waitFor(async () =>
+      expect(within(await row('ערבית')).getByRole('img').lastElementChild).toHaveClass('spine-short'),
+    )
+  })
 
-    fireEvent.click(within(worn).getByRole('checkbox', { name: 'תפילין' }))
+  it('records wearing תפילין in the שחרית row and clears it with a second tap', async () => {
+    renderAt('/tabs/today')
+
+    const shacharit = await row('שחרית')
+
+    expect(within(shacharit).getByRole('checkbox', { name: 'טלית' })).toHaveAttribute('aria-checked', 'false')
+
+    fireEvent.click(within(shacharit).getByRole('checkbox', { name: 'תפילין' }))
     await waitFor(async () => expect((await db.days.get('2026-10-28'))?.tefillin).toBe(true))
-    expect(within(await wornItems()).getByRole('checkbox', { name: 'תפילין' })).toHaveAttribute('aria-checked', 'true')
+    expect(within(await row('שחרית')).getByRole('checkbox', { name: 'תפילין' })).toHaveAttribute('aria-checked', 'true')
 
-    fireEvent.click(within(await wornItems()).getByRole('checkbox', { name: 'תפילין' }))
+    fireEvent.click(within(await row('שחרית')).getByRole('checkbox', { name: 'תפילין' }))
     await waitFor(async () => expect(await db.days.get('2026-10-28')).toBeUndefined())
   })
 
@@ -95,10 +102,33 @@ describe('today', () => {
   ])('offers only טלית on %s', async (_occasion, date) => {
     renderAt(`/tabs/today/${date}`)
 
-    const worn = await wornItems()
+    const shacharit = await row('שחרית')
 
-    expect(within(worn).getByRole('checkbox', { name: 'טלית' })).toBeInTheDocument()
-    expect(within(worn).queryByRole('checkbox', { name: 'תפילין' })).not.toBeInTheDocument()
+    expect(within(shacharit).getByRole('checkbox', { name: 'טלית' })).toBeInTheDocument()
+    expect(within(shacharit).queryByRole('checkbox', { name: 'תפילין' })).not.toBeInTheDocument()
+  })
+
+  it('stamps today’s spine only when the tap marks it במניין', async () => {
+    await db.days.put(day('2026-10-28', { prayers: { maariv: 'minyan' } }))
+    renderAt('/tabs/today')
+
+    const lastSpine = async (label: string) => within(await row(label)).getByRole('img').lastElementChild
+
+    await waitFor(async () => expect(await lastSpine('ערבית')).toHaveClass('spine-gold'))
+    expect(await lastSpine('ערבית')).not.toHaveClass('spine-stamp')
+
+    await markInMinyanSkippingPlace('שחרית')
+
+    await waitFor(async () => expect(await lastSpine('שחרית')).toHaveClass('spine-gold', 'spine-stamp'))
+  })
+
+  it('names a prayer’s shelf by the days since tracking started', async () => {
+    await db.days.put(day('2026-10-27', { prayers: { shacharit: 'minyan' } }))
+    renderAt('/tabs/today')
+
+    expect(
+      await within(await row('שחרית')).findByRole('img', { name: '1 מתוך 2 הימים האחרונים במניין' }),
+    ).toBeInTheDocument()
   })
 
   it('shows each prayer streak, counting a still-blank today', async () => {
@@ -108,40 +138,15 @@ describe('today', () => {
     ])
     renderAt('/tabs/today')
 
-    expect(within(await row('שחרית')).getByText('4 ברצף')).toBeInTheDocument()
-    expect(within(await row('מנחה')).queryByText(/ברצף/)).not.toBeInTheDocument()
+    expect(within(await row('שחרית')).getByText('4 ימים ברצף')).toBeInTheDocument()
+    expect(within(await row('מנחה')).getByRole('paragraph')).toBeEmptyDOMElement()
   })
 
   it('shows no streak text on the Torah row once its streak is broken', async () => {
     await db.days.bulkPut([day('2026-10-25', { torah: true }), day('2026-10-26', { prayers: { shacharit: 'minyan' } })])
     renderAt('/tabs/today')
 
-    expect(await screen.findByRole('checkbox', { name: 'למדתי תורה' })).toBeInTheDocument()
-    expect(within(await row('תורה')).queryByText(/ברצף/)).not.toBeInTheDocument()
-  })
-
-  it('shows no streak text for מוסף', async () => {
-    await db.days.bulkPut([
-      day('2026-10-24', { prayers: { musaf: 'minyan' } }),
-      day('2026-10-31', { prayers: { musaf: 'minyan' } }),
-    ])
-    renderAt('/tabs/today/2026-10-24')
-
-    expect(within(await row('מוסף')).queryByText(/ברצף/)).not.toBeInTheDocument()
-  })
-
-  it('shows the place and the streak under a prayer’s name', async () => {
-    await db.days.bulkPut([
-      ...days('2026-10-25', '2026-10-27', { prayers: { shacharit: 'minyan', maariv: 'minyan' } }),
-      day('2026-10-28', { prayers: { shacharit: 'minyan', mincha: 'alone' }, places: { shacharit: 'אוהל יצחק' } }),
-    ])
-    renderAt('/tabs/today')
-
-    await waitFor(async () =>
-      expect(within(await row('שחרית')).getByRole('paragraph')).toHaveTextContent(/^אוהל יצחק · 4 ברצף$/),
-    )
-    expect(within(await row('ערבית')).getByRole('paragraph')).toHaveTextContent(/^3 ברצף$/)
-    expect(within(await row('מנחה')).getByRole('paragraph')).toBeEmptyDOMElement()
+    expect(within(await row('תורה')).getByRole('paragraph')).toBeEmptyDOMElement()
   })
 
   it('shows מוסף on שבת', async () => {
@@ -151,12 +156,11 @@ describe('today', () => {
     expect(await row('מוסף')).toBeInTheDocument()
   })
 
-  it('shows the holiday name as a chip in the title row', async () => {
+  it('shows the holiday name in the header', async () => {
     vi.setSystemTime(new Date(2026, 10, 11, 10))
     renderAt('/tabs/today')
 
-    expect(await screen.findByText('יום רביעי · א׳ בכסלו · תולדות · 11.11')).toBeInTheDocument()
-    expect((await screen.findByText('ראש חודש כסלו')).closest('ion-toolbar')).not.toBeNull()
+    expect(await screen.findByText('ראש חודש כסלו')).toBeInTheDocument()
     expect(await row('מוסף')).toBeInTheDocument()
   })
 
@@ -179,9 +183,9 @@ describe('today', () => {
 
     const week = await screen.findByRole('table', { name: 'השבוע' })
 
-    await waitFor(() => expect(within(week).getByText('4 מתוך 9')).toBeInTheDocument())
+    await waitFor(() => expect(within(week).getByText('4 מתוך 12')).toBeInTheDocument())
     expect(within(week).getByText('1')).toBeInTheDocument()
-    expect(within(week).getByText('1 מתוך 3')).toBeInTheDocument()
+    expect(within(week).getByText('1 מתוך 4')).toBeInTheDocument()
   })
 
   it('sums ק״ש בלבד, תפילין and טלית for the week, with תפילין skipping שבת', async () => {
@@ -226,9 +230,8 @@ describe('today', () => {
     const previous = await buttonByLabel('היום הקודם')
 
     expect(next).toHaveAttribute('disabled')
-    expect(next.closest('ion-header')).not.toBeNull()
-    expect(previous.closest('ion-header')).not.toBeNull()
-    expect(document.querySelector('ion-footer')).toBeNull()
+    expect(next.closest('ion-footer')).not.toBeNull()
+    expect(previous.closest('ion-footer')).not.toBeNull()
     fireEvent.click(previous)
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/today/2026-10-27'))

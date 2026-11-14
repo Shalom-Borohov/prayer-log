@@ -19,20 +19,12 @@ function prayerMarks(record: DayRecord, places: DayRecord['places']): string[] {
   })
 }
 
-interface DayMarksOptions {
-  withWorn?: boolean
-}
-
-export function dayMarks(
-  record: DayRecord,
-  places?: DayRecord['places'],
-  { withWorn = true }: DayMarksOptions = {},
-): string[] {
-  const wornItems = withWorn ? wornItemsForDay(record.date) : []
-
+export function dayMarks(record: DayRecord, places?: DayRecord['places']): string[] {
   return [
     ...prayerMarks(record, places),
-    ...wornItems.filter((item) => record[item]).map((item) => COMMON_COPY.worn[item]),
+    ...wornItemsForDay(record.date)
+      .filter((item) => record[item])
+      .map((item) => COMMON_COPY.worn[item]),
     ...(record.torah ? [COMMON_COPY.learnedTorah] : []),
   ]
 }

@@ -19,7 +19,7 @@ export function LearningRows({ entries, hints, onEdit, onHint }: LearningRowsPro
         <button
           key={`entry-${index}`}
           type="button"
-          className="torah-line learning-row learning-entry"
+          className="learning-row learning-entry"
           onClick={() => onEdit(entry, index)}
         >
           <span className="learning-text">{learningLabel(entry)}</span>
@@ -30,7 +30,7 @@ export function LearningRows({ entries, hints, onEdit, onHint }: LearningRowsPro
         <button
           key={`hint-${index}`}
           type="button"
-          className="torah-line learning-row learning-hint"
+          className="learning-row learning-hint"
           aria-label={TODAY_COPY.learningHint(learningLabel(hint))}
           onClick={() => onHint(hint)}
         >

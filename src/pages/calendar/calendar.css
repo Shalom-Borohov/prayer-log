@@ -1,92 +1,127 @@
-.week-cards {
+.month-grid {
   display: grid;
-  gap: 10px;
-  padding: 12px 16px 16px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  margin: 16px;
+  padding: 10px 8px 12px;
+  border-radius: 10px;
+  background: var(--ion-item-background);
 }
 
-.week-card {
-  padding: 12px;
-  border-radius: var(--card-radius);
-  background: var(--surface);
+.month-weekday {
+  padding-bottom: 4px;
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--app-label-secondary);
+}
+
+.month-day {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 1px;
+  min-height: 62px;
+  padding: 2px 0 4px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
   color: var(--app-label);
+  font: inherit;
+  touch-action: manipulation;
 }
 
-.week-card-header {
+.month-day:disabled {
+  color: var(--app-label-tertiary);
+}
+
+.month-day:disabled .month-day-spines,
+.month-day:disabled .month-day-worn {
+  visibility: hidden;
+}
+
+.month-day:not(:disabled):active {
+  background: var(--app-fill);
+}
+
+.month-day:focus-visible {
+  outline: 2px solid var(--ion-color-primary);
+  outline-offset: -2px;
+}
+
+.month-day-number {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.month-day.is-today .month-day-number {
+  border-radius: 50%;
+  background: var(--leather-band);
+  color: var(--gold-leaf);
+  font-weight: 700;
+}
+
+.month-day-hebrew,
+.month-day-parsha {
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  color: var(--app-label-secondary);
+}
+
+.month-day.is-holiday .month-day-hebrew {
+  color: var(--ion-color-primary);
+  font-weight: 700;
+}
+
+.month-day-spines {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.month-day-spines .spine {
+  --gold-band: 3px;
+  --spine-height: 14px;
+  width: 4px;
+  border-radius: 1px;
+}
+
+.month-day-worn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  height: 28px;
-  white-space: nowrap;
+  gap: 4px;
+  height: 5px;
+  margin-top: 2px;
 }
 
-.week-card-dates {
-  font-size: calc(17rem / 17);
-  font-weight: 600;
-  line-height: 22px;
+.month-day-parsha {
+  min-height: 1lh;
+  max-width: 100%;
+  margin-top: 2px;
+  padding-inline: 2px;
+  text-align: center;
 }
 
-.week-card-parsha {
-  overflow: hidden;
-  color: var(--accent);
-  font-size: var(--type-control);
-  line-height: 20px;
-  text-overflow: ellipsis;
+.worn-mark {
+  border-radius: 1px;
 }
 
-.week-day-letter {
-  color: var(--app-label-secondary);
-  font-size: var(--type-control);
-  line-height: 15px;
+.worn-mark.is-marked {
+  background: var(--hue);
 }
 
-.week-day-number {
-  position: relative;
-  padding-bottom: 3px;
-  font-size: var(--type-control);
-  font-weight: 600;
-  line-height: 16px;
+.worn-mark-tefillin {
+  width: 5px;
+  height: 5px;
 }
 
-.week-day-number.is-holiday {
-  color: var(--accent);
-}
-
-.week-day-number.is-outside {
-  opacity: 0.45;
-}
-
-.week-day-hebrew {
-  color: var(--app-label-secondary);
-  font-size: var(--type-small);
-  line-height: 14px;
-}
-
-.week-shelves-day.is-today .week-shelves-head {
-  font-weight: 700;
-}
-
-.week-shelves-day.is-today .week-day-letter {
-  color: var(--app-label);
-}
-
-.week-shelves-day.is-today .week-day-number {
-  font-weight: 700;
-}
-
-.week-today-mark {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 16px;
+.worn-mark-tallit {
+  width: 9px;
   height: 3px;
-  background: var(--today);
-  translate: -50% 0;
-}
-
-.week-card-holidays {
-  margin: 0;
-  color: var(--accent);
-  font-size: var(--type-control);
-  line-height: 24px;
 }

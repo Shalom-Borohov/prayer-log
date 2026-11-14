@@ -53,7 +53,7 @@ export function LearningLogPage() {
 
   return (
     <IonPage>
-      <IonHeader className="app-header">
+      <IonHeader className="leather-header">
         <IonToolbar>
           <IonButtons slot="start">
             <IonBackButton defaultHref={STATS_PATH} text={COMMON_COPY.stats} />
