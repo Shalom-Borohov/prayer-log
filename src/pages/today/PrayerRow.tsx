@@ -1,16 +1,14 @@
+import type { ReactNode } from 'react'
+import { Shelf } from '../../components/Shelf'
 import { COMMON_COPY } from '../../copy/common'
 import { setPrayer } from '../../data/repo'
-import { LIST_SEPARATOR, streakLabel } from '../../domain/format'
+import { streakLabel } from '../../domain/format'
 import { attendancesFor } from '../../domain/prayersForDay'
-import type { SlotState } from '../../domain/shelf'
+import { type SlotState, shelfLabel } from '../../domain/shelf'
 import type { Attendance, Prayer } from '../../domain/types'
 import { useSave } from '../../hooks/useSave'
 import { PlaceButton } from './PlaceButton'
 import { usePlacePicker } from './usePlacePicker'
-import { WeekShelf } from './WeekShelf'
-import './attendance.css'
-import './day-row.css'
-import './prayer-row.css'
 
 interface PrayerRowProps {
   date: string
@@ -20,8 +18,8 @@ interface PrayerRowProps {
   rememberedPlace: string | undefined
   knownPlaces: string[]
   streak: number | null
-  shelf: SlotState[]
-  endsToday: boolean
+  slots: SlotState[] | null
+  children?: ReactNode
 }
 
 export function PrayerRow({
@@ -32,12 +30,10 @@ export function PrayerRow({
   rememberedPlace,
   knownPlaces,
   streak,
-  shelf,
-  endsToday,
+  slots,
+  children,
 }: PrayerRowProps) {
   const label = COMMON_COPY.prayers[prayer]
-  const shownPlace = attendance === 'minyan' && place
-  const streakText = streak === null ? null : streakLabel(streak)
   const pickPlace = usePlacePicker(date, prayer, knownPlaces)
   const save = useSave()
 
@@ -56,17 +52,18 @@ export function PrayerRow({
   }
 
   return (
-    <section className={`prayer-row hue-${prayer}`} role="group" aria-label={label}>
+    <section className={`day-row hue-${prayer}`} role="group" aria-label={label}>
       <div className="day-row-top">
         <div className="day-row-title">
-          <h2 className="day-row-name">{label}</h2>
-          <p className="day-row-meta">
-            {shownPlace && <PlaceButton prayer={prayer} place={shownPlace} onClick={() => pickPlace(shownPlace)} />}
-            {shownPlace && streakText && <span>{LIST_SEPARATOR}</span>}
-            {streakText && <span>{streakText}</span>}
-          </p>
+          <div className="day-row-name">
+            <h2>{label}</h2>
+            {attendance === 'minyan' && place && (
+              <PlaceButton prayer={prayer} place={place} onClick={() => pickPlace(place)} />
+            )}
+          </div>
+          {streak !== null && <p>{streakLabel(streak)}</p>}
         </div>
-        <WeekShelf shelfKey={prayer} slots={shelf} endsToday={endsToday} />
+        {slots && <Shelf slots={slots} label={shelfLabel(slots, prayer)} stamp />}
       </div>
       <div className="attendance">
         {attendancesFor(prayer).map((option) => (
@@ -81,6 +78,7 @@ export function PrayerRow({
           </button>
         ))}
       </div>
+      {children}
     </section>
   )
 }

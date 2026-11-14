@@ -1,13 +1,4 @@
-import type { Appearance } from '../../appearance/appearance'
-
 export const SETTINGS_COPY = {
-  appearance: 'מראה',
-  appearanceOptions: {
-    system: 'לפי הטלפון',
-    light: 'בהיר',
-    dark: 'כהה',
-  } satisfies Record<Appearance, string>,
-  appearanceFooter: 'לפי הטלפון עובר בין בהיר לכהה יחד עם הגדרת המכשיר.',
   backupRestored: 'הגיבוי שוחזר',
   confirmSwap: 'החזרה',
   undo: {

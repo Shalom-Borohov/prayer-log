@@ -9,33 +9,16 @@ Scope: the whole app shell (היום, לוח, סטטיסטיקה). Visitor mode:
 
 Job: mark each prayer במניין/ביחידות in one tap right after it, tick למדתי תורה, see the week; fill past days (שבת) from לוח or the banner; read per-prayer patterns in סטטיסטיקה.
 
-Redesign chosen 2026-11-13 on impeccable's decision page, judged on the owner's iPhone SE. It replaces "Three stars" (navy night chart), which proved too dense and too small on the phone. After two hands of new worlds were rejected, the owner pinned the earlier books concept ("The Beit Midrash Shelf", spec decision 14) and picked its dressed, larger form. The picked sketch is `.impeccable/mocks/decision/shelf-dressed.html`.
-
 ## Direction contract
 
-THESIS: Every prayer is a sefer on the shelf, and a prayer במניין earns its gold stamp. Refuses the habit-tracker default of green checks, flames and heat grids, and refuses its own first version's small 6pt spines: every mark is large enough to read at arm's length.
+THESIS: Every day is a spine on the beit midrash shelf, and a prayer במניין earns its gold stamp. Refuses the habit-tracker default of green checkmarks, a flame and a heat grid.
 
-OWN-WORLD: One flat leather hue per prayer, fixed on every tab: שחרית bottle green, מוסף plum, מנחה oxblood, ערבית navy, תורה brown. Gold leaf is the במניין state only. Spines 16pt wide: a stamped spine with two gold bands and a gold title block for במניין; a plain bare spine for ביחידות; a plain half-height spine for ק״ש בלבד; a dashed slot for due and not marked. A flat shelf board under every week, a small gilded bar under today. One dark leather band holds the toolbar, the gold large title and the date line, closed by a fine gold double rule. Frank Ruhl Libre for the large title, prayer names and poster numerals; the system sans for the rest. Flat colour, no grain, gradient or shadow. Light and dark follow the phone.
+OWN-WORLD: Flat leather hues, one per prayer and fixed on every tab: שחרית bottle green, מוסף plum, מנחה oxblood, ערבית navy, תורה brown. Gold leaf is the done state (darker gold in light mode for contrast). Shell is one solid dark leather block (toolbar + large title + date line, no transition flash, no scroll fade) with gold title type; content on the system grouped ground; SF for everything. No grain, gradient or texture.
 
-STORY: The owner opens היום after מנחה, sees the dashed slot at the end of מנחה's shelf, taps במניין, and the slot becomes a gold-stamped spine while the streak ticks up.
+STORY: The owner opens היום, sees today's date in Hebrew and Gregorian, taps במניין under שחרית, and watches that prayer's shelf gain a gold spine and its streak count tick up.
 
-FIRST VIEWPORT: Leather band with the gear and round הקודם / הבא chevrons, the gold title היום with the holiday chip, and the date line. Below, one list with a row per applicable prayer, about 112pt each: the name at 24pt with place and streak under it, the week's seven spines on a shelf board at the row's end, and under them a full-width 44pt segmented control whose selected במניין takes the prayer's leather with gold lettering. On a four-prayer day only the prayers fill the first screen; the checks, Torah card and השבוע table follow below.
+FIRST VIEWPORT: Leather band with the settings gear at the toolbar's end, gold large title היום and the date line (weekday · Hebrew date · the week's פרשה · Gregorian, holiday name). Below, an inset group with one row per applicable prayer: name (followed by the בית כנסת in secondary text while במניין), streak line (empty at a streak of 0, keeping its height), 7-day mini shelf at the trailing edge, and a full-width native segmented control במניין | ביחידות (plus ק״ש בלבד on שחרית and ערבית) whose selected במניין segment takes the prayer's leather hue; under שחרית, round תפילין and טלית checks (תפילין hidden on שבת, יום טוב and חול המועד). Then the Torah row (check, saved learning entries, grey ring hints from the last day with entries, and the הערה note line ending in a "+" that opens the learning sheet), then the השבוע ruled table. At the bottom, a footer bar with הקודם / הבא above the tab bar; a horizontal swipe on the content does the same.
 
-FORM: The sefarim shelf, pinned by the owner over two dealt hands; signature move: the shelf of dressed spines, repeated per prayer on היום, per week in לוח and per period in סטטיסטיקה. Signature interaction: marking במניין stamps today's slot in gold in place; nothing moves under reduce motion. The roll ran (seed:8c46305ce270a843) and dealt two hands, which the owner turned down before pinning the books, so this form is the owner's, not the roll's.
+FORM: Beit Midrash Shelf, candidate 5 of 7 (siddur, wall calendar, zmanim board, tallit, sefarim shelf, Jerusalem stone, parochet). seed:7bcf1fddce3b850e. Raises: flat colour only (zoo map); hue per prayer as data series (acetate manual); state as a mark in a fixed slot: gold spine / bare leather / short bare spine for ק״ש בלבד / empty dashed slot (timetable rack); stats as dense hairline-ruled tables with no card stack (high-density; streaks stay a separate table because they are all-time while the per-prayer table follows the השבוע/החודש/כל הזמנים switch, and Torah days get their own row so they never sit under במניין), led by one trend chart of columns in the shelf's own materials (dashed outline for what was due, gold for במניין, bare leather for the rest); stamps in place, nothing reflows (ticket wallet); rows never move (split-flap). Signature move: the shelf, repeated as the 7-day mini shelf on היום, the per-day spine slots in לוח cells (with small תפילין and טלית marks under them, which are not shelf slots), and full-period shelves per prayer in סטטיסטיקה (השבוע and החודש only). No coloured row-edge borders.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
-
-## Per-tab structures (picked 2026-11-13, all drawn at 375×667)
-
-- היום: `.impeccable/mocks/decision/shelf-dressed.html`. Only the prayers' controls must be on the first screen (owner's answer; replaces spec 68).
-- לוח: week shelves, `.impeccable/mocks/decision/cal-weeks.html`. One card per week, newest on top, a shelf per prayer and for תורה, 38pt day columns.
-- סטטיסטיקה: the number and the shelves, `.impeccable/mocks/decision/stats-shelves.html`. The count במניין at 88pt, then a row per prayer with its line of numbers and the period's shelf.
-- Appearance: follows the phone's light or dark setting, with a switch in הגדרות to override it (owner's answer; replaces spec 66). Dark sketches: `dark-today.html`, `dark-calendar.html`, `dark-stats.html`.
-- App icon: the first, flat shelf icon restored as it was (five spines with gold bands on dark leather), `.impeccable/mocks/decision/icon-flat.html`. The owner picked it on 2026-11-13 over three shaded drawings; it replaces spec 67.
-- מוסף has no streak number, as before (spec 5).
-
-## Unresolved decisions
-
-- סטטיסטיקה's other periods (picked 2026-11-13): החודש stands each prayer's month on two boards, `month-boards.html`; כל הזמנים has trend columns under the big number, `alltime-trend.html`.
-- The dark versions were confirmed by the owner on 2026-11-13.
-- The sketches show a four-prayer day only; the three-prayer day, the reminder rows and the checks, Torah card and השבוע table below the prayers are the build's to lay out.

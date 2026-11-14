@@ -9,20 +9,13 @@ import '@ionic/react/css/typography.css'
 import '@ionic/react/css/padding.css'
 import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
-import '@ionic/react/css/palettes/dark.class.css'
-import '@fontsource/frank-ruhl-libre/hebrew-700.css'
-import '@fontsource/frank-ruhl-libre/latin-700.css'
-import './ionic-palette.css'
+import '@ionic/react/css/palettes/dark.system.css'
 import './theme.css'
-import './globals.css'
-import './app-header.css'
+import './leather-header.css'
 
 import { App } from './App'
-import { startAppearance } from './appearance/appearanceStore'
 
 setupIonicReact({ mode: 'ios' })
-
-startAppearance()
 
 navigator.storage?.persist?.()
 

@@ -1,52 +1,44 @@
 import { COMMON_COPY } from '../copy/common'
 import { FORMAT_COPY } from '../copy/format'
-import { prayersForDay } from './prayersForDay'
+import { addDays, daysInRange } from './logicalDay'
 import { trackingStart } from './totals'
-import { type Attendance, type DayRecord, type Prayer, PRAYERS } from './types'
+import type { Attendance, DayRecord, Prayer } from './types'
 
-export type SlotState = 'done' | 'alone' | 'shema' | 'unmarked' | 'blank'
+export type SlotState = 'gold' | 'plain' | 'short' | 'empty' | 'none'
 
-export type ShelfKey = Prayer | 'torah'
+const MARK_SLOTS = { minyan: 'gold', alone: 'plain', shema: 'short' } as const satisfies Record<Attendance, SlotState>
 
-export interface ShelfRow {
-  key: ShelfKey
-  slots: SlotState[]
-}
-
-const MARK_SLOTS = { minyan: 'done', alone: 'alone', shema: 'shema' } as const satisfies Record<Attendance, SlotState>
-
-export function slotFor(record: DayRecord | undefined, key: ShelfKey): SlotState {
-  if (key === 'torah') {
-    return record?.torah ? 'done' : 'unmarked'
+export function slotFor(record: DayRecord | undefined, key: Prayer | 'torah'): SlotState {
+  if (!record) {
+    return 'empty'
   }
 
-  const mark = record?.prayers[key]
+  if (key === 'torah') {
+    return record.torah ? 'gold' : 'empty'
+  }
 
-  return mark ? MARK_SLOTS[mark] : 'unmarked'
+  const mark = record.prayers[key]
+
+  return mark ? MARK_SLOTS[mark] : 'empty'
 }
 
-export function shelfRows(records: DayRecord[], dates: string[], today: string): ShelfRow[] {
-  const start = trackingStart(records)
-  const byDate = new Map(records.map((day) => [day.date, day]))
-  const dueOn = new Map(dates.map((date) => [date, prayersForDay(date)]))
-  const isDue = (date: string, key: ShelfKey) => key === 'torah' || dueOn.get(date)?.includes(key) === true
+export function shelfLabel(slots: SlotState[], key: Prayer | 'torah'): string {
+  const trackedSlots = slots.filter((slot) => slot !== 'none')
 
-  const slotOn = (date: string, key: ShelfKey): SlotState =>
-    start === null || date < start || date > today || !isDue(date, key) ? 'blank' : slotFor(byDate.get(date), key)
-
-  const keys: ShelfKey[] = [...PRAYERS.filter((prayer) => dates.some((date) => isDue(date, prayer))), 'torah']
-
-  return keys.map((key) => ({ key, slots: dates.map((date) => slotOn(date, key)) }))
-}
-
-export function shelfLabel(slots: SlotState[], key: ShelfKey): string {
-  const tracked = slots.filter((slot) => slot !== 'blank')
-
-  if (tracked.length === 0) {
+  if (trackedSlots.length === 0) {
     return COMMON_COPY.noData
   }
 
   const doneLabel = key === 'torah' ? FORMAT_COPY.withLearning : COMMON_COPY.attendance.minyan
 
-  return FORMAT_COPY.recentDays(slots.filter((slot) => slot === 'done').length, tracked.length, doneLabel)
+  return FORMAT_COPY.recentDays(slots.filter((slot) => slot === 'gold').length, trackedSlots.length, doneLabel)
+}
+
+export function shelfSlots(records: DayRecord[], key: Prayer | 'torah', end: string, count: number): SlotState[] {
+  const start = trackingStart(records)
+  const byDate = new Map(records.map((day) => [day.date, day]))
+
+  return daysInRange(addDays(end, 1 - count), end).map((date) =>
+    start === null || date < start ? 'none' : slotFor(byDate.get(date), key),
+  )
 }

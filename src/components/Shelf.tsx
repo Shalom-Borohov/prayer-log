@@ -1,32 +1,31 @@
+import { useState } from 'react'
 import type { SlotState } from '../domain/shelf'
-import { Spine } from './Spine'
 import './Shelf.css'
 
 interface ShelfProps {
   slots: SlotState[]
   label: string
-  todayIndex?: number
-  stampsToday?: boolean
-  boardSize?: number
+  stamp?: boolean
 }
 
-export function Shelf({ slots, label, todayIndex, stampsToday = false, boardSize = slots.length }: ShelfProps) {
-  const boardStarts = slots.flatMap((_, index) => (index % boardSize === 0 ? [index] : []))
+export function Shelf({ slots, label, stamp = false }: ShelfProps) {
+  const last = slots[slots.length - 1]
+  const [previousLast, setPreviousLast] = useState(last)
+  const [stamping, setStamping] = useState(false)
+
+  if (last !== previousLast) {
+    setPreviousLast(last)
+    setStamping(stamp && last === 'gold')
+  }
 
   return (
     <div className="shelf" role="img" aria-label={label}>
-      {boardStarts.map((start) => (
-        <div key={start} className="shelf-board">
-          {slots.slice(start, start + boardSize).map((slot, offset) => {
-            const index = start + offset
-
-            return (
-              <span key={index} className={index === todayIndex ? 'shelf-slot is-today' : 'shelf-slot'}>
-                <Spine state={slot} stamps={stampsToday && index === todayIndex} />
-              </span>
-            )
-          })}
-        </div>
+      {slots.map((slot, index) => (
+        <i
+          key={index}
+          className={`spine spine-${slot}${stamping && index === slots.length - 1 ? ' spine-stamp' : ''}`}
+          onAnimationEnd={() => setStamping(false)}
+        />
       ))}
     </div>
   )

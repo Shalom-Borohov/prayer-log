@@ -33,21 +33,17 @@ function emptyTotals(): PeriodTotals {
   }
 }
 
-function count(tally: PrayerTally, mark: Attendance | undefined, onlyIfMarked: boolean) {
+function count(tally: PrayerTally, mark: Attendance | undefined) {
+  tally.total += 1
   if (mark) {
     tally[mark] += 1
   }
-  if (mark || !onlyIfMarked) {
-    tally.total += 1
-  }
 }
 
-function countDay(tally: DayTally, done: boolean | undefined, onlyIfMarked: boolean) {
+function countDay(tally: DayTally, done: boolean | undefined) {
+  tally.total += 1
   if (done) {
     tally.days += 1
-  }
-  if (done || !onlyIfMarked) {
-    tally.total += 1
   }
 }
 
@@ -77,14 +73,13 @@ export function periodTotals(records: DayRecord[], from: string, to: string, tod
   const byDate = new Map(records.map((day) => [day.date, day]))
   for (const date of daysInRange(start > from ? start : from, to < today ? to : today)) {
     const record = byDate.get(date)
-    const inProgress = date === today
-    countDay(totals.torah, record?.torah, inProgress)
+    countDay(totals.torah, record?.torah)
     for (const item of wornItemsForDay(date)) {
-      countDay(totals[item], record?.[item], inProgress)
+      countDay(totals[item], record?.[item])
     }
     for (const prayer of prayersForDay(date)) {
-      count(totals.prayers, record?.prayers[prayer], inProgress)
-      count(totals.perPrayer[prayer], record?.prayers[prayer], inProgress)
+      count(totals.prayers, record?.prayers[prayer])
+      count(totals.perPrayer[prayer], record?.prayers[prayer])
     }
   }
 
