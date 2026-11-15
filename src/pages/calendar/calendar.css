@@ -4,7 +4,7 @@
   gap: 4px;
   margin: 16px;
   padding: 10px 8px 12px;
-  border-radius: 10px;
+  border-radius: var(--group-radius);
   background: var(--ion-item-background);
 }
 

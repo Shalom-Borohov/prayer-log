@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Frank Ruhl Libre';
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url('@fontsource/frank-ruhl-libre/files/frank-ruhl-libre-hebrew-700-normal.woff2') format('woff2');
+}
+
 :root {
   --ion-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif;
 
@@ -8,20 +16,24 @@
   --ion-color-primary-shade: #794f10;
   --ion-color-primary-tint: #966b2a;
 
-  --ion-background-color: #f2f2f7;
-  --ion-background-color-rgb: 242, 242, 247;
-  --ion-item-background: #ffffff;
+  --ion-background-color: #f0e9dc;
+  --ion-background-color-rgb: 240, 233, 220;
+  --ion-item-background: #fffcf6;
+  --ion-tab-bar-background: #f8f3ea;
+
+  --title-face: 'Frank Ruhl Libre', var(--ion-font-family);
+  --group-radius: 14px;
 
   --app-label: #000000;
   --app-label-secondary: rgba(60, 60, 67, 0.75);
   --app-label-tertiary: rgba(60, 60, 67, 0.3);
-  --app-separator: rgba(60, 60, 67, 0.29);
+  --app-separator: rgba(90, 70, 40, 0.22);
   --app-fill: rgba(118, 118, 128, 0.12);
-  --app-raised: #ffffff;
 
   --leather-band: #2b2320;
   --leather-plain: var(--leather-band);
   --leather-band-text: #e8d7ad;
+  --on-leather: #ffffff;
   --gold-leaf: #e2c27a;
   --gold: #a87a1f;
 
@@ -36,6 +48,17 @@
   --leather-mincha: var(--leather-mincha-deep);
   --leather-maariv: var(--leather-maariv-deep);
   --leather-torah: var(--leather-torah-deep);
+
+  --leather-shacharit-ink: var(--leather-shacharit-deep);
+  --leather-musaf-ink: var(--leather-musaf-deep);
+  --leather-mincha-ink: var(--leather-mincha-deep);
+  --leather-maariv-ink: var(--leather-maariv-deep);
+
+  --choice-height: 40px;
+  --choice-radius: 20px;
+  --choice-gap: 8px;
+  --choice-outline-share: 40%;
+  --choice-outline-neutral: rgba(70, 55, 35, 0.32);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -50,14 +73,14 @@
 
     --ion-background-color: #000000;
     --ion-background-color-rgb: 0, 0, 0;
-    --ion-item-background: #1c1c1e;
+    --ion-item-background: #1d1a17;
+    --ion-tab-bar-background: #15120f;
 
     --app-label: #ffffff;
     --app-label-secondary: rgba(235, 235, 245, 0.6);
     --app-label-tertiary: rgba(235, 235, 245, 0.3);
-    --app-separator: rgba(84, 84, 88, 0.6);
+    --app-separator: rgba(130, 112, 92, 0.5);
     --app-fill: rgba(118, 118, 128, 0.24);
-    --app-raised: #636366;
 
     --leather-band: #1f1916;
     --leather-plain: #806a5b;
@@ -68,14 +91,22 @@
     --leather-mincha: #b04a57;
     --leather-maariv: #4a6a9e;
     --leather-torah: #a0703f;
+
+    --leather-shacharit-ink: #8fc4ab;
+    --leather-musaf-ink: #c9a6dc;
+    --leather-mincha-ink: #e69aa3;
+    --leather-maariv-ink: #a3b9e2;
+
+    --choice-outline-share: 70%;
+    --choice-outline-neutral: rgba(235, 225, 210, 0.28);
   }
 }
 
 @media (prefers-color-scheme: dark) {
   ion-modal {
-    --ion-background-color: #1c1c1e;
-    --ion-background-color-rgb: 28, 28, 30;
-    --ion-item-background: #2c2c2e;
+    --ion-background-color: #1d1a17;
+    --ion-background-color-rgb: 29, 26, 23;
+    --ion-item-background: #2b2723;
   }
 }
 
@@ -100,21 +131,25 @@ textarea {
 .hue-shacharit {
   --hue: var(--leather-shacharit);
   --hue-deep: var(--leather-shacharit-deep);
+  --hue-ink: var(--leather-shacharit-ink);
 }
 
 .hue-musaf {
   --hue: var(--leather-musaf);
   --hue-deep: var(--leather-musaf-deep);
+  --hue-ink: var(--leather-musaf-ink);
 }
 
 .hue-mincha {
   --hue: var(--leather-mincha);
   --hue-deep: var(--leather-mincha-deep);
+  --hue-ink: var(--leather-mincha-ink);
 }
 
 .hue-maariv {
   --hue: var(--leather-maariv);
   --hue-deep: var(--leather-maariv-deep);
+  --hue-ink: var(--leather-maariv-ink);
 }
 
 .hue-torah {
@@ -187,25 +222,13 @@ ion-searchbar .searchbar-clear-button::after {
   translate: -50% -50%;
 }
 
-.inset-segment {
-  width: calc(100% - 32px);
-  margin: 16px 16px 0;
-}
-
-.inset-segment ion-segment-button {
-  min-height: 44px;
-  margin-block: 0;
-  font-size: 0.9375rem;
-}
-
-.inset-segment ion-segment-button::part(indicator) {
-  top: 2px;
-  bottom: 2px;
+ion-list.list-ios.list-inset {
+  border-radius: var(--group-radius);
 }
 
 .inset-group {
   margin: 16px;
-  border-radius: 10px;
+  border-radius: var(--group-radius);
   overflow: hidden;
   background: var(--ion-item-background);
 }
@@ -214,7 +237,7 @@ ion-searchbar .searchbar-clear-button::after {
   width: calc(100% - 32px);
   margin: 0 16px 24px;
   border-collapse: collapse;
-  border-radius: 10px;
+  border-radius: var(--group-radius);
   overflow: hidden;
   background: var(--ion-item-background);
   font-size: 1.0625rem;
