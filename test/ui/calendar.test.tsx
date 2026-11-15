@@ -128,8 +128,6 @@ describe('calendar', () => {
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/calendar/2026-10-15'))
     expect(await screen.findByText('יום חמישי · ד׳ בחשון · נח · 15.10')).toBeInTheDocument()
-    expect((await buttonByLabel('היום הקודם')).closest('ion-footer')).not.toBeNull()
-    expect((await buttonByLabel('היום הבא')).closest('ion-footer')).not.toBeNull()
   })
 
   it('moves between months but not past this one', async () => {
@@ -139,8 +137,6 @@ describe('calendar', () => {
     const previous = await buttonByLabel('החודש הקודם')
 
     expect(next).toHaveAttribute('disabled')
-    expect(next.closest('ion-footer')).not.toBeNull()
-    expect(previous.closest('ion-footer')).not.toBeNull()
     fireEvent.click(previous)
 
     expect(await screen.findByText('ספטמבר 2026')).toBeInTheDocument()

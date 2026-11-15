@@ -262,6 +262,14 @@ Decisions 74–81 are the redesign of issue #71, picked on impeccable's decision
     - Totals count today's due prayers whether or not they are marked (assumption 4), so decision 71 no longer holds.
     - Light or dark follows the phone with no מראה switch (assumption 7). A choice saved by 79's switch stays in `localStorage` and is ignored.
     - The text sizes are 1.12.0's. 73 and 81 made the redesigns' text larger, and the owner chose not to keep either.
+83. **Paging without a bar (added 2026-11-14, replaces 27's bar, changes 7, 28 and 45; 27's header rule, title, date line, back button and gear only, still holds):** the הקודם/הבא bar above the tab bar is gone from היום, from a day opened from לוח or מה למדתי, and from לוח. Swipe (28) is the way to step a day or a month. Why: next to the swipe, the bar was noise (#65).
+    - Previous and next stay for VoiceOver, which keeps one-finger swipes for itself, and for a keyboard. They aren't drawn, and their row shows only while one of them has focus. They keep their spoken names ("היום הקודם", "החודש הבא"), and next stays disabled on today and on the current month (7).
+    - 28's "the bottom bar … stay still" no longer applies, and 45's tap-area rule for הקודם and הבא covers the row only while it shows.
+    - Known gap: WCAG 2.5.1 asks for a single-tap alternative to a swipe. A day still opens with a tap from לוח, but a month in לוח changes only by swipe. The owner accepted this, as social-log did.
+84. **Edge swipes on iOS (added 2026-11-14, clarifies 28):** swipe-back is Ionic's own gesture, so the real previous page follows the finger. iOS's built-in edge swipe is blocked for touches that start within 20px of either screen edge, except on tap targets (buttons, rows, controls, an overlay's backdrop). Why: in a Home Screen app on a Hebrew iPhone, both gestures use the right edge; in אימונים they ran together and the app jumped and froze taps (#25).
+    - Taps are ignored while a page transition is still animating, as in UIKit, but never for more than 1s per transition, so a stuck animation can't freeze the app. This includes the 180ms slide of a day or month after a swipe (28), so a tap can't land on a row that is still moving; the tab bar waits out the slide too.
+    - A day or month swipe (28) may still start in that strip. On a day opened from לוח or מה למדתי, the swipe-back keeps the right 50px.
+    - Cost: a vertical scroll that starts in the 20px strip doesn't scroll.
 
 ## Assumptions (accepted by the user)
 

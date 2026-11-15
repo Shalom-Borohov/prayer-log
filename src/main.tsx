@@ -14,8 +14,13 @@ import './theme.css'
 import './leather-header.css'
 
 import { App } from './App'
+import { blockSystemEdgeSwipe } from './navigation/edgeSwipe'
+import { guardTapsDuringTransitions } from './navigation/tapGuard'
 
 setupIonicReact({ mode: 'ios' })
+
+guardTapsDuringTransitions(document)
+blockSystemEdgeSwipe(document)
 
 navigator.storage?.persist?.()
 
