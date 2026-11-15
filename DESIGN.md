@@ -46,9 +46,9 @@ colors:
   fill: "rgba(118, 118, 128, 0.12)"
   fill-dark: "rgba(118, 118, 128, 0.24)"
 typography:
-  large-title:
+  title:
     fontFamily: "'Frank Ruhl Libre', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif"
-    fontSize: "34px"
+    fontSize: "17px"
     fontWeight: 700
   row-title:
     fontFamily: "'Frank Ruhl Libre', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Arial Hebrew', sans-serif"
@@ -95,7 +95,7 @@ components:
   leather-shell:
     backgroundColor: "{colors.leather-band}"
     textColor: "{colors.gold-leaf}"
-    typography: "{typography.large-title}"
+    typography: "{typography.title}"
   date-line:
     backgroundColor: "{colors.leather-band}"
     textColor: "{colors.leather-band-text}"
@@ -194,14 +194,14 @@ components:
 
 **Creative North Star: "The Beit Midrash Shelf"**
 
-Every day is a spine on a shelf of sefarim, and a prayer במניין earns its gold stamp. The system is a native iOS app first: Ionic in forced iOS mode, the system font for every word but the titles, a warm paper ground with cream inset groups, a bottom tab bar, large titles that collapse on scroll, full RTL. On top of that native frame sit three borrowed materials: a dark leather band that holds the large title and the date line; a set of flat leather hues, one per prayer, with gold leaf as the only "done" mark; and one book face, Frank Ruhl Libre bold, that sets the screen titles and the row names on היום like the title page of a sefer.
+Every day is a spine on a shelf of sefarim, and a prayer במניין earns its gold stamp. The system is a native iOS app first: Ionic in forced iOS mode, the system font for every word but the titles, a warm paper ground with cream inset groups, a bottom tab bar, titles in the toolbar, full RTL. On top of that native frame sit three borrowed materials: a dark leather band that holds the title and the date line; a set of flat leather hues, one per prayer, with gold leaf as the only "done" mark; and one book face, Frank Ruhl Libre bold, that sets the screen titles and the row names on היום like the title page of a sefer.
 
 The shelf is the one signature and it repeats at every scale: a 7-day mini shelf at the trailing edge of each row on היום, a row of tiny spines under each day number in לוח, and full-period shelves per prayer in סטטיסטיקה. A slot is always one of five states (gold, bare leather, short bare leather for ק״ש בלבד, empty dashed, nothing), stamped in place; rows never move and nothing reflows.
 
 Density is Operate-mode: one tap per prayer, one-handed, seconds at a time. Numbers live in hairline-ruled tables with tabular figures, not in card stacks. The one chart is the trend columns on סטטיסטיקה, built from the same materials: gold, bare leather and the dashed empty outline. Everything is flat colour; nothing casts a shadow. The only box-shadows are inset lines: the bands that paint gold onto a spine, the 1px outlines of the choice buttons and the ring of an unchecked round check.
 
 **Key Characteristics:**
-- Native iOS skeleton (paper ground, cream inset groups, large title, tab bar) with a dark leather shell band.
+- Native iOS skeleton (paper ground, cream inset groups, toolbar title, tab bar) with a dark leather shell band.
 - One fixed leather hue per prayer, identical on every tab.
 - Gold leaf is the only completion mark; bare leather means prayed ביחידות; a dashed empty slot means unmarked.
 - The shelf repeats at three sizes as the system's single signature.
@@ -228,7 +228,7 @@ Each prayer owns one hue, applied through a hue class that sets a display hue (`
 Spines use the display hue, so they lift in dark mode to stay visible on black. Filled controls (a picked attendance button, the checked Torah circle) use the deep hue in both modes so gold-leaf and white text keep their contrast. An unpicked attendance button is drawn in its prayer's leather: a 1px outline of the display hue mixed toward transparent (40% of the hue in light mode, 70% in dark) around a label in the ink hue, which lightens in dark mode to read on the warm dark cell.
 
 ### Neutral
-- **Shell Leather** (leather-band, leather-band-dark): one solid block holding the toolbar, the condensed large-title header and the date (or month) line inside it. It stays leather during iOS page transitions and above the page when it is pulled down. Also the today circle in the month grid.
+- **Shell Leather** (leather-band, leather-band-dark): one solid block holding the toolbar with its title and, under it, the date (or month) line centred, which scrolls away with the content. It stays leather during iOS page transitions and above the page when it is pulled down. Also the today circle in the month grid.
 - **Plain Leather** (leather-band, leather-plain-dark): the ביחידות and ק״ש בלבד fill in the trend columns, and the fill of the picked button in the neutral switches (the period switch, גמרא | משנה, באג | הצעה). It is the shell leather in light mode and a lighter warm leather in dark mode, where the shell leather would vanish into the card (3.35:1 on the dark card). It is not a prayer hue.
 - **Parchment Text** (leather-band-text): the date line (weekday · Hebrew date · the week's פרשה · Gregorian) on the band.
 - **On-Leather White** (on-leather): the text of a picked ביחידות or ק״ש בלבד button, and of a picked neutral switch button in dark mode. In light mode the picked switch text is the cream cell colour.
@@ -255,7 +255,7 @@ Spines use the display hue, so they lift in dark mode to stay visible on black. 
 **Character:** A book face for the names and the iPhone's own face for everything else. Frank Ruhl Libre, a classic Hebrew book serif, sets the titles and the prayer names like a sefer's title page; every word a user reads or taps beyond those stays native, so the app still reads as part of the phone.
 
 ### Hierarchy
-- **Large Title** (Frank Ruhl Libre 700, Ionic's iOS large-title size, gold leaf on leather): screen titles היום, לוח, סטטיסטיקה, or the weekday for a past day. Every title in a leather header takes the same face, collapsed into the toolbar and on sheets (לימוד, דיווח, מה חדש), including the copy Ionic animates during a page transition.
+- **Title** (Frank Ruhl Libre 700, Ionic's iOS toolbar title size, gold leaf on leather): screen titles היום, לוח, סטטיסטיקה, or the weekday for a past day, centred in the toolbar. There are no large titles. Every title in a leather header takes the same face, in the toolbar and on sheets (לימוד, דיווח, מה חדש), including the copy Ionic animates during a page transition.
 - **Row Title** (Frank Ruhl Libre 700, calc(21rem / 17), which is 21pt at the iPhone's default Text Size, line-height 1.5rem): the prayer names and תורה in day rows on היום.
 - **Body** (400 for row headers, 600 for values, 1.0625rem): ruled table cells, list items, month day numbers (500; 700 for today).
 - **Subhead** (400–600, 0.9375rem, line-height 1.4): the date line, attendance and switch button labels (500, 600 when picked), the Torah note field, shelf-row labels, empty-state body.
@@ -269,7 +269,7 @@ Spines use the display hue, so they lift in dark mode to stay visible on black. 
 
 ## Layout
 
-Single column, phone-first, RTL. Content sits on the paper ground in inset groups and tables with 16px side margins and 14px corners; group labels hang 32px in from the edge, 22px above and 6px below. The leather band spans full width at the top and carries the date line with 20px side padding.
+Single column, phone-first, RTL. Content sits on the paper ground in inset groups and tables with 16px side margins and 14px corners; group labels hang 32px in from the edge, 22px above and 6px below. The leather band spans full width at the top and carries the date line, centred, with 20px side padding.
 
 Day rows are 12px/16px/14px padded with a 44px minimum top line: title and streak line on the leading side (at a streak of 0 the line is empty but keeps its height, so the title never moves), the mini shelf on the trailing side, then a full-width row of attendance buttons 10px below. Every interactive target is at least 44px, except that month cells can be about 43px wide on the narrowest phones, because seven must fit across. Where a control looks smaller, an invisible layer carries the tap area to 44px: the attendance buttons are 40px tall in a row with 2px above and below, and each one's tap layer reaches 2px past its top and bottom and 4px into the 8px gap on either side, so a tap anywhere across the row counts.
 
@@ -347,7 +347,7 @@ Buttons in a seven-column grid: Gregorian number (body 500, centred in a 30px bo
 An inset list at the top of היום (today only) with one disclosure row per day that needs filling, such as an unmarked day or a blank Friday-night ערבית. Label text is gilded; rows navigate to that day. When a backup is due, a last row without a disclosure chevron opens the share sheet. Absent when nothing needs filling and no backup is due.
 
 ### Navigation
-Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with a back button to לוח on days opened from לוח, to מה למדתי on days opened from that list, and to סטטיסטיקה on the list itself, and a settings gear at the end of the toolbar on every page but הגדרות. הגדרות opens inside the current tab, with a back button named for the tab. Large titles collapse into the toolbar on scroll. Toolbar buttons keep Ionic's size, and an invisible centred layer carries each tap area to at least 44×44px. Icons beside a label are hidden from screen readers.
+Native iOS: bottom tab bar (היום, לוח, סטטיסטיקה) with outline icons and 11px labels, selected in gilded ink. Toolbar on leather with a back button to לוח on days opened from לוח, to מה למדתי on days opened from that list, and to סטטיסטיקה on the list itself, and a settings gear at the end of the toolbar on every page but הגדרות. הגדרות opens inside the current tab, with a back button named for the tab. The title always sits in the toolbar; there are no large titles. Toolbar buttons keep Ionic's size, and an invisible centred layer carries each tap area to at least 44×44px. Icons beside a label are hidden from screen readers.
 
 A horizontal swipe on the content steps the day (היום and days opened from לוח or מה למדתי) or the month (לוח): drag left for הקודם, right for הבא. There is no bar for them. Previous and next buttons stay for VoiceOver and the keyboard but aren't drawn; while one has focus, their row shows above the tab bar: item-background ground with the iOS hairline top rule, "› הקודם" at the start and "הבא ‹" at the end in the primary ink. Next is disabled on today and on the current month.
 

@@ -278,6 +278,10 @@ Decisions 74–81 are the redesign of issue #71, picked on impeccable's decision
     - 45's "40 inside a 44 track" and "visibly 44 tall" no longer describe these controls: every button in them is drawn 40pt tall and takes a tap across 44pt, including the 2pt above and below it and half the gap to its neighbour.
     - Groups, tables and the month grid have 14pt corners.
     - Everything else is as 82 left it: the rows and shelves on היום, the month grid in לוח, the chart and tables in סטטיסטיקה, the icon, and every status, streak and count.
+86. **A smaller header (added 2026-11-15, changes 85; #77):** there are no large titles. The screen title sits centred in the toolbar beside the back button and the gear, in Frank Ruhl Libre bold at Ionic's toolbar title size. The date (or month) line sits centred under the bar, on the same leather, and scrolls away with the content. Why: the owner found the band took too much of the screen. At rest it held a bar with only the gear, a large-title row under it and then the date line.
+    - On a 390×844 iPhone, the band at rest goes from about 186px to about 127px on היום, on a day opened from לוח or מה למדתי, and on לוח. On סטטיסטיקה it goes from about 150px to 91px. Scrolled, every screen is 91px, as before.
+    - 85's "Screen titles keep Ionic's large-title size" no longer holds. 20 still holds: the band is one solid leather block from the status bar through the date line, through page transitions and pull-down, and never fades on scroll.
+    - On a past day the title is the weekday, and the date line repeats it. That is unchanged.
 
 ## Assumptions (accepted by the user)
 

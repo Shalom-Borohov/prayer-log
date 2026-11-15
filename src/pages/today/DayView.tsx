@@ -71,15 +71,10 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
         </IonToolbar>
       </IonHeader>
       <IonContent ref={areaRef} fullscreen>
-        <IonHeader collapse="condense" className="leather-header">
-          <IonToolbar>
-            <IonTitle size="large">{title}</IonTitle>
-          </IonToolbar>
-          <div className="day-heading">
-            <p>{dateLine}</p>
-            {holidays.length > 0 && <p className="holidays">{holidays.join(LIST_SEPARATOR)}</p>}
-          </div>
-        </IonHeader>
+        <div className="day-heading">
+          <p>{dateLine}</p>
+          {holidays.length > 0 && <p className="holidays">{holidays.join(LIST_SEPARATOR)}</p>}
+        </div>
         <div ref={paneRef}>
           {records && dayStreaks && places && (
             <>

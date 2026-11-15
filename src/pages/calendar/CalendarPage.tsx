@@ -60,14 +60,9 @@ export function CalendarPage() {
         </IonToolbar>
       </IonHeader>
       <IonContent ref={areaRef} fullscreen>
-        <IonHeader collapse="condense" className="leather-header">
-          <IonToolbar>
-            <IonTitle size="large">{COMMON_COPY.calendar}</IonTitle>
-          </IonToolbar>
-          <div className="day-heading">
-            <p>{monthTitle(month)}</p>
-          </div>
-        </IonHeader>
+        <div className="day-heading">
+          <p>{monthTitle(month)}</p>
+        </div>
         <div ref={paneRef}>
           {records && (
             <MonthGrid

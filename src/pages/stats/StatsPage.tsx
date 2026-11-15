@@ -38,11 +38,7 @@ export function StatsPage() {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense" className="leather-header">
-          <IonToolbar>
-            <IonTitle size="large">{COMMON_COPY.stats}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+        <div className="leather-pull-down" />
         {records && records.length === 0 && (
           <div className="empty-state">
             <h2>{COMMON_COPY.noData}</h2>
