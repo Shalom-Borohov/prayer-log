@@ -230,8 +230,6 @@ describe('today', () => {
     const previous = await buttonByLabel('היום הקודם')
 
     expect(next).toHaveAttribute('disabled')
-    expect(next.closest('ion-footer')).not.toBeNull()
-    expect(previous.closest('ion-footer')).not.toBeNull()
     fireEvent.click(previous)
 
     await waitFor(() => expect(currentPath()).toBe('/tabs/today/2026-10-27'))

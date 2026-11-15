@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonFooter, IonIcon, IonToolbar } from '@ionic/react'
+import { IonButton, IonButtons, IonIcon, IonToolbar } from '@ionic/react'
 import { chevronBack, chevronForward } from 'ionicons/icons'
 import { COMMON_COPY } from '../copy/common'
 import './PeriodNav.css'
@@ -13,7 +13,7 @@ interface PeriodNavProps {
 
 export function PeriodNav({ previousLabel, nextLabel, onPrevious, onNext, nextDisabled }: PeriodNavProps) {
   return (
-    <IonFooter className="period-nav">
+    <div className="period-nav">
       <IonToolbar>
         <IonButtons slot="start">
           <IonButton aria-label={previousLabel} onClick={onPrevious}>
@@ -28,6 +28,6 @@ export function PeriodNav({ previousLabel, nextLabel, onPrevious, onNext, nextDi
           </IonButton>
         </IonButtons>
       </IonToolbar>
-    </IonFooter>
+    </div>
   )
 }

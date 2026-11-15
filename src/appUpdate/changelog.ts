@@ -2,6 +2,11 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.17.0',
+    features: ['הקודם והבא כבר לא על המסך: מחליקים בין ימים וחודשים'],
+    fixes: [],
+  },
+  {
     version: '1.16.0',
     features: [
       'חזרה למראה המקורי: מדף הספרים מתחת לכותרת העור והזהב',
