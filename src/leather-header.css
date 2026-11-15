@@ -49,8 +49,15 @@ ion-back-button.ion-cloned-element {
   --color: var(--gold-leaf);
 }
 
+.day-heading,
+.leather-pull-down {
+  position: relative;
+}
+
 .day-heading {
   padding: 0 20px 14px;
+  background: var(--leather-band);
+  text-align: center;
   color: var(--leather-band-text);
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -65,7 +72,8 @@ ion-back-button.ion-cloned-element {
   font-weight: 600;
 }
 
-ion-header[collapse='condense'].leather-header::before {
+.day-heading::before,
+.leather-pull-down::before {
   content: '';
   position: absolute;
   inset-inline: 0;

@@ -2,6 +2,11 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.19.0',
+    features: ['הכותרת למעלה קטנה יותר, ויש יותר מקום לתפילות'],
+    fixes: [],
+  },
+  {
     version: '1.18.0',
     features: [
       'מראה חדש: כותרות ושמות התפילות באות ספר, על רקע של נייר',
