@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => ({
         start_url: '.',
         scope: '.',
         theme_color: '#2b2320',
-        background_color: '#f2f2f7',
+        background_color: '#f0e9dc',
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icon-512.png', sizes: '512x512', type: 'image/png' },
@@ -33,7 +33,7 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
       },
     }),

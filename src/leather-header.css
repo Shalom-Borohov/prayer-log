@@ -39,6 +39,11 @@ ion-header.leather-header {
   color: var(--gold-leaf);
 }
 
+ion-title {
+  font-family: var(--title-face);
+  font-weight: 700;
+}
+
 ion-title.ion-cloned-element,
 ion-back-button.ion-cloned-element {
   --color: var(--gold-leaf);
