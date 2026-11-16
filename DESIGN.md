@@ -26,12 +26,12 @@ colors:
   leather-maariv-ink-dark: "#a3b9e2"
   leather-torah: "#6b4423"
   leather-torah-dark: "#a0703f"
-  grouped-ground: "#f0e9dc"
+  grouped-ground: "#f2f2f7"
   grouped-ground-dark: "#000000"
-  cell: "#fffcf6"
+  cell: "#ffffff"
   cell-dark: "#1d1a17"
   modal-cell-dark: "#2b2723"
-  tab-bar: "#f8f3ea"
+  tab-bar: "#f9f9f9"
   tab-bar-dark: "#15120f"
   label: "#000000"
   label-dark: "#ffffff"
@@ -39,9 +39,9 @@ colors:
   label-secondary-dark: "rgba(235, 235, 245, 0.6)"
   label-tertiary: "rgba(60, 60, 67, 0.3)"
   label-tertiary-dark: "rgba(235, 235, 245, 0.3)"
-  separator: "rgba(90, 70, 40, 0.22)"
+  separator: "rgba(60, 60, 67, 0.29)"
   separator-dark: "rgba(130, 112, 92, 0.5)"
-  choice-outline-neutral: "rgba(70, 55, 35, 0.32)"
+  choice-outline-neutral: "rgba(60, 60, 67, 0.3)"
   choice-outline-neutral-dark: "rgba(235, 225, 210, 0.28)"
   fill: "rgba(118, 118, 128, 0.12)"
   fill-dark: "rgba(118, 118, 128, 0.24)"
@@ -194,14 +194,14 @@ components:
 
 **Creative North Star: "The Beit Midrash Shelf"**
 
-Every day is a spine on a shelf of sefarim, and a prayer במניין earns its gold stamp. The system is a native iOS app first: Ionic in forced iOS mode, the system font for every word but the titles, a warm paper ground with cream inset groups, a bottom tab bar, titles in the toolbar, full RTL. On top of that native frame sit three borrowed materials: a dark leather band that holds the title and the date line; a set of flat leather hues, one per prayer, with gold leaf as the only "done" mark; and one book face, Frank Ruhl Libre bold, that sets the screen titles and the row names on היום like the title page of a sefer.
+Every day is a spine on a shelf of sefarim, and a prayer במניין earns its gold stamp. The system is a native iOS app first: Ionic in forced iOS mode, the system font for every word but the titles, iOS's grey-white ground with white inset groups, a bottom tab bar, titles in the toolbar, full RTL. On top of that native frame sit three borrowed materials: a dark leather band that holds the title and the date line; a set of flat leather hues, one per prayer, with gold leaf as the only "done" mark; and one book face, Frank Ruhl Libre bold, that sets the screen titles and the row names on היום like the title page of a sefer.
 
 The shelf is the one signature and it repeats at every scale: a 7-day mini shelf at the trailing edge of each row on היום, a row of tiny spines under each day number in לוח, and full-period shelves per prayer in סטטיסטיקה. A slot is always one of five states (gold, bare leather, short bare leather for ק״ש בלבד, empty dashed, nothing), stamped in place; rows never move and nothing reflows.
 
 Density is Operate-mode: one tap per prayer, one-handed, seconds at a time. Numbers live in hairline-ruled tables with tabular figures, not in card stacks. The one chart is the trend columns on סטטיסטיקה, built from the same materials: gold, bare leather and the dashed empty outline. Everything is flat colour; nothing casts a shadow. The only box-shadows are inset lines: the bands that paint gold onto a spine, the 1px outlines of the choice buttons and the ring of an unchecked round check.
 
 **Key Characteristics:**
-- Native iOS skeleton (paper ground, cream inset groups, toolbar title, tab bar) with a dark leather shell band.
+- Native iOS skeleton (grey-white ground, white inset groups, toolbar title, tab bar) with a dark leather shell band.
 - One fixed leather hue per prayer, identical on every tab.
 - Gold leaf is the only completion mark; bare leather means prayed ביחידות; a dashed empty slot means unmarked.
 - The shelf repeats at three sizes as the system's single signature.
@@ -210,11 +210,11 @@ Density is Operate-mode: one tap per prayer, one-handed, seconds at a time. Numb
 
 ## Colors
 
-A warm paper ground carrying five flat leather hues and one gold, with a dark leather band as the shell.
+An iOS grey-white ground carrying five flat leather hues and one gold, with a dark leather band as the shell.
 
 ### Primary
 - **Gold Leaf** (gold-leaf): the shell's voice. Large and small titles, toolbar buttons and the holiday line on the leather band, the text of a picked במניין button, the checkmark in the Torah check, and today's number in the month grid. Same value in both modes because it always sits on dark leather.
-- **Gilded Ink** (gold-primary, gold-primary-dark): Ionic's primary. Tab bar selection, focus rings, the backfill banner text, holiday Hebrew dates in the month grid, text selection tint. Darker in light mode for contrast on cream; brighter gold in dark mode.
+- **Gilded Ink** (gold-primary, gold-primary-dark): Ionic's primary. Tab bar selection, focus rings, the backfill banner text, holiday Hebrew dates in the month grid, text selection tint. Darker in light mode for contrast on white; brighter gold in dark mode.
 - **Stamp Gold** (gold-stamp, gold-stamp-dark): the bands painted onto a gold spine. Darker in light mode, brighter in dark mode.
 
 ### Secondary: the leathers
@@ -231,11 +231,11 @@ Spines use the display hue, so they lift in dark mode to stay visible on black. 
 - **Shell Leather** (leather-band, leather-band-dark): one solid block holding the toolbar with its title and, under it, the date (or month) line centred, which scrolls away with the content. It stays leather during iOS page transitions and above the page when it is pulled down. Also the today circle in the month grid.
 - **Plain Leather** (leather-band, leather-plain-dark): the ביחידות and ק״ש בלבד fill in the trend columns, and the fill of the picked button in the neutral switches (the period switch, גמרא | משנה, באג | הצעה). It is the shell leather in light mode and a lighter warm leather in dark mode, where the shell leather would vanish into the card (3.35:1 on the dark card). It is not a prayer hue.
 - **Parchment Text** (leather-band-text): the date line (weekday · Hebrew date · the week's פרשה · Gregorian) on the band.
-- **On-Leather White** (on-leather): the text of a picked ביחידות or ק״ש בלבד button, and of a picked neutral switch button in dark mode. In light mode the picked switch text is the cream cell colour.
-- **Paper Ground** (grouped-ground / grouped-ground-dark) and **Cream Cell** (cell / cell-dark): a warm paper ground with cream inset cells in light mode; in dark mode the ground stays black and the cells are a warm dark. Modals in dark mode step to the warm dark cell as their ground and modal-cell-dark for their cells. The installed app's launch background is the paper ground.
-- **Tab Bar** (tab-bar / tab-bar-dark): the tab bar's own ground, a lighter paper in light mode and a near-black warm brown in dark mode.
+- **On-Leather White** (on-leather): the text of a picked ביחידות or ק״ש בלבד button, and of a picked neutral switch button in dark mode. In light mode the picked switch text is the white cell colour.
+- **Grouped Ground** (grouped-ground / grouped-ground-dark) and **Cell** (cell / cell-dark): iOS's grey-white ground with pure white inset cells in light mode; in dark mode the ground stays black and the cells are a warm dark. Modals in dark mode step to the warm dark cell as their ground and modal-cell-dark for their cells. The installed app's launch background is the grouped ground.
+- **Tab Bar** (tab-bar / tab-bar-dark): the tab bar's own ground, iOS's bar white in light mode and a near-black warm brown in dark mode.
 - **Labels** (label, label-secondary, label-tertiary and dark pairs): primary text, secondary text for streak lines, group labels, footers and table column heads; tertiary for disabled future days and the unchecked Torah ring. Secondary is raised to 0.75 alpha in light mode for legibility.
-- **Separator** (separator / separator-dark): 0.5px warm brown hairlines between rows and table lines.
+- **Separator** (separator / separator-dark): 0.5px hairlines between rows and table lines, iOS grey in light mode and warm brown in dark mode.
 - **Choice Outline** (choice-outline-neutral / choice-outline-neutral-dark): the 1px outline of an unpicked button in the neutral switches.
 - **Fill** (fill / fill-dark): the pressed state of a month cell and the quiet fill of the recovery screen's buttons.
 
@@ -269,7 +269,7 @@ Spines use the display hue, so they lift in dark mode to stay visible on black. 
 
 ## Layout
 
-Single column, phone-first, RTL. Content sits on the paper ground in inset groups and tables with 16px side margins and 14px corners; group labels hang 32px in from the edge, 22px above and 6px below. The leather band spans full width at the top and carries the date line, centred, with 20px side padding.
+Single column, phone-first, RTL. Content sits on the grouped ground in inset groups and tables with 16px side margins and 14px corners; group labels hang 32px in from the edge, 22px above and 6px below. The leather band spans full width at the top and carries the date line, centred, with 20px side padding.
 
 Day rows are 12px/16px/14px padded with a 44px minimum top line: title and streak line on the leading side (at a streak of 0 the line is empty but keeps its height, so the title never moves), the mini shelf on the trailing side, then a full-width row of attendance buttons 10px below. Every interactive target is at least 44px, except that month cells can be about 43px wide on the narrowest phones, because seven must fit across. Where a control looks smaller, an invisible layer carries the tap area to 44px: the attendance buttons are 40px tall in a row with 2px above and below, and each one's tap layer reaches 2px past its top and bottom and 4px into the 8px gap on either side, so a tap anywhere across the row counts.
 
@@ -279,7 +279,7 @@ Spacing steps observed: 2, 3, 4, 8, 12, 16, 20, 32px.
 
 ## Elevation & Depth
 
-Flat. Depth comes from the grouped model (cream cells on a paper or black ground) and from the dark leather band above the content, not from shadows.
+Flat. Depth comes from the grouped model (white cells on a grey-white ground, warm dark cells on black) and from the dark leather band above the content, not from shadows.
 
 ### Shadow Vocabulary
 - **Gold bands** (`box-shadow: inset 0 4px 0 var(--gold), inset 0 -4px 0 var(--gold)`; 3px bands on the small spines): not elevation. This is how the gold stamp is painted onto a spine's head and foot.

@@ -282,6 +282,9 @@ Decisions 74–81 are the redesign of issue #71, picked on impeccable's decision
     - On a 390×844 iPhone, the band at rest goes from about 186px to about 127px on היום, on a day opened from לוח or מה למדתי, and on לוח. On סטטיסטיקה it goes from about 150px to 91px. Scrolled, every screen is 91px, as before.
     - 85's "Screen titles keep Ionic's large-title size" no longer holds. 20 still holds: the band is one solid leather block from the status bar through the date line, through page transitions and pull-down, and never fades on scroll.
     - On a past day the title is the weekday, and the date line repeats it. That is unchanged.
+87. **White, not paper (added 2026-11-16, changes 85; #78):** in light mode the ground is iOS's grey-white (`#f2f2f7`) and the cells are pure white. The tab bar is iOS's bar white (`#f9f9f9`), and the hairlines and the unpicked button outlines are plain iOS grey. The launch screen takes the same grey-white. Why: on the phone the warm paper read as too yellow. Shown the real app in three tones next to the paper, the owner picked iOS white over a trace of paper and a halfway tone.
+    - 85's warm paper, cream cells and paper tint no longer hold in light mode, and the launch screen is no longer paper. The rest of 85 still holds: the serif titles, the leather buttons and the 14pt corners.
+    - Dark mode doesn't change. The ground stays black, with the warm dark cells, bar and sheets.
 
 ## Assumptions (accepted by the user)
 
