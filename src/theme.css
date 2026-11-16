@@ -16,10 +16,10 @@
   --ion-color-primary-shade: #794f10;
   --ion-color-primary-tint: #966b2a;
 
-  --ion-background-color: #f0e9dc;
-  --ion-background-color-rgb: 240, 233, 220;
-  --ion-item-background: #fffcf6;
-  --ion-tab-bar-background: #f8f3ea;
+  --ion-background-color: #f2f2f7;
+  --ion-background-color-rgb: 242, 242, 247;
+  --ion-item-background: #ffffff;
+  --ion-tab-bar-background: #f9f9f9;
 
   --title-face: 'Frank Ruhl Libre', var(--ion-font-family);
   --group-radius: 14px;
@@ -27,7 +27,7 @@
   --app-label: #000000;
   --app-label-secondary: rgba(60, 60, 67, 0.75);
   --app-label-tertiary: rgba(60, 60, 67, 0.3);
-  --app-separator: rgba(90, 70, 40, 0.22);
+  --app-separator: rgba(60, 60, 67, 0.29);
   --app-fill: rgba(118, 118, 128, 0.12);
 
   --leather-band: #2b2320;
@@ -58,7 +58,7 @@
   --choice-radius: 20px;
   --choice-gap: 8px;
   --choice-outline-share: 40%;
-  --choice-outline-neutral: rgba(70, 55, 35, 0.32);
+  --choice-outline-neutral: rgba(60, 60, 67, 0.3);
 }
 
 @media (prefers-color-scheme: dark) {
