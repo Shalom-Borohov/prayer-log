@@ -285,6 +285,11 @@ Decisions 74–81 are the redesign of issue #71, picked on impeccable's decision
 87. **White, not paper (added 2026-11-16, changes 85; #78):** in light mode the ground is iOS's grey-white (`#f2f2f7`) and the cells are pure white. The tab bar is iOS's bar white (`#f9f9f9`), and the hairlines and the unpicked button outlines are plain iOS grey. The launch screen takes the same grey-white. Why: on the phone the warm paper read as too yellow. Shown the real app in three tones next to the paper, the owner picked iOS white over a trace of paper and a halfway tone.
     - 85's warm paper, cream cells and paper tint no longer hold in light mode, and the launch screen is no longer paper. The rest of 85 still holds: the serif titles, the leather buttons and the 14pt corners.
     - Dark mode doesn't change. The ground stays black, with the warm dark cells, bar and sheets.
+88. **The edge block checks the finger that just landed, and backdrops aren't tap targets (added 2026-11-17, changes 84; #80):** the 20px edge check looks at the finger whose touch just started, not the first finger already on the screen. An overlay's backdrop is no longer one of 84's tap targets.
+    - With one finger held mid-screen, a second finger landing at the edge is blocked. With one finger held at the edge, a second finger landing mid-screen is left alone. When two fingers land together, either one at the edge blocks the touch.
+    - An edge swipe can't move the page under an open alert, action sheet or half sheet.
+    - Cost: a tap in the 20px strip at either side of a backdrop doesn't close the overlay, as with iOS's own alerts. A tap anywhere else on the backdrop still does.
+    - Why: the old check let iOS's back swipe through for a second finger, and anywhere on a backdrop. Decided by the owner on 2026-11-17, following finished-titles' spec decision 78.
 
 ## Assumptions (accepted by the user)
 

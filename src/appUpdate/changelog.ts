@@ -2,6 +2,14 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.20.1',
+    features: [],
+    fixes: [
+      'כשחלון פתוח, החלקה מקצה המסך כבר לא מזיזה את הדף שמתחתיו',
+      'החלקה מקצה המסך באצבע שנייה כבר לא חוזרת דף אחורה',
+    ],
+  },
+  {
     version: '1.20.0',
     features: ['הרקע לבן ופחות צהוב'],
     fixes: [],
