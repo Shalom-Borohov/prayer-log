@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-תפילות: a personal, offline-only iPhone PWA for logging each day's prayers (במניין / ביחידות / ק״ש בלבד), Torah learning, תפילין and טלית, with streaks and stats. Hebrew, RTL. There is no server or account: all data lives in IndexedDB on the device, and a JSON backup file can be exported and imported.
+תפילות: a personal, offline-only iPhone PWA for logging each day's prayers (במניין / ביחידות / ק״ש בלבד), Torah learning, תפילין and טלית, with streaks and stats. Hebrew, RTL. There is no account, and the log has no server: all data lives in IndexedDB on the device, and a JSON backup file can be exported and imported. The one exception is the opt-in evening reminder (spec decision 89): a Cloudflare Worker in `worker/` holds the push subscription and sends the push.
 
 ## Commands
 
@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Every PR that ships raises `version` in `package.json`: the minor number for features, the patch number for fixes (spec decision 22). The same PR adds a release to `src/appUpdate/changelog.ts`: short Hebrew lines for what the user will notice, under `features` and `fixes`. The phone shows them once after updating (spec decision 25). PRs that change only CI or docs keep the version and add no release.
 
-CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` deploys to GitHub Pages on every push to `main`, with base path `/prayer-log/`. `ios-screenshot.yml`, run by hand from the Actions tab or by PRs that edit it, screenshots the picked branch in Safari on the iOS simulator (spec decision 55).
+CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` deploys to GitHub Pages on every push to `main`, with base path `/prayer-log/`. `ios-screenshot.yml`, run by hand from the Actions tab or by PRs that edit it, screenshots the picked branch in Safari on the iOS simulator (spec decision 55). `worker.yml` deploys the reminder Worker to Cloudflare on pushes to `main` that touch it, using the `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and `VAPID_PRIVATE_KEY` secrets.
 
 ## Sources of truth
 
@@ -31,7 +31,7 @@ CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` d
 
 ## Architecture
 
-The code is split into layers, and imports go downward only: `pages` → `data` / `domain` → `copy`. `Tabs`, `pages/settings` and `recovery` also import `appUpdate`, which keeps its own release logic and seen-version storage and imports only `copy`.
+The code is split into layers, and imports go downward only: `pages` → `data` / `domain` → `copy`. `Tabs`, `pages/settings` and `recovery` also import `appUpdate`, which keeps its own release logic and seen-version storage and imports only `copy`. `Tabs` and `pages/settings` also import `reminder`, which keeps the reminder setting and push subscription and imports `data`, `domain`, `copy` and `hooks`.
 
 - **`src/domain/`**: pure functions over `DayRecord[]`, with no React and no Dexie.
   - Types live in `types.ts`.
@@ -55,6 +55,10 @@ The code is split into layers, and imports go downward only: `pages` → `data` 
   - Styling is plain CSS with tokens in `theme.css`. On marks, gold means only done (a prayer במניין, a day of learning or a checked round check; `DESIGN.md`, The Gold Means Minyan Rule). The shell and the accents listed under Colors in `DESIGN.md`, such as the backfill banner and holiday dates in לוח, use it too.
   - The page `body` is leather, and `index.html` has a static `.status-bar-strip` (styled in `leather-header.css`). iOS 26 colours the installed app's status bar from these, not from `theme-color` (spec decision 20), so keep both. Don't give the strip `pointer-events: none`: Safari then skips it and hazes the top of the header.
 - **`src/navigation/`**: path helpers, and two guards that `main.tsx` installs (spec decision 84). `edgeSwipe.ts` blocks iOS's own edge swipe within 20px of either edge unless the touch starts on a control; `tapGuard.ts` ignores taps while an Ionic page transition animates, for at most 1s.
+- **`src/reminder/`**, **`src/sw.ts`** and **`worker/`**: the evening reminder (spec decision 89).
+  - The service worker is built with `injectManifest` from `src/sw.ts`. It keeps the prompt update flow and adds the `push` and `notificationclick` handlers. Its text comes from `src/sw/notification.ts`.
+  - `useReminderSync` (in `Tabs`) sends the Worker one record whenever the subscription, time or today's completeness changes.
+  - `worker/` is a Cloudflare Worker (cron every 15 minutes, KV `SUBS`) that shares `src/reminder/record.ts` and `src/domain/logicalDay.ts`. `worker/.dev.vars` holds the VAPID private key and is gitignored.
 - **`src/recovery/`**: an error boundary above `IonApp`, and a plain screen with no Ionic and no router that can still export and import a backup and apply a waiting update (spec decisions 32, 42, 43).
 - **`src/appUpdate/`**: the update bar, the "מה חדש" sheet and `changelog.ts`, rendered by `Tabs.tsx` and הגדרות (spec decisions 24, 25). `useAppUpdate` is shared with the recovery screen.
   - `registerType: 'prompt'`, so a new service worker waits until the user taps "עדכון" (`UpdateBar`, through `useRegisterSW`).

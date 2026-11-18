@@ -1,0 +1,9 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "prayer-log-reminder",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-01",
+  "observability": { "enabled": true },
+  "triggers": { "crons": ["*/15 * * * *"] },
+  "kv_namespaces": [{ "binding": "SUBS", "id": "9336072a5fe04dac93c7718168d212fc" }]
+}

@@ -1,4 +1,4 @@
-const ROLLOVER_HOUR = 3
+export const ROLLOVER_HOUR = 3
 
 const NOON = 12
 
@@ -30,11 +30,13 @@ export function addDays(date: string, days: number): string {
   return toIsoDate(new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate() + days, NOON))
 }
 
+export const logicalDate = (calendarDate: string, hour: number) =>
+  hour < ROLLOVER_HOUR ? addDays(calendarDate, -1) : calendarDate
+
 export function logicalToday(now: number): string {
   const moment = new Date(now)
-  const today = toIsoDate(moment)
 
-  return moment.getHours() < ROLLOVER_HOUR ? addDays(today, -1) : today
+  return logicalDate(toIsoDate(moment), moment.getHours())
 }
 
 export const isSaturday = (date: string) => parseIsoDate(date).getDay() === SATURDAY

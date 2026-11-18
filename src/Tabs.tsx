@@ -11,9 +11,11 @@ import { LearningLogPage } from './pages/learningLog/LearningLogPage'
 import { SettingsPage } from './pages/settings/SettingsPage'
 import { StatsPage } from './pages/stats/StatsPage'
 import { DateRoute, TodayDateRoute, TodayRoute } from './pages/today/DayRoutes'
+import { useReminderSync } from './reminder/useReminderSync'
 
 export function Tabs() {
   const whatsNew = useWhatsNew()
+  useReminderSync()
 
   return (
     <IonTabs>
