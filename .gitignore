@@ -47,3 +47,6 @@ dist-ssr
 .claude/skills/impeccable/
 .claude/agents/impeccable-*
 .claude/worktrees/
+
+.dev.vars
+.wrangler/

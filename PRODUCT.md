@@ -28,8 +28,8 @@ Used for a few seconds at a time, usually right after a prayer, one-handed, on t
 
 ## Capabilities and Constraints
 
-- PWA with a native iOS look, hosted on GitHub Pages. No backend; data in IndexedDB on the device, with export/import of a JSON backup file.
-- No notifications and no prayer times (זמנים): iOS web push needs a server, and זמנים need a location.
+- PWA with a native iOS look, hosted on GitHub Pages. The log has no backend; data in IndexedDB on the device, with export/import of a JSON backup file.
+- No prayer times (זמנים): they need a location. The one notification is an opt-in evening reminder (spec decision 89), sent by a small Cloudflare Worker because iOS web push needs a server. Only the push subscription, the reminder time and whether the day is complete leave the phone.
 - Hebrew UI, full RTL. Terms: שחרית, מנחה, ערבית, מוסף, במניין, ביחידות, ק״ש בלבד, למדתי תורה, מה למדתי, היום, לוח, סטטיסטיקה, רצף.
 - Day = calendar date that rolls over at 03:00. Friday-night ערבית counts as Friday.
 - מוסף on שבת, ראש חודש, יום טוב, חול המועד, ראש השנה and יום כיפור, by the Israel schedule.
