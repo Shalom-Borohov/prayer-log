@@ -13,9 +13,11 @@ type ReminderState = Pick<ReminderRecord, 'time' | 'completeDate' | 'skipNights'
 
 const NOTIFICATIONS_ALLOWED: NotificationPermission = 'granted'
 
+const keepOffDespiteFailedUnsubscribe = () => undefined
+
 async function syncReminder(registration: ServiceWorkerRegistration, state: ReminderState, today: string) {
   if (Notification.permission !== NOTIFICATIONS_ALLOWED) {
-    await disableReminder(registration, state.time)
+    await disableReminder(registration, state.time).catch(keepOffDespiteFailedUnsubscribe)
 
     return
   }
