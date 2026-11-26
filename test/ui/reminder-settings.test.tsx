@@ -77,6 +77,21 @@ describe('the evening reminder setting', () => {
     expect(push.puts()[1].body.time).toBe('21:30')
   })
 
+  it('offers no time between 02:00 and 02:45, whose hour would run past the end of the day', async () => {
+    const push = stubPush()
+
+    renderAt(SETTINGS)
+    await turnOn()
+    await waitFor(() => expect(push.puts()).toHaveLength(1))
+
+    const picker = document.querySelector('ion-datetime')
+
+    expect(picker?.hourValues).toContain(1)
+    expect(picker?.hourValues).not.toContain(2)
+    expect(picker?.hourValues).toContain(3)
+    expect(picker?.hourValues).toContain(23)
+  })
+
   it('unsubscribes and removes the reminder when turned off', async () => {
     const push = stubPush()
 

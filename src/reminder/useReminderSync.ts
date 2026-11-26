@@ -7,11 +7,21 @@ import { SKIP_NIGHTS_AHEAD } from './config'
 import { usePushRegistration } from './pushRegistration'
 import { pushSubscriptionSchema, type ReminderRecord } from './record'
 import { readLastSent, saveLastSent, saveReminderSettings, useReminderSettings } from './reminderSettings'
-import { sendRecord } from './subscription'
+import { disableReminder, sendRecord } from './subscription'
 
 type ReminderState = Pick<ReminderRecord, 'time' | 'completeDate' | 'skipNights'>
 
-async function syncReminder(registration: ServiceWorkerRegistration, state: ReminderState) {
+const NOTIFICATIONS_ALLOWED: NotificationPermission = 'granted'
+
+const keepOffDespiteFailedUnsubscribe = () => undefined
+
+async function syncReminder(registration: ServiceWorkerRegistration, state: ReminderState, today: string) {
+  if (Notification.permission !== NOTIFICATIONS_ALLOWED) {
+    await disableReminder(registration, state.time).catch(keepOffDespiteFailedUnsubscribe)
+
+    return
+  }
+
   const subscription = await registration.pushManager.getSubscription()
 
   if (!subscription) {
@@ -32,7 +42,7 @@ async function syncReminder(registration: ServiceWorkerRegistration, state: Remi
     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   }
 
-  const signature = JSON.stringify(record)
+  const signature = JSON.stringify({ sentOn: today, record })
 
   if (signature !== readLastSent() && (await sendRecord(record))) {
     saveLastSent(signature)
@@ -52,7 +62,7 @@ export function useReminderSync() {
     }
 
     const completeDate = allMarked ? today : null
-    const sync = () => void syncReminder(registration, { time, completeDate, skipNights: nights })
+    const sync = () => void syncReminder(registration, { time, completeDate, skipNights: nights }, today)
 
     function syncWhenVisible() {
       if (document.visibilityState === 'visible') {

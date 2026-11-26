@@ -11,6 +11,7 @@ import {
 } from '@ionic/react'
 import { useState } from 'react'
 import { COMMON_COPY } from '../../copy/common'
+import { ROLLOVER_HOUR } from '../../domain/logicalDay'
 import { useToast } from '../../hooks/useToast'
 import { pushSupported, usePushRegistration } from '../../reminder/pushRegistration'
 import { saveReminderSettings, useReminderSettings } from '../../reminder/reminderSettings'
@@ -20,6 +21,14 @@ import { SETTINGS_COPY } from './copy'
 const TIME_PICKER_ID = 'reminder-time'
 
 const QUARTER_HOURS = '0,15,30,45'
+
+const HOURS_PER_DAY = 24
+
+const LAST_HOUR_OF_LOGICAL_DAY = ROLLOVER_HOUR - 1
+
+const PICKABLE_HOURS = Array.from({ length: HOURS_PER_DAY }, (_, hour) => hour).filter(
+  (hour) => hour !== LAST_HOUR_OF_LOGICAL_DAY,
+)
 
 const TIME_OF_DAY = /\d{2}:\d{2}/
 
@@ -107,6 +116,7 @@ export function ReminderSettings() {
           presentation="time"
           locale="he"
           hourCycle="h23"
+          hourValues={PICKABLE_HOURS}
           minuteValues={QUARTER_HOURS}
           value={time}
           onIonChange={(event) => changeTime(event.detail.value)}

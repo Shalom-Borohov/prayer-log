@@ -34,12 +34,16 @@ export function stubPush() {
 
   const fetch = vi.fn<typeof globalThis.fetch>(async () => new Response(null, { status: NO_CONTENT }))
 
+  class FakeNotification {
+    static permission: NotificationPermission = 'granted'
+  }
+
   Object.defineProperty(navigator, 'serviceWorker', {
     value: { ready: Promise.resolve({ pushManager }) },
     configurable: true,
   })
   vi.stubGlobal('PushManager', class {})
-  vi.stubGlobal('Notification', class {})
+  vi.stubGlobal('Notification', FakeNotification)
   vi.stubGlobal('fetch', fetch)
   onTestFinished(() => {
     Reflect.deleteProperty(navigator, 'serviceWorker')
@@ -60,6 +64,9 @@ export function stubPush() {
     deletes: () => requests('DELETE'),
     alreadySubscribed: () => {
       current = subscription
+    },
+    revokePermission: () => {
+      FakeNotification.permission = 'denied'
     },
     failRequests: () => fetch.mockRejectedValue(new TypeError('Load failed')),
     answerRequests: () => fetch.mockImplementation(async () => new Response(null, { status: NO_CONTENT })),
