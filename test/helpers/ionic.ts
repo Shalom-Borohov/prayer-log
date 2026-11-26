@@ -38,7 +38,25 @@ export function ionElement(selector: string) {
   })
 }
 
-export const buttonByLabel = (label: string) => ionElement(`ion-button[aria-label="${label}"]`)
+const IONIC_NATIVE_CONTROL = 'button, a'
+
+const nativeLabel = (ionButton: Element) =>
+  ionButton.shadowRoot?.querySelector(IONIC_NATIVE_CONTROL)?.getAttribute('aria-label')
+
+export const visibleButtonsLabelled = (label: string) =>
+  visibleAll('ion-button').filter((ionButton) => nativeLabel(ionButton) === label)
+
+export function buttonByLabel(label: string) {
+  return waitFor(() => {
+    const [ionButton] = visibleButtonsLabelled(label)
+
+    if (!ionButton) {
+      throw new Error(`no ion-button labelled ${label}`)
+    }
+
+    return ionButton
+  })
+}
 
 export function sheetDialog(modal: Element | null) {
   const dialog = modal?.shadowRoot?.querySelector('[role="dialog"]')
