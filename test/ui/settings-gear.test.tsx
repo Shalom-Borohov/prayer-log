@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
-import { buttonByLabel, ionElement, visibleAll } from '../helpers/ionic'
+import { buttonByLabel, ionElement, visibleButtonsLabelled } from '../helpers/ionic'
 import { currentPath, renderAt } from '../helpers/renderAt'
 
 describe('the settings gear', () => {
@@ -34,6 +34,6 @@ describe('the settings gear', () => {
     renderAt(path)
 
     expect(await ionElement('ion-back-button')).toHaveAttribute('text', tabName)
-    expect(visibleAll('ion-button[aria-label="הגדרות"]')).toHaveLength(0)
+    expect(visibleButtonsLabelled('הגדרות')).toHaveLength(0)
   })
 })

@@ -31,7 +31,7 @@ async function sheetStatus() {
     throw new Error('no report sheet')
   }
 
-  return within(sheet).getByRole('status')
+  return within(sheet).findByRole('status')
 }
 
 describe('the report sheet', () => {
