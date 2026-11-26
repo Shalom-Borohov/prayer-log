@@ -9,7 +9,12 @@ export function useAllDays() {
 }
 
 export function useAllPrayersMarked(date: string) {
-  return useLiveQuery(async () => missingPrayers(await db.days.get(date), date).length === 0, [date])
+  const answer = useLiveQuery(
+    async () => ({ date, allMarked: missingPrayers(await db.days.get(date), date).length === 0 }),
+    [date],
+  )
+
+  return answer?.date === date ? answer.allMarked : undefined
 }
 
 export function useRestoreUndo() {

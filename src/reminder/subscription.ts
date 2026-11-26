@@ -45,6 +45,9 @@ export async function disableReminder(registration: ServiceWorkerRegistration, t
 
   const { endpoint } = subscription
 
-  await subscription.unsubscribe()
-  await send('DELETE', { endpoint })
+  try {
+    await subscription.unsubscribe()
+  } finally {
+    await send('DELETE', { endpoint })
+  }
 }

@@ -2,6 +2,15 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.21.2',
+    features: [],
+    fixes: [
+      'תזכורת הערב כבר לא מדלגת על יום חדש כאילו הוא כבר נרשם',
+      'מתג התזכורת נכבה כשמבטלים את ההתראות בהגדרות של iOS',
+      'אי אפשר לבחור לתזכורת שעה בין 02:00 ל-02:45, שבה היא עלולה לא להגיע',
+    ],
+  },
+  {
     version: '1.21.1',
     features: [],
     fixes: [
