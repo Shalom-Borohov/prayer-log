@@ -95,6 +95,25 @@ describe('לוח when the app comes back in a new month', () => {
     expect(await screen.findByText('נובמבר 2026')).toBeInTheDocument()
   })
 
+  it('keeps the current month on screen when the clock moves back before it, until the next step', async () => {
+    await openOctober()
+    await leaveAndComeBackAt(firstMorningOfNovember)
+    await screen.findByText('נובמבר 2026')
+
+    await leaveAndComeBackAt(lateOctoberNight)
+
+    expect(screen.getByText('נובמבר 2026')).toBeInTheDocument()
+
+    fireEvent.click(await buttonByLabel('החודש הקודם'))
+
+    expect(await screen.findByText('אוקטובר 2026')).toBeInTheDocument()
+    expect(await cell(31)).toHaveClass('is-today')
+
+    await leaveAndComeBackAt(firstMorningOfNovember)
+
+    expect(await screen.findByText('נובמבר 2026')).toBeInTheDocument()
+  })
+
   it('follows the date again after stepping back onto the current month once the clock moved back', async () => {
     await stepBackToSeptember()
 

@@ -300,6 +300,9 @@ Decisions 74–81 are the redesign of issue #71, picked on impeccable's decision
     - The switch, the time and the last record sent stay on the phone, outside the backup, like decision 25.
     - Why: the owner asked for a reminder when something wasn't logged that day. iOS gives a web app no way to schedule its own notification, so a sender off the phone is the only route. Decided by the owner on 2026-11-18, choosing a push that skips complete days over a nightly push, a calendar alarm or an in-app note.
 
+90. **לוח tells VoiceOver which day is today (added 2026-11-23, clarifies 8; #88):** today's day in לוח carries `aria-current="date"`, as in אימונים' calendar, so it's announced as the current date on top of its usual label. Why: the gold circle and number showed today only to the eye. The dark-mode circle's contrast against its cell is a design question for `DESIGN.md` and is left as it is.
+91. **The backfill and backup rows show only in the היום tab (added 2026-11-23, clarifies 9, 13 and 31; #91):** today's date opened from לוח or from מה למדתי shows the day without them, though the date is today. Why: those tabs are for looking back at a day, and a tap on a backfill row there would open the missed day inside that tab. Decided by the owner on 2026-11-22.
+
 ## Assumptions (accepted by the user)
 
 1. Stack: same as אימונים — React 19 + TypeScript + Vite, Ionic React in iOS mode, Dexie with persistent storage, `vite-plugin-pwa`, Vitest + Testing Library + fake-indexeddb, oxlint. Hebrew calendar via `@hebcal/core` (offline, no location).

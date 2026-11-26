@@ -21,6 +21,13 @@ describe('calendar', () => {
     expect(await cell(29)).toBeDisabled()
   })
 
+  it('tells assistive tech which day is today, and only that day', async () => {
+    renderAt('/tabs/calendar')
+
+    expect(await cell(28)).toHaveAttribute('aria-current', 'date')
+    expect(await cell(27)).not.toHaveAttribute('aria-current')
+  })
+
   it('names each day with the text it shows as one run', async () => {
     renderAt('/tabs/calendar')
 
