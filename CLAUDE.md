@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run build`: `tsc -b && vite build`. This is the type check; there is no separate `tsc` script.
   - `vite.config.ts` stamps the `package.json` version and the build time into `__APP_VERSION__` / `__APP_BUILT_AT__`, which הגדרות shows.
 
-Every PR that ships raises `version` in `package.json`: the minor number for features, the patch number for fixes (spec decision 22). The same PR adds a release to `src/appUpdate/changelog.ts`: short Hebrew lines for what the user will notice, under `features` and `fixes`. The phone shows them once after updating (spec decision 25). PRs that change only CI or docs keep the version and add no release.
+Every PR that ships raises `version` in `package.json`: the minor number for features, the patch number for fixes (spec decision 22). The same PR adds a release to `src/appUpdate/changelog.ts`: short Hebrew lines for what the user will notice, under `features` and `fixes`. The phone shows them once after updating (spec decision 25). PRs that change only CI, docs or dependencies (Dependabot's) keep the version and add no release.
 
-CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` deploys to GitHub Pages on every push to `main`, with base path `/prayer-log/`. `ios-screenshot.yml`, run by hand from the Actions tab or by PRs that edit it, screenshots the picked branch in Safari on the iOS simulator (spec decision 55). `worker.yml` deploys the reminder Worker to Cloudflare on pushes to `main` that touch it, using the `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and `VAPID_PRIVATE_KEY` secrets.
+CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` deploys to GitHub Pages on every push to `main`, with base path `/prayer-log/`. `ios-screenshot.yml`, run by hand from the Actions tab or by PRs that edit it, screenshots the picked branch in Safari on the iOS simulator (spec decision 55). `worker.yml` runs the tests and the Worker's type check (`tsconfig.worker.json`), then deploys the reminder Worker to Cloudflare on pushes to `main` that touch it, using the `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and `VAPID_PRIVATE_KEY` secrets. `dependabot.yml` opens weekly grouped update PRs for npm and the actions (spec decision 94).
 
 ## Sources of truth
 
