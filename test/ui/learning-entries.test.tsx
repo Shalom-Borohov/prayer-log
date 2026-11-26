@@ -4,6 +4,7 @@ import { db } from '../../src/data/db'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
 import { day } from '../helpers/days'
+import { expectNamedSheet, sheetDialog } from '../helpers/ionic'
 import { gemara, mishna } from '../helpers/learning'
 import {
   chooseKind,
@@ -82,6 +83,17 @@ describe('learning entries on the Torah row', () => {
     await learningSheetCloses()
     expect(await stored()).toStrictEqual(day(TODAY, { torah: true }))
     await waitFor(() => expect(screen.queryByText('גמרא · שבת דף י״ב')).not.toBeInTheDocument())
+  })
+
+  it('names the sheet לימוד for VoiceOver, with its grabber in Hebrew', async () => {
+    renderAt('/tabs/today')
+
+    await openNewLearning()
+
+    const sheet = await learningSheet()
+
+    await expectNamedSheet(sheet, 'לימוד')
+    expect(await within(sheetDialog(sheet)).findByRole('button', { name: 'שינוי גודל החלונית' })).toBeInTheDocument()
   })
 
   it('offers no delete on a new entry', async () => {

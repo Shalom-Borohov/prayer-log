@@ -40,6 +40,31 @@ export function ionElement(selector: string) {
 
 export const buttonByLabel = (label: string) => ionElement(`ion-button[aria-label="${label}"]`)
 
+export function sheetDialog(modal: Element | null) {
+  const dialog = modal?.shadowRoot?.querySelector('[role="dialog"]')
+
+  if (!(dialog instanceof HTMLElement)) {
+    throw new Error('no sheet dialog')
+  }
+
+  return dialog
+}
+
+export async function sheetTitled(title: string) {
+  const modal = (await screen.findByText(title, { selector: 'ion-title' })).closest('ion-modal')
+
+  if (!modal) {
+    throw new Error(`no sheet titled ${title}`)
+  }
+
+  return modal
+}
+
+export async function expectNamedSheet(modal: Element | null, name: string) {
+  await waitFor(() => expect(sheetDialog(modal)).toHaveAccessibleName(name))
+  expect(modal).not.toHaveAttribute('aria-label')
+}
+
 export const shownText = (element: Element) => element.textContent.replace(/\s+/g, ' ').trim()
 
 export const cell = (dayNumber: number) =>

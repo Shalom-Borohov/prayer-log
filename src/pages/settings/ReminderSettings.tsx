@@ -16,6 +16,7 @@ import { useToast } from '../../hooks/useToast'
 import { pushSupported, usePushRegistration } from '../../reminder/pushRegistration'
 import { saveReminderSettings, useReminderSettings } from '../../reminder/reminderSettings'
 import { disableReminder, enableReminder } from '../../reminder/subscription'
+import { nameSheet } from '../../sheets/sheetName'
 import { SETTINGS_COPY } from './copy'
 
 const TIME_PICKER_ID = 'reminder-time'
@@ -110,7 +111,7 @@ export function ReminderSettings() {
       <IonNote className="list-footer">
         {pushSupported() ? SETTINGS_COPY.reminderNote : SETTINGS_COPY.reminderNeedsHomeScreen}
       </IonNote>
-      <IonModal keepContentsMounted>
+      <IonModal keepContentsMounted onWillPresent={nameSheet(SETTINGS_COPY.reminderTime)}>
         <IonDatetime
           id={TIME_PICKER_ID}
           presentation="time"

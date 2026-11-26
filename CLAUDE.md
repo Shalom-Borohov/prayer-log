@@ -31,7 +31,7 @@ CI (`.github/workflows/ci.yml`) runs lint, test and build on PRs. `deploy.yml` d
 
 ## Architecture
 
-The code is split into layers, and imports go downward only: `pages` → `data` / `domain` → `copy`. `Tabs`, `pages/settings` and `recovery` also import `appUpdate`, which keeps its own release logic and seen-version storage and imports only `copy`. `Tabs` and `pages/settings` also import `reminder`, which keeps the reminder setting and push subscription and imports `data`, `domain`, `copy` and `hooks`.
+The code is split into layers, and imports go downward only: `pages` → `data` / `domain` → `copy`. `Tabs`, `pages/settings` and `recovery` also import `appUpdate`, which keeps its own release logic and seen-version storage and imports only `copy` and `sheets`. `appUpdate`, `pages/today` and `pages/settings` import `sheets`, which holds what more than one feature's `IonModal` needs and imports only `copy`: the half-sheet props, and `nameSheet`, which every `IonModal` passes as `onWillPresent` so VoiceOver gets the sheet's name and a Hebrew grabber label (spec decision 95). `Tabs` and `pages/settings` also import `reminder`, which keeps the reminder setting and push subscription and imports `data`, `domain`, `copy` and `hooks`.
 
 - **`src/domain/`**: pure functions over `DayRecord[]`, with no React and no Dexie.
   - Types live in `types.ts`.

@@ -309,6 +309,9 @@ Decisions 74–81 are the redesign of issue #71, picked on impeccable's decision
     - npm minor and patch updates come in one grouped PR, and each major in its own. Majors of `react-router` and `react-router-dom` are ignored, since Ionic's router needs version 6, and so are majors of `@types/node`, which follows the Node 24 that CI runs. All action updates come in one PR.
     - The config is the same as grocery-list's, purchase-log's and restaurant-visits'. These PRs keep the version (decision 22).
     - Why: the Worker also deploys on `package.json` and `package-lock.json` changes, so a dependency bump that broke it shipped without a test run, and the pinned actions and dependencies never got update PRs. The type check is the Worker's alone, since `deploy.yml` already checks the app's. Found by a read-only night review of the workflow files; the owner picked the Worker's type check on 2026-11-26.
+95. **Every sheet has a name for VoiceOver (added 2026-11-26, extends 44, like 58's Hebrew names for Ionic's English ones; #92):** VoiceOver announces each sheet by its title: מה חדש, דיווח and לימוד. The reminder's time picker has no title, so it's announced as שעה, after the row that opens it. The grabber on the half-height sheets (מה חדש, לימוד) reads "שינוי גודל החלונית" instead of Ionic's English label, and it still moves the sheet between its heights.
+    - When a sheet opens, `nameSheet` (`src/sheets/sheetName.ts`) sets the name on the dialog inside it, and the grabber's label. The name isn't passed to `IonModal`, because Ionic React writes it back onto the outer element on every update, which leaves it on an element with no role.
+    - Why: VoiceOver announced every sheet as a dialog with no name (WCAG 4.1.2), and an English label in a Hebrew app breaks the reading. The names were decided on 2026-11-22; the owner picked שעה for the time picker and a Hebrew grabber label on 2026-11-26.
 
 ## Assumptions (accepted by the user)
 

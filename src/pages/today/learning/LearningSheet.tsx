@@ -20,10 +20,10 @@ import { addLearning, removeLearning, replaceLearning } from '../../../data/repo
 import { startingEntry, withPlaceInRange } from '../../../domain/learningPlaces'
 import { type DayRecord, LEARNING_KINDS, type LearningEntry, type LearningKind } from '../../../domain/types'
 import { useSave } from '../../../hooks/useSave'
+import { HALF_SHEET } from '../../../sheets/halfSheet'
+import { nameSheet } from '../../../sheets/sheetName'
 import { TODAY_COPY } from '../copy'
 import { LearningPicker } from './LearningPicker'
-
-const HALF_SHEET = { initialBreakpoint: 0.6, breakpoints: [0, 0.6, 1] }
 
 export interface LearningTarget {
   entry: LearningEntry
@@ -118,7 +118,12 @@ interface LearningSheetProps {
 
 export function LearningSheet({ date, records, target, isOpen, onClose, onDismissed }: LearningSheetProps) {
   return (
-    <IonModal isOpen={isOpen} onDidDismiss={onDismissed} {...HALF_SHEET}>
+    <IonModal
+      isOpen={isOpen}
+      onWillPresent={nameSheet(TODAY_COPY.learningSheet)}
+      onDidDismiss={onDismissed}
+      {...HALF_SHEET}
+    >
       {target && <LearningForm date={date} records={records} target={target} onClose={onClose} />}
     </IonModal>
   )

@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { reminderRecordSchema } from '../../src/reminder/record'
 import { freezeDate } from '../helpers/clock'
 import { resetDb } from '../helpers/db'
-import { expectInOrder, ionChange, ionElement } from '../helpers/ionic'
+import { expectInOrder, expectNamedSheet, ionChange, ionElement } from '../helpers/ionic'
 import { toasts } from '../helpers/overlays'
 import { stubPush } from '../helpers/push'
 import { renderAt } from '../helpers/renderAt'
@@ -90,6 +90,30 @@ describe('the evening reminder setting', () => {
     expect(picker?.hourValues).not.toContain(2)
     expect(picker?.hourValues).toContain(3)
     expect(picker?.hourValues).toContain(23)
+  })
+
+  it('names the time picker שעה for VoiceOver, after the row that opens it', async () => {
+    const push = stubPush()
+
+    renderAt(SETTINGS)
+    await turnOn()
+    await waitFor(() => expect(push.puts()).toHaveLength(1))
+
+    const datetimeButton = await ionElement('ion-datetime-button')
+
+    const timeButton = await waitFor(() => {
+      const button = datetimeButton.shadowRoot?.querySelector('#time-button')
+
+      if (!(button instanceof HTMLElement)) {
+        throw new Error('no time button')
+      }
+
+      return button
+    })
+
+    fireEvent.click(timeButton)
+
+    await expectNamedSheet((await ionElement('ion-datetime')).closest('ion-modal'), 'שעה')
   })
 
   it('unsubscribes and removes the reminder when turned off', async () => {
