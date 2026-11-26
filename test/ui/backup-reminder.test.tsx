@@ -206,3 +206,27 @@ describe('the last backup line in הגדרות', () => {
     expect(await screen.findByText('גיבוי אחרון: 6.11.2026 10:00')).toBeVisible()
   })
 })
+
+describe('the banner on today’s date outside היום', () => {
+  const loggedWithAGap = days('2026-10-28', '2026-11-03', { prayers: allMinyan })
+
+  it.each(['/tabs/calendar/2026-11-06', '/tabs/stats/2026-11-06'])(
+    'shows neither the backfill nor the backup rows at %s',
+    async (path) => {
+      await db.days.bulkPut(loggedWithAGap)
+      renderAt(path)
+      await dayContentLoaded()
+
+      expect(screen.queryAllByText(/לא מולא/)).toHaveLength(0)
+      expect(screen.queryByText(NEVER_LABEL)).not.toBeInTheDocument()
+    },
+  )
+
+  it('shows both on היום', async () => {
+    await db.days.bulkPut(loggedWithAGap)
+    renderAt('/tabs/today')
+
+    expect(await screen.findAllByText(/לא מולא/)).toHaveLength(2)
+    expect(await screen.findByText(NEVER_LABEL)).toBeVisible()
+  })
+})

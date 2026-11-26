@@ -59,6 +59,7 @@ export function MonthGrid({ month, today, records, holidayDates, onOpen }: Month
             type="button"
             className={`month-day${date === today ? ' is-today' : ''}${holidayDates.has(date) ? ' is-holiday' : ''}`}
             disabled={date > today}
+            aria-current={date === today ? 'date' : undefined}
             aria-label={CALENDAR_COPY.dayCell(
               dayNumber,
               hebrewDateLabel(date),

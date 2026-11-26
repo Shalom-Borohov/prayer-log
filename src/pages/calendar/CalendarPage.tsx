@@ -30,8 +30,13 @@ export function CalendarPage() {
   const records = useAllDays()
   const router = useIonRouter()
   const currentMonth = monthStart(today)
-  const [chosenPastMonth, setChosenPastMonth] = useState<string | null>(null)
-  const month = chosenPastMonth ?? currentMonth
+  const [shown, setShown] = useState({ month: currentMonth, isFollowingToday: true })
+
+  if (shown.isFollowingToday && currentMonth > shown.month) {
+    setShown({ month: currentMonth, isFollowingToday: true })
+  }
+
+  const { month } = shown
 
   const holidays = daysInRange(month, monthEnd(month)).flatMap((date) => {
     const names = holidayNames(date)
@@ -41,7 +46,7 @@ export function CalendarPage() {
 
   const holidayDates = new Set(holidays.map((holiday) => holiday.date))
 
-  const showMonth = (target: string) => setChosenPastMonth(target < currentMonth ? target : null)
+  const showMonth = (target: string) => setShown({ month: target, isFollowingToday: target >= currentMonth })
 
   const period = {
     onPrevious: () => showMonth(monthStart(addDays(month, -1))),

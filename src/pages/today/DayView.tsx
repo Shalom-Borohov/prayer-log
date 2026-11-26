@@ -78,7 +78,7 @@ export function DayView({ date, today, tab }: { date: string; today: string; tab
         <div ref={paneRef}>
           {records && dayStreaks && places && (
             <>
-              {date === today && <BackfillBanner records={records} today={today} onOpen={openDay} />}
+              {tab === 'today' && date === today && <BackfillBanner records={records} today={today} onOpen={openDay} />}
               <div className="inset-group">
                 {prayersForDay(date).map((prayer) => (
                   <PrayerRow
