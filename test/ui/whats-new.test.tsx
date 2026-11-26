@@ -1,8 +1,8 @@
-import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { saveSeenVersion } from '../../src/appUpdate/seenVersion'
 import { resetDb } from '../helpers/db'
-import { expectInOrder } from '../helpers/ionic'
+import { expectInOrder, expectNamedSheet, sheetDialog, sheetTitled } from '../helpers/ionic'
 import { renderAt } from '../helpers/renderAt'
 
 vi.mock('../../src/appUpdate/changelog', () => ({
@@ -37,6 +37,23 @@ describe('what’s new after an update', () => {
     expect(screen.getByText('ישן')).toBeInTheDocument()
     expect(screen.queryByText('הכי ישן')).not.toBeInTheDocument()
     await expectInOrder([`גרסה ${__APP_VERSION__}`, 'גרסה 0.2.0'])
+  })
+
+  it('is named מה חדש for VoiceOver', async () => {
+    saveSeenVersion(OLDEST_SEEN)
+    renderAt('/tabs/calendar')
+
+    await expectNamedSheet(await sheetTitled('מה חדש'), 'מה חדש')
+  })
+
+  it('names its grabber in Hebrew for VoiceOver', async () => {
+    saveSeenVersion(OLDEST_SEEN)
+    renderAt('/tabs/calendar')
+
+    const sheet = sheetDialog(await sheetTitled('מה חדש'))
+
+    expect(await within(sheet).findByRole('button', { name: 'שינוי גודל החלונית' })).toBeInTheDocument()
+    expect(within(sheet).queryByRole('button', { name: /Activate/ })).not.toBeInTheDocument()
   })
 
   it('shows only once', async () => {

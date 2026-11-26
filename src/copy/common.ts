@@ -16,6 +16,7 @@ export const COMMON_COPY = {
   settings: 'הגדרות',
   cancel: 'ביטול',
   close: 'סגירה',
+  sheetHandle: 'שינוי גודל החלונית',
   ok: 'אישור',
   exportBackup: 'ייצוא גיבוי',
   importBackup: 'ייבוא גיבוי',

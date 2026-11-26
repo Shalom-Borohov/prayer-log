@@ -2,6 +2,11 @@ import type { Release } from './releases'
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.21.3',
+    features: [],
+    fixes: ['ב-VoiceOver, כל חלונית מוכרזת בשמה, וידית הגודל שלה בעברית'],
+  },
+  {
     version: '1.21.2',
     features: [],
     fixes: [

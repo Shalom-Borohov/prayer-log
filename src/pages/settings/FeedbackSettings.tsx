@@ -19,6 +19,7 @@ import {
 import { chatbubbleEllipsesOutline } from 'ionicons/icons'
 import { useState } from 'react'
 import { COMMON_COPY } from '../../copy/common'
+import { nameSheet } from '../../sheets/sheetName'
 import { SETTINGS_COPY } from './copy'
 import { type FeedbackKind, feedbackLink } from './feedbackUrl'
 import { usePhoneState } from './phoneState'
@@ -102,7 +103,7 @@ export function FeedbackSettings() {
           <IonLabel>{SETTINGS_COPY.reportBugOrIdea}</IonLabel>
         </IonItem>
       </IonList>
-      <IonModal isOpen={open} onDidDismiss={() => setOpen(false)}>
+      <IonModal isOpen={open} onWillPresent={nameSheet(SETTINGS_COPY.report)} onDidDismiss={() => setOpen(false)}>
         <FeedbackForm onClose={() => setOpen(false)} />
       </IonModal>
     </>

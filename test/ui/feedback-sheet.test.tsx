@@ -1,7 +1,7 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { resetDb } from '../helpers/db'
-import { ionField, ionInput } from '../helpers/ionic'
+import { expectNamedSheet, ionField, ionInput } from '../helpers/ionic'
 import { renderAt } from '../helpers/renderAt'
 
 const REPORT = 'הרצף לא התעדכן'
@@ -78,6 +78,12 @@ describe('the report sheet', () => {
     ionInput(await ionField('תיאור'), REPORT)
 
     await waitFor(async () => expect(await sheetStatus()).toBeEmptyDOMElement())
+  })
+
+  it('is named דיווח for VoiceOver', async () => {
+    await typeReport(REPORT)
+
+    await expectNamedSheet((await descriptionField()).closest('ion-modal'), 'דיווח')
   })
 
   it('opens GitHub again on a second tap', async () => {

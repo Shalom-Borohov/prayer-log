@@ -13,11 +13,11 @@ import {
 } from '@ionic/react'
 import { Fragment } from 'react'
 import { COMMON_COPY } from '../copy/common'
+import { HALF_SHEET } from '../sheets/halfSheet'
+import { nameSheet } from '../sheets/sheetName'
 import { APP_UPDATE_COPY } from './copy'
 import type { Release } from './releases'
 import './appUpdate.css'
-
-const HALF_SHEET = { initialBreakpoint: 0.6, breakpoints: [0, 0.6, 1] }
 
 interface WhatsNewSheetProps {
   isOpen: boolean
@@ -46,7 +46,12 @@ function ChangeList({ title, changes }: { title: string; changes: string[] }) {
 
 export function WhatsNewSheet({ isOpen, releases, onClose }: WhatsNewSheetProps) {
   return (
-    <IonModal isOpen={isOpen} onDidDismiss={onClose} {...HALF_SHEET}>
+    <IonModal
+      isOpen={isOpen}
+      onWillPresent={nameSheet(APP_UPDATE_COPY.whatsNew)}
+      onDidDismiss={onClose}
+      {...HALF_SHEET}
+    >
       <IonHeader className="leather-header">
         <IonToolbar>
           <IonTitle>{APP_UPDATE_COPY.whatsNew}</IonTitle>
